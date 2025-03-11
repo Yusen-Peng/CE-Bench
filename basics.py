@@ -4,8 +4,8 @@ import torch
 from tqdm import tqdm
 import plotly.express as px
 from datasets import load_dataset
-from transformer_lens import HookedTransformer
 from sae_lens import SAE
+from transformer_lens import HookedTransformer
 
 import webbrowser
 import http.server
