@@ -1,0 +1,32 @@
+Loaded pretrained model meta-llama/Llama-3.2-1B into HookedTransformer
+Tokenized prompt: ['<|begin_of_text|>', 'When', ' John', ' and', ' Mary', ' went', ' to', ' the', ' shops', ',', ' John', ' gave', ' the', ' bag', ' to']
+Tokenized answer: [' Mary']
+Performance on answer token:
+Rank: 0        Logit: 24.70 Prob: 85.16% Token: | Mary|
+Top 0th token. Logit: 24.70 Prob: 85.16% Token: | Mary|
+Top 1th token. Logit: 21.91 Prob:  5.25% Token: | his|
+Top 2th token. Logit: 21.22 Prob:  2.64% Token: | the|
+Top 3th token. Logit: 19.79 Prob:  0.63% Token: | a|
+Top 4th token. Logit: 18.91 Prob:  0.26% Token: | John|
+Top 5th token. Logit: 18.76 Prob:  0.23% Token: | their|
+Top 6th token. Logit: 18.56 Prob:  0.18% Token: | Mrs|
+Top 7th token. Logit: 18.52 Prob:  0.18% Token: | her|
+Top 8th token. Logit: 18.46 Prob:  0.17% Token: | Maria|
+Top 9th token. Logit: 18.38 Prob:  0.15% Token: | me|
+Ranks of the answer tokens: [(' Mary', 0)]
+Tokenized prompt: ['<|begin_of_text|>', 'When', ' John', ' and', ' Mary', ' went', ' to', ' the', ' shops', ',', ' John', ' gave', ' the', ' bag', ' to']
+Tokenized answer: [' Mary']
+Padded sae_out from torch.Size([1, 14, 2048]) to torch.Size([1, 16, 2048])
+Performance on answer token:
+Rank: 11       Logit: 16.39 Prob:  1.00% Token: | Mary|
+Top 0th token. Logit: 19.84 Prob: 31.48% Token: | the|
+Top 1th token. Logit: 18.06 Prob:  5.30% Token: | her|
+Top 2th token. Logit: 17.64 Prob:  3.48% Token: | me|
+Top 3th token. Logit: 17.63 Prob:  3.45% Token: | his|
+Top 4th token. Logit: 17.47 Prob:  2.94% Token: |,|
+Top 5th token. Logit: 17.19 Prob:  2.22% Token: | him|
+Top 6th token. Logit: 16.86 Prob:  1.59% Token: | a|
+Top 7th token. Logit: 16.52 Prob:  1.14% Token: | them|
+Top 8th token. Logit: 16.44 Prob:  1.05% Token: | and|
+Top 9th token. Logit: 16.44 Prob:  1.04% Token: | their|
+Ranks of the answer tokens: [(' Mary', 11)]

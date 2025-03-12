@@ -25,7 +25,8 @@
     so far we have reconstruction error for "standard", "gated", "topk", "jumprelu"!
 
 
-4. expressiveness evaluation: specific capability test (in progress)
+4. expressiveness evaluation: specific capability test (prototype done)
+    Specific capability test compares model's capability on a next token generation task without SAE and with SAE. The outputs are written into log files accordingly. now we have "standard", "gated", "topk", "jumprelu" log files! 
 
 
 5. interpretability features: Logits Lens
