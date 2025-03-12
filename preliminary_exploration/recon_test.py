@@ -1,5 +1,6 @@
 import os
 import torch
+import gc
 from tqdm import tqdm
 from datasets import load_dataset
 from sae_lens import SAE, HookedSAETransformer
@@ -20,7 +21,6 @@ def main():
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     tokenizer.pad_token = tokenizer.eos_token
 
-
     # Load the trained SAE from checkpoints
     architecture = "standard"
     sae_checkpoint_path = f"checkpoints/{architecture}/final_1000448"
@@ -34,31 +34,66 @@ def main():
         **sae.cfg.model_from_pretrained_kwargs
     )
 
+    # Verify SAE config
+    print(f"Loaded SAE with d_in={sae.cfg.d_in}, d_sae={sae.cfg.d_sae}, hook={sae.cfg.hook_name}")
+
+    # Load and downsample the pile-10k dataset
+    dataset = load_dataset("NeelNanda/pile-10k", split="train")
+    desired_sample_size = 400 # FIXME: experiment with this!
+    downsampled_dataset = dataset.shuffle(seed=42).select(range(desired_sample_size))
+
+    # Tokenization function
+    def tokenize_function(examples):
+        return tokenizer(
+            examples["text"],
+            padding="max_length",
+            truncation=True,
+            max_length=128,
+            return_tensors="pt",
+        )
+
+    tokenized_dataset = downsampled_dataset.map(tokenize_function, batched=True)
+
+    batch_size = 8
+    with torch.no_grad():
+        for i in range(0, len(tokenized_dataset), batch_size):
+            torch.cuda.empty_cache()
+            gc.collect()
+
+            # Select batch
+            batch = tokenized_dataset[i : i + batch_size]
+            inputs = torch.tensor(batch["input_ids"]).to(device, non_blocking=True)
+
+            # Use autocast for mixed precision (memory efficient)
+            with torch.autocast(device_type="cuda", dtype=torch.bfloat16):
+                _, cache = model.run_with_cache(inputs, return_type=None)
+                hidden_states = cache["blocks.0.hook_mlp_out"]
+
+                # Encode activations using the SAE
+                feature_acts = sae.encode(hidden_states)
+                sae_out = sae.decode(feature_acts)
+
+            # Free memory
+            del inputs, cache, hidden_states, feature_acts, sae_out
+            torch.cuda.empty_cache()
+            gc.collect()
+
+    print("Done with batch processing!")
+    sae.eval()
+    from transformer_lens import utils
+    from functools import partial
+
+    def reconstr_hook(activation, hook, sae_out): return sae_out
+
+    def zero_abl_hook(activation, hook): return torch.zeros_like(activation)
 
 
-    batch_tokens = token_dataset[:32]["tokens"]
+    print("Orig", model(inputs, return_type="loss").item())
 
-    
-   
-
-    
-
-    
-
-    
-    # next we want to do a reconstruction test
-    def reconstr_hook(activation, hook, sae_out):
-        return sae_out
-
-    def zero_abl_hook(activation, hook):
-        return torch.zeros_like(activation)
-
-
-    print("Orig", model(batch_tokens, return_type="loss").item())
     print(
         "reconstr",
         model.run_with_hooks(
-            batch_tokens,
+            inputs,
             fwd_hooks=[
                 (
                     sae.cfg.hook_name,
@@ -71,8 +106,13 @@ def main():
     print(
         "Zero",
         model.run_with_hooks(
-            batch_tokens,
+            inputs,
             return_type="loss",
             fwd_hooks=[(sae.cfg.hook_name, zero_abl_hook)],
         ).item(),
     )
+
+
+
+if __name__ == "__main__":
+    main()

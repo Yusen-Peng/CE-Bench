@@ -13,14 +13,17 @@
     now we have "standard", "gated", "topk", "jumprelu" trained!
     
 2. analyze the trained SAE for Llama 3.2 1B: L0 test (prototype done)
-    now we are able to extract average L0 scores for every single batch and put them into a CSV file;
-    A lower L0 score generally means a more interpretable model because it enforces sparsity, isolating distinct features, reducing redundancy, and improving tractability!
+    now we are able to extract average L0 scores for every single batch and put them into a CSV fle (dataset is NeelNanda/pile-10k downsampling 400);
+   
+    A lower L0 score generally means a more interpretable model because it enforces sparsity, isolating distinct features, reducing redundancy, and improving tractability.
+
     now we have trained "standard", "gated", "topk", "jumprelu" L0 scores!
 
-3. expressiveness evaluation: reconstruction test + zero ablation test (in progress)
+3. expressiveness evaluation: reconstruction test/zero ablation test (in progress)
 
 
-4. expressiveness evaluation: specific capability test
+
+4. expressiveness evaluation: specific capability test (in progress)
 
 
 5. interpretability features: Logits Lens
@@ -31,11 +34,16 @@
 
 
 
+7. interpretability evaluation: automated interpretability
 
 
 
 
-## KAN integration
+## interpretability evaluation
+
+
+
+## KAN autoencoder integration
 
 1. KAN autoencoder code
 2. 
