@@ -9,11 +9,15 @@
 ### preliminary exploration
 
 1. actually train an SAE on Llama 3.2 1B (prototype done)
-    now we are able to train a SAE upon Llama 3.2 1B with the dataset "apollo-research/roneneldan-TinyStories-tokenizer-gpt2" using ONLY 1M tokens;
+    now we are able to train a SAE upon Llama 3.2 1B with the dataset "apollo-research/roneneldan-TinyStories-tokenizer-gpt2" using only 1M tokens;
+    now we have "standard", "gated", "topk", "jumprelu" trained!
+    
 2. analyze the trained SAE for Llama 3.2 1B: L0 test (prototype done)
     now we are able to extract average L0 scores for every single batch and put them into a CSV file;
+    A lower L0 score generally means a more interpretable model because it enforces sparsity, isolating distinct features, reducing redundancy, and improving tractability!
+    now we have trained "standard", "gated", "topk", "jumprelu" L0 scores!
 
-3. expressiveness evaluation: reconstruction test + zero ablation test
+3. expressiveness evaluation: reconstruction test + zero ablation test (in progress)
 
 
 4. expressiveness evaluation: specific capability test

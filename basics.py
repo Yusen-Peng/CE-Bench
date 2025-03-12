@@ -4,87 +4,14 @@ from tqdm import tqdm
 from datasets import load_dataset
 from sae_lens import SAE
 from transformer_lens import HookedTransformer
+from transformer_lens import utils
+from functools import partial
 
 torch.set_grad_enabled(False)
-def main():
-    device = "cuda" if torch.cuda.is_available() else "cpu"
-    print(f"Device: {device}")
-
-
-    model = HookedTransformer.from_pretrained("gpt2-small", device=device)
-
-    # the cfg dict is returned alongside the SAE since it may contain useful information for analysing the SAE (eg: instantiating an activation store)
-    # Note that this is not the same as the SAEs config dict, rather it is whatever was in the HF repo, from which we can extract the SAE config dict
-    # We also return the feature sparsities which are stored in HF for convenience.
-    sae, cfg_dict, sparsity = SAE.from_pretrained(
-        release="gpt2-small-res-jb",  # see other options in sae_lens/pretrained_saes.yaml
-        sae_id="blocks.8.hook_resid_pre",  # won't always be a hook point
-        device=device,
-    )
-
-    from transformer_lens.utils import tokenize_and_concatenate
-
-    dataset = load_dataset(
-        path="NeelNanda/pile-10k",
-        split="train",
-        streaming=False,
-    )
-
-    token_dataset = tokenize_and_concatenate(
-        dataset=dataset,  # type: ignore
-        tokenizer=model.tokenizer,  # type: ignore
-        streaming=True,
-        max_length=sae.cfg.context_size,
-        add_bos_token=sae.cfg.prepend_bos,
-    )
-
-    sae.eval()  # prevents error if we're expecting a dead neuron mask for who grads
-
-    with torch.no_grad():
-        # activation store can give us tokens.
-        batch_tokens = token_dataset[:32]["tokens"]
-        _, cache = model.run_with_cache(batch_tokens, prepend_bos=True)
-
-        # Use the SAE
-        feature_acts = sae.encode(cache[sae.cfg.hook_name])
-        sae_out = sae.decode(feature_acts)
-
-        # save some room
-        del cache
-
-        # ignore the bos token, get the number of features that activated in each token, averaged accross batch and position
-        l0 = (feature_acts[:, 1:] > 0).float().sum(-1).detach()
-        print("average l0", l0.mean().item())
-        print("------------------------LO test ------------------------")
-        print(f"debugging statement: aha! we reached here!")
-        import matplotlib.pyplot as plt
-
-        l0_numpy = l0.flatten().cpu().numpy()
-
-        plt.hist(l0_numpy, bins=50, edgecolor='black')
-        plt.xlabel("Value")
-        plt.ylabel("Frequency")
-        plt.title("Histogram of l0")
-        plt.savefig("l0_histogram.png")
-
-    
-
-
-
-
-
-
-
-
-
-    from transformer_lens import utils
-    from functools import partial
-
-
-    # next we want to do a reconstruction test.
+def main():    
+    # next we want to do a reconstruction test
     def reconstr_hook(activation, hook, sae_out):
         return sae_out
-
 
     def zero_abl_hook(activation, hook):
         return torch.zeros_like(activation)
@@ -112,6 +39,15 @@ def main():
             fwd_hooks=[(sae.cfg.hook_name, zero_abl_hook)],
         ).item(),
     )
+
+
+
+
+
+
+
+
+    
 
     example_prompt = "When John and Mary went to the shops, John gave the bag to"
     example_answer = " Mary"

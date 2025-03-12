@@ -5,5 +5,4 @@ HANDY.md
 checkpoints/
 logs/
 __pycache__/
-sae_lens/
 checkpoints/b5bc6yb8/final_1000448/sae_weights.safetensor
