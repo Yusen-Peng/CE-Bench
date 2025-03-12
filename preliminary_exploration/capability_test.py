@@ -23,7 +23,7 @@ def main():
     tokenizer.pad_token = tokenizer.eos_token
 
     # Load the trained SAE from checkpoints
-    architecture = "jumprelu"
+    architecture = "standard"
     sae_checkpoint_path = f"checkpoints/{architecture}/final_1000448"
     sae = SAE.load_from_pretrained(path=sae_checkpoint_path, device=device)
     sae.eval()
@@ -39,7 +39,6 @@ def main():
     print(f"Loaded SAE with d_in={sae.cfg.d_in}, d_sae={sae.cfg.d_sae}, hook={sae.cfg.hook_name}")
 
 
-
     example_prompt = "When John and Mary went to the shops, John gave the bag to"
     example_answer = " Mary"
     utils.test_prompt(example_prompt, example_answer, model, prepend_bos=True)
@@ -51,7 +50,6 @@ def main():
 
     def reconstr_hook(activations, hook, sae_out):
         return sae_out
-
 
     def zero_abl_hook(mlp_out, hook):
         return torch.zeros_like(mlp_out)

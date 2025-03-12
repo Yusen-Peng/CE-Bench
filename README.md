@@ -19,8 +19,10 @@
 
     now we have trained "standard", "gated", "topk", "jumprelu" L0 scores!
 
-3. expressiveness evaluation: reconstruction test/zero ablation test (in progress)
-
+3. expressiveness evaluation: reconstruction test/zero ablation test (prototype done)
+    now we are able to generate original loss, reconstruction loss, and zero ablation loss in a single csv file/
+    
+    so far we have reconstruction error for "standard", "gated", "topk", "jumprelu"!
 
 
 4. expressiveness evaluation: specific capability test (in progress)

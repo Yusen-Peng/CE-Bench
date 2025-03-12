@@ -22,7 +22,7 @@ def main():
     tokenizer.pad_token = tokenizer.eos_token
 
     # Load the trained SAE from checkpoints
-    architecture = "standard"
+    architecture = "jumprelu"
     sae_checkpoint_path = f"checkpoints/{architecture}/final_1000448"
     sae = SAE.load_from_pretrained(path=sae_checkpoint_path, device=device)
     sae.eval()
@@ -55,10 +55,17 @@ def main():
     tokenized_dataset = downsampled_dataset.map(tokenize_function, batched=True)
 
     batch_size = 8
+    results = []
+
+    def reconstr_hook(activation, hook, sae_out): return sae_out
+
+    def zero_abl_hook(activation, hook): return torch.zeros_like(activation)
+
+
     with torch.no_grad():
         for i in range(0, len(tokenized_dataset), batch_size):
-            torch.cuda.empty_cache()
             gc.collect()
+            torch.cuda.empty_cache()
 
             # Select batch
             batch = tokenized_dataset[i : i + batch_size]
@@ -66,12 +73,40 @@ def main():
 
             # Use autocast for mixed precision (memory efficient)
             with torch.autocast(device_type="cuda", dtype=torch.bfloat16):
+                # Forward pass with cache
                 _, cache = model.run_with_cache(inputs, return_type=None)
                 hidden_states = cache["blocks.0.hook_mlp_out"]
 
-                # Encode activations using the SAE
+                # Encode/decode with SAE
                 feature_acts = sae.encode(hidden_states)
                 sae_out = sae.decode(feature_acts)
+
+            # Compute original loss
+            orig_loss = model(inputs, return_type="loss").item()
+
+            # Compute reconstruction loss (insert decoded SAE output at hook)
+            reconstr_loss = model.run_with_hooks(
+                inputs,
+                fwd_hooks=[
+                    (sae.cfg.hook_name, partial(reconstr_hook, sae_out=sae_out))
+                ],
+                return_type="loss",
+            ).item()
+
+            # Compute zero-ablation loss (hooked activation -> zeros)
+            zero_loss = model.run_with_hooks(
+                inputs,
+                fwd_hooks=[(sae.cfg.hook_name, zero_abl_hook)],
+                return_type="loss",
+            ).item()
+
+            # Save results in the list
+            results.append({
+                "batch_index": i // batch_size,
+                "orig_loss": orig_loss,
+                "reconstr_loss": reconstr_loss,
+                "zero_loss": zero_loss
+            })
 
             # Free memory
             del inputs, cache, hidden_states, feature_acts, sae_out
@@ -79,38 +114,12 @@ def main():
             gc.collect()
 
     print("Done with batch processing!")
-    sae.eval()
-    from transformer_lens import utils
-    from functools import partial
-
-    def reconstr_hook(activation, hook, sae_out): return sae_out
-
-    def zero_abl_hook(activation, hook): return torch.zeros_like(activation)
-
-
-    print("Orig", model(inputs, return_type="loss").item())
-
-    print(
-        "reconstr",
-        model.run_with_hooks(
-            inputs,
-            fwd_hooks=[
-                (
-                    sae.cfg.hook_name,
-                    partial(reconstr_hook, sae_out=sae_out),
-                )
-            ],
-            return_type="loss",
-        ).item(),
-    )
-    print(
-        "Zero",
-        model.run_with_hooks(
-            inputs,
-            return_type="loss",
-            fwd_hooks=[(sae.cfg.hook_name, zero_abl_hook)],
-        ).item(),
-    )
+    import pandas as pd
+    # Convert to a DataFrame and save to CSV
+    df = pd.DataFrame(results)
+    csv_path = f"figures/{architecture}_batch_losses.csv"
+    df.to_csv(csv_path, index=False)
+    print(f"Saved losses to {csv_path}")
 
 
 
