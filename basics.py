@@ -1,38 +1,13 @@
-# Standard imports
 import os
 import torch
 from tqdm import tqdm
-import plotly.express as px
 from datasets import load_dataset
 from sae_lens import SAE
 from transformer_lens import HookedTransformer
 
-import webbrowser
-import http.server
-import socketserver
-import threading
-
-PORT = 8000
-
 torch.set_grad_enabled(False)
-
-def display_vis_inline(filename: str, height: int = 850):
-        """
-        Displays the HTML files in Colab. Uses global `PORT` variable defined in prev cell, so that each
-        vis has a unique port without having to define a port within the function.
-        """
-        webbrowser.open(filename)
-
 def main():
-
-    # For the most part I'll try to import functions and classes near where they are used
-    # to make it clear where they come from.
-
-    if torch.backends.mps.is_available():
-        device = "mps"
-    else:
-        device = "cuda" if torch.cuda.is_available() else "cpu"
-
+    device = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"Device: {device}")
 
 
@@ -81,7 +56,26 @@ def main():
         l0 = (feature_acts[:, 1:] > 0).float().sum(-1).detach()
         print("average l0", l0.mean().item())
         print("------------------------LO test ------------------------")
-        px.histogram(l0.flatten().cpu().numpy()).show()
+        print(f"debugging statement: aha! we reached here!")
+        import matplotlib.pyplot as plt
+
+        l0_numpy = l0.flatten().cpu().numpy()
+
+        plt.hist(l0_numpy, bins=50, edgecolor='black')
+        plt.xlabel("Value")
+        plt.ylabel("Frequency")
+        plt.title("Histogram of l0")
+        plt.savefig("l0_histogram.png")
+
+    
+
+
+
+
+
+
+
+
 
     from transformer_lens import utils
     from functools import partial
@@ -203,8 +197,6 @@ def main():
     save_feature_centric_vis(sae_vis_data=visualization_data_gpt, filename=filename)
 
     from sae_lens.analysis.neuronpedia_integration import get_neuronpedia_quick_list
-
-    # this function should open
     get_neuronpedia_quick_list(sae, test_feature_idx_gpt)
 
 
