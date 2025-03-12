@@ -2,3 +2,6 @@ __pycache__/
 HANDY.md
 *.html
 .env
+checkpoints/
+logs/
+__pycache__/
