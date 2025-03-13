@@ -48,7 +48,8 @@ inspired by "Route Sparse Autoencoder to Interpret Large Language Models", we ca
 Following the LLM-assisted approach above can make the interpretability evaluation much simpler.
 
 
+(working in progress)
+
 ## KAN autoencoder integration
 
-1. KAN autoencoder code
-2. 
+this is the challenging part: stay tuned!
