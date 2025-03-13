@@ -81,8 +81,8 @@ def main():
     print("tokenizer loaded!")
 
     # Load the trained SAE from checkpoints
-    architecture = "jumprelu"
-    sae_checkpoint_path = f"checkpoints/{architecture}/final_1000448"
+    architecture = "standard"
+    sae_checkpoint_path = f"checkpoints/{architecture}/final_122880000"
     sae = SAE.load_from_pretrained(path=sae_checkpoint_path, device=device)
     print("SAE loaded!")
 

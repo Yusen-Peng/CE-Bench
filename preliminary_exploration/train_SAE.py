@@ -56,11 +56,11 @@ def main():
         train_batch_size_tokens=512,
         context_size=512,  # Kept as is (matches dataset)
         n_batches_in_buffer=8,  # Reduced from 64 to minimal buffer
-        training_tokens=1_000_000,  # Reduced from 100M to 1M tokens
+        training_tokens=total_training_tokens,
         store_batch_size_prompts=4,  # Reduced from 16
         use_ghost_grads=False,
-        feature_sampling_window=100,  # Reduced from 1000
-        dead_feature_window=100,  # Reduced from 1000
+        feature_sampling_window=1000,
+        dead_feature_window=1000,
         dead_feature_threshold=1e-4,
         log_to_wandb=False,
         wandb_project="sae_llama_3_2_1B",

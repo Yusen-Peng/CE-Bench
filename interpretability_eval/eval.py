@@ -79,25 +79,6 @@ def main():
     print("Tokenized dataset loaded!")
 
 
-    visualization_data = SaeVisRunner(
-        feature_vis_config
-    ).run(
-        encoder=sae,
-        model=model,
-        tokens=tokens_tensor,  # ✅ Fixed
-    )
-
-
-    from sae_dashboard.data_writing_fns import save_feature_centric_vis
-
-    filename = f"figures/{architecture}_demo_feature_dashboards.html"
-    save_feature_centric_vis(sae_vis_data=visualization_data, filename=filename)
-
-
-
-
-
-
 
 if __name__ == "__main__":
     main()

@@ -17,7 +17,7 @@ def main():
     device = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"Using device: {device}")
 
-    architecture = "jumprelu"
+    architecture = "standard"
     log_file = f"figures/{architecture}_capability.log"
     sys.stdout = open(log_file, "w")
 
@@ -27,7 +27,7 @@ def main():
     tokenizer.pad_token = tokenizer.eos_token
 
     # Load the trained SAE from checkpoints
-    sae_checkpoint_path = f"checkpoints/{architecture}/final_1000448"
+    sae_checkpoint_path = f"checkpoints/{architecture}/final_122880000"
     sae = SAE.load_from_pretrained(path=sae_checkpoint_path, device=device)
     sae.eval()
 
@@ -38,8 +38,8 @@ def main():
         **sae.cfg.model_from_pretrained_kwargs
     )
 
-    example_prompt = "When John and Mary went to the shops, John gave the bag to"
-    example_answer = " Mary"
+    example_prompt = "If the glass falls off the table, it will"
+    example_answer = " break"
     utils.test_prompt(example_prompt, example_answer, model, prepend_bos=True)
 
     logits, cache = model.run_with_cache(example_prompt, prepend_bos=False)
