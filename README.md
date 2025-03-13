@@ -40,6 +40,12 @@
 
 ## interpretability evaluation
 
+inspired by "Route Sparse Autoencoder to Interpret Large Language Models", we can use a similar LLM-Assisted interpretability evaluation benchmark like the following:
+
+![alt text](LLM_assisted.png)
+![alt text](LLM_assisted_result.png)
+
+Following the LLM-assisted approach above can make the interpretability evaluation much simpler.
 
 
 ## KAN autoencoder integration
