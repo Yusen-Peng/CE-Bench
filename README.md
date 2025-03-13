@@ -35,11 +35,8 @@
 5. interpretability features: Logits Lens (prototype done)
     now we are able to derive three plots per activation architecture. Kurtosis represents outliers and activation stability; Skewness represents asymmetry in neural representations; Skewness vs. Kurtosis can show feature specialization and learning dynamics. now we have plots for all "standard", "gated", "topk", "jumprelu"!
 
-6. interpretability features: SAE feature dashboard (in progress)
-
-
-
-
+6. interpretability features: SAE feature dashboard (prototype done)
+    we are able to generate feature dashboard in HTML, including neuron alignment, activation density, correlated features, and top activations, etc. for now we have HTML output for all "standard", "gated", "topk", "jumprelu" sparse autoencoders!
 
 ## interpretability evaluation
 
