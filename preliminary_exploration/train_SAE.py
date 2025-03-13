@@ -14,7 +14,6 @@ def main():
     print("Using device:", device)
     os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
-    
     total_training_steps = 30_000
     batch_size = 4096
     total_training_tokens = total_training_steps * batch_size

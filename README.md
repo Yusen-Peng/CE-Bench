@@ -4,6 +4,9 @@
 
 ## Authors: Alex Gulko, Yusen Peng
 
+![alt text](docs/NLP_pipeline.png "KAN-LLaMA pipeline")
+
+
 ## Project check-in task-list
 
 ### preliminary exploration
@@ -29,15 +32,11 @@
     Specific capability test compares model's capability on a next token generation task without SAE and with SAE. The outputs are written into log files accordingly. now we have "standard", "gated", "topk", "jumprelu" log files! 
 
 
-5. interpretability features: Logits Lens
+5. interpretability features: Logits Lens (prototype done)
+    now we are able to derive three plots per activation architecture. Kurtosis represents outliers and activation stability; Skewness represents asymmetry in neural representations; Skewness vs. Kurtosis can show feature specialization and learning dynamics. now we have plots for all "standard", "gated", "topk", "jumprelu"!
 
+6. interpretability features: SAE feature dashboard (in progress)
 
-
-6. interpretability features: SAE feature dashboard
-
-
-
-7. interpretability evaluation: automated interpretability
 
 
 
