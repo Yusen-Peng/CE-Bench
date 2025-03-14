@@ -6,7 +6,6 @@
 
 ![alt text](docs/NLP_pipeline.png "KAN-LLaMA pipeline")
 
-
 ## Project check-in task-list
 
 ### preliminary exploration
@@ -40,15 +39,9 @@
 
 ## interpretability evaluation
 
-inspired by "Route Sparse Autoencoder to Interpret Large Language Models", we can use a similar LLM-Assisted interpretability evaluation benchmark like the following:
+inspired by "Route Sparse Autoencoder to Interpret Large Language Models", we use a similar LLM-Assisted interpretability evaluation benchmark with some prompt engineering. Following the LLM-assisted approach above can make the interpretability evaluation much simpler. 
 
-![alt text](LLM_assisted.png)
-![alt text](LLM_assisted_result.png)
-
-Following the LLM-assisted approach above can make the interpretability evaluation much simpler.
-
-
-(working in progress)
+Right now, the basic pipeline with ChatGPT-4o is working; we can get interpretability scores saved in a csv file for each SAE.
 
 ## KAN autoencoder integration
 
