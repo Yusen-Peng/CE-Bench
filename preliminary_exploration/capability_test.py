@@ -17,7 +17,7 @@ def main():
     device = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"Using device: {device}")
 
-    architecture = "standard"
+    architecture = "gated"
     log_file = f"figures/{architecture}_capability.log"
     sys.stdout = open(log_file, "w")
 

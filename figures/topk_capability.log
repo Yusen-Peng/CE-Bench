@@ -1,35 +1,32 @@
 Loaded pretrained model meta-llama/Llama-3.2-1B into HookedTransformer
-Tokenized prompt: ['<|begin_of_text|>', 'When', ' John', ' and', ' Mary', ' went', ' to', ' the', ' shops', ',', ' John', ' gave', ' the', ' bag', ' to']
-Tokenized answer: [' Mary']
+Tokenized prompt: ['<|begin_of_text|>', 'If', ' the', ' glass', ' falls', ' off', ' the', ' table', ',', ' it', ' will']
+Tokenized answer: [' break']
 Performance on answer token:
-Rank: 0        Logit: 24.70 Prob: 85.16% Token: | Mary|
-Top 0th token. Logit: 24.70 Prob: 85.16% Token: | Mary|
-Top 1th token. Logit: 21.91 Prob:  5.25% Token: | his|
-Top 2th token. Logit: 21.22 Prob:  2.64% Token: | the|
-Top 3th token. Logit: 19.79 Prob:  0.63% Token: | a|
-Top 4th token. Logit: 18.91 Prob:  0.26% Token: | John|
-Top 5th token. Logit: 18.76 Prob:  0.23% Token: | their|
-Top 6th token. Logit: 18.56 Prob:  0.18% Token: | Mrs|
-Top 7th token. Logit: 18.52 Prob:  0.18% Token: | her|
-Top 8th token. Logit: 18.46 Prob:  0.17% Token: | Maria|
-Top 9th token. Logit: 18.38 Prob:  0.15% Token: | me|
-Ranks of the answer tokens: [(' Mary', 0)]
-Tokenized prompt: ['<|begin_of_text|>', 'When', ' John', ' and', ' Mary', ' went', ' to', ' the', ' shops', ',', ' John', ' gave', ' the', ' bag', ' to']
-Tokenized answer: [' Mary']
-Padded sae_out from torch.Size([1, 14, 2048]) to torch.Size([1, 16, 2048])
+Rank: 2        Logit: 20.85 Prob: 12.82% Token: | break|
+Top 0th token. Logit: 20.90 Prob: 13.47% Token: | be|
+Top 1th token. Logit: 20.87 Prob: 13.05% Token: | not|
+Top 2th token. Logit: 20.85 Prob: 12.82% Token: | break|
+Top 3th token. Logit: 20.04 Prob:  5.69% Token: | fall|
+Top 4th token. Logit: 19.89 Prob:  4.89% Token: | hit|
+Top 5th token. Logit: 18.78 Prob:  1.61% Token: | sh|
+Top 6th token. Logit: 18.72 Prob:  1.52% Token: | cause|
+Top 7th token. Logit: 18.59 Prob:  1.34% Token: | make|
+Top 8th token. Logit: 18.59 Prob:  1.33% Token: | have|
+Top 9th token. Logit: 18.52 Prob:  1.25% Token: | probably|
+Ranks of the answer tokens: [(' break', 2)]
+Tokenized prompt: ['<|begin_of_text|>', 'If', ' the', ' glass', ' falls', ' off', ' the', ' table', ',', ' it', ' will']
+Tokenized answer: [' break']
+Padded sae_out from torch.Size([1, 10, 2048]) to torch.Size([1, 12, 2048])
 Performance on answer token:
-Rank: 7145     Logit:  5.85 Prob:  0.00% Token: | Mary|
-Top 0th token. Logit: 15.05 Prob:  9.73% Token: |.|
-Top 1th token. Logit: 14.14 Prob:  3.91% Token: |,|
-Top 2th token. Logit: 13.94 Prob:  3.19% Token: |.
-|
-Top 3th token. Logit: 13.93 Prob:  3.15% Token: |:|
-Top 4th token. Logit: 13.73 Prob:  2.60% Token: |.com|
-Top 5th token. Logit: 13.62 Prob:  2.32% Token: |
-|
-Top 6th token. Logit: 13.39 Prob:  1.85% Token: |<|end_of_text|>|
-Top 7th token. Logit: 13.10 Prob:  1.38% Token: | to|
-Top 8th token. Logit: 12.98 Prob:  1.23% Token: | est|
-Top 9th token. Logit: 12.88 Prob:  1.11% Token: | |
-|
-Ranks of the answer tokens: [(' Mary', 7145)]
+Rank: 268      Logit: 12.39 Prob:  0.05% Token: | break|
+Top 0th token. Logit: 16.17 Prob:  2.43% Token: | the|
+Top 1th token. Logit: 16.09 Prob:  2.22% Token: | you|
+Top 2th token. Logit: 15.70 Prob:  1.51% Token: | be|
+Top 3th token. Logit: 15.60 Prob:  1.37% Token: | it|
+Top 4th token. Logit: 15.31 Prob:  1.03% Token: | s|
+Top 5th token. Logit: 15.29 Prob:  1.00% Token: | |
+Top 6th token. Logit: 15.25 Prob:  0.96% Token: | that|
+Top 7th token. Logit: 15.21 Prob:  0.93% Token: | what|
+Top 8th token. Logit: 15.19 Prob:  0.90% Token: | get|
+Top 9th token. Logit: 15.17 Prob:  0.89% Token: | is|
+Ranks of the answer tokens: [(' break', 268)]

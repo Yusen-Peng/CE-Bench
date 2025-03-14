@@ -18,7 +18,7 @@ def compute_statistics(file_path):
 
 def main():
     # Example usage
-    architecture = "standard"
+    architecture = "gated"
     file_path = f"figures/{architecture}_l0_scores.csv"
     compute_statistics(file_path)
 
