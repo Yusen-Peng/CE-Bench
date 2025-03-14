@@ -84,7 +84,7 @@ def main():
     ).run(
         encoder=sae,
         model=model,
-        tokens=tokens_tensor,  # ✅ Fixed
+        tokens=tokens_tensor,
     )
 
 

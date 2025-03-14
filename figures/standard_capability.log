@@ -18,16 +18,15 @@ Tokenized prompt: ['<|begin_of_text|>', 'If', ' the', ' glass', ' falls', ' off'
 Tokenized answer: [' break']
 Padded sae_out from torch.Size([1, 10, 2048]) to torch.Size([1, 12, 2048])
 Performance on answer token:
-Rank: 2        Logit: 18.46 Prob:  2.44% Token: | break|
-Top 0th token. Logit: 20.37 Prob: 16.46% Token: | be|
-Top 1th token. Logit: 19.12 Prob:  4.72% Token: | not|
-Top 2th token. Logit: 18.46 Prob:  2.44% Token: | break|
-Top 3th token. Logit: 18.16 Prob:  1.80% Token: | make|
-Top 4th token. Logit: 18.14 Prob:  1.76% Token: | have|
-Top 5th token. Logit: 17.83 Prob:  1.30% Token: |
-|
-Top 6th token. Logit: 17.75 Prob:  1.20% Token: | become|
-Top 7th token. Logit: 17.68 Prob:  1.12% Token: | take|
-Top 8th token. Logit: 17.56 Prob:  1.00% Token: | also|
-Top 9th token. Logit: 17.56 Prob:  0.99% Token: | go|
-Ranks of the answer tokens: [(' break', 2)]
+Rank: 13       Logit: 16.95 Prob:  0.64% Token: | break|
+Top 0th token. Logit: 20.34 Prob: 19.23% Token: | be|
+Top 1th token. Logit: 18.57 Prob:  3.27% Token: | not|
+Top 2th token. Logit: 18.27 Prob:  2.42% Token: | have|
+Top 3th token. Logit: 18.16 Prob:  2.17% Token: |.|
+Top 4th token. Logit: 17.89 Prob:  1.65% Token: | take|
+Top 5th token. Logit: 17.68 Prob:  1.34% Token: | make|
+Top 6th token. Logit: 17.67 Prob:  1.33% Token: |,|
+Top 7th token. Logit: 17.45 Prob:  1.07% Token: | the|
+Top 8th token. Logit: 17.40 Prob:  1.02% Token: | become|
+Top 9th token. Logit: 17.36 Prob:  0.97% Token: | get|
+Ranks of the answer tokens: [(' break', 13)]

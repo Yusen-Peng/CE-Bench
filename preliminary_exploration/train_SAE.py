@@ -25,7 +25,7 @@ def main():
     # different architectures experiment
     # standard, gated, topk, jumprelu
     cfg = LanguageModelSAERunnerConfig(
-        architecture="jumprelu",
+        architecture="topk",
         model_name="meta-llama/Llama-3.2-1B",
         hook_name="blocks.0.hook_mlp_out",
         hook_layer=0,
