@@ -14,7 +14,7 @@ def main():
     print("Using device:", device)
     os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
-    total_training_steps = 30_000
+    total_training_steps = 15_000 # small
     batch_size = 4096
     total_training_tokens = total_training_steps * batch_size
 
@@ -25,7 +25,7 @@ def main():
     # different architectures experiment
     # standard, gated, topk, jumprelu
     cfg = LanguageModelSAERunnerConfig(
-        architecture="gated",
+        architecture="kan",
         model_name="meta-llama/Llama-3.2-1B",
         hook_name="blocks.0.hook_mlp_out",
         hook_layer=0,
@@ -35,8 +35,6 @@ def main():
         streaming=True,
         mse_loss_normalization=None,
         expansion_factor=8,
-        # activation_fn="topk",
-        # activation_fn_kwargs={"k": 100},
         b_dec_init_method="zeros",
         apply_b_dec_to_input=False,
         normalize_sae_decoder=False,
@@ -54,10 +52,10 @@ def main():
         l1_warm_up_steps=l1_warm_up_steps,
         lp_norm=1.0,
         train_batch_size_tokens=512,
-        context_size=512,  # Kept as is (matches dataset)
-        n_batches_in_buffer=8,  # Reduced from 64 to minimal buffer
+        context_size=512,
+        n_batches_in_buffer=8,
         training_tokens=total_training_tokens,
-        store_batch_size_prompts=4,  # Reduced from 16
+        store_batch_size_prompts=4,
         use_ghost_grads=False,
         feature_sampling_window=1000,
         dead_feature_window=1000,

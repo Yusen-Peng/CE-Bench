@@ -1,6 +1,3 @@
-# adapted from https://github.com/AminMoradiXL/kan_ae/blob/main/ae_kan_original.py
-# this can be a good starting point!
-
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -11,96 +8,7 @@ from tqdm import tqdm
 import math
 import torch.nn.functional as F
 
-
-class Encoder(nn.Module):
-    def __init__(
-        self,
-        input_size,
-        hidden_size,
-        bottleneck_size,
-        grid_size=5,
-        spline_order=3,
-        scale_noise=0.1,
-        scale_base=1.0,
-        scale_spline=1.0,
-        base_activation=torch.nn.SiLU,
-        grid_eps=0.02,
-        grid_range=[-1, 1],
-    ):
-        super(Encoder, self).__init__()
-        self.kan = KANLinear(
-            input_size,
-            hidden_size,
-            grid_size=grid_size,
-            spline_order=spline_order,
-            scale_noise=scale_noise,
-            scale_base=scale_base,
-            scale_spline=scale_spline,
-            base_activation=base_activation,
-            grid_eps=grid_eps,
-            grid_range=grid_range,
-        )
-        self.relu = nn.ReLU()
-        self.dense = nn.Linear(hidden_size, bottleneck_size)
-
-    def forward(self, x):
-        x = self.kan(x)
-        x = self.relu(x)
-        x = self.dense(x)
-        return x
-
-
-class Decoder(nn.Module):
-    def __init__(
-        self,
-        bottleneck_size,
-        hidden_size,
-        output_size,
-        grid_size=5,
-        spline_order=3,
-        scale_noise=0.1,
-        scale_base=1.0,
-        scale_spline=1.0,
-        base_activation=torch.nn.SiLU,
-        grid_eps=0.02,
-        grid_range=[-1, 1],
-    ):
-        super(Decoder, self).__init__()
-        self.dense = nn.Linear(bottleneck_size, hidden_size)
-        self.relu = nn.ReLU()
-        self.kan = KANLinear(
-            hidden_size,
-            output_size,
-            grid_size=grid_size,
-            spline_order=spline_order,
-            scale_noise=scale_noise,
-            scale_base=scale_base,
-            scale_spline=scale_spline,
-            base_activation=base_activation,
-            grid_eps=grid_eps,
-            grid_range=grid_range,
-        )
-
-    def forward(self, x):
-        x = self.dense(x)
-        x = self.relu(x)
-        x = self.kan(x)
-        return x
-
-
-class Autoencoder(nn.Module):
-    def __init__(self, input_size, hidden_size, bottleneck_size):
-        super(Autoencoder, self).__init__()
-        self.encoder = Encoder(input_size, hidden_size, bottleneck_size)
-        self.decoder = Decoder(bottleneck_size, hidden_size, input_size)
-
-    def forward(self, x):
-        x = self.encoder(x)
-        x = self.decoder(x)
-        return x
-
-
-class KANLinear(torch.nn.Module):
+class KANLinear(nn.Module):
     def __init__(
         self,
         in_features,
@@ -115,13 +23,22 @@ class KANLinear(torch.nn.Module):
         grid_eps=0.02,
         grid_range=[-1, 1],
     ):
+
         super(KANLinear, self).__init__()
         self.in_features = in_features
         self.out_features = out_features
+
+        # number of control points used for B-spline interpolation 
         self.grid_size = grid_size
+
+        # order of the B-spline basis functions
         self.spline_order = spline_order
 
+        # h calculates the grid step size, which determines how spaced the control points are
         h = (grid_range[1] - grid_range[0]) / grid_size
+
+        # the grid tensor stores the control points for the B-spline basis functions
+        # control points define where the B-spline basis functions are centered
         grid = (
             (
                 torch.arange(-spline_order, grid_size + spline_order + 1) * h
@@ -132,29 +49,50 @@ class KANLinear(torch.nn.Module):
         )
         self.register_buffer("grid", grid)
 
+        # the matrix responsible for the standard linear transformation applied to the base activation function
         self.base_weight = torch.nn.Parameter(
             torch.Tensor(out_features, in_features))
+        
+        # the matrix responsible for the B-spline interpolation
         self.spline_weight = torch.nn.Parameter(
             torch.Tensor(out_features, in_features, grid_size + spline_order)
         )
+
+        # if True, introduces an additional trainable scaling parameter for spline weights
         if enable_standalone_scale_spline:
             self.spline_scaler = torch.nn.Parameter(
                 torch.Tensor(out_features, in_features)
             )
 
+        # scaling factor for adding random noise to spline weights during initialization
         self.scale_noise = scale_noise
+
+        # scaling factor for initializing the base linear transformation weights
         self.scale_base = scale_base
+        
+        # scaling factor for spline weight initialization
         self.scale_spline = scale_spline
+
+        # if True, introduces an additional trainable scaling parameter for spline weights
         self.enable_standalone_scale_spline = enable_standalone_scale_spline
+
+        # activation function applied before the base linear transformation
         self.base_activation = base_activation()
+
+        # a small factor that controls how much the grid adapts to input distributions
         self.grid_eps = grid_eps
 
+        # initialize the weights properly here
         self.reset_parameters()
 
     def reset_parameters(self):
+        
+        # use Kaiming uniform initialization to set up self.base_weight
         torch.nn.init.kaiming_uniform_(
             self.base_weight, a=math.sqrt(5) * self.scale_base)
         with torch.no_grad():
+
+            # add random noise to the spline weights during initialization
             noise = (
                 (
                     torch.rand(self.grid_size + 1,
@@ -164,6 +102,8 @@ class KANLinear(torch.nn.Module):
                 * self.scale_noise
                 / self.grid_size
             )
+
+            # initialize the spline weights using the curve2coeff function
             self.spline_weight.data.copy_(
                 (self.scale_spline if not self.enable_standalone_scale_spline else 1.0)
                 * self.curve2coeff(
@@ -171,6 +111,8 @@ class KANLinear(torch.nn.Module):
                     noise,
                 )
             )
+
+            # if enabled, initialize the standalone scaling parameter for spline weights
             if self.enable_standalone_scale_spline:
                 # torch.nn.init.constant_(self.spline_scaler, self.scale_spline)
                 torch.nn.init.kaiming_uniform_(
@@ -210,6 +152,9 @@ class KANLinear(torch.nn.Module):
             self.grid_size + self.spline_order,
         )
         return bases.contiguous()
+
+
+
 
     def curve2coeff(self, x: torch.Tensor, y: torch.Tensor):
         """
@@ -342,3 +287,103 @@ class KANLinear(torch.nn.Module):
             regularize_activation * regularization_loss_activation
             + regularize_entropy * regularization_loss_entropy
         )
+    
+class Encoder(nn.Module):
+    """
+        encoder part: KANLinear -> ReLU -> Linear
+        KANLinear is a custom linear layer that uses a combination of
+        B-splines and a base activation function to transform the input.
+        The output is then passed through a ReLU activation and a final
+        linear layer to produce the bottleneck representation.
+    """
+    def __init__(
+        self,
+        input_size,
+        hidden_size,
+        bottleneck_size,
+        grid_size=5,
+        spline_order=3,
+        scale_noise=0.1,
+        scale_base=1.0,
+        scale_spline=1.0,
+        base_activation=torch.nn.SiLU,
+        grid_eps=0.02,
+        grid_range=[-1, 1],
+    ):
+        super(Encoder, self).__init__()
+        self.kan = KANLinear(
+            input_size,
+            hidden_size,
+            grid_size=grid_size,
+            spline_order=spline_order,
+            scale_noise=scale_noise,
+            scale_base=scale_base,
+            scale_spline=scale_spline,
+            base_activation=base_activation,
+            grid_eps=grid_eps,
+            grid_range=grid_range,
+        )
+        self.relu = nn.ReLU()
+        self.dense = nn.Linear(hidden_size, bottleneck_size)
+
+    def forward(self, x):
+        x = self.kan(x)
+        x = self.relu(x)
+        x = self.dense(x)
+        return x
+
+
+class Decoder(nn.Module):
+    """
+        decoder part: Linear -> ReLU -> KANLinear
+        The input is first passed through a linear layer, then a ReLU activation,
+        and finally through a KANLinear layer to produce the output.
+    """
+    def __init__(
+        self,
+        bottleneck_size,
+        hidden_size,
+        output_size,
+        grid_size=5,
+        spline_order=3,
+        scale_noise=0.1,
+        scale_base=1.0,
+        scale_spline=1.0,
+        base_activation=torch.nn.SiLU,
+        grid_eps=0.02,
+        grid_range=[-1, 1],
+    ):
+        super(Decoder, self).__init__()
+        self.dense = nn.Linear(bottleneck_size, hidden_size)
+        self.relu = nn.ReLU()
+        self.kan = KANLinear(
+            hidden_size,
+            output_size,
+            grid_size=grid_size,
+            spline_order=spline_order,
+            scale_noise=scale_noise,
+            scale_base=scale_base,
+            scale_spline=scale_spline,
+            base_activation=base_activation,
+            grid_eps=grid_eps,
+            grid_range=grid_range,
+        )
+
+    def forward(self, x):
+        x = self.kan(x)
+        return x
+
+class KANAutoencoder(nn.Module):
+    """
+        Autoencoder class that combines the Encoder and Decoder.
+    """
+    def __init__(self, input_size, hidden_size, bottleneck_size):
+        super(KANAutoencoder, self).__init__()
+        self.encoder = Encoder(input_size, hidden_size, bottleneck_size)
+        self.decoder = Decoder(bottleneck_size, hidden_size, input_size)
+
+    def forward(self, x):
+        x = self.encoder(x)
+        x = self.decoder(x)
+        return x
+

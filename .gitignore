@@ -5,3 +5,11 @@ logs/
 __pycache__/
 checkpoints/b5bc6yb8/final_1000448/sae_weights.safetensor
 *.log
+=======
+figures/*.html
+checkpoints/
+logs/
+__pycache__/
+checkpoints/b5bc6yb8/final_1000448/sae_weights.safetensor
+nohup.out
+>>>>>>> ffa9c46ce934dc84ed0aeeb422fcd417736f7da8

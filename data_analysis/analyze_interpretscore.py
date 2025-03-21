@@ -2,7 +2,7 @@ import pandas as pd
 
 if __name__ == "__main__":
     # Load the data
-    architecture = "gated"
+    architecture = "kan_mini"
     file_path = f"figures/{architecture}_feature_interpretability_results.csv"
     df = pd.read_csv(file_path)
     average_score = df["Score"].mean()

@@ -1,7 +1,15 @@
 """Most of this is just copied over from Arthur's code and slightly simplified:
 https://github.com/ArthurConmy/sae/blob/main/sae/model.py
 """
-
+import torch
+import torch.nn as nn
+import torch.optim as optim
+import torchvision
+import torchvision.transforms as transforms
+from torch.utils.data import DataLoader
+from tqdm import tqdm
+import math
+import torch.nn.functional as F
 import json
 import os
 import warnings
@@ -39,11 +47,11 @@ T = TypeVar("T", bound="SAE")
 @dataclass
 class SAEConfig:
     # architecture details
-    architecture: Literal["standard", "gated", "jumprelu", "topk"]
+    architecture: Literal["standard", "gated", "jumprelu", "topk", "kan"]
 
     # forward pass details.
     d_in: int
-    d_sae: int
+    d_sae: int  # 'kan': this is the bottleneck size
     activation_fn_str: str
     apply_b_dec_to_input: bool
     finetuning_scaling_factor: bool
@@ -67,6 +75,7 @@ class SAEConfig:
     neuronpedia_id: Optional[str] = None
     model_from_pretrained_kwargs: dict[str, Any] = field(default_factory=dict)
     seqpos_slice: tuple[int | None, ...] = (None,)
+    kan_hidden_size: Optional[int] = None
 
     @classmethod
     def from_dict(cls, config_dict: dict[str, Any]) -> "SAEConfig":
@@ -91,7 +100,6 @@ class SAEConfig:
 
         return cls(**config_dict)
 
-    # def __post_init__(self):
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -117,6 +125,7 @@ class SAEConfig:
             "neuronpedia_id": self.neuronpedia_id,
             "model_from_pretrained_kwargs": self.model_from_pretrained_kwargs,
             "seqpos_slice": self.seqpos_slice,
+            "kan_hidden_size": self.kan_hidden_size,
         }
 
 
@@ -167,6 +176,9 @@ class SAE(HookedRootModule):
         elif self.cfg.architecture == "jumprelu":
             self.initialize_weights_jumprelu()
             self.encode = self.encode_jumprelu
+        elif self.cfg.architecture == "kan":
+            self.initialize_weights_kan()
+            self.encode = self.encode_kan
         else:
             raise ValueError(f"Invalid architecture: {self.cfg.architecture}")
 
@@ -315,6 +327,19 @@ class SAE(HookedRootModule):
             torch.zeros(self.cfg.d_sae, dtype=self.dtype, device=self.device)
         )
         self.initialize_weights_basic()
+    
+    def initialize_weights_kan(self):
+        if self.cfg.kan_hidden_size is None:
+            hidden_size = max(self.cfg.d_in, self.cfg.d_sae)
+        else:
+            hidden_size = self.cfg.kan_hidden_size
+
+        # create the KANAutoencoder
+        self.kan_autoencoder = KANAutoencoder(
+            input_size=self.cfg.d_in,
+            hidden_size=hidden_size,
+            bottleneck_size=self.cfg.d_sae,
+        ).to(self.device, self.dtype)
 
     @overload
     def to(
@@ -391,6 +416,45 @@ class SAE(HookedRootModule):
                 sae_error = self.hook_sae_error(x - x_reconstruct_clean)
             sae_out = sae_out + sae_error
         return self.hook_sae_output(sae_out)
+    
+    def process_sae_in(self, sae_in: torch.Tensor) -> torch.Tensor:
+        sae_in = sae_in.to(self.dtype)
+        sae_in = self.reshape_fn_in(sae_in)
+        sae_in = self.hook_sae_input(sae_in)
+        sae_in = self.run_time_activation_norm_fn_in(sae_in)
+
+        # Only subtract b_dec if we actually have it
+        if hasattr(self, "b_dec") and self.cfg.apply_b_dec_to_input:
+            return sae_in - self.b_dec
+        else:
+            return sae_in
+
+    def encode_standard(
+        self, x: Float[torch.Tensor, "... d_in"]
+    ) -> Float[torch.Tensor, "... d_sae"]:
+        """
+        Calculate SAE features from inputs
+        """
+        sae_in = self.process_sae_in(x)
+
+        # "... d_in, d_in d_sae -> ... d_sae",
+        hidden_pre = self.hook_sae_acts_pre(sae_in @ self.W_enc + self.b_enc)
+        return self.hook_sae_acts_post(self.activation_fn(hidden_pre))
+
+    def encode_jumprelu(
+        self, x: Float[torch.Tensor, "... d_in"]
+    ) -> Float[torch.Tensor, "... d_sae"]:
+        """
+        Calculate SAE features from inputs
+        """
+        sae_in = self.process_sae_in(x)
+
+        # "... d_in, d_in d_sae -> ... d_sae",
+        hidden_pre = self.hook_sae_acts_pre(sae_in @ self.W_enc + self.b_enc)
+
+        return self.hook_sae_acts_post(
+            self.activation_fn(hidden_pre) * (hidden_pre > self.threshold)
+        )
 
     def encode_gated(
         self, x: Float[torch.Tensor, "... d_in"]
@@ -409,60 +473,57 @@ class SAE(HookedRootModule):
 
         return self.hook_sae_acts_post(active_features * feature_magnitudes)
 
-    def encode_jumprelu(
+    def encode_kan(
         self, x: Float[torch.Tensor, "... d_in"]
     ) -> Float[torch.Tensor, "... d_sae"]:
-        """
-        Calculate SAE features from inputs
-        """
-        sae_in = self.process_sae_in(x)
-
-        # "... d_in, d_in d_sae -> ... d_sae",
-        hidden_pre = self.hook_sae_acts_pre(sae_in @ self.W_enc + self.b_enc)
-
-        return self.hook_sae_acts_post(
-            self.activation_fn(hidden_pre) * (hidden_pre > self.threshold)
-        )
-
-    def encode_standard(
-        self, x: Float[torch.Tensor, "... d_in"]
-    ) -> Float[torch.Tensor, "... d_sae"]:
-        """
-        Calculate SAE features from inputs
-        """
-        sae_in = self.process_sae_in(x)
-
-        # "... d_in, d_in d_sae -> ... d_sae",
-        hidden_pre = self.hook_sae_acts_pre(sae_in @ self.W_enc + self.b_enc)
-        return self.hook_sae_acts_post(self.activation_fn(hidden_pre))
-
-    def process_sae_in(
-        self, sae_in: Float[torch.Tensor, "... d_in"]
-    ) -> Float[torch.Tensor, "... d_sae"]:
-        sae_in = sae_in.to(self.dtype)
+        sae_in = x.to(self.dtype)
         sae_in = self.reshape_fn_in(sae_in)
         sae_in = self.hook_sae_input(sae_in)
         sae_in = self.run_time_activation_norm_fn_in(sae_in)
-        return sae_in - (self.b_dec * self.cfg.apply_b_dec_to_input)
+
+        hidden_pre = self.hook_sae_acts_pre(sae_in)
+        bottleneck = self.kan_autoencoder.encoder(hidden_pre)
+        return self.hook_sae_acts_post(bottleneck)
 
     def decode(
         self, feature_acts: Float[torch.Tensor, "... d_sae"]
     ) -> Float[torch.Tensor, "... d_in"]:
         """Decodes SAE feature activation tensor into a reconstructed input activation tensor."""
-        # "... d_sae, d_sae d_in -> ... d_in",
-        sae_out = self.hook_sae_recons(
-            self.apply_finetuning_scaling_factor(feature_acts) @ self.W_dec + self.b_dec
+        
+        if self.cfg.architecture in ["standard", "topk", "gated", "jumprelu"]:
+            # "... d_sae, d_sae d_in -> ... d_in",
+            sae_out = self.hook_sae_recon(
+                self.apply_finetuning_scaling_factor(feature_acts) @ self.W_dec + self.b_dec
+            )
+
+            # handle run time activation normalization if needed
+            # will fail if you call this twice without calling encode in between.
+            sae_out = self.run_time_activation_norm_fn_out(sae_out)
+
+            # handle hook z reshaping if needed.
+            return self.reshape_fn_out(sae_out, self.d_head)  # type: ignore
+
+        elif self.cfg.architecture == "kan":
+            return self.decode_kan(feature_acts)
+        
+        else:
+            raise ValueError(f"decode not defined for {self.cfg.architecture}")
+
+    def decode_kan(
+        self, feature_acts: Float[torch.Tensor, "... d_sae"]
+    ) -> Float[torch.Tensor, "... d_in"]:
+        dec_pre = self.hook_sae_recons(
+            self.kan_autoencoder.decoder(feature_acts)
         )
+        dec_out = self.run_time_activation_norm_fn_out(dec_pre)
+        return self.reshape_fn_out(dec_out, self.d_head)  # type: ignore
 
-        # handle run time activation normalization if needed
-        # will fail if you call this twice without calling encode in between.
-        sae_out = self.run_time_activation_norm_fn_out(sae_out)
 
-        # handle hook z reshaping if needed.
-        return self.reshape_fn_out(sae_out, self.d_head)  # type: ignore
 
     @torch.no_grad()
     def fold_W_dec_norm(self):
+        if self.cfg.architecture == "kan":
+            return
         W_dec_norms = self.W_dec.norm(dim=-1).unsqueeze(1)
         self.W_dec.data = self.W_dec.data / W_dec_norms
         self.W_enc.data = self.W_enc.data * W_dec_norms.T
@@ -480,6 +541,8 @@ class SAE(HookedRootModule):
     def fold_activation_norm_scaling_factor(
         self, activation_norm_scaling_factor: float
     ):
+        if self.cfg.architecture == "kan":
+            return
         self.W_enc.data = self.W_enc.data * activation_norm_scaling_factor
         # previously weren't doing this.
         self.W_dec.data = self.W_dec.data / activation_norm_scaling_factor
@@ -525,11 +588,21 @@ class SAE(HookedRootModule):
 
     # overwrite this in subclasses to modify the state_dict in-place before saving
     def process_state_dict_for_saving(self, state_dict: dict[str, Any]) -> None:
-        pass
+        if self.cfg.architecture == "kan":
+            # for KAN architecture, drop the standard W_enc, b_enc, W_dec, b_dec if they exist
+            for key in ["W_enc", "b_enc", "W_dec", "b_dec", "r_mag", "b_gate", "b_mag"]:
+                if key in state_dict:
+                    del state_dict[key]
+        
 
     # overwrite this in subclasses to modify the state_dict in-place after loading
     def process_state_dict_for_loading(self, state_dict: dict[str, Any]) -> None:
-        pass
+        if self.cfg.architecture == "kan":
+            # If the old checkpoint has e.g. W_enc, b_enc, etc. remove them
+            for key in ["W_enc", "b_enc", "W_dec", "b_dec", "r_mag", "b_gate", "b_mag"]:
+                if key in state_dict:
+                    del state_dict[key]
+
 
     @classmethod
     def load_from_pretrained(
@@ -694,6 +767,418 @@ class TopK(nn.Module):
         result = torch.zeros_like(x)
         result.scatter_(-1, topk.indices, values)
         return result
+
+
+
+
+
+class KANLinear(nn.Module):
+    def __init__(
+        self,
+        in_features,
+        out_features,
+        grid_size=5,
+        spline_order=3,
+        scale_noise=0.1,
+        scale_base=1.0,
+        scale_spline=1.0,
+        enable_standalone_scale_spline=True,
+        base_activation=torch.nn.SiLU,
+        grid_eps=0.02,
+        grid_range=[-1, 1],
+    ):
+
+        super(KANLinear, self).__init__()
+        self.in_features = in_features
+        self.out_features = out_features
+
+        # number of control points used for B-spline interpolation 
+        self.grid_size = grid_size
+
+        # order of the B-spline basis functions
+        self.spline_order = spline_order
+
+        # h calculates the grid step size, which determines how spaced the control points are
+        h = (grid_range[1] - grid_range[0]) / grid_size
+
+        # the grid tensor stores the control points for the B-spline basis functions
+        # control points define where the B-spline basis functions are centered
+        grid = (
+            (
+                torch.arange(-spline_order, grid_size + spline_order + 1) * h
+                + grid_range[0]
+            )
+            .expand(in_features, -1)
+            .contiguous()
+        )
+        self.register_buffer("grid", grid)
+
+        # the matrix responsible for the standard linear transformation applied to the base activation function
+        self.base_weight = torch.nn.Parameter(
+            torch.Tensor(out_features, in_features))
+        
+        # the matrix responsible for the B-spline interpolation
+        self.spline_weight = torch.nn.Parameter(
+            torch.Tensor(out_features, in_features, grid_size + spline_order)
+        )
+
+        # if True, introduces an additional trainable scaling parameter for spline weights
+        if enable_standalone_scale_spline:
+            self.spline_scaler = torch.nn.Parameter(
+                torch.Tensor(out_features, in_features)
+            )
+
+        # scaling factor for adding random noise to spline weights during initialization
+        self.scale_noise = scale_noise
+
+        # scaling factor for initializing the base linear transformation weights
+        self.scale_base = scale_base
+        
+        # scaling factor for spline weight initialization
+        self.scale_spline = scale_spline
+
+        # if True, introduces an additional trainable scaling parameter for spline weights
+        self.enable_standalone_scale_spline = enable_standalone_scale_spline
+
+        # activation function applied before the base linear transformation
+        self.base_activation = base_activation()
+
+        # a small factor that controls how much the grid adapts to input distributions
+        self.grid_eps = grid_eps
+
+        # initialize the weights properly here
+        self.reset_parameters()
+
+    def reset_parameters(self):
+        
+        # use Kaiming uniform initialization to set up self.base_weight
+        torch.nn.init.kaiming_uniform_(
+            self.base_weight, a=math.sqrt(5) * self.scale_base)
+        with torch.no_grad():
+
+            # add random noise to the spline weights during initialization
+            noise = (
+                (
+                    torch.rand(self.grid_size + 1,
+                               self.in_features, self.out_features)
+                    - 1 / 2
+                )
+                * self.scale_noise
+                / self.grid_size
+            )
+
+            # initialize the spline weights using the curve2coeff function
+            self.spline_weight.data.copy_(
+                (self.scale_spline if not self.enable_standalone_scale_spline else 1.0)
+                * self.curve2coeff(
+                    self.grid.T[self.spline_order: -self.spline_order],
+                    noise,
+                )
+            )
+
+            # if enabled, initialize the standalone scaling parameter for spline weights
+            if self.enable_standalone_scale_spline:
+                # torch.nn.init.constant_(self.spline_scaler, self.scale_spline)
+                torch.nn.init.kaiming_uniform_(
+                    self.spline_scaler, a=math.sqrt(5) * self.scale_spline)
+
+    def b_splines(self, x: torch.Tensor):
+        """
+        Compute the B-spline bases for the given input tensor.
+
+        Args:
+            x (torch.Tensor): Input tensor of shape (batch_size, in_features).
+
+        Returns:
+            torch.Tensor: B-spline bases tensor of shape (batch_size, in_features, grid_size + spline_order).
+        """
+        assert x.dim() == 2 and x.size(1) == self.in_features
+
+        grid: torch.Tensor = (
+            self.grid
+        )  # (in_features, grid_size + 2 * spline_order + 1)
+        x = x.unsqueeze(-1)
+        bases = ((x >= grid[:, :-1]) & (x < grid[:, 1:])).to(x.dtype)
+        for k in range(1, self.spline_order + 1):
+            bases = (
+                (x - grid[:, : -(k + 1)])
+                / (grid[:, k:-1] - grid[:, : -(k + 1)])
+                * bases[:, :, :-1]
+            ) + (
+                (grid[:, k + 1:] - x)
+                / (grid[:, k + 1:] - grid[:, 1:(-k)])
+                * bases[:, :, 1:]
+            )
+
+        assert bases.size() == (
+            x.size(0),
+            self.in_features,
+            self.grid_size + self.spline_order,
+        )
+        return bases.contiguous()
+
+
+    def curve2coeff(self, x: torch.Tensor, y: torch.Tensor):
+        """
+        Compute the coefficients of the curve that interpolates the given points.
+
+        Args:
+            x (torch.Tensor): Input tensor of shape (batch_size, in_features).
+            y (torch.Tensor): Output tensor of shape (batch_size, in_features, out_features).
+
+        Returns:
+            torch.Tensor: Coefficients tensor of shape (out_features, in_features, grid_size + spline_order).
+        """
+        assert x.dim() == 2 and x.size(1) == self.in_features
+        assert y.size() == (x.size(0), self.in_features, self.out_features)
+
+        A = self.b_splines(x).transpose(
+            0, 1
+        )  # (in_features, batch_size, grid_size + spline_order)
+        B = y.transpose(0, 1)  # (in_features, batch_size, out_features)
+        solution = torch.linalg.lstsq(
+            A, B
+        ).solution  # (in_features, grid_size + spline_order, out_features)
+        result = solution.permute(
+            2, 0, 1
+        )  # (out_features, in_features, grid_size + spline_order)
+
+        assert result.size() == (
+            self.out_features,
+            self.in_features,
+            self.grid_size + self.spline_order,
+        )
+        return result.contiguous()
+
+    @property
+    def scaled_spline_weight(self):
+        return self.spline_weight * (
+            self.spline_scaler.unsqueeze(-1)
+            if self.enable_standalone_scale_spline
+            else 1.0
+        )
+
+    def forward(self, x: torch.Tensor):
+        assert x.size(-1) == self.in_features
+        original_shape = x.shape
+        x = x.view(-1, self.in_features)
+
+        base_output = F.linear(self.base_activation(x), self.base_weight)
+        spline_output = F.linear(
+            self.b_splines(x).view(x.size(0), -1),
+            self.scaled_spline_weight.view(self.out_features, -1),
+        )
+        output = base_output + spline_output
+
+        output = output.view(*original_shape[:-1], self.out_features)
+        return output
+
+    @torch.no_grad()
+    def update_grid(self, x: torch.Tensor, margin=0.01):
+        assert x.dim() == 2 and x.size(1) == self.in_features
+        batch = x.size(0)
+
+        splines = self.b_splines(x)  # (batch, in, coeff)
+        splines = splines.permute(1, 0, 2)  # (in, batch, coeff)
+        orig_coeff = self.scaled_spline_weight  # (out, in, coeff)
+        orig_coeff = orig_coeff.permute(1, 2, 0)  # (in, coeff, out)
+        unreduced_spline_output = torch.bmm(
+            splines, orig_coeff)  # (in, batch, out)
+        unreduced_spline_output = unreduced_spline_output.permute(
+            1, 0, 2
+        )  # (batch, in, out)
+
+        # sort each channel individually to collect data distribution
+        x_sorted = torch.sort(x, dim=0)[0]
+        grid_adaptive = x_sorted[
+            torch.linspace(
+                0, batch - 1, self.grid_size + 1, dtype=torch.int64, device=x.device
+            )
+        ]
+
+        uniform_step = (x_sorted[-1] - x_sorted[0] +
+                        2 * margin) / self.grid_size
+        grid_uniform = (
+            torch.arange(
+                self.grid_size + 1, dtype=torch.float32, device=x.device
+            ).unsqueeze(1)
+            * uniform_step
+            + x_sorted[0]
+            - margin
+        )
+
+        grid = self.grid_eps * grid_uniform + \
+            (1 - self.grid_eps) * grid_adaptive
+        grid = torch.concatenate(
+            [
+                grid[:1]
+                - uniform_step
+                * torch.arange(self.spline_order, 0, -1,
+                               device=x.device).unsqueeze(1),
+                grid,
+                grid[-1:]
+                + uniform_step
+                * torch.arange(1, self.spline_order + 1,
+                               device=x.device).unsqueeze(1),
+            ],
+            dim=0,
+        )
+
+        self.grid.copy_(grid.T)
+        self.spline_weight.data.copy_(
+            self.curve2coeff(x, unreduced_spline_output))
+
+    def regularization_loss(self, regularize_activation=1.0, regularize_entropy=1.0):
+        """
+        Compute the regularization loss.
+
+        This is a dumb simulation of the original L1 regularization as stated in the
+        paper, since the original one requires computing absolutes and entropy from the
+        expanded (batch, in_features, out_features) intermediate tensor, which is hidden
+        behind the F.linear function if we want an memory efficient implementation.
+
+        The L1 regularization is now computed as mean absolute value of the spline
+        weights. The authors implementation also includes this term in addition to the
+        sample-based regularization.
+        """
+        l1_fake = self.spline_weight.abs().mean(-1)
+        regularization_loss_activation = l1_fake.sum()
+        p = l1_fake / regularization_loss_activation
+        regularization_loss_entropy = -torch.sum(p * p.log())
+        return (
+            regularize_activation * regularization_loss_activation
+            + regularize_entropy * regularization_loss_entropy
+        )
+    
+class Encoder(nn.Module):
+    """
+        encoder part: KANLinear -> ReLU -> Linear
+        KANLinear is a custom linear layer that uses a combination of
+        B-splines and a base activation function to transform the input.
+        The output is then passed through a ReLU activation and a final
+        linear layer to produce the bottleneck representation.
+    """
+    def __init__(
+        self,
+        input_size,
+        hidden_size,
+        bottleneck_size,
+        grid_size=5,
+        spline_order=3,
+        scale_noise=0.1,
+        scale_base=1.0,
+        scale_spline=1.0,
+        base_activation=torch.nn.SiLU,
+        grid_eps=0.02,
+        grid_range=[-1, 1],
+    ):
+        super(Encoder, self).__init__()
+        self.kan = KANLinear(
+            input_size,
+            hidden_size,
+            grid_size=grid_size,
+            spline_order=spline_order,
+            scale_noise=scale_noise,
+            scale_base=scale_base,
+            scale_spline=scale_spline,
+            base_activation=base_activation,
+            grid_eps=grid_eps,
+            grid_range=grid_range,
+        )
+        self.relu = nn.ReLU()
+        self.dense = nn.Linear(hidden_size, bottleneck_size)
+
+    def forward(self, x):
+        x = self.kan(x)
+        x = self.relu(x)
+        x = self.dense(x)
+        return x
+
+
+class Decoder(nn.Module):
+    """
+        decoder part: Linear -> ReLU -> KANLinear
+        The input is first passed through a linear layer, then a ReLU activation,
+        and finally through a KANLinear layer to produce the output.
+    """
+    def __init__(
+        self,
+        bottleneck_size,
+        hidden_size,
+        output_size,
+        grid_size=5,
+        spline_order=3,
+        scale_noise=0.1,
+        scale_base=1.0,
+        scale_spline=1.0,
+        base_activation=torch.nn.SiLU,
+        grid_eps=0.02,
+        grid_range=[-1, 1],
+    ):
+        super(Decoder, self).__init__()
+        self.dense = nn.Linear(bottleneck_size, hidden_size)
+        self.relu = nn.ReLU()
+        self.kan = KANLinear(
+            hidden_size,
+            output_size,
+            grid_size=grid_size,
+            spline_order=spline_order,
+            scale_noise=scale_noise,
+            scale_base=scale_base,
+            scale_spline=scale_spline,
+            base_activation=base_activation,
+            grid_eps=grid_eps,
+            grid_range=grid_range,
+        )
+
+    def forward(self, x):
+        x = self.kan(x)
+        return x
+
+
+class KANAutoencoder(nn.Module):
+    def __init__(
+        self, 
+        input_size, 
+        hidden_size, 
+        bottleneck_size,
+        grid_size=5,
+        spline_order=3,
+        scale_noise=0.1,
+        scale_base=1.0,
+        scale_spline=1.0,
+        base_activation=torch.nn.SiLU,
+        grid_eps=0.02,
+        grid_range=[-1, 1],
+    ):
+        super(KANAutoencoder, self).__init__()
+        self.encoder = Encoder(
+            input_size, hidden_size, bottleneck_size,
+            grid_size=grid_size,
+            spline_order=spline_order,
+            scale_noise=scale_noise,
+            scale_base=scale_base,
+            scale_spline=scale_spline,
+            base_activation=base_activation,
+            grid_eps=grid_eps,
+            grid_range=grid_range,
+        )
+        self.decoder = Decoder(
+            bottleneck_size, hidden_size, input_size,
+            grid_size=grid_size,
+            spline_order=spline_order,
+            scale_noise=scale_noise,
+            scale_base=scale_base,
+            scale_spline=scale_spline,
+            base_activation=base_activation,
+            grid_eps=grid_eps,
+            grid_range=grid_range,
+        )
+
+    def forward(self, x):
+        x = self.encoder(x)
+        x = self.decoder(x)
+        return x
 
 
 def get_activation_fn(

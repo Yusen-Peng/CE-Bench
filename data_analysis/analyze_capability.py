@@ -20,7 +20,7 @@ def extract_ranks(file_path):
     print(f"SAE Rank: {sae_rank}")
 
 def main():
-    architecture = "gated"
+    architecture = "kan_mini"
     file_path = f"figures/{architecture}_capability.log"
     extract_ranks(file_path)
 
