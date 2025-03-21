@@ -442,17 +442,16 @@ class TrainingSAE(SAE):
             losses["auxiliary_reconstruction_loss"] = topk_loss
             loss = mse_loss + topk_loss
         elif self.cfg.architecture == "kan":
-            reg_loss = 0
-            for module in self.kan_autoencoder.modules():
-                if isinstance(module, KANLinear):
-                    reg_loss += module.regularization_loss(
-                        regularize_activation=1.0,
-                        regularize_entropy=1.0
-                    )
+            # reg_loss = 0
+            # for module in self.kan_autoencoder.modules():
+            #     if isinstance(module, KANLinear):
+            #         reg_loss += module.regularization_loss(
+            #             regularize_activation=1.0,
+            #             regularize_entropy=1.0
+            #         )
             
-            loss = mse_loss  + reg_loss
-            losses["mse_loss"] = mse_loss
-            losses["kan_reg_loss"] = reg_loss
+            # losses["kan_reg_loss"] = reg_loss
+            loss = mse_loss
 
         else:
             # default SAE sparsity loss
