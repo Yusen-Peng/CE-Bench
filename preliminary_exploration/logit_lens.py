@@ -11,6 +11,26 @@ from sae_lens import SAE, HookedSAETransformer
 import json
 import safetensors.torch
 
+
+@torch.no_grad()
+def get_effective_decoder_matrix_for_kan(sae, device="cpu") -> torch.Tensor:
+    d_sae = sae.cfg.d_sae
+    
+    # 1) Figure out what dtype the KAN decoder's parameters are using
+    param_dtype = next(sae.kan_autoencoder.decoder.parameters()).dtype
+    
+    # 2) Make an identity matrix in that same dtype
+    basis = torch.eye(d_sae, device=device, dtype=param_dtype)
+
+    # 3) Decode it
+    decoded = sae.kan_autoencoder.decoder(basis)
+    # shape [d_sae, d_in]
+
+    M_eff = decoded.T  # shape [d_in, d_sae]
+    return M_eff
+
+
+
 @torch.no_grad()
 def get_feature_property_df(sae: SAE, feature_sparsity: torch.Tensor):
     """
@@ -62,6 +82,7 @@ def get_W_U_W_dec_stats_df(W_dec: torch.Tensor, model: HookedTransformer, cosine
     # Ensure both tensors have the same dtype
     dtype = W_dec.dtype  # Preserve W_dec's dtype
     W_U = W_U.to(dtype)  # Convert W_U to the same dtype as W_dec
+    W_dec = W_dec.to(W_U.dtype)
 
     if cosine_sim:
         W_U = W_U / W_U.norm(dim=0, keepdim=True)
@@ -81,8 +102,8 @@ def main():
     print("tokenizer loaded!")
 
     # Load the trained SAE from checkpoints
-    architecture = "gated"
-    sae_checkpoint_path = f"checkpoints/{architecture}/final_122880000"
+    architecture = "kan_mini"
+    sae_checkpoint_path = f"checkpoints/{architecture}/final_36864000"
     sae = SAE.load_from_pretrained(path=sae_checkpoint_path, device=device)
     print("SAE loaded!")
 
@@ -114,7 +135,15 @@ def main():
     # Use the loaded SAE and sparsity
     sparse_autoencoder = sae
     log_feature_sparsity = sparsity.to(device)  # Keep on GPU
-    W_dec = sparse_autoencoder.W_dec.to(device)  # Keep on GPU
+
+    if hasattr(sae, "W_dec"):
+        W_dec = sparse_autoencoder.W_dec.to(device)
+    
+    else:
+        W_dec = get_effective_decoder_matrix_for_kan(sae, device=device)
+        W_dec = W_dec.T
+
+        
     W_U_stats_df_dec, _ = get_W_U_W_dec_stats_df(W_dec, model, cosine_sim=False)
     W_U_stats_df_dec["sparsity"] = log_feature_sparsity.cpu().numpy()
     print("Statistics calculated!")

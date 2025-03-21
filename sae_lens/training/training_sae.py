@@ -15,7 +15,7 @@ from torch import nn
 
 from sae_lens import logger
 from sae_lens.config import LanguageModelSAERunnerConfig
-from sae_lens.sae import SAE, SAEConfig
+from sae_lens.sae import SAE, SAEConfig, KANLinear
 from sae_lens.toolkit.pretrained_sae_loaders import (
     handle_config_defaulting,
     read_sae_from_disk,
@@ -120,6 +120,7 @@ class TrainingSAEConfig(SAEConfig):
     decoder_heuristic_init: bool
     init_encoder_as_decoder_transpose: bool
     scale_sparsity_penalty_by_decoder_norm: bool
+    kan_hidden_size: Optional[int] = None
 
     @classmethod
     def from_sae_runner_config(
@@ -161,6 +162,7 @@ class TrainingSAEConfig(SAEConfig):
             model_from_pretrained_kwargs=cfg.model_from_pretrained_kwargs or {},
             jumprelu_init_threshold=cfg.jumprelu_init_threshold,
             jumprelu_bandwidth=cfg.jumprelu_bandwidth,
+            kan_hidden_size=None,
         )
 
     @classmethod
@@ -201,6 +203,7 @@ class TrainingSAEConfig(SAEConfig):
             "normalize_activations": self.normalize_activations,
             "jumprelu_init_threshold": self.jumprelu_init_threshold,
             "jumprelu_bandwidth": self.jumprelu_bandwidth,
+            "kan_hidden_size": self.kan_hidden_size,
         }
 
     # this needs to exist so we can initialize the parent sae cfg without the training specific
@@ -255,7 +258,9 @@ class TrainingSAE(SAE):
             self.log_threshold.data = torch.ones(
                 self.cfg.d_sae, dtype=self.dtype, device=self.device
             ) * np.log(cfg.jumprelu_init_threshold)
-
+        
+        elif cfg.architecture == "kan":
+            self.encode_with_hidden_pre_fn = self.encode_with_hidden_pre_kan
         else:
             raise ValueError(f"Unknown architecture: {cfg.architecture}")
 
@@ -264,6 +269,9 @@ class TrainingSAE(SAE):
         self.use_error_term = use_error_term
 
         self.initialize_weights_complex()
+
+        if cfg.architecture == "kan":
+            self.initialize_weights_kan()
 
         # The training SAE will assume that the activation store handles
         # reshaping.
@@ -359,6 +367,17 @@ class TrainingSAE(SAE):
             magnitude_pre_activation,
         )  # magnitude_pre_activation_noised
 
+    def encode_with_hidden_pre_kan(self, x: torch.Tensor):
+        sae_in = self.process_sae_in(x)
+        code = self.kan_autoencoder.encoder(sae_in)
+        # store the raw code as "hidden_pre," or store the final hidden layer pre-activation
+        hidden_pre = code
+        return code, hidden_pre
+
+    def decode(self, feature_acts: torch.Tensor) -> torch.Tensor:
+        return super().decode(feature_acts)
+    
+
     def forward(
         self,
         x: Float[torch.Tensor, "... d_in"],
@@ -422,6 +441,19 @@ class TrainingSAE(SAE):
             )
             losses["auxiliary_reconstruction_loss"] = topk_loss
             loss = mse_loss + topk_loss
+        elif self.cfg.architecture == "kan":
+            reg_loss = 0
+            for module in self.kan_autoencoder.modules():
+                if isinstance(module, KANLinear):
+                    reg_loss += module.regularization_loss(
+                        regularize_activation=1.0,
+                        regularize_entropy=1.0
+                    )
+            
+            loss = mse_loss  + reg_loss
+            losses["mse_loss"] = mse_loss
+            losses["kan_reg_loss"] = reg_loss
+
         else:
             # default SAE sparsity loss
             weighted_feature_acts = feature_acts
@@ -595,7 +627,8 @@ class TrainingSAE(SAE):
         return sae
 
     def initialize_weights_complex(self):
-        """ """
+        if self.cfg.architecture == "kan":
+            return
 
         if self.cfg.decoder_orthogonal_init:
             self.W_dec.data = nn.init.orthogonal_(self.W_dec.data.T).T
