@@ -10,7 +10,7 @@ squeue -j ####### -o "%i %T %r"
 
 # run experiments
 python3 -m preliminary_exploration.L0_test
-CUDA_VISIBLE_DEVICES=0 taskset -c 30,31,32,33,34,35,36,37,38,39 python3 -m preliminary_exploration.L0_test
+CUDA_VISIBLE_DEVICES=0 taskset -c 30,31,32,33,34,35,36,37,38,39 python3 -m preliminary_exploration.train_SAE
 
 # enviroment setup
 module load miniconda3

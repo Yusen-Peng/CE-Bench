@@ -18,7 +18,7 @@ def compute_statistics(file_path):
 
 def main():
     # Example usage
-    architecture = "kan_mini"
+    architecture = "kan_small"
     file_path = f"figures/{architecture}_l0_scores.csv"
     compute_statistics(file_path)
 

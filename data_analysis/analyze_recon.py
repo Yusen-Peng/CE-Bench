@@ -16,7 +16,7 @@ def compute_loss_averages(file_path):
 
 
 def main():
-    architecture = "kan_mini"
+    architecture = "kan_small"
     file_path = f"figures/{architecture}_batch_losses.csv"
     compute_loss_averages(file_path)
 

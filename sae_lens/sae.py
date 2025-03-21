@@ -75,7 +75,6 @@ class SAEConfig:
     neuronpedia_id: Optional[str] = None
     model_from_pretrained_kwargs: dict[str, Any] = field(default_factory=dict)
     seqpos_slice: tuple[int | None, ...] = (None,)
-    kan_hidden_size: Optional[int] = None
 
     @classmethod
     def from_dict(cls, config_dict: dict[str, Any]) -> "SAEConfig":
@@ -125,7 +124,6 @@ class SAEConfig:
             "neuronpedia_id": self.neuronpedia_id,
             "model_from_pretrained_kwargs": self.model_from_pretrained_kwargs,
             "seqpos_slice": self.seqpos_slice,
-            "kan_hidden_size": self.kan_hidden_size,
         }
 
 
@@ -329,15 +327,10 @@ class SAE(HookedRootModule):
         self.initialize_weights_basic()
     
     def initialize_weights_kan(self):
-        if self.cfg.kan_hidden_size is None:
-            hidden_size = max(self.cfg.d_in, self.cfg.d_sae)
-        else:
-            hidden_size = self.cfg.kan_hidden_size
-
         # create the KANAutoencoder
         self.kan_autoencoder = KANAutoencoder(
             input_size=self.cfg.d_in,
-            hidden_size=hidden_size,
+            hidden_size=self.cfg.d_sae,
             bottleneck_size=self.cfg.d_sae,
         ).to(self.device, self.dtype)
 
@@ -492,7 +485,7 @@ class SAE(HookedRootModule):
         
         if self.cfg.architecture in ["standard", "topk", "gated", "jumprelu"]:
             # "... d_sae, d_sae d_in -> ... d_in",
-            sae_out = self.hook_sae_recon(
+            sae_out = self.hook_sae_recons(
                 self.apply_finetuning_scaling_factor(feature_acts) @ self.W_dec + self.b_dec
             )
 
@@ -1142,6 +1135,7 @@ class KANAutoencoder(nn.Module):
         input_size, 
         hidden_size, 
         bottleneck_size,
+        ae_type="kan",
         grid_size=5,
         spline_order=3,
         scale_noise=0.1,
@@ -1176,8 +1170,12 @@ class KANAutoencoder(nn.Module):
         )
 
     def forward(self, x):
-        x = self.encoder(x)
-        x = self.decoder(x)
+        if self.only_kan:
+            x = self.kan(x)
+            x = self.kan(x)
+        else:
+            x = self.encoder(x)
+            x = self.decoder(x)
         return x
 
 

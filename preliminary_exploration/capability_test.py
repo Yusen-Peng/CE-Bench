@@ -17,7 +17,7 @@ def main():
     device = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"Using device: {device}")
 
-    architecture = "kan_mini"
+    architecture = "kan_small"
     log_file = f"figures/{architecture}_capability.log"
     sys.stdout = open(log_file, "w")
 
@@ -27,7 +27,7 @@ def main():
     tokenizer.pad_token = tokenizer.eos_token
 
     # Load the trained SAE from checkpoints
-    sae_checkpoint_path = f"checkpoints/{architecture}/final_36864000"
+    sae_checkpoint_path = f"checkpoints/{architecture}/final_61440000"
     sae = SAE.load_from_pretrained(path=sae_checkpoint_path, device=device)
     sae.eval()
 
