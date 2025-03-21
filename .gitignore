@@ -1,5 +1,10 @@
 __pycache__/
 .env
+checkpoints/*
+logs/
+__pycache__/
+checkpoints/b5bc6yb8/final_1000448/sae_weights.safetensor
+*.log
 figures/*.html
 checkpoints/
 logs/
