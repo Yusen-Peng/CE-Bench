@@ -22,8 +22,8 @@ def main():
     tokenizer.pad_token = tokenizer.eos_token
 
     # Load the trained SAE from checkpoints
-    architecture = "kan_small"
-    sae_checkpoint_path = f"checkpoints/{architecture}/final_61440000"
+    architecture = "kan_only_tiny"
+    sae_checkpoint_path = f"checkpoints/{architecture}/final_614400"
     sae = SAE.load_from_pretrained(path=sae_checkpoint_path, device=device)
     sae.eval()
 
@@ -38,7 +38,8 @@ def main():
     print(f"Loaded SAE with d_in={sae.cfg.d_in}, d_sae={sae.cfg.d_sae}, hook={sae.cfg.hook_name}")
 
     # Load and downsample the pile-10k dataset
-    dataset = load_dataset("NeelNanda/pile-10k", split="train")
+    #dataset = load_dataset("NeelNanda/pile-10k", split="train")
+    dataset = load_dataset("apollo-research/roneneldan-TinyStories-tokenizer-gpt2", split="train")
     desired_sample_size = 400 # FIXME: experiment with this downsampling size!
     downsampled_dataset = dataset.shuffle(seed=42).select(range(desired_sample_size))
 

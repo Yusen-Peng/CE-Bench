@@ -120,7 +120,7 @@ class TrainingSAEConfig(SAEConfig):
     decoder_heuristic_init: bool
     init_encoder_as_decoder_transpose: bool
     scale_sparsity_penalty_by_decoder_norm: bool
-    kan_hidden_size: Optional[int] = None
+    ae_kwargs: dict[str, Any]
 
     @classmethod
     def from_sae_runner_config(
@@ -162,17 +162,19 @@ class TrainingSAEConfig(SAEConfig):
             model_from_pretrained_kwargs=cfg.model_from_pretrained_kwargs or {},
             jumprelu_init_threshold=cfg.jumprelu_init_threshold,
             jumprelu_bandwidth=cfg.jumprelu_bandwidth,
-            kan_hidden_size=None,
+            ae_kwargs=cfg.ae_kwargs,
         )
 
     @classmethod
     def from_dict(cls, config_dict: dict[str, Any]) -> "TrainingSAEConfig":
+        # print(f"training_sae_config.py:169 {config_dict=}")
         # remove any keys that are not in the dataclass
         # since we sometimes enhance the config with the whole LM runner config
         valid_field_names = {field.name for field in fields(cls)}
         valid_config_dict = {
             key: val for key, val in config_dict.items() if key in valid_field_names
         }
+        # print(f"training_sae_config.py:177 {valid_config_dict=}")
 
         # ensure seqpos slice is tuple
         # ensure that seqpos slices is a tuple
@@ -188,6 +190,7 @@ class TrainingSAEConfig(SAEConfig):
         return TrainingSAEConfig(**valid_config_dict)
 
     def to_dict(self) -> dict[str, Any]:
+        # print(f"training_sae_config.py:193 {super().to_dict()=}")
         return {
             **super().to_dict(),
             "l1_coefficient": self.l1_coefficient,
@@ -203,7 +206,6 @@ class TrainingSAEConfig(SAEConfig):
             "normalize_activations": self.normalize_activations,
             "jumprelu_init_threshold": self.jumprelu_init_threshold,
             "jumprelu_bandwidth": self.jumprelu_bandwidth,
-            "kan_hidden_size": self.kan_hidden_size,
         }
 
     # this needs to exist so we can initialize the parent sae cfg without the training specific
@@ -247,6 +249,7 @@ class TrainingSAE(SAE):
         base_sae_cfg = SAEConfig.from_dict(cfg.get_base_sae_cfg_dict())
         super().__init__(base_sae_cfg)
         self.cfg = cfg  # type: ignore
+        # print(f"training_sae_config.py:252 {self.cfg=}")
 
         if cfg.architecture == "standard" or cfg.architecture == "topk":
             self.encode_with_hidden_pre_fn = self.encode_with_hidden_pre
@@ -442,15 +445,6 @@ class TrainingSAE(SAE):
             losses["auxiliary_reconstruction_loss"] = topk_loss
             loss = mse_loss + topk_loss
         elif self.cfg.architecture == "kan":
-            # reg_loss = 0
-            # for module in self.kan_autoencoder.modules():
-            #     if isinstance(module, KANLinear):
-            #         reg_loss += module.regularization_loss(
-            #             regularize_activation=1.0,
-            #             regularize_entropy=1.0
-            #         )
-            
-            # losses["kan_reg_loss"] = reg_loss
             loss = mse_loss
 
         else:

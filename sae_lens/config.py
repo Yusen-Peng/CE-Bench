@@ -159,6 +159,7 @@ class LanguageModelSAERunnerConfig:
     architecture: Literal["standard", "gated", "jumprelu", "topk"] = "standard"
     d_in: int = 512
     d_sae: Optional[int] = None
+    ae_kwargs: dict[str, Any] = dict_field(default={})
     b_dec_init_method: str = "geometric_median"
     expansion_factor: Optional[int] = (
         None  # defaults to 4 if d_sae and expansion_factor is None
@@ -268,6 +269,8 @@ class LanguageModelSAERunnerConfig:
                 "Resuming is no longer supported. You can finetune a trained SAE using cfg.from_pretrained path."
                 + "If you want to load an SAE with resume=True in the config, please manually set resume=False in that config."
             )
+        
+        # print(f"config.py:273 {self.ae_kwargs=}")
 
         if self.use_cached_activations and self.cached_activations_path is None:
             self.cached_activations_path = _default_cached_activations_path(
@@ -452,9 +455,13 @@ class LanguageModelSAERunnerConfig:
             "activation_fn_kwargs": self.activation_fn_kwargs,
             "model_from_pretrained_kwargs": self.model_from_pretrained_kwargs,
             "seqpos_slice": self.seqpos_slice,
+            "ae_kwargs": self.ae_kwargs,
         }
 
     def get_training_sae_cfg_dict(self) -> dict[str, Any]:
+        
+        # print(f"config.py:463 {self.get_base_sae_cfg_dict()=}")
+
         return {
             **self.get_base_sae_cfg_dict(),
             "l1_coefficient": self.l1_coefficient,

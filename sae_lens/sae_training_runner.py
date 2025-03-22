@@ -77,6 +77,7 @@ class SAETrainingRunner:
                     self.cfg.from_pretrained_path, self.cfg.device
                 )
             else:
+                print("Creating new SAE")
                 self.sae = TrainingSAE(
                     TrainingSAEConfig.from_dict(
                         self.cfg.get_training_sae_cfg_dict(),

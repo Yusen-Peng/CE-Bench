@@ -14,7 +14,7 @@ def main():
     print("Using device:", device)
     os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
-    total_training_steps = 15_000 # small
+    total_training_steps = 150 # small
     batch_size = 4096
     total_training_tokens = total_training_steps * batch_size
 
@@ -24,8 +24,10 @@ def main():
 
     # different architectures experiment
     # standard, gated, topk, jumprelu
+    # kan_ae_type = "kan_relu_dense"
     cfg = LanguageModelSAERunnerConfig(
         architecture="kan",
+        activation_fn_kwargs={"kan_hidden_size": 2048 * 8, "kan_ae_type": "only_kan"},
         model_name="meta-llama/Llama-3.2-1B",
         hook_name="blocks.0.hook_mlp_out",
         hook_layer=0,

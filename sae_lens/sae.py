@@ -75,6 +75,7 @@ class SAEConfig:
     neuronpedia_id: Optional[str] = None
     model_from_pretrained_kwargs: dict[str, Any] = field(default_factory=dict)
     seqpos_slice: tuple[int | None, ...] = (None,)
+    ae_kwargs: dict[str, Any] = field(default_factory=dict)
 
     @classmethod
     def from_dict(cls, config_dict: dict[str, Any]) -> "SAEConfig":
@@ -124,6 +125,7 @@ class SAEConfig:
             "neuronpedia_id": self.neuronpedia_id,
             "model_from_pretrained_kwargs": self.model_from_pretrained_kwargs,
             "seqpos_slice": self.seqpos_slice,
+            "ae_kwargs": self.ae_kwargs,
         }
 
 
@@ -327,10 +329,12 @@ class SAE(HookedRootModule):
         self.initialize_weights_basic()
     
     def initialize_weights_kan(self):
+        print(f"sae.py:332 {self.cfg.activation_fn_kwargs=}")
         # create the KANAutoencoder
         self.kan_autoencoder = KANAutoencoder(
             input_size=self.cfg.d_in,
-            hidden_size=self.cfg.d_sae,
+            hidden_size=self.cfg.activation_fn_kwargs["kan_hidden_size"],
+            kan_ae_type=self.cfg.activation_fn_kwargs["kan_ae_type"],
             bottleneck_size=self.cfg.d_sae,
         ).to(self.device, self.dtype)
 
@@ -1135,7 +1139,7 @@ class KANAutoencoder(nn.Module):
         input_size, 
         hidden_size, 
         bottleneck_size,
-        ae_type="kan",
+        kan_ae_type="kan_relu_dense",
         grid_size=5,
         spline_order=3,
         scale_noise=0.1,
@@ -1146,6 +1150,11 @@ class KANAutoencoder(nn.Module):
         grid_range=[-1, 1],
     ):
         super(KANAutoencoder, self).__init__()
+        
+        if kan_ae_type == "kan_only":
+            hidden_size = bottleneck_size
+
+        self.kan_ae_type = kan_ae_type
         self.encoder = Encoder(
             input_size, hidden_size, bottleneck_size,
             grid_size=grid_size,
@@ -1170,12 +1179,14 @@ class KANAutoencoder(nn.Module):
         )
 
     def forward(self, x):
-        if self.only_kan:
+        if self.kan_ae_type == "only_kan":
             x = self.kan(x)
             x = self.kan(x)
-        else:
+        elif self.kan_ae_type == "kan_relu_dense":
             x = self.encoder(x)
             x = self.decoder(x)
+        else:
+            raise ValueError(f"Unknown KAN Autoencoder type: {self.kan_ae_type}")
         return x
 
 
