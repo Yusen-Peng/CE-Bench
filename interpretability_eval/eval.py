@@ -30,8 +30,9 @@ def main():
     print("Tokenizer loaded!")
 
     # Load the trained SAE
-    architecture = "kan_small"
-    sae_checkpoint_path = f"checkpoints/{architecture}/final_61440000"
+    architecture = "kan_relu_dense_latent"
+    steps = "1.5k"
+    sae_checkpoint_path = f"checkpoints/{architecture}/{steps}"
     sae = SAE.load_from_pretrained(path=sae_checkpoint_path, device=device)
     print("SAE loaded!")
 
@@ -172,7 +173,7 @@ def main():
         })
 
     # Save Results to CSV
-    results_path = f"figures/{architecture}_feature_interpretability_results.csv"
+    results_path = f"figures/{architecture}_{steps}_feature_interpretability_results.csv"
     df = pd.DataFrame(parsed_responses)
     df.to_csv(results_path, index=False)
 

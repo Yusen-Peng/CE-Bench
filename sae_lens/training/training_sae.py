@@ -15,7 +15,7 @@ from torch import nn
 
 from sae_lens import logger
 from sae_lens.config import LanguageModelSAERunnerConfig
-from sae_lens.sae import SAE, SAEConfig, KANLinear
+from sae_lens.sae import SAE, SAEConfig
 from sae_lens.toolkit.pretrained_sae_loaders import (
     handle_config_defaulting,
     read_sae_from_disk,

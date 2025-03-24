@@ -1129,6 +1129,8 @@ class Decoder(nn.Module):
         )
 
     def forward(self, x):
+        x = self.dense(x)
+        x = self.relu(x)
         x = self.kan(x)
         return x
 
@@ -1150,43 +1152,62 @@ class KANAutoencoder(nn.Module):
         grid_range=[-1, 1],
     ):
         super(KANAutoencoder, self).__init__()
-        
-        if kan_ae_type == "kan_only":
-            hidden_size = bottleneck_size
-
         self.kan_ae_type = kan_ae_type
-        self.encoder = Encoder(
-            input_size, hidden_size, bottleneck_size,
-            grid_size=grid_size,
-            spline_order=spline_order,
-            scale_noise=scale_noise,
-            scale_base=scale_base,
-            scale_spline=scale_spline,
-            base_activation=base_activation,
-            grid_eps=grid_eps,
-            grid_range=grid_range,
-        )
-        self.decoder = Decoder(
-            bottleneck_size, hidden_size, input_size,
-            grid_size=grid_size,
-            spline_order=spline_order,
-            scale_noise=scale_noise,
-            scale_base=scale_base,
-            scale_spline=scale_spline,
-            base_activation=base_activation,
-            grid_eps=grid_eps,
-            grid_range=grid_range,
-        )
-
-    def forward(self, x):
-        if self.kan_ae_type == "only_kan":
-            x = self.kan(x)
-            x = self.kan(x)
-        elif self.kan_ae_type == "kan_relu_dense":
-            x = self.encoder(x)
-            x = self.decoder(x)
+        if kan_ae_type == "only_kan":
+            hidden_size = bottleneck_size
+            self.encoder = KANLinear(
+                input_size,
+                hidden_size,
+                grid_size=grid_size,
+                spline_order=spline_order,
+                scale_noise=scale_noise,
+                scale_base=scale_base,
+                scale_spline=scale_spline,
+                base_activation=base_activation,
+                grid_eps=grid_eps,
+                grid_range=grid_range,
+            )
+            self.decoder = KANLinear(
+                hidden_size,
+                input_size,
+                grid_size=grid_size,
+                spline_order=spline_order,
+                scale_noise=scale_noise,
+                scale_base=scale_base,
+                scale_spline=scale_spline,
+                base_activation=base_activation,
+                grid_eps=grid_eps,
+                grid_range=grid_range,
+            )
+        elif kan_ae_type == "kan_relu_dense":
+            self.encoder = Encoder(
+                input_size, hidden_size, bottleneck_size,
+                grid_size=grid_size,
+                spline_order=spline_order,
+                scale_noise=scale_noise,
+                scale_base=scale_base,
+                scale_spline=scale_spline,
+                base_activation=base_activation,
+                grid_eps=grid_eps,
+                grid_range=grid_range,
+            )
+            self.decoder = Decoder(
+                bottleneck_size, hidden_size, input_size,
+                grid_size=grid_size,
+                spline_order=spline_order,
+                scale_noise=scale_noise,
+                scale_base=scale_base,
+                scale_spline=scale_spline,
+                base_activation=base_activation,
+                grid_eps=grid_eps,
+                grid_range=grid_range,
+            )
         else:
             raise ValueError(f"Unknown KAN Autoencoder type: {self.kan_ae_type}")
+
+    def forward(self, x):
+        x = self.encoder(x)
+        x = self.decoder(x)
         return x
 
 

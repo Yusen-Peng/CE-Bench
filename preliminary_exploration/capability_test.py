@@ -17,8 +17,9 @@ def main():
     device = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"Using device: {device}")
 
-    architecture = "kan_small"
-    log_file = f"figures/{architecture}_capability.log"
+    architecture = "kan_relu_dense_2_latent"
+    steps = "9k"
+    log_file = f"figures/{architecture}_{steps}_capability.log"
     sys.stdout = open(log_file, "w")
 
     # Load LLaMA 3.2 tokenizer
@@ -27,7 +28,7 @@ def main():
     tokenizer.pad_token = tokenizer.eos_token
 
     # Load the trained SAE from checkpoints
-    sae_checkpoint_path = f"checkpoints/{architecture}/final_61440000"
+    sae_checkpoint_path = f"checkpoints/{architecture}/{steps}"
     sae = SAE.load_from_pretrained(path=sae_checkpoint_path, device=device)
     sae.eval()
 

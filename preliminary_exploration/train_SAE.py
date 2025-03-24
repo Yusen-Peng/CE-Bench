@@ -14,7 +14,7 @@ def main():
     print("Using device:", device)
     os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
-    total_training_steps = 150 # small
+    total_training_steps = 9_000 # now 9k, jumprelu
     batch_size = 4096
     total_training_tokens = total_training_steps * batch_size
 
@@ -25,9 +25,10 @@ def main():
     # different architectures experiment
     # standard, gated, topk, jumprelu
     # kan_ae_type = "kan_relu_dense"
+    n_checkpoints = 5
     cfg = LanguageModelSAERunnerConfig(
-        architecture="kan",
-        activation_fn_kwargs={"kan_hidden_size": 2048 * 8, "kan_ae_type": "only_kan"},
+        architecture="topk",
+        #activation_fn_kwargs={"kan_hidden_size": 2048 * 8 * 2, "kan_ae_type": "kan_relu_dense"},
         model_name="meta-llama/Llama-3.2-1B",
         hook_name="blocks.0.hook_mlp_out",
         hook_layer=0,
@@ -68,11 +69,12 @@ def main():
         eval_every_n_wandb_logs=20,
         device=device,
         seed=42,
-        n_checkpoints=0,
+        n_checkpoints=n_checkpoints,
         checkpoint_path="checkpoints",
         dtype="bfloat16",
     )
     
+    print(f"training with {cfg.architecture} architecture with {total_training_steps} steps")
     # look at the next cell to see some instruction for what to do while this is running.
     sparse_autoencoder = SAETrainingRunner(cfg).run()
     print("training done!")

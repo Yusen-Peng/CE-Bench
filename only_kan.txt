@@ -1,0 +1,2438 @@
+Using device: cuda
+Loaded pretrained model meta-llama/Llama-3.2-1B into HookedTransformer
+Creating new SAE
+sae.py:332 self.cfg.activation_fn_kwargs={'kan_hidden_size': 16384, 'kan_ae_type': 'only_kan'}
+sae.py:332 self.cfg.activation_fn_kwargs={'kan_hidden_size': 16384, 'kan_ae_type': 'only_kan'}
+Training SAE:   0%|          | 0/4096000 [00:00<?, ?it/s]
+Estimating norm scaling factor:   0%|          | 0/1000 [00:00<?, ?it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  4.02it/s][A[A
+
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 12.87it/s][A[A
+
+                                                               [A[A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 25.63it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:   0%|          | 1/1000 [00:00<09:05,  1.83it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 25.89it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:   2%|▏         | 17/1000 [00:00<00:32, 29.95it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 25.42it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:   3%|▎         | 33/1000 [00:00<00:19, 49.05it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 26.53it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:   5%|▍         | 49/1000 [00:01<00:15, 62.76it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 25.75it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:   6%|▋         | 65/1000 [00:01<00:13, 71.24it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 27.23it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:   8%|▊         | 81/1000 [00:01<00:11, 78.37it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 26.29it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  10%|▉         | 97/1000 [00:01<00:10, 82.53it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 25.83it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  11%|█▏        | 113/1000 [00:01<00:10, 84.92it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 25.78it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  13%|█▎        | 129/1000 [00:01<00:09, 87.17it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 26.61it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  14%|█▍        | 145/1000 [00:02<00:09, 89.28it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 25.38it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  16%|█▌        | 161/1000 [00:02<00:09, 89.63it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 26.21it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  18%|█▊        | 177/1000 [00:02<00:09, 90.55it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 25.14it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  19%|█▉        | 193/1000 [00:02<00:08, 90.21it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 25.83it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  21%|██        | 209/1000 [00:02<00:08, 90.49it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 25.43it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  22%|██▎       | 225/1000 [00:02<00:08, 90.25it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 25.77it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  24%|██▍       | 241/1000 [00:03<00:08, 90.28it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 27.70it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  26%|██▌       | 257/1000 [00:03<00:08, 91.96it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 27.53it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  27%|██▋       | 273/1000 [00:03<00:07, 92.89it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 26.76it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  29%|██▉       | 289/1000 [00:03<00:07, 93.51it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 26.50it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  30%|███       | 305/1000 [00:03<00:07, 93.90it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 26.31it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  32%|███▏      | 321/1000 [00:04<00:07, 93.29it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 27.09it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  34%|███▎      | 337/1000 [00:04<00:07, 93.55it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 26.94it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  35%|███▌      | 353/1000 [00:04<00:06, 93.03it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 26.17it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  37%|███▋      | 369/1000 [00:04<00:06, 93.00it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 25.96it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  38%|███▊      | 385/1000 [00:04<00:06, 92.86it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 26.30it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  40%|████      | 401/1000 [00:04<00:06, 92.54it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 27.64it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  42%|████▏     | 417/1000 [00:05<00:06, 93.39it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 25.46it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  43%|████▎     | 433/1000 [00:05<00:06, 91.74it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 25.39it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  45%|████▍     | 449/1000 [00:05<00:06, 90.68it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 24.75it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  46%|████▋     | 465/1000 [00:05<00:05, 90.22it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 25.45it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  48%|████▊     | 481/1000 [00:05<00:05, 90.23it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 25.43it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  50%|████▉     | 497/1000 [00:05<00:05, 90.51it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 25.66it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  51%|█████▏    | 513/1000 [00:06<00:05, 90.93it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 25.99it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  53%|█████▎    | 529/1000 [00:06<00:05, 91.10it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 25.98it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  55%|█████▍    | 545/1000 [00:06<00:04, 91.53it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 25.77it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  56%|█████▌    | 561/1000 [00:06<00:04, 91.34it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 25.99it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  58%|█████▊    | 577/1000 [00:06<00:04, 91.32it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 26.86it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  59%|█████▉    | 593/1000 [00:06<00:04, 91.62it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 26.22it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  61%|██████    | 609/1000 [00:07<00:04, 91.65it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 25.05it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  62%|██████▎   | 625/1000 [00:07<00:04, 90.68it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 26.83it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  64%|██████▍   | 641/1000 [00:07<00:03, 91.60it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 26.00it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  66%|██████▌   | 657/1000 [00:07<00:03, 91.47it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 26.94it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  67%|██████▋   | 673/1000 [00:07<00:03, 92.00it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 26.69it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  69%|██████▉   | 689/1000 [00:08<00:03, 91.81it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 26.74it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  70%|███████   | 705/1000 [00:08<00:03, 92.62it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 26.79it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  72%|███████▏  | 721/1000 [00:08<00:02, 93.02it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 25.83it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  74%|███████▎  | 737/1000 [00:08<00:02, 92.06it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 25.86it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  75%|███████▌  | 753/1000 [00:08<00:02, 91.72it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 25.55it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  77%|███████▋  | 769/1000 [00:08<00:02, 91.65it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 26.28it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  78%|███████▊  | 785/1000 [00:09<00:02, 91.59it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 26.49it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  80%|████████  | 801/1000 [00:09<00:02, 91.78it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 26.84it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  82%|████████▏ | 817/1000 [00:09<00:01, 92.20it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 27.09it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  83%|████████▎ | 833/1000 [00:09<00:01, 92.98it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 27.37it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  85%|████████▍ | 849/1000 [00:09<00:01, 94.12it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 27.60it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  86%|████████▋ | 865/1000 [00:09<00:01, 94.86it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 27.33it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  88%|████████▊ | 881/1000 [00:10<00:01, 94.15it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 26.33it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  90%|████████▉ | 897/1000 [00:10<00:01, 93.83it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 25.47it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  91%|█████████▏| 913/1000 [00:10<00:00, 92.70it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 26.45it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  93%|█████████▎| 929/1000 [00:10<00:00, 93.19it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 26.60it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  94%|█████████▍| 945/1000 [00:10<00:00, 93.60it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 26.96it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  96%|█████████▌| 961/1000 [00:10<00:00, 93.92it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 25.13it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  98%|█████████▊| 977/1000 [00:11<00:00, 92.43it/s][A
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A[A
+
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 24.30it/s][A[A
+
+                                                               [A[A
+Estimating norm scaling factor:  99%|█████████▉| 993/1000 [00:11<00:00, 90.74it/s][AEstimating norm scaling factor: 100%|██████████| 1000/1000 [00:11<00:00, 88.35it/s]
+
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.80it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.64it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.91it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.57it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.91it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.59it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.83it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.73it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.88it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.69it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.99it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.72it/s][A
+                                                               [A100| mse_loss: 1408.00000:   0%|          | 0/4096000 [00:18<?, ?it/s]100| mse_loss: 1408.00000:   1%|▏         | 51200/4096000 [00:18<24:25, 2759.67it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.89it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.81it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.95it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.62it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.87it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.72it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.79it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.57it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.90it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.77it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.86it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.89it/s][A
+                                                               [A200| mse_loss: 1328.00000:   1%|▏         | 51200/4096000 [00:25<24:25, 2759.67it/s]200| mse_loss: 1328.00000:   2%|▎         | 102400/4096000 [00:25<15:24, 4321.86it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 26.29it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  6.00it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.93it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.71it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.61it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.97it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.76it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.96it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.77it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.97it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.70it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.97it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.88it/s][A
+                                                               [A300| mse_loss: 1272.00000:   2%|▎         | 102400/4096000 [00:33<15:24, 4321.86it/s]300| mse_loss: 1272.00000:   4%|▍         | 153600/4096000 [00:33<12:32, 5239.00it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.83it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.70it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  6.00it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 16.14it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.88it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.68it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.81it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.84it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.93it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.68it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.88it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.71it/s][A
+                                                               [A400| mse_loss: 4352.00000:   4%|▍         | 153600/4096000 [00:40<12:32, 5239.00it/s]400| mse_loss: 4352.00000:   5%|▌         | 204800/4096000 [00:40<11:04, 5858.22it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.92it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.69it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.95it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.44it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.92it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.83it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.93it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.63it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.84it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.71it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.91it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.71it/s][A
+                                                               [A500| mse_loss: 4096.00000:   5%|▌         | 204800/4096000 [00:47<11:04, 5858.22it/s]500| mse_loss: 4096.00000:   6%|▋         | 256000/4096000 [00:47<10:13, 6263.39it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.93it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.67it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.95it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.90it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.97it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.65it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.89it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.76it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.92it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.89it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  6.00it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.96it/s][A
+                                                               [A600| mse_loss: 1088.00000:   6%|▋         | 256000/4096000 [00:54<10:13, 6263.39it/s]600| mse_loss: 1088.00000:   8%|▊         | 307200/4096000 [00:54<09:39, 6539.52it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 25.17it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.96it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 16.09it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.88it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.78it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.57it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 14.27it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.74it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.57it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.79it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.54it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.99it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.88it/s][A
+                                                               [A700| mse_loss: 2800.00000:   8%|▊         | 307200/4096000 [01:01<09:39, 6539.52it/s]700| mse_loss: 2800.00000:   9%|▉         | 358400/4096000 [01:01<09:20, 6671.87it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.82it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.73it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.94it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.81it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.97it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.77it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.83it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.62it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  6.38it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 16.44it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.84it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.94it/s][A
+                                                               [A800| mse_loss: 4192.00000:   9%|▉         | 358400/4096000 [01:09<09:20, 6671.87it/s]800| mse_loss: 4192.00000:  10%|█         | 409600/4096000 [01:09<09:00, 6814.16it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.90it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.60it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.91it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.85it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.89it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.84it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.90it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.99it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.78it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.71it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.91it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.92it/s][A
+                                                               [A900| mse_loss: 2512.00000:  10%|█         | 409600/4096000 [01:16<09:00, 6814.16it/s]900| mse_loss: 2512.00000:  11%|█▏        | 460800/4096000 [01:16<08:45, 6913.35it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.95it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.77it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.90it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.79it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.90it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.94it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.83it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.38it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.90it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.72it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.93it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.66it/s][A
+                                                               [A1000| mse_loss: 1184.00000:  11%|█▏        | 460800/4096000 [01:23<08:45, 6913.35it/s]1000| mse_loss: 1184.00000:  12%|█▎        | 512000/4096000 [01:23<08:33, 6977.66it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 25.39it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.91it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.61it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.78it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.29it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.92it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.62it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.93it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.70it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.86it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.39it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.90it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.46it/s][A
+                                                               [A1100| mse_loss: 2384.00000:  12%|█▎        | 512000/4096000 [01:30<08:33, 6977.66it/s]1100| mse_loss: 2384.00000:  14%|█▍        | 563200/4096000 [01:30<08:27, 6966.50it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.87it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.85it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.92it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.69it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.89it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.64it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.89it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.78it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.96it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.71it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.77it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.56it/s][A
+                                                               [A1200| mse_loss: 972.00000:  14%|█▍        | 563200/4096000 [01:37<08:27, 6966.50it/s] 1200| mse_loss: 972.00000:  15%|█▌        | 614400/4096000 [01:37<08:16, 7011.85it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.92it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.89it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.88it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.96it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.82it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.18it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.85it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.77it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.86it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.68it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.89it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.91it/s][A
+                                                               [A1300| mse_loss: 2112.00000:  15%|█▌        | 614400/4096000 [01:45<08:16, 7011.85it/s]1300| mse_loss: 2112.00000:  16%|█▋        | 665600/4096000 [01:45<08:06, 7044.89it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.94it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.96it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.93it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.68it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.83it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.83it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.88it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.71it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.82it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.87it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.92it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.77it/s][A
+                                                               [A1400| mse_loss: 4160.00000:  16%|█▋        | 665600/4096000 [01:52<08:06, 7044.89it/s]1400| mse_loss: 4160.00000:  18%|█▊        | 716800/4096000 [01:52<07:58, 7066.82it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 24.85it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.82it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.76it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.86it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.76it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.71it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.51it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.91it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.64it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.88it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.68it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.88it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.84it/s][A
+                                                               [A1500| mse_loss: 1144.00000:  18%|█▊        | 716800/4096000 [01:59<07:58, 7066.82it/s]1500| mse_loss: 1144.00000:  19%|█▉        | 768000/4096000 [01:59<07:53, 7031.57it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.71it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.61it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.90it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.74it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.87it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.71it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.87it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.61it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.90it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.59it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.67it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.61it/s][A
+                                                               [A1600| mse_loss: 1064.00000:  19%|█▉        | 768000/4096000 [02:06<07:53, 7031.57it/s]1600| mse_loss: 1064.00000:  20%|██        | 819200/4096000 [02:06<07:44, 7052.14it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.90it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.91it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.84it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.83it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.86it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.41it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.92it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.56it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.84it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.92it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.85it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.58it/s][A
+                                                               [A1700| mse_loss: 1944.00000:  20%|██        | 819200/4096000 [02:14<07:44, 7052.14it/s]1700| mse_loss: 1944.00000:  21%|██▏       | 870400/4096000 [02:14<07:36, 7067.09it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.80it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.65it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.87it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.61it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.85it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.86it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.86it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.63it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.82it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.57it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.86it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.60it/s][A
+                                                               [A1800| mse_loss: 3136.00000:  21%|██▏       | 870400/4096000 [02:21<07:36, 7067.09it/s]1800| mse_loss: 3136.00000:  22%|██▎       | 921600/4096000 [02:21<07:28, 7075.23it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 25.32it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.94it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 16.02it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.84it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.47it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.83it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.75it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.91it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.90it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.84it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.70it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.76it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.85it/s][A
+                                                               [A1900| mse_loss: 2448.00000:  22%|██▎       | 921600/4096000 [02:28<07:28, 7075.23it/s]1900| mse_loss: 2448.00000:  24%|██▍       | 972800/4096000 [02:28<07:23, 7036.30it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.83it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 16.23it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.89it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.69it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.92it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.65it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.72it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.48it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.90it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 14.68it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.70it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.57it/s][A
+                                                               [A2000| mse_loss: 1040.00000:  24%|██▍       | 972800/4096000 [02:35<07:23, 7036.30it/s]2000| mse_loss: 1040.00000:  25%|██▌       | 1024000/4096000 [02:35<07:15, 7048.61it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.86it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.71it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.85it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.67it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.85it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.51it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.78it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.67it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.79it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.71it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.86it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.64it/s][A
+                                                               [A2100| mse_loss: 1012.00000:  25%|██▌       | 1024000/4096000 [02:43<07:15, 7048.61it/s]2100| mse_loss: 1012.00000:  26%|██▋       | 1075200/4096000 [02:43<07:08, 7057.88it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.86it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.77it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.84it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.24it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.91it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.82it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.86it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.74it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.85it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.67it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.93it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.56it/s][A
+                                                               [A2200| mse_loss: 1032.00000:  26%|██▋       | 1075200/4096000 [02:50<07:08, 7057.88it/s]2200| mse_loss: 1032.00000:  28%|██▊       | 1126400/4096000 [02:50<07:00, 7065.08it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 24.77it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.88it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.86it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.76it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.56it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.86it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.60it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.87it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.71it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.87it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.45it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.90it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.83it/s][A
+                                                               [A2300| mse_loss: 988.00000:  28%|██▊       | 1126400/4096000 [02:57<07:00, 7065.08it/s] 2300| mse_loss: 988.00000:  29%|██▉       | 1177600/4096000 [02:57<06:55, 7023.60it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.84it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.55it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.86it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.62it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.87it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.78it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.89it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.46it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.86it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.49it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.84it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.48it/s][A
+                                                               [A2400| mse_loss: 2144.00000:  29%|██▉       | 1177600/4096000 [03:05<06:55, 7023.60it/s]2400| mse_loss: 2144.00000:  30%|███       | 1228800/4096000 [03:05<06:47, 7036.11it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.85it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.81it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.76it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.25it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.80it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.59it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.90it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.34it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.71it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.39it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.84it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.31it/s][A
+                                                               [A2500| mse_loss: 1224.00000:  30%|███       | 1228800/4096000 [03:12<06:47, 7036.11it/s]2500| mse_loss: 1224.00000:  31%|███▏      | 1280000/4096000 [03:12<06:39, 7040.98it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.72it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.39it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.84it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.40it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.69it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.48it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.77it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.65it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.72it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.60it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.84it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.48it/s][A
+                                                               [A2600| mse_loss: 2384.00000:  31%|███▏      | 1280000/4096000 [03:19<06:39, 7040.98it/s]2600| mse_loss: 2384.00000:  32%|███▎      | 1331200/4096000 [03:19<06:32, 7045.34it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 25.32it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.83it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.45it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.64it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.57it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.84it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.42it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.80it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.40it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.85it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.37it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.74it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.04it/s][A
+                                                               [A2700| mse_loss: 1020.00000:  32%|███▎      | 1331200/4096000 [03:26<06:32, 7045.34it/s]2700| mse_loss: 1020.00000:  34%|███▍      | 1382400/4096000 [03:26<06:27, 6997.46it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.82it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.42it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.83it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.45it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.83it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.57it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.87it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.60it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.84it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.68it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.79it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.45it/s][A
+                                                               [A2800| mse_loss: 3104.00000:  34%|███▍      | 1382400/4096000 [03:34<06:27, 6997.46it/s]2800| mse_loss: 3104.00000:  35%|███▌      | 1433600/4096000 [03:34<06:19, 7015.53it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.88it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.82it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.82it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.57it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.74it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.61it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.85it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.76it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.75it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.65it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.90it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.93it/s][A
+                                                               [A2900| mse_loss: 3168.00000:  35%|███▌      | 1433600/4096000 [03:41<06:19, 7015.53it/s]2900| mse_loss: 3168.00000:  36%|███▋      | 1484800/4096000 [03:41<06:11, 7032.55it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.86it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.90it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.83it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.52it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.85it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.77it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.81it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 14.94it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.77it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.59it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.77it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.41it/s][A
+                                                               [A3000| mse_loss: 1016.00000:  36%|███▋      | 1484800/4096000 [03:48<06:11, 7032.55it/s]3000| mse_loss: 1016.00000:  38%|███▊      | 1536000/4096000 [03:48<06:03, 7038.50it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 25.27it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.83it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.52it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.72it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.57it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.87it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.44it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.84it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.71it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.87it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.78it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.89it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.80it/s][A
+                                                               [A3100| mse_loss: 1080.00000:  38%|███▊      | 1536000/4096000 [03:56<06:03, 7038.50it/s]3100| mse_loss: 1080.00000:  39%|███▉      | 1587200/4096000 [03:56<05:58, 7000.60it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.77it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.49it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.85it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.60it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.87it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.97it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.86it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.40it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.85it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.86it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.82it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.48it/s][A
+                                                               [A3200| mse_loss: 2832.00000:  39%|███▉      | 1587200/4096000 [04:03<05:58, 7000.60it/s]3200| mse_loss: 2832.00000:  40%|████      | 1638400/4096000 [04:03<05:50, 7019.30it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.71it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.53it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.92it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.68it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.72it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.41it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.93it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.67it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.70it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.56it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.88it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.53it/s][A
+                                                               [A3300| mse_loss: 3488.00000:  40%|████      | 1638400/4096000 [04:10<05:50, 7019.30it/s]3300| mse_loss: 3488.00000:  41%|████▏     | 1689600/4096000 [04:10<05:42, 7028.85it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.78it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.68it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.88it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.31it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.82it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.71it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.83it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.46it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.76it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.49it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.86it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.52it/s][A
+                                                               [A3400| mse_loss: 992.00000:  41%|████▏     | 1689600/4096000 [04:17<05:42, 7028.85it/s] 3400| mse_loss: 992.00000:  42%|████▎     | 1740800/4096000 [04:17<05:34, 7035.24it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 24.98it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.88it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.48it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.66it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.50it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.85it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.51it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.72it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.49it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.90it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.54it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.71it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.65it/s][A
+                                                               [A3500| mse_loss: 1192.00000:  42%|████▎     | 1740800/4096000 [04:25<05:34, 7035.24it/s]3500| mse_loss: 1192.00000:  44%|████▍     | 1792000/4096000 [04:25<05:29, 6992.75it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.81it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.64it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.71it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.37it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.84it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.40it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.74it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.49it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.85it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.41it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.62it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.34it/s][A
+                                                               [A3600| mse_loss: 1928.00000:  44%|████▍     | 1792000/4096000 [04:32<05:29, 6992.75it/s]3600| mse_loss: 1928.00000:  45%|████▌     | 1843200/4096000 [04:32<05:21, 7007.48it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.83it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.49it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.72it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.60it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.88it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.43it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.81it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.64it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.78it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.41it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.83it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.74it/s][A
+                                                               [A3700| mse_loss: 1896.00000:  45%|████▌     | 1843200/4096000 [04:39<05:21, 7007.48it/s]3700| mse_loss: 1896.00000:  46%|████▋     | 1894400/4096000 [04:39<05:13, 7022.38it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.83it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.49it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.80it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.38it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.88it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.65it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.73it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.22it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.88it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.72it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.90it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.75it/s][A
+                                                               [A3800| mse_loss: 1904.00000:  46%|████▋     | 1894400/4096000 [04:47<05:13, 7022.38it/s]3800| mse_loss: 1904.00000:  48%|████▊     | 1945600/4096000 [04:47<05:05, 7033.55it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 26.06it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.84it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.71it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.68it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.44it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.85it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.42it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.78it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.68it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.83it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.68it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.89it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 16.01it/s][A
+                                                               [A3900| mse_loss: 1024.00000:  48%|████▊     | 1945600/4096000 [04:54<05:05, 7033.55it/s]3900| mse_loss: 1024.00000:  49%|████▉     | 1996800/4096000 [04:54<04:59, 6998.34it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.77it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.51it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.74it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.33it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.86it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.48it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.81it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.23it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.88it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.09it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.74it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.53it/s][A
+                                                               [A4000| mse_loss: 972.00000:  49%|████▉     | 1996800/4096000 [05:01<04:59, 6998.34it/s] 4000| mse_loss: 972.00000:  50%|█████     | 2048000/4096000 [05:01<04:52, 7011.70it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.90it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.60it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.81it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.47it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.93it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.79it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.82it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.45it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.79it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.49it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.92it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.86it/s][A
+                                                               [A4100| mse_loss: 2784.00000:  50%|█████     | 2048000/4096000 [05:09<04:52, 7011.70it/s]4100| mse_loss: 2784.00000:  51%|█████▏    | 2099200/4096000 [05:09<04:44, 7029.71it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.82it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.45it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.88it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.34it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.78it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.59it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.80it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.50it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.82it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.72it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.89it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.99it/s][A
+                                                               [A4200| mse_loss: 1064.00000:  51%|█████▏    | 2099200/4096000 [05:16<04:44, 7029.71it/s]4200| mse_loss: 1064.00000:  52%|█████▎    | 2150400/4096000 [05:16<04:36, 7040.98it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 25.52it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.89it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.55it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.80it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.46it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.88it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.76it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.82it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.65it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.90it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.69it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.90it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.69it/s][A
+                                                               [A4300| mse_loss: 1120.00000:  52%|█████▎    | 2150400/4096000 [05:23<04:36, 7040.98it/s]4300| mse_loss: 1120.00000:  54%|█████▍    | 2201600/4096000 [05:23<04:30, 7004.75it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.75it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.65it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.92it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.76it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.85it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.97it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.88it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.48it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.80it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.37it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.74it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.38it/s][A
+                                                               [A4400| mse_loss: 1816.00000:  54%|█████▍    | 2201600/4096000 [05:30<04:30, 7004.75it/s]4400| mse_loss: 1816.00000:  55%|█████▌    | 2252800/4096000 [05:30<04:22, 7023.68it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.83it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.55it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.88it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.58it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.82it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.43it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.88it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.63it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.79it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.39it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.84it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.45it/s][A
+                                                               [A4500| mse_loss: 1080.00000:  55%|█████▌    | 2252800/4096000 [05:38<04:22, 7023.68it/s]4500| mse_loss: 1080.00000:  56%|█████▋    | 2304000/4096000 [05:38<04:14, 7033.78it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.81it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.67it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.85it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.49it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.85it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.63it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.78it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.44it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.83it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.50it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.82it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.37it/s][A
+                                                               [A4600| mse_loss: 1000.00000:  56%|█████▋    | 2304000/4096000 [05:45<04:14, 7033.78it/s]4600| mse_loss: 1000.00000:  57%|█████▊    | 2355200/4096000 [05:45<04:07, 7040.37it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 25.03it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.83it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.43it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.80it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.54it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.85it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.43it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.83it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.43it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.86it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.52it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.87it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.37it/s][A
+                                                               [A4700| mse_loss: 1012.00000:  57%|█████▊    | 2355200/4096000 [05:52<04:07, 7040.37it/s]4700| mse_loss: 1012.00000:  59%|█████▉    | 2406400/4096000 [05:52<04:01, 6999.43it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.74it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.61it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.85it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.41it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.76it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.47it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.86it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.62it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.79it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.70it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.81it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.49it/s][A
+                                                               [A4800| mse_loss: 2400.00000:  59%|█████▉    | 2406400/4096000 [06:00<04:01, 6999.43it/s]4800| mse_loss: 2400.00000:  60%|██████    | 2457600/4096000 [06:00<03:53, 7018.74it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.77it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.49it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.85it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.41it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.83it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.37it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.82it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.41it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.81it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.66it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.91it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.82it/s][A
+                                                               [A4900| mse_loss: 1312.00000:  60%|██████    | 2457600/4096000 [06:07<03:53, 7018.74it/s]4900| mse_loss: 1312.00000:  61%|██████▏   | 2508800/4096000 [06:07<03:45, 7032.74it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.82it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.49it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.64it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 14.35it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.68it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.69it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.82it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.52it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.91it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.92it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.73it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.53it/s][A
+                                                               [A5000| mse_loss: 1480.00000:  61%|██████▏   | 2508800/4096000 [06:14<03:45, 7032.74it/s]5000| mse_loss: 1480.00000:  62%|██████▎   | 2560000/4096000 [06:14<03:38, 7038.31it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 24.70it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.67it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.43it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.78it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.54it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.81it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.73it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.88it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.85it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.85it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.70it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.86it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.42it/s][A
+                                                               [A5100| mse_loss: 1000.00000:  62%|██████▎   | 2560000/4096000 [06:21<03:38, 7038.31it/s]5100| mse_loss: 1000.00000:  64%|██████▍   | 2611200/4096000 [06:21<03:32, 7001.60it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.78it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.74it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.80it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.28it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.84it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.58it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.92it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.50it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.73it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.70it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.84it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.50it/s][A
+                                                               [A5200| mse_loss: 1056.00000:  64%|██████▍   | 2611200/4096000 [06:29<03:32, 7001.60it/s]5200| mse_loss: 1056.00000:  65%|██████▌   | 2662400/4096000 [06:29<03:24, 7021.50it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.92it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.55it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.86it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.67it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.93it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.33it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.86it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.57it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.84it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.51it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.86it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.78it/s][A
+                                                               [A5300| mse_loss: 1776.00000:  65%|██████▌   | 2662400/4096000 [06:36<03:24, 7021.50it/s]5300| mse_loss: 1776.00000:  66%|██████▋   | 2713600/4096000 [06:36<03:16, 7036.63it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.88it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.70it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.84it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.55it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.81it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.67it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.73it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.23it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.89it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.67it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.82it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.45it/s][A
+                                                               [A5400| mse_loss: 1664.00000:  66%|██████▋   | 2713600/4096000 [06:43<03:16, 7036.63it/s]5400| mse_loss: 1664.00000:  68%|██████▊   | 2764800/4096000 [06:43<03:08, 7045.45it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 26.24it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.86it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.73it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.83it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.60it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.78it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.17it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.77it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.66it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.90it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.57it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.90it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.70it/s][A
+                                                               [A5500| mse_loss: 1816.00000:  68%|██████▊   | 2764800/4096000 [06:51<03:08, 7045.45it/s]5500| mse_loss: 1816.00000:  69%|██████▉   | 2816000/4096000 [06:51<03:02, 7007.71it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.83it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.52it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.86it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.96it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.88it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.47it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.91it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.42it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.83it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.90it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.83it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.58it/s][A
+                                                               [A5600| mse_loss: 1832.00000:  69%|██████▉   | 2816000/4096000 [06:58<03:02, 7007.71it/s]5600| mse_loss: 1832.00000:  70%|███████   | 2867200/4096000 [06:58<02:54, 7028.08it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.88it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.69it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.93it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.44it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.85it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.64it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.90it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.57it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.68it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.60it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.89it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.77it/s][A
+                                                               [A5700| mse_loss: 1004.00000:  70%|███████   | 2867200/4096000 [07:05<02:54, 7028.08it/s]5700| mse_loss: 1004.00000:  71%|███████▏  | 2918400/4096000 [07:05<02:47, 7042.69it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.91it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.92it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.88it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.51it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.68it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.55it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.75it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.40it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.81it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.49it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.87it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.56it/s][A
+                                                               [A5800| mse_loss: 2512.00000:  71%|███████▏  | 2918400/4096000 [07:12<02:47, 7042.69it/s]5800| mse_loss: 2512.00000:  72%|███████▎  | 2969600/4096000 [07:12<02:39, 7050.53it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 25.36it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.83it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.54it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.84it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.20it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.73it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.48it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.83it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.37it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.84it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.77it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.86it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.69it/s][A
+                                                               [A5900| mse_loss: 968.00000:  72%|███████▎  | 2969600/4096000 [07:20<02:39, 7050.53it/s] 5900| mse_loss: 968.00000:  74%|███████▍  | 3020800/4096000 [07:20<02:33, 7008.96it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.73it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.51it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.90it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.67it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.83it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.28it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.91it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.72it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.88it/s][A
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00,  7.41it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.81it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.86it/s][A
+                                                               [A6000| mse_loss: 1720.00000:  74%|███████▍  | 3020800/4096000 [07:27<02:33, 7008.96it/s]6000| mse_loss: 1720.00000:  75%|███████▌  | 3072000/4096000 [07:27<02:26, 6981.35it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.91it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.63it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.65it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.07it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.85it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.49it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.81it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.73it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.82it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.47it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.82it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.51it/s][A
+                                                               [A6100| mse_loss: 1056.00000:  75%|███████▌  | 3072000/4096000 [07:34<02:26, 6981.35it/s]6100| mse_loss: 1056.00000:  76%|███████▋  | 3123200/4096000 [07:34<02:18, 7005.15it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.87it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.65it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.74it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.38it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.86it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.70it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.78it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.38it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.88it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.90it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.79it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.61it/s][A
+                                                               [A6200| mse_loss: 1192.00000:  76%|███████▋  | 3123200/4096000 [07:42<02:18, 7005.15it/s]6200| mse_loss: 1192.00000:  78%|███████▊  | 3174400/4096000 [07:42<02:11, 7026.66it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 25.39it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.85it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.60it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.79it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.50it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.74it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.49it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.85it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.50it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.89it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.44it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.74it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.69it/s][A
+                                                               [A6300| mse_loss: 1672.00000:  78%|███████▊  | 3174400/4096000 [07:49<02:11, 7026.66it/s]6300| mse_loss: 1672.00000:  79%|███████▉  | 3225600/4096000 [07:49<02:04, 6991.57it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.84it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.41it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.77it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.47it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.90it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.68it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.68it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.38it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.86it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.56it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.84it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.93it/s][A
+                                                               [A6400| mse_loss: 2048.00000:  79%|███████▉  | 3225600/4096000 [07:56<02:04, 6991.57it/s]6400| mse_loss: 2048.00000:  80%|████████  | 3276800/4096000 [07:56<01:56, 7015.99it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.85it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.52it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.87it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.73it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.86it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.53it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.79it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.59it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.74it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.14it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.74it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.38it/s][A
+                                                               [A6500| mse_loss: 1144.00000:  80%|████████  | 3276800/4096000 [08:04<01:56, 7015.99it/s]6500| mse_loss: 1144.00000:  81%|████████▏ | 3328000/4096000 [08:04<01:49, 7030.06it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.86it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.70it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.80it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.53it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.87it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.63it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.81it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.61it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.77it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.68it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.83it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.55it/s][A
+                                                               [A6600| mse_loss: 1880.00000:  81%|████████▏ | 3328000/4096000 [08:11<01:49, 7030.06it/s]6600| mse_loss: 1880.00000:  82%|████████▎ | 3379200/4096000 [08:11<01:41, 7044.64it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 25.41it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.86it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.73it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.73it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.60it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.88it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.83it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.84it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.60it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.87it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.62it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.82it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.59it/s][A
+                                                               [A6700| mse_loss: 1752.00000:  82%|████████▎ | 3379200/4096000 [08:18<01:41, 7044.64it/s]6700| mse_loss: 1752.00000:  84%|████████▍ | 3430400/4096000 [08:18<01:34, 7009.47it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.82it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.42it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.78it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.70it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.86it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.61it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.89it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.68it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.90it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.93it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.82it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.83it/s][A
+                                                               [A6800| mse_loss: 1136.00000:  84%|████████▍ | 3430400/4096000 [08:25<01:34, 7009.47it/s]6800| mse_loss: 1136.00000:  85%|████████▌ | 3481600/4096000 [08:25<01:27, 7032.17it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.88it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.99it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.84it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.74it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.91it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.79it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.92it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.90it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.65it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.68it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.92it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.75it/s][A
+                                                               [A6900| mse_loss: 1920.00000:  85%|████████▌ | 3481600/4096000 [08:33<01:27, 7032.17it/s]6900| mse_loss: 1920.00000:  86%|████████▋ | 3532800/4096000 [08:33<01:19, 7051.91it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.66it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.57it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.90it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.74it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.82it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.88it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.84it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.69it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.83it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.56it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.80it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.59it/s][A
+                                                               [A7000| mse_loss: 988.00000:  86%|████████▋ | 3532800/4096000 [08:40<01:19, 7051.91it/s] 7000| mse_loss: 988.00000:  88%|████████▊ | 3584000/4096000 [08:40<01:12, 7060.23it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 25.41it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.83it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.45it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.78it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.53it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.89it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.57it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.83it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.44it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.92it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.72it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.84it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.98it/s][A
+                                                               [A7100| mse_loss: 1544.00000:  88%|████████▊ | 3584000/4096000 [08:47<01:12, 7060.23it/s]7100| mse_loss: 1544.00000:  89%|████████▉ | 3635200/4096000 [08:47<01:05, 7019.53it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.73it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.51it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.86it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.88it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.86it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.58it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.85it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.53it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.87it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.58it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.85it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.56it/s][A
+                                                               [A7200| mse_loss: 1488.00000:  89%|████████▉ | 3635200/4096000 [08:54<01:05, 7019.53it/s]7200| mse_loss: 1488.00000:  90%|█████████ | 3686400/4096000 [08:54<00:58, 7035.90it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.74it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.59it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.90it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.53it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.84it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.88it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.88it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.83it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.75it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.76it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.81it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.52it/s][A
+                                                               [A7300| mse_loss: 1800.00000:  90%|█████████ | 3686400/4096000 [09:02<00:58, 7035.90it/s]7300| mse_loss: 1800.00000:  91%|█████████▏| 3737600/4096000 [09:02<00:50, 7050.01it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.79it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.49it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.85it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.46it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.84it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.49it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.84it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.74it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.81it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.28it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.88it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.60it/s][A
+                                                               [A7400| mse_loss: 1776.00000:  91%|█████████▏| 3737600/4096000 [09:09<00:50, 7050.01it/s]7400| mse_loss: 1776.00000:  92%|█████████▎| 3788800/4096000 [09:09<00:43, 7055.64it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 25.39it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.90it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.75it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.79it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.57it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.89it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.90it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.88it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.59it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.83it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.81it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.93it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.89it/s][A
+                                                               [A7500| mse_loss: 1064.00000:  92%|█████████▎| 3788800/4096000 [09:16<00:43, 7055.64it/s]7500| mse_loss: 1064.00000:  94%|█████████▍| 3840000/4096000 [09:16<00:36, 7020.81it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.67it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.42it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.90it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.39it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.70it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.52it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.85it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.19it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.70it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.47it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.81it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.40it/s][A
+                                                               [A7600| mse_loss: 2176.00000:  94%|█████████▍| 3840000/4096000 [09:24<00:36, 7020.81it/s]7600| mse_loss: 2176.00000:  95%|█████████▌| 3891200/4096000 [09:24<00:29, 7031.82it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.73it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.46it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.89it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.39it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.78it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.46it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.87it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.43it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.69it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.48it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.87it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.48it/s][A
+                                                               [A7700| mse_loss: 1004.00000:  95%|█████████▌| 3891200/4096000 [09:31<00:29, 7031.82it/s]7700| mse_loss: 1004.00000:  96%|█████████▋| 3942400/4096000 [09:31<00:21, 7040.92it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.80it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.52it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.86it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.33it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.67it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.48it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.85it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.45it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.86it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.84it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.90it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.53it/s][A
+                                                               [A7800| mse_loss: 1216.00000:  96%|█████████▋| 3942400/4096000 [09:38<00:21, 7040.92it/s]7800| mse_loss: 1216.00000:  98%|█████████▊| 3993600/4096000 [09:38<00:14, 7048.91it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  75%|███████▌  | 3/4 [00:00<00:00, 26.15it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.86it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.47it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.84it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.73it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.87it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.40it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.88it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.78it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.88it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.52it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.84it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.65it/s][A
+                                                               [A7900| mse_loss: 1640.00000:  98%|█████████▊| 3993600/4096000 [09:45<00:14, 7048.91it/s]7900| mse_loss: 1640.00000:  99%|█████████▉| 4044800/4096000 [09:45<00:07, 7012.24it/s]
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.81it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.55it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.81it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.58it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.87it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.49it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.82it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.56it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.90it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.30it/s][A
+                                                               [A
+Refilling buffer:   0%|          | 0/4 [00:00<?, ?it/s][A
+Refilling buffer:  25%|██▌       | 1/4 [00:00<00:00,  5.85it/s][A
+Refilling buffer: 100%|██████████| 4/4 [00:00<00:00, 15.77it/s][A
+                                                               [A8000| mse_loss: 1012.00000:  99%|█████████▉| 4044800/4096000 [09:53<00:07, 7012.24it/s]8000| mse_loss: 1012.00000: 100%|██████████| 4096000/4096000 [09:53<00:00, 7029.38it/s]8000| mse_loss: 1012.00000: 100%|██████████| 4096000/4096000 [09:55<00:00, 6881.64it/s]
+training done!
