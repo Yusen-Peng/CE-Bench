@@ -2,8 +2,8 @@ import pandas as pd
 
 if __name__ == "__main__":
     # Load the data
-    architecture = "kan_relu_dense_latent"
-    steps = "9k"
+    architecture = "RIGHT_kan_relu_dense_latent"
+    steps = "1k"
     file_path = f"figures/{architecture}_{steps}_feature_interpretability_results.csv"
     df = pd.read_csv(file_path)
     average_score = df["Score"].mean()

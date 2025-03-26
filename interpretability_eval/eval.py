@@ -30,8 +30,8 @@ def main():
     print("Tokenizer loaded!")
 
     # Load the trained SAE
-    architecture = "kan_relu_dense_latent"
-    steps = "1.5k"
+    architecture = "RIGHT_kan_relu_dense_latent"
+    steps = "1k"
     sae_checkpoint_path = f"checkpoints/{architecture}/{steps}"
     sae = SAE.load_from_pretrained(path=sae_checkpoint_path, device=device)
     print("SAE loaded!")
@@ -64,7 +64,10 @@ def main():
     num_features = activations.shape[2]
     feature_activations_sum = activations[0, :, :].sum(axis=0)  # Shape: (num_features,)
 
-    # Select the top 100 most activated features
+    # randomly select 100 features
+    num_selected = min(100, num_features)
+    # random select
+    selected_feature_indices = np.random.choice(num_features, num_selected, replace=False)
     num_selected = min(100, num_features)
     selected_feature_indices = np.argsort(feature_activations_sum)[-num_selected:]  # Top activated features
 

@@ -9,7 +9,6 @@ from transformer_lens import utils
 from functools import partial
 from transformers import AutoTokenizer
 
-
 torch.set_grad_enabled(False)
 def main():
     # Set device
@@ -22,8 +21,8 @@ def main():
     tokenizer.pad_token = tokenizer.eos_token
 
     # Load the trained SAE from checkpoints
-    architecture = "kan_relu_dense_2_latent"
-    steps = "9k"
+    architecture = "RIGHT_jumprelu"
+    steps = "3k"
     sae_checkpoint_path = f"checkpoints/{architecture}/{steps}"
     sae = SAE.load_from_pretrained(path=sae_checkpoint_path, device=device)
     sae.eval()
@@ -38,23 +37,21 @@ def main():
     # Verify SAE config
     print(f"Loaded SAE with d_in={sae.cfg.d_in}, d_sae={sae.cfg.d_sae}, hook={sae.cfg.hook_name}")
 
-    # Load and downsample the pile-10k dataset
-    dataset = load_dataset("NeelNanda/pile-10k", split="train")
-    #dataset = load_dataset("apollo-research/roneneldan-TinyStories-tokenizer-gpt2", split="train")
-    desired_sample_size = 400 # FIXME: experiment with this downsampling size!
+    dataset = load_dataset("GulkoA/TinyStories-tokenized-Llama-3.2", split="validation")
+    desired_sample_size = 1_000 # 1k validation samples
     downsampled_dataset = dataset.shuffle(seed=42).select(range(desired_sample_size))
 
     # Tokenization function
-    def tokenize_function(examples):
-        return tokenizer(
-            examples["text"],
-            padding="max_length",
-            truncation=True,
-            max_length=128,
-            return_tensors="pt",
-        )
+    # def tokenize_function(examples):
+    #     return tokenizer(
+    #         examples["text"],
+    #         padding="max_length",
+    #         truncation=True,
+    #         max_length=128,
+    #         return_tensors="pt",
+    #     )
 
-    tokenized_dataset = downsampled_dataset.map(tokenize_function, batched=True)
+    #tokenized_dataset = downsampled_dataset.map(tokenize_function, batched=True)
 
     batch_size = 8
     results = []
@@ -65,12 +62,12 @@ def main():
 
 
     with torch.no_grad():
-        for i in range(0, len(tokenized_dataset), batch_size):
+        for i in range(0, len(downsampled_dataset), batch_size):
             gc.collect()
             torch.cuda.empty_cache()
 
             # Select batch
-            batch = tokenized_dataset[i : i + batch_size]
+            batch = downsampled_dataset[i : i + batch_size]
             inputs = torch.tensor(batch["input_ids"]).to(device, non_blocking=True)
 
             # Use autocast for mixed precision (memory efficient)
@@ -117,7 +114,6 @@ def main():
 
     print("Done with batch processing!")
     import pandas as pd
-    # Convert to a DataFrame and save to CSV
     df = pd.DataFrame(results)
     csv_path = f"figures/{architecture}_{steps}_batch_losses.csv"
     df.to_csv(csv_path, index=False)

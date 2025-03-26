@@ -21,8 +21,9 @@ def main():
     tokenizer.pad_token = tokenizer.eos_token
 
     # Load the trained SAE from checkpoints
-    architecture = "only_kan"
-    sae_checkpoint_path = f"checkpoints/{architecture}/final_36864000"
+    architecture = "RIGHT_kan_relu_dense_latent"
+    steps = "1k"
+    sae_checkpoint_path = f"checkpoints/{architecture}/{steps}"
     sae = SAE.load_from_pretrained(path=sae_checkpoint_path, device=device)
     sae.eval()
 
@@ -32,37 +33,22 @@ def main():
         device=device,
         **sae.cfg.model_from_pretrained_kwargs
     )
-
     # Verify SAE config
     print(f"Loaded SAE with d_in={sae.cfg.d_in}, d_sae={sae.cfg.d_sae}, hook={sae.cfg.hook_name}")
-
     # Load and downsample the pile-10k dataset
-    dataset = load_dataset("NeelNanda/pile-10k", split="train")
-    desired_sample_size = 400  # FIXME: experiment with this downsampling size!
+    dataset = load_dataset("GulkoA/TinyStories-tokenized-Llama-3.2", split="validation")
+    desired_sample_size = 1_000 # 1k validation samples
     downsampled_dataset = dataset.shuffle(seed=42).select(range(desired_sample_size))
-
-    # Tokenization function
-    def tokenize_function(examples):
-        return tokenizer(
-            examples["text"],
-            padding="max_length",
-            truncation=True,
-            max_length=128,
-            return_tensors="pt",
-        )
-
-    tokenized_dataset = downsampled_dataset.map(tokenize_function, batched=True)
-
     batch_size = 8
     all_activations = []
     avg_l0_scores = []
     with torch.no_grad():
-        for i in range(0, len(tokenized_dataset), batch_size):
+        for i in range(0, len(downsampled_dataset), batch_size):
             torch.cuda.empty_cache()
             gc.collect()
 
             # Select batch
-            batch = tokenized_dataset[i : i + batch_size]
+            batch = downsampled_dataset[i : i + batch_size]
             inputs = torch.tensor(batch["input_ids"]).to(device, non_blocking=True)
 
             # Use autocast for mixed precision (memory efficient)
@@ -91,7 +77,7 @@ def main():
     all_activations = np.concatenate(all_activations)
 
     # different versions
-    csv_file = f"figures/{architecture}_l0_scores.csv"
+    csv_file = f"figures/{architecture}_{steps}_l0_scores.csv"
     os.makedirs(os.path.dirname(csv_file), exist_ok=True)  # Ensure directory exists
     with open(csv_file, mode='w', newline='') as file:
         writer = csv.writer(file)

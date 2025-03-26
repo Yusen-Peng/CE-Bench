@@ -17,8 +17,8 @@ def main():
     device = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"Using device: {device}")
 
-    architecture = "kan_relu_dense_2_latent"
-    steps = "9k"
+    architecture = "RIGHT_kan_relu_dense_latent"
+    steps = "3k"
     log_file = f"figures/{architecture}_{steps}_capability.log"
     sys.stdout = open(log_file, "w")
 

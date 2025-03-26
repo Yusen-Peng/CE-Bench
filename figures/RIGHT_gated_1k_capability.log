@@ -1,0 +1,32 @@
+Loaded pretrained model meta-llama/Llama-3.2-1B into HookedTransformer
+Tokenized prompt: ['<|begin_of_text|>', 'If', ' the', ' glass', ' falls', ' off', ' the', ' table', ',', ' it', ' will']
+Tokenized answer: [' break']
+Performance on answer token:
+Rank: 2        Logit: 20.85 Prob: 12.82% Token: | break|
+Top 0th token. Logit: 20.90 Prob: 13.47% Token: | be|
+Top 1th token. Logit: 20.87 Prob: 13.05% Token: | not|
+Top 2th token. Logit: 20.85 Prob: 12.82% Token: | break|
+Top 3th token. Logit: 20.04 Prob:  5.69% Token: | fall|
+Top 4th token. Logit: 19.89 Prob:  4.89% Token: | hit|
+Top 5th token. Logit: 18.78 Prob:  1.61% Token: | sh|
+Top 6th token. Logit: 18.72 Prob:  1.52% Token: | cause|
+Top 7th token. Logit: 18.59 Prob:  1.34% Token: | make|
+Top 8th token. Logit: 18.59 Prob:  1.33% Token: | have|
+Top 9th token. Logit: 18.52 Prob:  1.25% Token: | probably|
+Ranks of the answer tokens: [(' break', 2)]
+Tokenized prompt: ['<|begin_of_text|>', 'If', ' the', ' glass', ' falls', ' off', ' the', ' table', ',', ' it', ' will']
+Tokenized answer: [' break']
+Padded sae_out from torch.Size([1, 10, 2048]) to torch.Size([1, 12, 2048])
+Performance on answer token:
+Rank: 15       Logit: 17.84 Prob:  0.61% Token: | break|
+Top 0th token. Logit: 21.61 Prob: 26.26% Token: | be|
+Top 1th token. Logit: 19.95 Prob:  5.01% Token: | not|
+Top 2th token. Logit: 19.30 Prob:  2.61% Token: | have|
+Top 3th token. Logit: 18.84 Prob:  1.65% Token: | make|
+Top 4th token. Logit: 18.75 Prob:  1.51% Token: | also|
+Top 5th token. Logit: 18.58 Prob:  1.28% Token: | take|
+Top 6th token. Logit: 18.38 Prob:  1.04% Token: | become|
+Top 7th token. Logit: 18.22 Prob:  0.89% Token: | come|
+Top 8th token. Logit: 18.22 Prob:  0.88% Token: | go|
+Top 9th token. Logit: 18.12 Prob:  0.80% Token: | help|
+Ranks of the answer tokens: [(' break', 15)]

@@ -1,0 +1,249 @@
+Estimating norm scaling factor:   8%|▊         | 80/1000 [00:04<00:47, 19.32it/s]
+interrupted, saving progressor:   6%|▋         | 65/1000 [00:04<00:45, 20.51it/s]
+Traceback (most recent call last):                             
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/training/activations_store.py", line 781, in next_batch
+    return next(self.dataloader)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/utils/data/dataloader.py", line 708, in __next__
+    data = self._next_data()
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/utils/data/dataloader.py", line 763, in _next_data
+    index = self._next_index()  # may raise StopIteration
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/utils/data/dataloader.py", line 698, in _next_index
+    return next(self._sampler_iter)  # may raise StopIteration
+StopIteration
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 152, in run_trainer_with_interruption_handling
+    sae = trainer.fit()
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/training/sae_trainer.py", line 177, in fit
+    self.activations_store.set_norm_scaling_factor_if_needed()
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/training/activations_store.py", line 421, in set_norm_scaling_factor_if_needed
+    self.estimated_norm_scaling_factor = self.estimate_norm_scaling_factor()
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/training/activations_store.py", line 448, in estimate_norm_scaling_factor
+    acts = self.next_batch()[0]
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/training/activations_store.py", line 784, in next_batch
+    self._dataloader = self.get_data_loader()
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/training/activations_store.py", line 733, in get_data_loader
+    self.get_buffer(self.half_buffer_size, raise_on_epoch_end=True),
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/training/activations_store.py", line 684, in get_buffer
+    refill_batch_tokens = self.get_batch_tokens(
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/training/activations_store.py", line 503, in get_batch_tokens
+    sequences.append(next(self.iterable_sequences))
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/training/activations_store.py", line 361, in _iterate_tokenized_sequences
+    yield from concat_and_batch_sequences(
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 57, in generator_context
+    response = gen.send(request)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/tokenization_and_batching.py", line 88, in concat_and_batch_sequences
+    batch, offset = _add_tokens_to_batch(
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/tokenization_and_batching.py", line 42, in _add_tokens_to_batch
+    sequence_separator_token_id_tensor = torch.tensor(
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 27, in interrupt_callback
+    raise InterruptedException()
+sae_lens.sae_training_runner.InterruptedException
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/data/yusenp/NLP/KAN-LLaMA/preliminary_exploration/train_SAE.py", line 88, in <module>
+    main()
+  File "/data/yusenp/NLP/KAN-LLaMA/preliminary_exploration/train_SAE.py", line 81, in main
+    sparse_autoencoder = SAETrainingRunner(cfg).run()
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 113, in run
+    sae = self.run_trainer_with_interruption_handling(trainer)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 157, in run_trainer_with_interruption_handling
+    self.save_checkpoint(trainer, checkpoint_name=checkpoint_name)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 232, in save_checkpoint
+    wandb.log_artifact(sparsity_artifact)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/wandb/sdk/wandb_run.py", line 401, in wrapper_fn
+    return func(self, *args, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/wandb/sdk/wandb_run.py", line 391, in wrapper
+    return func(self, *args, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/wandb/sdk/wandb_run.py", line 3101, in log_artifact
+    return self._log_artifact(
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/wandb/sdk/wandb_run.py", line 3248, in _log_artifact
+    self._assert_can_log_artifact(artifact)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/wandb/sdk/wandb_run.py", line 3299, in _assert_can_log_artifact
+    expected_type = Artifact._expected_type(
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/wandb/sdk/artifacts/artifact.py", line 2371, in _expected_type
+    response = client.execute(
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/wandb/sdk/lib/retry.py", line 215, in wrapped_fn
+    return retrier(*args, **kargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/wandb/sdk/lib/retry.py", line 134, in __call__
+    result = self._call_fn(*args, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/wandb/apis/public/api.py", line 79, in execute
+    return self._client.execute(*args, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/wandb/vendor/gql-0.2.0/wandb_gql/client.py", line 52, in execute
+    result = self._get_result(document, *args, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/wandb/vendor/gql-0.2.0/wandb_gql/client.py", line 60, in _get_result
+    return self.transport.execute(document, *args, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/wandb/sdk/lib/gql_request.py", line 58, in execute
+    request = self.session.post(self.url, **post_args)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/requests/sessions.py", line 637, in post
+    return self.request("POST", url, data=data, json=json, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/requests/sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/requests/sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/requests/adapters.py", line 667, in send
+    resp = conn.urlopen(
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/urllib3/connectionpool.py", line 787, in urlopen
+    response = self._make_request(
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/urllib3/connectionpool.py", line 534, in _make_request
+    response = conn.getresponse()
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/urllib3/connection.py", line 516, in getresponse
+    httplib_response = super().getresponse()
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/http/client.py", line 1375, in getresponse
+    response.begin()
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/http/client.py", line 318, in begin
+    version, status, reason = self._read_status()
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/http/client.py", line 279, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/socket.py", line 717, in readinto
+    return self._sock.recv_into(b)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/ssl.py", line 1307, in recv_into
+    return self.read(nbytes, buffer)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/ssl.py", line 1163, in read
+    return self._sslobj.read(len, buffer)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 27, in interrupt_callback
+    raise InterruptedException()
+sae_lens.sae_training_runner.InterruptedException
+Traceback (most recent call last):
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/training/activations_store.py", line 781, in next_batch
+    return next(self.dataloader)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/utils/data/dataloader.py", line 708, in __next__
+    data = self._next_data()
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/utils/data/dataloader.py", line 763, in _next_data
+    index = self._next_index()  # may raise StopIteration
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/utils/data/dataloader.py", line 698, in _next_index
+    return next(self._sampler_iter)  # may raise StopIteration
+StopIteration
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 152, in run_trainer_with_interruption_handling
+    sae = trainer.fit()
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/training/sae_trainer.py", line 177, in fit
+    self.activations_store.set_norm_scaling_factor_if_needed()
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/training/activations_store.py", line 421, in set_norm_scaling_factor_if_needed
+    self.estimated_norm_scaling_factor = self.estimate_norm_scaling_factor()
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/training/activations_store.py", line 448, in estimate_norm_scaling_factor
+    acts = self.next_batch()[0]
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/training/activations_store.py", line 784, in next_batch
+    self._dataloader = self.get_data_loader()
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/training/activations_store.py", line 733, in get_data_loader
+    self.get_buffer(self.half_buffer_size, raise_on_epoch_end=True),
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/training/activations_store.py", line 684, in get_buffer
+    refill_batch_tokens = self.get_batch_tokens(
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/training/activations_store.py", line 503, in get_batch_tokens
+    sequences.append(next(self.iterable_sequences))
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/training/activations_store.py", line 361, in _iterate_tokenized_sequences
+    yield from concat_and_batch_sequences(
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 57, in generator_context
+    response = gen.send(request)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/tokenization_and_batching.py", line 88, in concat_and_batch_sequences
+    batch, offset = _add_tokens_to_batch(
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/tokenization_and_batching.py", line 42, in _add_tokens_to_batch
+    sequence_separator_token_id_tensor = torch.tensor(
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 27, in interrupt_callback
+    raise InterruptedException()
+sae_lens.sae_training_runner.InterruptedException
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/data/yusenp/NLP/KAN-LLaMA/preliminary_exploration/train_SAE.py", line 88, in <module>
+    main()
+  File "/data/yusenp/NLP/KAN-LLaMA/preliminary_exploration/train_SAE.py", line 81, in main
+    sparse_autoencoder = SAETrainingRunner(cfg).run()
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 113, in run
+    sae = self.run_trainer_with_interruption_handling(trainer)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 157, in run_trainer_with_interruption_handling
+    self.save_checkpoint(trainer, checkpoint_name=checkpoint_name)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 232, in save_checkpoint
+    wandb.log_artifact(sparsity_artifact)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/wandb/sdk/wandb_run.py", line 401, in wrapper_fn
+    return func(self, *args, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/wandb/sdk/wandb_run.py", line 391, in wrapper
+    return func(self, *args, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/wandb/sdk/wandb_run.py", line 3101, in log_artifact
+    return self._log_artifact(
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/wandb/sdk/wandb_run.py", line 3248, in _log_artifact
+    self._assert_can_log_artifact(artifact)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/wandb/sdk/wandb_run.py", line 3299, in _assert_can_log_artifact
+    expected_type = Artifact._expected_type(
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/wandb/sdk/artifacts/artifact.py", line 2371, in _expected_type
+    response = client.execute(
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/wandb/sdk/lib/retry.py", line 215, in wrapped_fn
+    return retrier(*args, **kargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/wandb/sdk/lib/retry.py", line 134, in __call__
+    result = self._call_fn(*args, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/wandb/apis/public/api.py", line 79, in execute
+    return self._client.execute(*args, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/wandb/vendor/gql-0.2.0/wandb_gql/client.py", line 52, in execute
+    result = self._get_result(document, *args, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/wandb/vendor/gql-0.2.0/wandb_gql/client.py", line 60, in _get_result
+    return self.transport.execute(document, *args, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/wandb/sdk/lib/gql_request.py", line 58, in execute
+    request = self.session.post(self.url, **post_args)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/requests/sessions.py", line 637, in post
+    return self.request("POST", url, data=data, json=json, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/requests/sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/requests/sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/requests/adapters.py", line 667, in send
+    resp = conn.urlopen(
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/urllib3/connectionpool.py", line 787, in urlopen
+    response = self._make_request(
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/urllib3/connectionpool.py", line 534, in _make_request
+    response = conn.getresponse()
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/urllib3/connection.py", line 516, in getresponse
+    httplib_response = super().getresponse()
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/http/client.py", line 1375, in getresponse
+    response.begin()
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/http/client.py", line 318, in begin
+    version, status, reason = self._read_status()
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/http/client.py", line 279, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/socket.py", line 717, in readinto
+    return self._sock.recv_into(b)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/ssl.py", line 1307, in recv_into
+    return self.read(nbytes, buffer)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/ssl.py", line 1163, in read
+    return self._sslobj.read(len, buffer)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 27, in interrupt_callback
+    raise InterruptedException()
+sae_lens.sae_training_runner.InterruptedException
+Exception ignored in atexit callback: <function _start_and_connect_service.<locals>.teardown_atexit at 0x7fefb897d870>
+Traceback (most recent call last):
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/wandb/sdk/lib/service_connection.py", line 94, in teardown_atexit
+    conn.teardown(hooks.exit_code)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/wandb/sdk/lib/service_connection.py", line 226, in teardown
+    self._router.join()
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/wandb/sdk/interface/router.py", line 75, in join
+    self._thread.join()
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/threading.py", line 1096, in join
+    self._wait_for_tstate_lock()
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/threading.py", line 1116, in _wait_for_tstate_lock
+    if lock.acquire(block, timeout):
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 27, in interrupt_callback
+    raise InterruptedException()
+sae_lens.sae_training_runner.InterruptedException:

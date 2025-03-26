@@ -1,0 +1,73 @@
+Estimating norm scaling factor: 100%|██████████| 1000/1000 [02:32<00:00,  6.54it/s]
+200| mse_loss: 19.35180:   2%|▎         | 102400/4096000 [29:10interrupted, saving progress
+Error in sys.excepthook:                                       
+sae_trainer.py:348 {'model_performance_preservation': {'ce_loss_score': 0.5846068219285573, 'ce_loss_with_ablation': 8.344155311584473, 'ce_loss_with_sae': 4.885763168334961, 'ce_loss_without_sae': 2.4283978939056396}, 'reconstruction_quality': {'explained_variance': 0.0235649012029171, 'mse': 20.04507064819336, 'cossim': 0.6395798921585083}, 'shrinkage': {'l2_norm_in': 42.9886474609375, 'l2_norm_out': 0.8199502229690552, 'l2_ratio': 0.019174179062247276, 'relative_reconstruction_bias': 0.02176971733570099}, 'sparsity': {'l0': 9215.232421875, 'l1': 938.1790161132812}, 'token_stats': {'total_tokens_eval_reconstruction': 5120, 'total_tokens_eval_sparsity_variance': 5120}}
+Traceback (most recent call last):
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/wandb/sdk/lib/exit_hooks.py", line 41, in exc_handler
+    def exc_handler(
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 27, in interrupt_callback
+    raise InterruptedException()
+sae_lens.sae_training_runner.InterruptedException
+
+Original exception was:
+Traceback (most recent call last):
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 152, in run_trainer_with_interruption_handling
+    sae = trainer.fit()
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/training/sae_trainer.py", line 187, in fit
+    step_output = self._train_step(sae=self.sae, sae_in=layer_acts)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/training/sae_trainer.py", line 255, in _train_step
+    ).backward()  # loss.backward() if not autocasting
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/_tensor.py", line 626, in backward
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/autograd/__init__.py", line 347, in backward
+    _engine_run_backward(
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/autograd/graph.py", line 823, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 27, in interrupt_callback
+    raise InterruptedException()
+sae_lens.sae_training_runner.InterruptedException
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/data/yusenp/NLP/KAN-LLaMA/preliminary_exploration/train_SAE.py", line 91, in <module>
+    main()
+  File "/data/yusenp/NLP/KAN-LLaMA/preliminary_exploration/train_SAE.py", line 85, in main
+    sparse_autoencoder = SAETrainingRunner(cfg).run()
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 113, in run
+    sae = self.run_trainer_with_interruption_handling(trainer)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 157, in run_trainer_with_interruption_handling
+    self.save_checkpoint(trainer, checkpoint_name=checkpoint_name)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 199, in save_checkpoint
+    weights_path, cfg_path, sparsity_path = trainer.sae.save_model(
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae.py", line 569, in save_model
+    save_file(state_dict, model_weights_path)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/safetensors/torch.py", line 286, in save_file
+    serialize_file(_flatten(tensors), filename, metadata=metadata)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/safetensors/torch.py", line 496, in _flatten
+    return {
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/safetensors/torch.py", line 500, in <dictcomp>
+    "data": _tobytes(v, k),
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/safetensors/torch.py", line 460, in _tobytes
+    return data.tobytes()
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 27, in interrupt_callback
+    raise InterruptedException()
+sae_lens.sae_training_runner.InterruptedException
+Exception ignored in atexit callback: <function _start_and_connect_service.<locals>.teardown_atexit at 0x7ffac03039a0>
+Traceback (most recent call last):
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/wandb/sdk/lib/service_connection.py", line 94, in teardown_atexit
+    conn.teardown(hooks.exit_code)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/wandb/sdk/lib/service_connection.py", line 226, in teardown
+    self._router.join()
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/wandb/sdk/interface/router.py", line 75, in join
+    self._thread.join()
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/threading.py", line 1096, in join
+    self._wait_for_tstate_lock()
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/threading.py", line 1116, in _wait_for_tstate_lock
+    if lock.acquire(block, timeout):
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 27, in interrupt_callback
+    raise InterruptedException()
+sae_lens.sae_training_runner.InterruptedException:

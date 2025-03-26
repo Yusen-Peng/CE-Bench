@@ -1,0 +1,3 @@
+Estimating norm scaling factor: 100%|██████████| 1000/1000 [00:10<00:00, 93.41it/s]
+4000| auxiliary_reconstruction_loss: 712.00000 | mse_loss: 6176.00000: 100%|██████████| 2048000/2048000 [02:15<00:00, 15085.50it/s] 
+                                                               

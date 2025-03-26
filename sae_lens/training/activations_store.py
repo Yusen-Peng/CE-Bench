@@ -43,7 +43,7 @@ class ActivationsStore:
     dataset: HfDataset
     cached_activations_path: str | None
     cached_activation_dataset: Dataset | None = None
-    tokens_column: Literal["tokens", "input_ids", "text", "problem"]
+    tokens_column: Literal["tokens", "input_ids", "text", "problem", ""]
     hook_name: str
     hook_layer: int
     hook_head_index: int | None

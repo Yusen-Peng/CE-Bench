@@ -1,0 +1,69 @@
+Estimating norm scaling factor: 100%|██████████| 1000/1000 [00:44<00:00, 22.38it/s]
+Estimating norm scaling factor: 100%|█████████▉| 997/1000 [00:4Traceback (most recent call last):
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/data/yusenp/NLP/KAN-LLaMA/preliminary_exploration/train_SAE.py", line 91, in <module>
+    main()
+  File "/data/yusenp/NLP/KAN-LLaMA/preliminary_exploration/train_SAE.py", line 85, in main
+    sparse_autoencoder = SAETrainingRunner(cfg).run()
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 113, in run
+    sae = self.run_trainer_with_interruption_handling(trainer)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 152, in run_trainer_with_interruption_handling
+    sae = trainer.fit()
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/training/sae_trainer.py", line 187, in fit
+    step_output = self._train_step(sae=self.sae, sae_in=layer_acts)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/training/sae_trainer.py", line 259, in _train_step
+    self.scaler.step(self.optimizer)  # just ctx.optimizer.step() if not autocasting
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/amp/grad_scaler.py", line 380, in step
+    return optimizer.step(*args, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/optim/lr_scheduler.py", line 140, in wrapper
+    return func.__get__(opt, opt.__class__)(*args, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/optim/optimizer.py", line 493, in wrapper
+    out = func(*args, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/optim/optimizer.py", line 91, in _use_grad
+    ret = func(self, *args, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/optim/adam.py", line 244, in step
+    adam(
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/optim/optimizer.py", line 154, in maybe_fallback
+    return func(*args, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/optim/adam.py", line 876, in adam
+    func(
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/optim/adam.py", line 703, in _multi_tensor_adam
+    exp_avg_sq_sqrt = torch._foreach_sqrt(device_exp_avg_sqs)
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 1024.00 MiB. GPU 0 has a total capacity of 19.50 GiB of which 615.88 MiB is free. Including non-PyTorch memory, this process has 18.88 GiB memory in use. Of the allocated memory 18.41 GiB is allocated by PyTorch, and 376.23 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+Traceback (most recent call last):
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/data/yusenp/NLP/KAN-LLaMA/preliminary_exploration/train_SAE.py", line 91, in <module>
+    main()
+  File "/data/yusenp/NLP/KAN-LLaMA/preliminary_exploration/train_SAE.py", line 85, in main
+    sparse_autoencoder = SAETrainingRunner(cfg).run()
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 113, in run
+    sae = self.run_trainer_with_interruption_handling(trainer)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 152, in run_trainer_with_interruption_handling
+    sae = trainer.fit()
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/training/sae_trainer.py", line 187, in fit
+    step_output = self._train_step(sae=self.sae, sae_in=layer_acts)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/training/sae_trainer.py", line 259, in _train_step
+    self.scaler.step(self.optimizer)  # just ctx.optimizer.step() if not autocasting
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/amp/grad_scaler.py", line 380, in step
+    return optimizer.step(*args, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/optim/lr_scheduler.py", line 140, in wrapper
+    return func.__get__(opt, opt.__class__)(*args, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/optim/optimizer.py", line 493, in wrapper
+    out = func(*args, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/optim/optimizer.py", line 91, in _use_grad
+    ret = func(self, *args, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/optim/adam.py", line 244, in step
+    adam(
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/optim/optimizer.py", line 154, in maybe_fallback
+    return func(*args, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/optim/adam.py", line 876, in adam
+    func(
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/optim/adam.py", line 703, in _multi_tensor_adam
+    exp_avg_sq_sqrt = torch._foreach_sqrt(device_exp_avg_sqs)
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 1024.00 MiB. GPU 0 has a total capacity of 19.50 GiB of which 615.88 MiB is free. Including non-PyTorch memory, this process has 18.88 GiB memory in use. Of the allocated memory 18.41 GiB is allocated by PyTorch, and 376.23 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)

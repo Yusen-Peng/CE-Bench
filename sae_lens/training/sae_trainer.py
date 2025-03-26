@@ -345,6 +345,7 @@ class SAETrainer:
                 ignore_tokens=ignore_tokens,
                 model_kwargs=self.cfg.model_kwargs,
             )  # not calculating featurwise metrics here.
+            print(f"sae_trainer.py:348 {eval_metrics}")
 
             # Remove eval metrics that are already logged during training
             eval_metrics.pop("metrics/explained_variance", None)
@@ -356,8 +357,9 @@ class SAETrainer:
             # Remove metrics that are not useful for wandb logging
             eval_metrics.pop("metrics/total_tokens_evaluated", None)
 
-            W_dec_norm_dist = self.sae.W_dec.detach().float().norm(dim=1).cpu().numpy()
-            eval_metrics["weights/W_dec_norms"] = wandb.Histogram(W_dec_norm_dist)  # type: ignore
+            if "W_dec" in self.sae.__dict__:
+                W_dec_norm_dist = self.sae.W_dec.detach().float().norm(dim=1).cpu().numpy()
+                eval_metrics["weights/W_dec_norms"] = wandb.Histogram(W_dec_norm_dist)  # type: ignore
 
             if self.sae.cfg.architecture == "standard":
                 b_e_dist = self.sae.b_enc.detach().float().cpu().numpy()

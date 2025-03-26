@@ -1,0 +1,135 @@
+Estimating norm scaling factor: 100%|██████████| 1000/1000 [00:41<00:00, 24.01it/s]
+700| mse_loss: 10.24894:   9%|▉         | 358400/4096000 [11:16<1:48:58, 571.60it/s]interrupted, saving progress
+Traceback (most recent call last):                             
+sae_trainer.py:348 {'model_performance_preservation': {'ce_loss_score': 0.7144325763092219, 'ce_loss_with_ablation': 7.897684097290039, 'ce_loss_with_sae': 3.560110569000244, 'ce_loss_without_sae': 1.8263294696807861}, 'reconstruction_quality': {'explained_variance': -0.0899583250284195, 'mse': 4.770529270172119, 'cossim': 0.7195467948913574}, 'shrinkage': {'l2_norm_in': 50.79624557495117, 'l2_norm_out': 1.042899489402771, 'l2_ratio': 0.019627047702670097, 'relative_reconstruction_bias': 0.02985858917236328}, 'sparsity': {'l0': 8203.94921875, 'l1': 48.54915237426758}, 'token_stats': {'total_tokens_eval_reconstruction': 20480, 'total_tokens_eval_sparsity_variance': 20480}}
+sae_trainer.py:348 {'model_performance_preservation': {'ce_loss_score': 0.9281730638535428, 'ce_loss_with_ablation': 7.889072895050049, 'ce_loss_with_sae': 2.5864179134368896, 'ce_loss_without_sae': 2.17607045173645}, 'reconstruction_quality': {'explained_variance': -0.09030607342720032, 'mse': 4.509460926055908, 'cossim': 0.7909398674964905}, 'shrinkage': {'l2_norm_in': 50.23884201049805, 'l2_norm_out': 1.1325712203979492, 'l2_ratio': 0.022017359733581543, 'relative_reconstruction_bias': 0.02980378270149231}, 'sparsity': {'l0': 8206.767578125, 'l1': 49.791141510009766}, 'token_stats': {'total_tokens_eval_reconstruction': 20480, 'total_tokens_eval_sparsity_variance': 20480}}
+sae_trainer.py:348 {'model_performance_preservation': {'ce_loss_score': 0.9582489911033938, 'ce_loss_with_ablation': 8.025683403015137, 'ce_loss_with_sae': 2.3677237033843994, 'ce_loss_without_sae': 2.1212058067321777}, 'reconstruction_quality': {'explained_variance': -0.0843379870057106, 'mse': 4.579038143157959, 'cossim': 0.834703266620636}, 'shrinkage': {'l2_norm_in': 50.40205383300781, 'l2_norm_out': 1.2090643644332886, 'l2_ratio': 0.02360430918633938, 'relative_reconstruction_bias': 0.029613083228468895}, 'sparsity': {'l0': 8203.2568359375, 'l1': 40.83031463623047}, 'token_stats': {'total_tokens_eval_reconstruction': 20480, 'total_tokens_eval_sparsity_variance': 20480}}
+sae_trainer.py:348 {'model_performance_preservation': {'ce_loss_score': 0.9704331304130949, 'ce_loss_with_ablation': 8.044498443603516, 'ce_loss_with_sae': 2.3458259105682373, 'ce_loss_without_sae': 2.1722004413604736}, 'reconstruction_quality': {'explained_variance': -0.07860517501831055, 'mse': 4.55760383605957, 'cossim': 0.8619715571403503}, 'shrinkage': {'l2_norm_in': 50.526126861572266, 'l2_norm_out': 1.255252480506897, 'l2_ratio': 0.02447626180946827, 'relative_reconstruction_bias': 0.029815150424838066}, 'sparsity': {'l0': 8198.6875, 'l1': 31.281879425048828}, 'token_stats': {'total_tokens_eval_reconstruction': 20480, 'total_tokens_eval_sparsity_variance': 20480}}
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 152, in run_trainer_with_interruption_handling
+    sae = trainer.fit()
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/training/sae_trainer.py", line 187, in fit
+    step_output = self._train_step(sae=self.sae, sae_in=layer_acts)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/training/sae_trainer.py", line 259, in _train_step
+    self.scaler.step(self.optimizer)  # just ctx.optimizer.step() if not autocasting
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/amp/grad_scaler.py", line 380, in step
+    return optimizer.step(*args, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/optim/lr_scheduler.py", line 140, in wrapper
+    return func.__get__(opt, opt.__class__)(*args, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/optim/optimizer.py", line 493, in wrapper
+    out = func(*args, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/optim/optimizer.py", line 91, in _use_grad
+    ret = func(self, *args, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/optim/adam.py", line 244, in step
+    adam(
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/optim/optimizer.py", line 154, in maybe_fallback
+    return func(*args, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/optim/adam.py", line 876, in adam
+    func(
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/optim/adam.py", line 703, in _multi_tensor_adam
+    exp_avg_sq_sqrt = torch._foreach_sqrt(device_exp_avg_sqs)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 27, in interrupt_callback
+    raise InterruptedException()
+sae_lens.sae_training_runner.InterruptedException
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/data/yusenp/NLP/KAN-LLaMA/preliminary_exploration/train_SAE.py", line 91, in <module>
+    main()
+  File "/data/yusenp/NLP/KAN-LLaMA/preliminary_exploration/train_SAE.py", line 85, in main
+    sparse_autoencoder = SAETrainingRunner(cfg).run()
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 113, in run
+    sae = self.run_trainer_with_interruption_handling(trainer)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 157, in run_trainer_with_interruption_handling
+    self.save_checkpoint(trainer, checkpoint_name=checkpoint_name)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 192, in save_checkpoint
+    trainer.activations_store.save(
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/training/activations_store.py", line 803, in save
+    save_file(self.state_dict(), file_path)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/safetensors/torch.py", line 286, in save_file
+    serialize_file(_flatten(tensors), filename, metadata=metadata)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/safetensors/torch.py", line 496, in _flatten
+    return {
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/safetensors/torch.py", line 500, in <dictcomp>
+    "data": _tobytes(v, k),
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/safetensors/torch.py", line 422, in _tobytes
+    tensor = tensor.to("cpu")
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 27, in interrupt_callback
+    raise InterruptedException()
+sae_lens.sae_training_runner.InterruptedException
+Traceback (most recent call last):
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 152, in run_trainer_with_interruption_handling
+    sae = trainer.fit()
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/training/sae_trainer.py", line 187, in fit
+    step_output = self._train_step(sae=self.sae, sae_in=layer_acts)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/training/sae_trainer.py", line 259, in _train_step
+    self.scaler.step(self.optimizer)  # just ctx.optimizer.step() if not autocasting
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/amp/grad_scaler.py", line 380, in step
+    return optimizer.step(*args, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/optim/lr_scheduler.py", line 140, in wrapper
+    return func.__get__(opt, opt.__class__)(*args, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/optim/optimizer.py", line 493, in wrapper
+    out = func(*args, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/optim/optimizer.py", line 91, in _use_grad
+    ret = func(self, *args, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/optim/adam.py", line 244, in step
+    adam(
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/optim/optimizer.py", line 154, in maybe_fallback
+    return func(*args, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/optim/adam.py", line 876, in adam
+    func(
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/optim/adam.py", line 703, in _multi_tensor_adam
+    exp_avg_sq_sqrt = torch._foreach_sqrt(device_exp_avg_sqs)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 27, in interrupt_callback
+    raise InterruptedException()
+sae_lens.sae_training_runner.InterruptedException
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/data/yusenp/NLP/KAN-LLaMA/preliminary_exploration/train_SAE.py", line 91, in <module>
+    main()
+  File "/data/yusenp/NLP/KAN-LLaMA/preliminary_exploration/train_SAE.py", line 85, in main
+    sparse_autoencoder = SAETrainingRunner(cfg).run()
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 113, in run
+    sae = self.run_trainer_with_interruption_handling(trainer)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 157, in run_trainer_with_interruption_handling
+    self.save_checkpoint(trainer, checkpoint_name=checkpoint_name)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 192, in save_checkpoint
+    trainer.activations_store.save(
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/training/activations_store.py", line 803, in save
+    save_file(self.state_dict(), file_path)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/safetensors/torch.py", line 286, in save_file
+    serialize_file(_flatten(tensors), filename, metadata=metadata)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/safetensors/torch.py", line 496, in _flatten
+    return {
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/safetensors/torch.py", line 500, in <dictcomp>
+    "data": _tobytes(v, k),
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/safetensors/torch.py", line 422, in _tobytes
+    tensor = tensor.to("cpu")
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 27, in interrupt_callback
+    raise InterruptedException()
+sae_lens.sae_training_runner.InterruptedException
+Exception ignored in atexit callback: <function _start_and_connect_service.<locals>.teardown_atexit at 0x7f2512585f30>
+Traceback (most recent call last):
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/wandb/sdk/lib/service_connection.py", line 94, in teardown_atexit
+    conn.teardown(hooks.exit_code)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/wandb/sdk/lib/service_connection.py", line 226, in teardown
+    self._router.join()
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/wandb/sdk/interface/router.py", line 75, in join
+    self._thread.join()
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/threading.py", line 1096, in join
+    self._wait_for_tstate_lock()
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/threading.py", line 1116, in _wait_for_tstate_lock
+    if lock.acquire(block, timeout):
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 27, in interrupt_callback
+    raise InterruptedException()
+sae_lens.sae_training_runner.InterruptedException:
