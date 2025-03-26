@@ -102,8 +102,9 @@ def main():
     print("tokenizer loaded!")
 
     # Load the trained SAE from checkpoints
-    architecture = "kan_mini"
-    sae_checkpoint_path = f"checkpoints/{architecture}/final_36864000"
+    architecture = "RIGHT_jumprelu"
+    steps = "1k"
+    sae_checkpoint_path = f"checkpoints/{architecture}/{steps}"
     sae = SAE.load_from_pretrained(path=sae_checkpoint_path, device=device)
     print("SAE loaded!")
 

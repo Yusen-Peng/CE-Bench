@@ -26,8 +26,9 @@ def main():
     print("tokenizer loaded!")
 
     # Load the trained SAE from checkpoints
-    architecture = "topk"
-    sae_checkpoint_path = f"checkpoints/{architecture}/final_122880000"
+    architecture = "RIGHT_jumprelu"
+    steps = "1k"
+    sae_checkpoint_path = f"checkpoints/{architecture}/{steps}"
     sae = SAE.load_from_pretrained(path=sae_checkpoint_path, device=device)
     print("SAE loaded!")
 
@@ -90,7 +91,7 @@ def main():
 
     from sae_dashboard.data_writing_fns import save_feature_centric_vis
 
-    filename = f"figures/{architecture}_demo_feature_dashboards.html"
+    filename = f"figures/{architecture}_{steps}_demo_feature_dashboards.html"
     save_feature_centric_vis(sae_vis_data=visualization_data, filename=filename)
 
 
