@@ -1,5 +1,6 @@
 import torch
 import os
+from datasets import load_dataset
 
 from sae_lens import LanguageModelSAERunnerConfig, SAETrainingRunner
 
@@ -22,6 +23,9 @@ def main():
     lr_decay_steps = total_training_steps // 5  # 20% of training
     l1_warm_up_steps = total_training_steps // 20  # 5% of training
 
+    # cached_activations_path = "C:\\Users\\alexg\\.cache\\huggingface\\hub\\datasets--GulkoA--TinyStories-Llama-3.2-1B-cache-100k"
+    # print(cached_activations_path)
+
     # different architectures experiment
     # standard, gated, topk, jumprelu
     # kan_ae_type = "kan_relu_dense"
@@ -31,12 +35,14 @@ def main():
         #activation_fn_kwargs={"kan_hidden_size": 2048 * 8, "kan_ae_type": "only_kan"},
         model_name="meta-llama/Llama-3.2-1B",
         # model_name="tiny-stories-1L-21M",
-        hook_name="blocks.0.hook_mlp_out",
-        hook_layer=0,
+        cached_activations_path="GulkoA/TinyStories-Llama-3.2-1B-cache-100k",
+        use_cached_activations=True,
+        # hook_name="blocks.0.hook_mlp_out",
+        # hook_layer=0,
         d_in=2048, # 2048 for Llama 3.2 1B
-        # # d_in=1024, 
+        # d_in=1024, 
         dataset_path="GulkoA/TinyStories-tokenized-Llama-3.2",
-        is_dataset_tokenized=True,
+        # is_dataset_tokenized=True,
         streaming=True,
         mse_loss_normalization="dense_batch",
         expansion_factor=8,

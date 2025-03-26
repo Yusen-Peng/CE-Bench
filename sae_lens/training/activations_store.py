@@ -380,15 +380,16 @@ class ActivationsStore:
 
         assert self.cached_activations_path is not None  # keep pyright happy
         # Sanity check: does the cache directory exist?
-        if not os.path.exists(self.cached_activations_path):
-            raise FileNotFoundError(
-                f"Cache directory {self.cached_activations_path} does not exist. "
-                "Consider double-checking your dataset, model, and hook names."
-            )
+        # if not os.path.exists(self.cached_activations_path):
+            # raise FileNotFoundError(
+                # f"Cache directory {self.cached_activations_path} does not exist. "
+                # "Consider double-checking your dataset, model, and hook names."
+            # )
 
         # ---
         # Actual code
-        activations_dataset = datasets.load_from_disk(self.cached_activations_path)
+        activations_dataset = datasets.load_dataset(self.cached_activations_path, split="train")
+        print(type(activations_dataset))
         columns = [self.hook_name]
         if "token_ids" in activations_dataset.column_names:
             columns.append("token_ids")
