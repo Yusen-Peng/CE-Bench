@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/data/yusenp/NLP/KAN-LLaMA/preliminary_exploration/train_SAE.py", line 5, in <module>
+    from sae_lens import LanguageModelSAERunnerConfig, SAETrainingRunner
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/__init__.py", line 8, in <module>
+    from .analysis.hooked_sae_transformer import HookedSAETransformer
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/analysis/hooked_sae_transformer.py", line 11, in <module>
+    from sae_lens.sae import SAE
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae.py", line 28, in <module>
+    from sae_lens.config import DTYPE_MAP
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/config.py", line 515, in <module>
+    class CacheActivationsRunnerConfig:
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/config.py", line 565, in CacheActivationsRunnerConfig
+    device: str = "cuda" if torch.cuda.is_available() else "cpu"
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/cuda/__init__.py", line 129, in is_available
+    return torch._C._cuda_getDeviceCount() > 0
+KeyboardInterrupt

@@ -17,7 +17,7 @@ def compute_loss_averages(file_path):
 
 def main():
     architecture = "RIGHT_jumprelu"
-    steps = "_3k"
+    steps = "_30k_cached"
     file_path = f"figures/{architecture}{steps}_batch_losses.csv"
     compute_loss_averages(file_path)
 

@@ -1,0 +1,109 @@
+Estimating norm scaling factor: 100%|██████████| 1000/1000 [00:30<00:00, 33.25it/s]
+100| l0_loss: 692.92969 | mse_loss: 56.80927:   4%|▍         | Traceback (most recent call last):7it/s]
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/data/yusenp/NLP/KAN-LLaMA/preliminary_exploration/train_SAE.py", line 94, in <module>
+    main()
+  File "/data/yusenp/NLP/KAN-LLaMA/preliminary_exploration/train_SAE.py", line 89, in main
+    sparse_autoencoder = SAETrainingRunner(cfg).run()
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 120, in run
+    sae = self.run_trainer_with_interruption_handling(trainer)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 159, in run_trainer_with_interruption_handling
+    sae = trainer.fit()
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/training/sae_trainer.py", line 193, in fit
+    self._run_and_log_evals()
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/training/sae_trainer.py", line 341, in _run_and_log_evals
+    eval_metrics, _ = run_evals(
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/evals.py", line 139, in run_evals
+    reconstruction_metrics = get_downstream_reconstruction_metrics(
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/evals.py", line 325, in get_downstream_reconstruction_metrics
+    for metric_name, metric_value in get_recons_loss(
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/evals.py", line 669, in get_recons_loss
+    recons_logits, recons_ce_loss = model.run_with_hooks(
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/transformer_lens/hook_points.py", line 456, in run_with_hooks
+    return hooked_model.forward(*model_args, **model_kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/transformer_lens/HookedTransformer.py", line 612, in forward
+    residual = block(
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/transformer_lens/components/transformer_block.py", line 186, in forward
+    mlp_out = self.apply_mlp(normalized_resid_mid)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/transformer_lens/components/transformer_block.py", line 213, in apply_mlp
+    return self.hook_mlp_out(mlp_out)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1845, in _call_impl
+    return inner()
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1806, in inner
+    hook_result = hook(self, args, result)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/transformer_lens/hook_points.py", line 109, in full_hook
+    return hook(module_output, hook=self)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/evals.py", line 588, in standard_replacement_hook
+    activations = activation_store.apply_norm_scaling_factor(activations)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/training/activations_store.py", line 432, in apply_norm_scaling_factor
+    raise ValueError(
+ValueError: estimated_norm_scaling_factor is not set, call set_norm_scaling_factor_if_needed() first
+Traceback (most recent call last):
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/data/yusenp/NLP/KAN-LLaMA/preliminary_exploration/train_SAE.py", line 94, in <module>
+    main()
+  File "/data/yusenp/NLP/KAN-LLaMA/preliminary_exploration/train_SAE.py", line 89, in main
+    sparse_autoencoder = SAETrainingRunner(cfg).run()
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 120, in run
+    sae = self.run_trainer_with_interruption_handling(trainer)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 159, in run_trainer_with_interruption_handling
+    sae = trainer.fit()
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/training/sae_trainer.py", line 193, in fit
+    self._run_and_log_evals()
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/training/sae_trainer.py", line 341, in _run_and_log_evals
+    eval_metrics, _ = run_evals(
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/evals.py", line 139, in run_evals
+    reconstruction_metrics = get_downstream_reconstruction_metrics(
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/evals.py", line 325, in get_downstream_reconstruction_metrics
+    for metric_name, metric_value in get_recons_loss(
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/evals.py", line 669, in get_recons_loss
+    recons_logits, recons_ce_loss = model.run_with_hooks(
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/transformer_lens/hook_points.py", line 456, in run_with_hooks
+    return hooked_model.forward(*model_args, **model_kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/transformer_lens/HookedTransformer.py", line 612, in forward
+    residual = block(
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/transformer_lens/components/transformer_block.py", line 186, in forward
+    mlp_out = self.apply_mlp(normalized_resid_mid)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/transformer_lens/components/transformer_block.py", line 213, in apply_mlp
+    return self.hook_mlp_out(mlp_out)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1845, in _call_impl
+    return inner()
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1806, in inner
+    hook_result = hook(self, args, result)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/transformer_lens/hook_points.py", line 109, in full_hook
+    return hook(module_output, hook=self)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/evals.py", line 588, in standard_replacement_hook
+    activations = activation_store.apply_norm_scaling_factor(activations)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/training/activations_store.py", line 432, in apply_norm_scaling_factor
+    raise ValueError(
+ValueError: estimated_norm_scaling_factor is not set, call set_norm_scaling_factor_if_needed() first

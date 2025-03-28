@@ -70,6 +70,12 @@ class SAETrainingRunner:
             self.cfg,
             override_dataset=override_dataset,
         )
+        self.validation_activation_store = ActivationsStore.from_config(
+            self.model,
+            self.cfg,
+            override_dataset=override_dataset,
+            split="validation",
+        )
 
         if override_sae is None:
             if self.cfg.from_pretrained_path is not None:
@@ -105,6 +111,7 @@ class SAETrainingRunner:
             model=self.model,
             sae=self.sae,
             activation_store=self.activations_store,
+            validation_activation_store=self.validation_activation_store,
             save_checkpoint_fn=self.save_checkpoint,
             cfg=self.cfg,
         )

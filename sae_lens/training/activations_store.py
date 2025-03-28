@@ -93,6 +93,7 @@ class ActivationsStore:
         model: HookedRootModule,
         cfg: LanguageModelSAERunnerConfig | CacheActivationsRunnerConfig,
         override_dataset: HfDataset | None = None,
+        split: str = "train",
     ) -> ActivationsStore:
         if isinstance(cfg, CacheActivationsRunnerConfig):
             return cls.from_cache_activations(model, cfg)
@@ -143,6 +144,7 @@ class ActivationsStore:
             dataset_trust_remote_code=cfg.dataset_trust_remote_code,
             seqpos_slice=cfg.seqpos_slice,
             exclude_special_tokens=exclude_special_tokens,
+            split=split,
         )
 
     @classmethod
@@ -204,6 +206,7 @@ class ActivationsStore:
         dataset_trust_remote_code: bool | None = None,
         seqpos_slice: tuple[int | None, ...] = (None,),
         exclude_special_tokens: torch.Tensor | None = None,
+        split: str = "train",
     ):
         self.model = model
         if model_kwargs is None:
@@ -212,7 +215,7 @@ class ActivationsStore:
         self.dataset = (
             load_dataset(
                 dataset,
-                split="train",
+                split=split,
                 streaming=streaming,
                 trust_remote_code=dataset_trust_remote_code,  # type: ignore
             )
@@ -268,6 +271,9 @@ class ActivationsStore:
         elif "problem" in dataset_sample:
             self.is_dataset_tokenized = False
             self.tokens_column = "problem"
+        elif "prompt" in dataset_sample:
+            self.is_dataset_tokenized = False
+            self.tokens_column = "prompt"
         else:
             raise ValueError(
                 "Dataset must have a 'tokens', 'input_ids', 'text', or 'problem' column."
@@ -389,7 +395,7 @@ class ActivationsStore:
         # ---
         # Actual code
         activations_dataset = datasets.load_dataset(self.cached_activations_path, split="train")
-        print(type(activations_dataset))
+        # print(type(activations_dataset))
         columns = [self.hook_name]
         if "token_ids" in activations_dataset.column_names:
             columns.append("token_ids")

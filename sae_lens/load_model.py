@@ -32,9 +32,11 @@ def load_model(
             logger.info("-------------")
 
     if model_class_name == "HookedTransformer":
-        return HookedTransformer.from_pretrained_no_processing(
+        model = HookedTransformer.from_pretrained_no_processing(
             model_name=model_name, device=device, **model_from_pretrained_kwargs
         )
+        # model.requires_grad_(False)  # Set requires_grad to False by default
+        return model
     if model_class_name == "HookedMamba":
         try:
             from mamba_lens import HookedMamba

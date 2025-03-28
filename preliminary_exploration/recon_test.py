@@ -7,6 +7,7 @@ from sae_lens import SAE, HookedSAETransformer
 from transformer_lens import HookedTransformer
 from transformer_lens import utils
 from functools import partial
+import time
 from transformers import AutoTokenizer
 
 torch.set_grad_enabled(False)
@@ -22,7 +23,7 @@ def main():
 
     # Load the trained SAE from checkpoints
     architecture = "RIGHT_jumprelu"
-    steps = "3k"
+    steps = "1k"
     sae_checkpoint_path = f"checkpoints/{architecture}/{steps}"
     sae = SAE.load_from_pretrained(path=sae_checkpoint_path, device=device)
     sae.eval()
@@ -38,20 +39,9 @@ def main():
     print(f"Loaded SAE with d_in={sae.cfg.d_in}, d_sae={sae.cfg.d_sae}, hook={sae.cfg.hook_name}")
 
     dataset = load_dataset("GulkoA/TinyStories-tokenized-Llama-3.2", split="validation")
-    desired_sample_size = 1_000 # 1k validation samples
+    desired_sample_size = 100 # 1k validation samples
     downsampled_dataset = dataset.shuffle(seed=42).select(range(desired_sample_size))
-
-    # Tokenization function
-    # def tokenize_function(examples):
-    #     return tokenizer(
-    #         examples["text"],
-    #         padding="max_length",
-    #         truncation=True,
-    #         max_length=128,
-    #         return_tensors="pt",
-    #     )
-
-    #tokenized_dataset = downsampled_dataset.map(tokenize_function, batched=True)
+    #downsampled_dataset = dataset # use the entire validation set for now
 
     batch_size = 8
     results = []
@@ -60,7 +50,7 @@ def main():
 
     def zero_abl_hook(activation, hook): return torch.zeros_like(activation)
 
-
+    t1 = time.time()
     with torch.no_grad():
         for i in range(0, len(downsampled_dataset), batch_size):
             gc.collect()
@@ -81,7 +71,7 @@ def main():
                 sae_out = sae.decode(feature_acts)
 
             # Compute original loss
-            orig_loss = model(inputs, return_type="loss").item()
+            orig_loss = model.forward(inputs, return_type="loss").item()
 
             # Compute reconstruction loss (insert decoded SAE output at hook)
             reconstr_loss = model.run_with_hooks(
@@ -111,6 +101,9 @@ def main():
             del inputs, cache, hidden_states, feature_acts, sae_out
             torch.cuda.empty_cache()
             gc.collect()
+
+    t2 = time.time()
+    print(f"Time taken for batch processing: {t2 - t1:.2f} seconds")
 
     print("Done with batch processing!")
     import pandas as pd

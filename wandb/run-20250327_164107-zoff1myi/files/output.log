@@ -1,0 +1,156 @@
+Training SAE:   0%|          | 0/122880000 [00:00<?, ?it/s]                        /data/yusenp/NLP/KAN-LLaMA/sae_lens/training/activations_store.py:741: UserWarning: All samples in the training dataset have been exhausted, we are now beginning a new epoch with the same samples.
+  warnings.warn(scaling factor:  45%|████▌     | 452/1000 [00:00<00:01, 520.42it/s]
+Estimating norm scaling factor: 100%|██████████| 1000/1000 [00:01<00:00, 528.63it/s]
+1100| mse_loss: 0.40969:   0%|          | 563200/122880000 [06:11<21:50:06, 1556.07it/s]interrupted, saving progress
+sae_trainer.py:348 {'model_performance_preservation': {'ce_loss_score': 0.3825381290095964, 'ce_loss_with_ablation': 7.993437767028809, 'ce_loss_with_sae': 5.813145160675049, 'ce_loss_without_sae': 2.2938945293426514}, 'reconstruction_quality': {'explained_variance': -0.004980883095413446, 'mse': 23.18998908996582, 'cossim': 0.34380534291267395}, 'shrinkage': {'l2_norm_in': 46.32082748413086, 'l2_norm_out': 0.29796501994132996, 'l2_ratio': 0.0038061568047851324, 'relative_reconstruction_bias': 0.015385448932647705}, 'sparsity': {'l0': 8244.5283203125, 'l1': 3.835468053817749}, 'token_stats': {'total_tokens_eval_reconstruction': 5120, 'total_tokens_eval_sparsity_variance': 5120}}
+sae_trainer.py:348 {'model_performance_preservation': {'ce_loss_score': 0.5424818902782587, 'ce_loss_with_ablation': 8.472864151000977, 'ce_loss_with_sae': 5.190073490142822, 'ce_loss_without_sae': 2.4214351177215576}, 'reconstruction_quality': {'explained_variance': -0.01668269746005535, 'mse': 21.045618057250977, 'cossim': 0.39369043707847595}, 'shrinkage': {'l2_norm_in': 45.61519241333008, 'l2_norm_out': 0.8219265341758728, 'l2_ratio': 0.009613853879272938, 'relative_reconstruction_bias': 0.0437750406563282}, 'sparsity': {'l0': 8267.125, 'l1': 12.991238594055176}, 'token_stats': {'total_tokens_eval_reconstruction': 5120, 'total_tokens_eval_sparsity_variance': 5120}}
+sae_trainer.py:348 {'model_performance_preservation': {'ce_loss_score': 0.6964767435114423, 'ce_loss_with_ablation': 8.208343505859375, 'ce_loss_with_sae': 4.272825241088867, 'ce_loss_without_sae': 2.5577337741851807}, 'reconstruction_quality': {'explained_variance': -0.0038104006089270115, 'mse': 21.140634536743164, 'cossim': 0.5346075892448425}, 'shrinkage': {'l2_norm_in': 45.7351188659668, 'l2_norm_out': 0.9798876047134399, 'l2_ratio': 0.014396565966308117, 'relative_reconstruction_bias': 0.04260743409395218}, 'sparsity': {'l0': 8245.9482421875, 'l1': 14.087414741516113}, 'token_stats': {'total_tokens_eval_reconstruction': 5120, 'total_tokens_eval_sparsity_variance': 5120}}
+sae_trainer.py:348 {'model_performance_preservation': {'ce_loss_score': 0.807784161264859, 'ce_loss_with_ablation': 8.418126106262207, 'ce_loss_with_sae': 3.6017301082611084, 'ce_loss_without_sae': 2.4556472301483154}, 'reconstruction_quality': {'explained_variance': 0.012065942399203777, 'mse': 21.80083656311035, 'cossim': 0.6267426609992981}, 'shrinkage': {'l2_norm_in': 46.25271224975586, 'l2_norm_out': 1.1383424997329712, 'l2_ratio': 0.01858513429760933, 'relative_reconstruction_bias': 0.041977088898420334}, 'sparsity': {'l0': 8237.5615234375, 'l1': 15.984397888183594}, 'token_stats': {'total_tokens_eval_reconstruction': 5120, 'total_tokens_eval_sparsity_variance': 5120}}
+sae_trainer.py:348 {'model_performance_preservation': {'ce_loss_score': 0.846140994427681, 'ce_loss_with_ablation': 8.324442863464355, 'ce_loss_with_sae': 3.3605146408081055, 'ce_loss_without_sae': 2.457893133163452}, 'reconstruction_quality': {'explained_variance': 0.010112034156918526, 'mse': 21.138626098632812, 'cossim': 0.6730630397796631}, 'shrinkage': {'l2_norm_in': 46.036678314208984, 'l2_norm_out': 1.2115404605865479, 'l2_ratio': 0.021322717890143394, 'relative_reconstruction_bias': 0.04126569256186485}, 'sparsity': {'l0': 8231.689453125, 'l1': 17.215951919555664}, 'token_stats': {'total_tokens_eval_reconstruction': 5120, 'total_tokens_eval_sparsity_variance': 5120}}
+sae_trainer.py:348 {'model_performance_preservation': {'ce_loss_score': 0.8996841710111809, 'ce_loss_with_ablation': 8.514806747436523, 'ce_loss_with_sae': 3.0727572441101074, 'ce_loss_without_sae': 2.4659624099731445}, 'reconstruction_quality': {'explained_variance': 0.01607595756649971, 'mse': 21.3757381439209, 'cossim': 0.7131180763244629}, 'shrinkage': {'l2_norm_in': 46.09100341796875, 'l2_norm_out': 1.3140273094177246, 'l2_ratio': 0.02424025908112526, 'relative_reconstruction_bias': 0.04070810601115227}, 'sparsity': {'l0': 8233.173828125, 'l1': 21.412160873413086}, 'token_stats': {'total_tokens_eval_reconstruction': 5120, 'total_tokens_eval_sparsity_variance': 5120}}
+sae_trainer.py:348 {'model_performance_preservation': {'ce_loss_score': 0.9152573019145337, 'ce_loss_with_ablation': 8.2409029006958, 'ce_loss_with_sae': 2.910240888595581, 'ce_loss_without_sae': 2.4166805744171143}, 'reconstruction_quality': {'explained_variance': 0.03310959413647652, 'mse': 22.294309616088867, 'cossim': 0.7416418194770813}, 'shrinkage': {'l2_norm_in': 46.466468811035156, 'l2_norm_out': 1.412860631942749, 'l2_ratio': 0.026473496109247208, 'relative_reconstruction_bias': 0.04074179008603096}, 'sparsity': {'l0': 8232.501953125, 'l1': 21.873302459716797}, 'token_stats': {'total_tokens_eval_reconstruction': 5120, 'total_tokens_eval_sparsity_variance': 5120}}
+Traceback (most recent call last):
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 152, in run_trainer_with_interruption_handling
+    sae = trainer.fit()
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/training/sae_trainer.py", line 191, in fit
+    self._run_and_log_evals()
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/training/sae_trainer.py", line 339, in _run_and_log_evals
+    eval_metrics, _ = run_evals(
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/evals.py", line 139, in run_evals
+    reconstruction_metrics = get_downstream_reconstruction_metrics(
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/evals.py", line 325, in get_downstream_reconstruction_metrics
+    for metric_name, metric_value in get_recons_loss(
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/evals.py", line 669, in get_recons_loss
+    recons_logits, recons_ce_loss = model.run_with_hooks(
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/transformer_lens/hook_points.py", line 456, in run_with_hooks
+    return hooked_model.forward(*model_args, **model_kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/transformer_lens/HookedTransformer.py", line 612, in forward
+    residual = block(
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/transformer_lens/components/transformer_block.py", line 187, in forward
+    resid_post = self.hook_resid_post(resid_mid + mlp_out)  # [batch, pos, d_model]
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1735, in _wrapped_call_impl
+    def _wrapped_call_impl(self, *args, **kwargs):
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 27, in interrupt_callback
+    raise InterruptedException()
+sae_lens.sae_training_runner.InterruptedException
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/data/yusenp/NLP/KAN-LLaMA/preliminary_exploration/train_SAE.py", line 94, in <module>
+    main()
+  File "/data/yusenp/NLP/KAN-LLaMA/preliminary_exploration/train_SAE.py", line 89, in main
+    sparse_autoencoder = SAETrainingRunner(cfg).run()
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 113, in run
+    sae = self.run_trainer_with_interruption_handling(trainer)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 157, in run_trainer_with_interruption_handling
+    self.save_checkpoint(trainer, checkpoint_name=checkpoint_name)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 192, in save_checkpoint
+    trainer.activations_store.save(
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/training/activations_store.py", line 807, in save
+    save_file(self.state_dict(), file_path)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/safetensors/torch.py", line 286, in save_file
+    serialize_file(_flatten(tensors), filename, metadata=metadata)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/safetensors/torch.py", line 496, in _flatten
+    return {
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/safetensors/torch.py", line 500, in <dictcomp>
+    "data": _tobytes(v, k),
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/safetensors/torch.py", line 422, in _tobytes
+    tensor = tensor.to("cpu")
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 27, in interrupt_callback
+    raise InterruptedException()
+sae_lens.sae_training_runner.InterruptedException
+Traceback (most recent call last):
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 152, in run_trainer_with_interruption_handling
+    sae = trainer.fit()
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/training/sae_trainer.py", line 191, in fit
+    self._run_and_log_evals()
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/training/sae_trainer.py", line 339, in _run_and_log_evals
+    eval_metrics, _ = run_evals(
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/evals.py", line 139, in run_evals
+    reconstruction_metrics = get_downstream_reconstruction_metrics(
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/evals.py", line 325, in get_downstream_reconstruction_metrics
+    for metric_name, metric_value in get_recons_loss(
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/evals.py", line 669, in get_recons_loss
+    recons_logits, recons_ce_loss = model.run_with_hooks(
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/transformer_lens/hook_points.py", line 456, in run_with_hooks
+    return hooked_model.forward(*model_args, **model_kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/transformer_lens/HookedTransformer.py", line 612, in forward
+    residual = block(
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/transformer_lens/components/transformer_block.py", line 187, in forward
+    resid_post = self.hook_resid_post(resid_mid + mlp_out)  # [batch, pos, d_model]
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1735, in _wrapped_call_impl
+    def _wrapped_call_impl(self, *args, **kwargs):
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 27, in interrupt_callback
+    raise InterruptedException()
+sae_lens.sae_training_runner.InterruptedException
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/data/yusenp/NLP/KAN-LLaMA/preliminary_exploration/train_SAE.py", line 94, in <module>
+    main()
+  File "/data/yusenp/NLP/KAN-LLaMA/preliminary_exploration/train_SAE.py", line 89, in main
+    sparse_autoencoder = SAETrainingRunner(cfg).run()
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 113, in run
+    sae = self.run_trainer_with_interruption_handling(trainer)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 157, in run_trainer_with_interruption_handling
+    self.save_checkpoint(trainer, checkpoint_name=checkpoint_name)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 192, in save_checkpoint
+    trainer.activations_store.save(
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/training/activations_store.py", line 807, in save
+    save_file(self.state_dict(), file_path)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/safetensors/torch.py", line 286, in save_file
+    serialize_file(_flatten(tensors), filename, metadata=metadata)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/safetensors/torch.py", line 496, in _flatten
+    return {
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/safetensors/torch.py", line 500, in <dictcomp>
+    "data": _tobytes(v, k),
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/safetensors/torch.py", line 422, in _tobytes
+    tensor = tensor.to("cpu")
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 27, in interrupt_callback
+    raise InterruptedException()
+sae_lens.sae_training_runner.InterruptedException
+Exception ignored in atexit callback: <function _start_and_connect_service.<locals>.teardown_atexit at 0x7f4496ed7d90>
+Traceback (most recent call last):
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/wandb/sdk/lib/service_connection.py", line 94, in teardown_atexit
+    conn.teardown(hooks.exit_code)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/wandb/sdk/lib/service_connection.py", line 226, in teardown
+    self._router.join()
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/wandb/sdk/interface/router.py", line 75, in join
+    self._thread.join()
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/threading.py", line 1096, in join
+    self._wait_for_tstate_lock()
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/threading.py", line 1116, in _wait_for_tstate_lock
+    if lock.acquire(block, timeout):
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 27, in interrupt_callback
+    raise InterruptedException()
+sae_lens.sae_training_runner.InterruptedException:

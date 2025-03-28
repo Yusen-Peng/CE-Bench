@@ -1,0 +1,155 @@
+Estimating norm scaling factor: 100%|██████████| 1000/1000 [00:01<00:00, 518.19it/s]
+2500| auxiliary_reconstruction_loss: 1.72360 | l1_loss: 2.51509 | mse_loss: 1.10300:  31%|███▏      | 1280000/4096000 [05:36<10:21, 4527.95it/s]interrupted, saving progress
+sae_trainer.py:348 {'model_performance_preservation': {'ce_loss_score': 0.26182295297598396, 'ce_loss_with_ablation': 8.200347900390625, 'ce_loss_with_sae': 6.6786651611328125, 'ce_loss_without_sae': 2.3884711265563965}, 'reconstruction_quality': {'explained_variance': -0.015095815062522888, 'mse': 25.745195388793945, 'cossim': 0.29133060574531555}, 'shrinkage': {'l2_norm_in': 48.4709358215332, 'l2_norm_out': 0.044945426285266876, 'l2_ratio': 0.00012160483311163262, 'relative_reconstruction_bias': 0.008040419779717922}, 'sparsity': {'l0': 38.71085739135742, 'l1': 43.39912033081055}, 'token_stats': {'total_tokens_eval_reconstruction': 25600, 'total_tokens_eval_sparsity_variance': 25600}}
+sae_trainer.py:348 {'model_performance_preservation': {'ce_loss_score': 0.4873012449548838, 'ce_loss_with_ablation': 8.31177806854248, 'ce_loss_with_sae': 5.4616217613220215, 'ce_loss_without_sae': 2.462918996810913}, 'reconstruction_quality': {'explained_variance': -0.010152144357562065, 'mse': 26.00054168701172, 'cossim': 0.31830158829689026}, 'shrinkage': {'l2_norm_in': 48.80682373046875, 'l2_norm_out': 0.18820105493068695, 'l2_ratio': 0.00030015112133696675, 'relative_reconstruction_bias': 0.016393380239605904}, 'sparsity': {'l0': 36.45882797241211, 'l1': 237.8611297607422}, 'token_stats': {'total_tokens_eval_reconstruction': 25600, 'total_tokens_eval_sparsity_variance': 25600}}
+sae_trainer.py:348 {'model_performance_preservation': {'ce_loss_score': 0.4796076294206295, 'ce_loss_with_ablation': 8.168850898742676, 'ce_loss_with_sae': 5.3851637840271, 'ce_loss_without_sae': 2.364758253097534}, 'reconstruction_quality': {'explained_variance': -0.053436946123838425, 'mse': 21.199020385742188, 'cossim': 0.3258509635925293}, 'shrinkage': {'l2_norm_in': 45.62919235229492, 'l2_norm_out': 0.26146218180656433, 'l2_ratio': 0.0004028634284622967, 'relative_reconstruction_bias': 0.02654416486620903}, 'sparsity': {'l0': 29.050155639648438, 'l1': 288.32415771484375}, 'token_stats': {'total_tokens_eval_reconstruction': 25600, 'total_tokens_eval_sparsity_variance': 25600}}
+sae_trainer.py:348 {'model_performance_preservation': {'ce_loss_score': 0.4854048441480257, 'ce_loss_with_ablation': 7.961564064025879, 'ce_loss_with_sae': 5.176456928253174, 'ce_loss_without_sae': 2.2238645553588867}, 'reconstruction_quality': {'explained_variance': -0.04075688123703003, 'mse': 22.14837074279785, 'cossim': 0.33490583300590515}, 'shrinkage': {'l2_norm_in': 46.525535583496094, 'l2_norm_out': 0.335326611995697, 'l2_ratio': 0.0005182516179047525, 'relative_reconstruction_bias': 0.030682241544127464}, 'sparsity': {'l0': 28.995311737060547, 'l1': 380.4971923828125}, 'token_stats': {'total_tokens_eval_reconstruction': 25600, 'total_tokens_eval_sparsity_variance': 25600}}
+sae_trainer.py:348 {'model_performance_preservation': {'ce_loss_score': 0.5034286984786555, 'ce_loss_with_ablation': 7.9120965003967285, 'ce_loss_with_sae': 5.091972351074219, 'ce_loss_without_sae': 2.3102622032165527}, 'reconstruction_quality': {'explained_variance': -0.001079873531125486, 'mse': 25.585540771484375, 'cossim': 0.34657713770866394}, 'shrinkage': {'l2_norm_in': 49.141883850097656, 'l2_norm_out': 0.4368933141231537, 'l2_ratio': 0.000679403601679951, 'relative_reconstruction_bias': 0.03303493931889534}, 'sparsity': {'l0': 34.311092376708984, 'l1': 519.3346557617188}, 'token_stats': {'total_tokens_eval_reconstruction': 25600, 'total_tokens_eval_sparsity_variance': 25600}}
+sae_trainer.py:348 {'model_performance_preservation': {'ce_loss_score': 0.4894918061708714, 'ce_loss_with_ablation': 8.155667304992676, 'ce_loss_with_sae': 5.358844757080078, 'ce_loss_without_sae': 2.4419403076171875}, 'reconstruction_quality': {'explained_variance': 0.003297466551885009, 'mse': 25.32390022277832, 'cossim': 0.3562430441379547}, 'shrinkage': {'l2_norm_in': 48.98362350463867, 'l2_norm_out': 0.44463205337524414, 'l2_ratio': 0.0007453894359059632, 'relative_reconstruction_bias': 0.033668894320726395}, 'sparsity': {'l0': 33.13210678100586, 'l1': 530.302978515625}, 'token_stats': {'total_tokens_eval_reconstruction': 25600, 'total_tokens_eval_sparsity_variance': 25600}}
+sae_trainer.py:348 {'model_performance_preservation': {'ce_loss_score': 0.476622332293055, 'ce_loss_with_ablation': 8.128202438354492, 'ce_loss_with_sae': 5.401968479156494, 'ce_loss_without_sae': 2.4082984924316406}, 'reconstruction_quality': {'explained_variance': -0.009946675971150398, 'mse': 24.88739776611328, 'cossim': 0.361997127532959}, 'shrinkage': {'l2_norm_in': 48.68758773803711, 'l2_norm_out': 0.43367958068847656, 'l2_ratio': 0.0007626102888025343, 'relative_reconstruction_bias': 0.03379126638174057}, 'sparsity': {'l0': 32.86734390258789, 'l1': 514.300048828125}, 'token_stats': {'total_tokens_eval_reconstruction': 25600, 'total_tokens_eval_sparsity_variance': 25600}}
+sae_trainer.py:348 {'model_performance_preservation': {'ce_loss_score': 0.4875756499251914, 'ce_loss_with_ablation': 8.265886306762695, 'ce_loss_with_sae': 5.431755542755127, 'ce_loss_without_sae': 2.4531867504119873}, 'reconstruction_quality': {'explained_variance': -0.011149019934237003, 'mse': 24.72969627380371, 'cossim': 0.3640155792236328}, 'shrinkage': {'l2_norm_in': 48.62202835083008, 'l2_norm_out': 0.42973142862319946, 'l2_ratio': 0.0007793961558490992, 'relative_reconstruction_bias': 0.03378859534859657}, 'sparsity': {'l0': 32.120975494384766, 'l1': 508.7809143066406}, 'token_stats': {'total_tokens_eval_reconstruction': 25600, 'total_tokens_eval_sparsity_variance': 25600}}
+sae_trainer.py:348 {'model_performance_preservation': {'ce_loss_score': 0.48835764363172807, 'ce_loss_with_ablation': 8.16364574432373, 'ce_loss_with_sae': 5.344649314880371, 'ce_loss_without_sae': 2.3912441730499268}, 'reconstruction_quality': {'explained_variance': -0.055969055742025375, 'mse': 20.572519302368164, 'cossim': 0.37236037850379944}, 'shrinkage': {'l2_norm_in': 45.48048782348633, 'l2_norm_out': 0.3545980751514435, 'l2_ratio': 0.0007302789017558098, 'relative_reconstruction_bias': 0.03395811840891838}, 'sparsity': {'l0': 27.636640548706055, 'l1': 415.1352233886719}, 'token_stats': {'total_tokens_eval_reconstruction': 25600, 'total_tokens_eval_sparsity_variance': 25600}}
+sae_trainer.py:348 {'model_performance_preservation': {'ce_loss_score': 0.4868924230545003, 'ce_loss_with_ablation': 8.00209903717041, 'ce_loss_with_sae': 5.203895092010498, 'ce_loss_without_sae': 2.255030870437622}, 'reconstruction_quality': {'explained_variance': -0.04998287186026573, 'mse': 21.089752197265625, 'cossim': 0.3757316470146179}, 'shrinkage': {'l2_norm_in': 45.742156982421875, 'l2_norm_out': 0.3646356463432312, 'l2_ratio': 0.0007554237963631749, 'relative_reconstruction_bias': 0.03399745002388954}, 'sparsity': {'l0': 27.64058494567871, 'l1': 425.1950988769531}, 'token_stats': {'total_tokens_eval_reconstruction': 25600, 'total_tokens_eval_sparsity_variance': 25600}}
+sae_trainer.py:348 {'model_performance_preservation': {'ce_loss_score': 0.46570654204159184, 'ce_loss_with_ablation': 8.201801300048828, 'ce_loss_with_sae': 5.364487648010254, 'ce_loss_without_sae': 2.1093087196350098}, 'reconstruction_quality': {'explained_variance': -0.008571624755859375, 'mse': 24.769662857055664, 'cossim': 0.3733108937740326}, 'shrinkage': {'l2_norm_in': 48.77898406982422, 'l2_norm_out': 0.4355813264846802, 'l2_ratio': 0.0008315923623740673, 'relative_reconstruction_bias': 0.0338866300880909}, 'sparsity': {'l0': 30.562850952148438, 'l1': 508.870849609375}, 'token_stats': {'total_tokens_eval_reconstruction': 25600, 'total_tokens_eval_sparsity_variance': 25600}}
+sae_trainer.py:348 {'model_performance_preservation': {'ce_loss_score': 0.4777886443478525, 'ce_loss_with_ablation': 8.367950439453125, 'ce_loss_with_sae': 5.526605606079102, 'ce_loss_without_sae': 2.4210848808288574}, 'reconstruction_quality': {'explained_variance': -0.005268425680696964, 'mse': 24.82296371459961, 'cossim': 0.37704870104789734}, 'shrinkage': {'l2_norm_in': 48.79237747192383, 'l2_norm_out': 0.44110262393951416, 'l2_ratio': 0.0008519684197381139, 'relative_reconstruction_bias': 0.03403462469577789}, 'sparsity': {'l0': 30.736366271972656, 'l1': 511.25347900390625}, 'token_stats': {'total_tokens_eval_reconstruction': 25600, 'total_tokens_eval_sparsity_variance': 25600}}
+sae_trainer.py:348 {'model_performance_preservation': {'ce_loss_score': 0.47989886694426115, 'ce_loss_with_ablation': 8.182868003845215, 'ce_loss_with_sae': 5.280459403991699, 'ce_loss_without_sae': 2.134909152984619}, 'reconstruction_quality': {'explained_variance': -0.005168603733181953, 'mse': 25.32773208618164, 'cossim': 0.38413190841674805}, 'shrinkage': {'l2_norm_in': 48.90321350097656, 'l2_norm_out': 0.4485659599304199, 'l2_ratio': 0.0008678481681272388, 'relative_reconstruction_bias': 0.03390392288565636}, 'sparsity': {'l0': 30.87335777282715, 'l1': 517.44873046875}, 'token_stats': {'total_tokens_eval_reconstruction': 25600, 'total_tokens_eval_sparsity_variance': 25600}}
+sae_trainer.py:348 {'model_performance_preservation': {'ce_loss_score': 0.4955865427900902, 'ce_loss_with_ablation': 8.126861572265625, 'ce_loss_with_sae': 5.332842826843262, 'ce_loss_without_sae': 2.4890596866607666}, 'reconstruction_quality': {'explained_variance': -0.007198201958090067, 'mse': 25.14780616760254, 'cossim': 0.3863445222377777}, 'shrinkage': {'l2_norm_in': 48.84596633911133, 'l2_norm_out': 0.4506450593471527, 'l2_ratio': 0.0008804368553683162, 'relative_reconstruction_bias': 0.03410826250910759}, 'sparsity': {'l0': 30.626171112060547, 'l1': 515.2360229492188}, 'token_stats': {'total_tokens_eval_reconstruction': 25600, 'total_tokens_eval_sparsity_variance': 25600}}
+sae_trainer.py:348 {'model_performance_preservation': {'ce_loss_score': 0.5077412914546221, 'ce_loss_with_ablation': 8.234411239624023, 'ce_loss_with_sae': 5.319498538970947, 'ce_loss_without_sae': 2.4934704303741455}, 'reconstruction_quality': {'explained_variance': -0.014730334281921387, 'mse': 24.438852310180664, 'cossim': 0.3811855614185333}, 'shrinkage': {'l2_norm_in': 48.4588508605957, 'l2_norm_out': 0.43189531564712524, 'l2_ratio': 0.0008595669642090797, 'relative_reconstruction_bias': 0.03414430841803551}, 'sparsity': {'l0': 29.859764099121094, 'l1': 490.4231872558594}, 'token_stats': {'total_tokens_eval_reconstruction': 25600, 'total_tokens_eval_sparsity_variance': 25600}}
+sae_trainer.py:348 {'model_performance_preservation': {'ce_loss_score': 0.4914310772271914, 'ce_loss_with_ablation': 8.342547416687012, 'ce_loss_with_sae': 5.437134742736816, 'ce_loss_without_sae': 2.4304006099700928}, 'reconstruction_quality': {'explained_variance': -0.00754487095400691, 'mse': 24.62432861328125, 'cossim': 0.38332420587539673}, 'shrinkage': {'l2_norm_in': 48.800418853759766, 'l2_norm_out': 0.4422968924045563, 'l2_ratio': 0.0008849073783494532, 'relative_reconstruction_bias': 0.034188058227300644}, 'sparsity': {'l0': 30.49789047241211, 'l1': 499.8680419921875}, 'token_stats': {'total_tokens_eval_reconstruction': 25600, 'total_tokens_eval_sparsity_variance': 25600}}
+Traceback (most recent call last):
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 152, in run_trainer_with_interruption_handling
+    sae = trainer.fit()
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/training/sae_trainer.py", line 191, in fit
+    self._run_and_log_evals()
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/training/sae_trainer.py", line 340, in _run_and_log_evals
+    eval_metrics, _ = run_evals(
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/evals.py", line 188, in run_evals
+    sparsity_variance_metrics, feature_metrics = get_sparsity_and_variance_metrics(
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/evals.py", line 425, in get_sparsity_and_variance_metrics
+    _, cache = model.run_with_cache(
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/transformer_lens/HookedTransformer.py", line 694, in run_with_cache
+    out, cache_dict = super().run_with_cache(
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/transformer_lens/hook_points.py", line 569, in run_with_cache
+    model_out = self(*model_args, **model_kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/transformer_lens/HookedTransformer.py", line 583, in forward
+    ) = self.input_to_embed(
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/transformer_lens/HookedTransformer.py", line 375, in input_to_embed
+    if (
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/transformers/tokenization_utils_fast.py", line 279, in __len__
+    return self._tokenizer.get_vocab_size(with_added_tokens=True)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 27, in interrupt_callback
+    raise InterruptedException()
+sae_lens.sae_training_runner.InterruptedException
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/data/yusenp/NLP/KAN-LLaMA/preliminary_exploration/train_SAE.py", line 95, in <module>
+    main()
+  File "/data/yusenp/NLP/KAN-LLaMA/preliminary_exploration/train_SAE.py", line 90, in main
+    sparse_autoencoder = SAETrainingRunner(cfg).run()
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 113, in run
+    sae = self.run_trainer_with_interruption_handling(trainer)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 157, in run_trainer_with_interruption_handling
+    self.save_checkpoint(trainer, checkpoint_name=checkpoint_name)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 221, in save_checkpoint
+    model_artifact.add_file(str(weights_path))
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/wandb/sdk/artifacts/_validators.py", line 115, in wrapper
+    return method(self, *args, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/wandb/sdk/artifacts/artifact.py", line 1325, in add_file
+    digest = md5_file_b64(local_path)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/wandb/sdk/lib/hashutil.py", line 47, in md5_file_b64
+    return _b64_from_hasher(_md5_file_hasher(*paths))
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/wandb/sdk/lib/hashutil.py", line 67, in _md5_file_hasher
+    md5_hash.update(mview)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 27, in interrupt_callback
+    raise InterruptedException()
+sae_lens.sae_training_runner.InterruptedException
+Traceback (most recent call last):
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 152, in run_trainer_with_interruption_handling
+    sae = trainer.fit()
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/training/sae_trainer.py", line 191, in fit
+    self._run_and_log_evals()
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/training/sae_trainer.py", line 340, in _run_and_log_evals
+    eval_metrics, _ = run_evals(
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/evals.py", line 188, in run_evals
+    sparsity_variance_metrics, feature_metrics = get_sparsity_and_variance_metrics(
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/evals.py", line 425, in get_sparsity_and_variance_metrics
+    _, cache = model.run_with_cache(
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/transformer_lens/HookedTransformer.py", line 694, in run_with_cache
+    out, cache_dict = super().run_with_cache(
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/transformer_lens/hook_points.py", line 569, in run_with_cache
+    model_out = self(*model_args, **model_kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/transformer_lens/HookedTransformer.py", line 583, in forward
+    ) = self.input_to_embed(
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/transformer_lens/HookedTransformer.py", line 375, in input_to_embed
+    if (
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/transformers/tokenization_utils_fast.py", line 279, in __len__
+    return self._tokenizer.get_vocab_size(with_added_tokens=True)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 27, in interrupt_callback
+    raise InterruptedException()
+sae_lens.sae_training_runner.InterruptedException
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/data/yusenp/NLP/KAN-LLaMA/preliminary_exploration/train_SAE.py", line 95, in <module>
+    main()
+  File "/data/yusenp/NLP/KAN-LLaMA/preliminary_exploration/train_SAE.py", line 90, in main
+    sparse_autoencoder = SAETrainingRunner(cfg).run()
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 113, in run
+    sae = self.run_trainer_with_interruption_handling(trainer)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 157, in run_trainer_with_interruption_handling
+    self.save_checkpoint(trainer, checkpoint_name=checkpoint_name)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 221, in save_checkpoint
+    model_artifact.add_file(str(weights_path))
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/wandb/sdk/artifacts/_validators.py", line 115, in wrapper
+    return method(self, *args, **kwargs)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/wandb/sdk/artifacts/artifact.py", line 1325, in add_file
+    digest = md5_file_b64(local_path)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/wandb/sdk/lib/hashutil.py", line 47, in md5_file_b64
+    return _b64_from_hasher(_md5_file_hasher(*paths))
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/wandb/sdk/lib/hashutil.py", line 67, in _md5_file_hasher
+    md5_hash.update(mview)
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 27, in interrupt_callback
+    raise InterruptedException()
+sae_lens.sae_training_runner.InterruptedException
+Exception ignored in atexit callback: <function _start_and_connect_service.<locals>.teardown_atexit at 0x7f7a6ab8add0>
+Traceback (most recent call last):
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/wandb/sdk/lib/service_connection.py", line 94, in teardown_atexit
+    conn.teardown(hooks.exit_code)
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/wandb/sdk/lib/service_connection.py", line 226, in teardown
+    self._router.join()
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/site-packages/wandb/sdk/interface/router.py", line 75, in join
+    self._thread.join()
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/threading.py", line 1096, in join
+    self._wait_for_tstate_lock()
+  File "/data/yusenp/.conda/envs/kan_llama/lib/python3.10/threading.py", line 1116, in _wait_for_tstate_lock
+    if lock.acquire(block, timeout):
+  File "/data/yusenp/NLP/KAN-LLaMA/sae_lens/sae_training_runner.py", line 27, in interrupt_callback
+    raise InterruptedException()
+sae_lens.sae_training_runner.InterruptedException:

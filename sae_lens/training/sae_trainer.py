@@ -64,10 +64,12 @@ class SAETrainer:
         activation_store: ActivationsStore,
         save_checkpoint_fn: SaveCheckpointFn,
         cfg: LanguageModelSAERunnerConfig,
+        validation_activation_store: Optional[ActivationsStore] = None,
     ) -> None:
         self.model = model
         self.sae = sae
         self.activations_store = activation_store
+        self.validation_activation_store = validation_activation_store  # for evals, we can use the same store
         self.save_checkpoint = save_checkpoint_fn
         self.cfg = cfg
 
@@ -175,6 +177,7 @@ class SAETrainer:
         pbar = tqdm(total=self.cfg.total_training_tokens, desc="Training SAE")
 
         self.activations_store.set_norm_scaling_factor_if_needed()
+        self.validation_activation_store.set_norm_scaling_factor_if_needed()
 
         # Train loop
         while self.n_training_tokens < self.cfg.total_training_tokens:
@@ -327,24 +330,23 @@ class SAETrainer:
 
     @torch.no_grad()
     def _run_and_log_evals(self):
-        # record loss frequently, but not all the time.
         if (self.n_training_steps + 1) % (
             self.cfg.wandb_log_frequency * self.cfg.eval_every_n_wandb_logs
         ) == 0:
             self.sae.eval()
             ignore_tokens = set()
-            if self.activations_store.exclude_special_tokens is not None:
+            if self.validation_activation_store.exclude_special_tokens is not None:
                 ignore_tokens = set(
-                    self.activations_store.exclude_special_tokens.tolist()
+                    self.validation_activation_store.exclude_special_tokens.tolist()
                 )
             eval_metrics, _ = run_evals(
                 sae=self.sae,
-                activation_store=self.activations_store,
+                activation_store=self.validation_activation_store,
                 model=self.model,
                 eval_config=self.trainer_eval_config,
                 ignore_tokens=ignore_tokens,
                 model_kwargs=self.cfg.model_kwargs,
-            )  # not calculating featurwise metrics here.
+            )
             print(f"sae_trainer.py:348 {eval_metrics}")
 
             # Remove eval metrics that are already logged during training

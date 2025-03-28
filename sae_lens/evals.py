@@ -319,6 +319,9 @@ def get_downstream_reconstruction_metrics(
 
     for _ in batch_iter:
         batch_tokens = activation_store.get_batch_tokens(eval_batch_size_prompts)
+        
+        # print(f"batch_tokens: {batch_tokens}")
+
         for metric_name, metric_value in get_recons_loss(
             sae,
             model,
@@ -748,12 +751,16 @@ def multiple_evals(
     sae_block_pattern: str,
     n_eval_reconstruction_batches: int,
     n_eval_sparsity_variance_batches: int,
+    datasets: list[str], #= ["Skylion007/openwebtext", "lighteval/MATH"],
     eval_batch_size_prompts: int = 8,
-    datasets: list[str] = ["Skylion007/openwebtext", "lighteval/MATH"],
     ctx_lens: list[int] = [128],
     output_dir: str = "eval_results",
     verbose: bool = False,
 ) -> List[Dict[str, Any]]:
+    
+    if datasets is None:
+        raise ValueError("Please provide at least one dataset dumbass")
+
     device = "cuda" if torch.cuda.is_available() else "cpu"
 
     filtered_saes = get_saes_from_regex(sae_regex_pattern, sae_block_pattern)
@@ -773,7 +780,7 @@ def multiple_evals(
 
     current_model = None
     current_model_str = None
-    print(filtered_saes)
+    # print(filtered_saes)
     for sae_release_name, sae_id, _, _ in tqdm(filtered_saes):
         sae = SAE.from_pretrained(
             release=sae_release_name,  # see other options in sae_lens/pretrained_saes.yaml
@@ -973,7 +980,7 @@ if __name__ == "__main__":
     arg_parser.add_argument(
         "--datasets",
         nargs="+",
-        default=["Skylion007/openwebtext"],
+        #default=["Skylion007/openwebtext"],
         help="Datasets to evaluate on, such as 'Skylion007/openwebtext' or 'lighteval/MATH'.",
     )
     arg_parser.add_argument(

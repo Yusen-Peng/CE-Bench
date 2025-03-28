@@ -1,0 +1,4 @@
+Training SAE:   0%|          | 0/40960 [00:00<?, ?it/s]                            /data/yusenp/NLP/KAN-LLaMA/sae_lens/training/activations_store.py:738: UserWarning: All samples in the training dataset have been exhausted, we are now beginning a new epoch with the same samples.
+  warnings.warn(scaling factor:  42%|████▏     | 424/1000 [00:00<00:01, 531.62it/s]
+Estimating norm scaling factor: 100%|██████████| 1000/1000 [00:01<00:00, 546.88it/s]
+Training SAE:   0%|          | 0/40960 [00:10<?, ?it/s]00 [00:01<00:00, 572.60it/s]
