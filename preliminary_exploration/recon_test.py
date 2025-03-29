@@ -22,8 +22,8 @@ def main():
     tokenizer.pad_token = tokenizer.eos_token
 
     # Load the trained SAE from checkpoints
-    architecture = "RIGHT_jumprelu"
-    steps = "1k"
+    architecture = "tiny_kan_relu_dense"
+    steps = "100"
     sae_checkpoint_path = f"checkpoints/{architecture}/{steps}"
     sae = SAE.load_from_pretrained(path=sae_checkpoint_path, device=device)
     sae.eval()
@@ -39,9 +39,8 @@ def main():
     print(f"Loaded SAE with d_in={sae.cfg.d_in}, d_sae={sae.cfg.d_sae}, hook={sae.cfg.hook_name}")
 
     dataset = load_dataset("GulkoA/TinyStories-tokenized-Llama-3.2", split="validation")
-    desired_sample_size = 100 # 1k validation samples
+    desired_sample_size = 1_000 # 1k validation samples
     downsampled_dataset = dataset.shuffle(seed=42).select(range(desired_sample_size))
-    #downsampled_dataset = dataset # use the entire validation set for now
 
     batch_size = 8
     results = []
