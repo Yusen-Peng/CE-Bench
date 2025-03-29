@@ -26,10 +26,11 @@ print(f"Key/Query/Value dimension: {model.cfg.d_head * model.cfg.n_heads}")
 # %%
 # Get all activation names from the model
 activation_names = utils.get_act_name("gpt2")
-print(f"Total number of activation names: {len(activation_names)}")
-print("\nFirst 10 activation names:")
-for name in activation_names[:10]:
-    print(f"- {name}")
+print(f"Activation names: {activation_names}")
+# print(f"Total number of activation names: {len(activation_names)}")
+# print("\nFirst 10 activation names:")
+# for name in activation_names[:10]:
+#     print(f"- {name}")
 
 # %%
 # Filtering activation names by type

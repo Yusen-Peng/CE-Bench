@@ -74,7 +74,7 @@ class SAETrainingRunner:
             self.model,
             self.cfg,
             override_dataset=override_dataset,
-            split="validation",
+            split="validation", # make sure we are using the validation split
         )
 
         if override_sae is None:

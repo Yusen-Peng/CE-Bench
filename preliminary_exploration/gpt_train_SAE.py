@@ -1,6 +1,8 @@
 import torch
 import os
 from datasets import load_dataset
+from transformer_lens import utils
+
 
 from sae_lens import LanguageModelSAERunnerConfig, SAETrainingRunner
 
@@ -36,7 +38,7 @@ def main():
     print("Using device:", device)
     os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
-    total_training_steps = 3_000 # scale up to 3k
+    total_training_steps = 1_000 # NOTE: scale to 1k to keep it consistent
     batch_size = 4096
     total_training_tokens = total_training_steps * batch_size
 
@@ -47,14 +49,16 @@ def main():
     n_checkpoints = 5
     cfg = LanguageModelSAERunnerConfig(
         **model_config["gpt2-small"],
-        architecture="kan",
-        activation_fn_kwargs={"kan_hidden_size": 2048 * 8, "kan_ae_type": "kan_relu_dense"},
+        architecture="jumprelu",
+        #activation_fn_kwargs={"kan_hidden_size": 2048 * 8, "kan_ae_type": "kan_relu_dense"},
         #model_name="meta-llama/Llama-3.2-1B",
         # model_name="tiny-stories-1L-21M",
         # cached_activations_path="GulkoA/TinyStories-Llama-3.2-1B-cache-100k",
         # use_cached_activations=True,
-        hook_name="blocks.0.hook_mlp_out",
-        hook_layer=0,
+
+        # hook_name="blocks.5.hook_mlp_out",
+        hook_name=utils.get_act_name("mlp_out", 5),
+        hook_layer=5,
 
         # dataset_path="fka/awesome-chatgpt-prompts",
         is_dataset_tokenized=True,
@@ -90,16 +94,14 @@ def main():
         wandb_log_frequency=30,
         eval_every_n_wandb_logs=5,
         n_eval_batches=10,
-        eval_batch_size_prompts=4,
+        eval_batch_size_prompts=1,
         device=device,
         seed=42,
         n_checkpoints=n_checkpoints,
         checkpoint_path="checkpoints",
-        dtype="float32", # type matters
+        dtype="float32", # type actually matters!
     )
 
-    print(f"training with {cfg.architecture} architecture with {total_training_steps} steps")
-    # look at the next cell to see some instruction for what to do while this is running.
     sparse_autoencoder = SAETrainingRunner(cfg).run()
     print("training done!")
     return sparse_autoencoder

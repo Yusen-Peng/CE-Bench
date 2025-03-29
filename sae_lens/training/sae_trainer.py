@@ -69,7 +69,7 @@ class SAETrainer:
         self.model = model
         self.sae = sae
         self.activations_store = activation_store
-        self.validation_activation_store = validation_activation_store  # for evals, we can use the same store
+        self.validation_activation_store = validation_activation_store
         self.save_checkpoint = save_checkpoint_fn
         self.cfg = cfg
 
@@ -112,7 +112,7 @@ class SAETrainer:
                 cfg.adam_beta2,
             ),
         )
-        assert cfg.lr_end is not None  # this is set in config post-init
+        assert cfg.lr_end is not None
         self.lr_scheduler = get_lr_scheduler(
             cfg.lr_scheduler_name,
             lr=cfg.lr,
@@ -372,11 +372,31 @@ class SAETrainer:
                 b_mag_dist = self.sae.b_mag.detach().float().cpu().numpy()
                 eval_metrics["weights/b_mag"] = wandb.Histogram(b_mag_dist)  # type: ignore
 
+
+            self._checkpoint_if_best(eval_metrics)
+
             wandb.log(
                 eval_metrics,
                 step=self.n_training_steps,
             )
             self.sae.train()
+
+    def _checkpoint_if_best(self, eval_metrics: dict[str, Any]):
+        best_metric = eval_metrics["model_performance_preservation"]["ce_loss_with_sae"]
+        if "best_checkpoint_metric" not in self.__dict__:
+            self.best_checkpoint_metric = best_metric
+
+        if best_metric < self.best_checkpoint_metric:
+            self.best_checkpoint_metric = best_metric
+            original = eval_metrics["model_performance_preservation"]["ce_loss_without_sae"]
+
+            self.save_checkpoint(
+                trainer=self,
+                checkpoint_name=f"best_{self.n_training_tokens}_ce_{best_metric:.5f}_ori_{original:.5f}",
+                wandb_aliases=["best_model"],
+            )
+            print("saved best checkpoint")
+        print(f"best_checkpoint_metric: {self.best_checkpoint_metric}")
 
     @torch.no_grad()
     def _build_sparsity_log_dict(self) -> dict[str, Any]:
