@@ -12,3 +12,4 @@ checkpoints/b5bc6yb8/final_1000448/sae_weights.safetensor
 nohup.out
 wandb/*
 cache_activations/
+tiny-stories-1L-21M-cache/

@@ -9,6 +9,8 @@ from transformer_lens import utils
 from functools import partial
 import time
 from transformers import AutoTokenizer
+from transformers import GPT2Tokenizer
+
 
 torch.set_grad_enabled(False)
 def main():
@@ -17,20 +19,23 @@ def main():
     print(f"Using device: {device}")
 
     # Load LLaMA 3.2 tokenizer
-    model_name = "meta-llama/Llama-3.2-1B"
-    tokenizer = AutoTokenizer.from_pretrained(model_name)
+    #model_name = "meta-llama/Llama-3.2-1B"
+    #model_name = "gpt2"
+    #tokenizer = AutoTokenizer.from_pretrained(model_name)
+    tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
     tokenizer.pad_token = tokenizer.eos_token
 
     # Load the trained SAE from checkpoints
-    architecture = "tiny_kan_relu_dense"
-    steps = "100"
-    sae_checkpoint_path = f"checkpoints/{architecture}/{steps}"
+    architecture = "GPT_cache_kan_relu_dense"
+    steps = "1k"
+    best_model = "best_3686400_ce_2.34855_ori_2.33838"
+    sae_checkpoint_path = f"checkpoints/{architecture}/{steps}/{best_model}"
     sae = SAE.load_from_pretrained(path=sae_checkpoint_path, device=device)
     sae.eval()
 
     # Load model using HookedSAETransformer with SAE's kwargs
     model = HookedSAETransformer.from_pretrained_no_processing(
-        model_name,
+        model_name="gpt2",
         device=device,
         **sae.cfg.model_from_pretrained_kwargs
     )
@@ -38,7 +43,9 @@ def main():
     # Verify SAE config
     print(f"Loaded SAE with d_in={sae.cfg.d_in}, d_sae={sae.cfg.d_sae}, hook={sae.cfg.hook_name}")
 
-    dataset = load_dataset("GulkoA/TinyStories-tokenized-Llama-3.2", split="validation")
+
+    #dataset = load_dataset("GulkoA/TinyStories-tokenized-Llama-3.2", split="validation")
+    dataset = load_dataset("apollo-research/roneneldan-TinyStories-tokenizer-gpt2", split="validation")
     desired_sample_size = 1_000 # 1k validation samples
     downsampled_dataset = dataset.shuffle(seed=42).select(range(desired_sample_size))
 
@@ -63,14 +70,16 @@ def main():
             with torch.autocast(device_type="cuda", dtype=torch.bfloat16):
                 # Forward pass with cache
                 _, cache = model.run_with_cache(inputs, return_type=None)
-                hidden_states = cache["blocks.0.hook_mlp_out"]
+
+                # NOTE: now we are probing the MLP output of the 5th block
+                hidden_states = cache["blocks.5.hook_mlp_out"]
 
                 # Encode/decode with SAE
                 feature_acts = sae.encode(hidden_states)
                 sae_out = sae.decode(feature_acts)
 
             # Compute original loss
-            orig_loss = model.forward(inputs, return_type="loss").item()
+            orig_loss = model(inputs, return_type="loss").item()
 
             # Compute reconstruction loss (insert decoded SAE output at hook)
             reconstr_loss = model.run_with_hooks(

@@ -5,8 +5,9 @@ import openai
 import os
 import pandas as pd
 from dotenv import load_dotenv
-from transformers import AutoTokenizer
+from transformers import AutoTokenizer, GPT2Tokenizer
 from sae_lens import SAE, HookedSAETransformer
+
 
 def main():
     # Load environment variables (API Key)
@@ -24,19 +25,24 @@ def main():
     print(f"Using device: {device}")
     
     # Load LLaMA tokenizer
-    model_name = "meta-llama/Llama-3.2-1B"
-    tokenizer = AutoTokenizer.from_pretrained(model_name)
+    #model_name = "meta-llama/Llama-3.2-1B"
+    model_name = "gpt2-small"
+    
+    #tokenizer = AutoTokenizer.from_pretrained(model_name)
+    tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
+
     tokenizer.pad_token = tokenizer.eos_token
     print("Tokenizer loaded!")
 
     # Load the trained SAE
-    architecture = "RIGHT_kan_relu_dense_latent"
+    architecture = "GPT_cache_only_kan"
     steps = "1k"
-    sae_checkpoint_path = f"checkpoints/{architecture}/{steps}"
+    best_model = "best_3686400_ce_2.35626_ori_2.33838"
+    sae_checkpoint_path = f"checkpoints/{architecture}/{steps}/{best_model}/"
     sae = SAE.load_from_pretrained(path=sae_checkpoint_path, device=device)
     print("SAE loaded!")
 
-    # Load the LLaMA model using HookedSAETransformer
+    # Load the model using HookedSAETransformer
     model = HookedSAETransformer.from_pretrained_no_processing(
         model_name,
         device=device,
@@ -45,13 +51,13 @@ def main():
     print("Model loaded!")
 
     # Example input text
-    example_text = "The stock market crashed during the economic crisis in 2008."
+    example_text = "The stock market crashed during the economic crisis in 2008, leading to a global recession."
     tokens = tokenizer(example_text, return_tensors="pt").to(device)
 
     # Extract activations from the correct layer
     with torch.no_grad():
         _, cache = model.run_with_cache(tokens.input_ids) 
-    hidden_states = cache["blocks.0.hook_mlp_out"]
+    hidden_states = cache["blocks.5.hook_mlp_out"]  # now we are poking layer 5
 
     # Pass hidden states into SAE
     with torch.no_grad():
@@ -62,6 +68,8 @@ def main():
 
     # Select top 100 activated features
     num_features = activations.shape[2]
+    print(f"Number of features: {num_features}")
+
     feature_activations_sum = activations[0, :, :].sum(axis=0)  # Shape: (num_features,)
 
     # randomly select 100 features
@@ -69,7 +77,7 @@ def main():
     # random select
     selected_feature_indices = np.random.choice(num_features, num_selected, replace=False)
     num_selected = min(100, num_features)
-    selected_feature_indices = np.argsort(feature_activations_sum)[-num_selected:]  # Top activated features
+    selected_feature_indices = np.argsort(feature_activations_sum)[-num_selected:]
 
 
     print(f"Selected {num_selected} features for evaluation.")

@@ -1,0 +1,210 @@
+wandb: Using wandb-core as the SDK backend.  Please refer to https://wandb.me/wandb-core for more information.
+wandb: Currently logged in as: alexgulko (gulko-osu) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: Tracking run with wandb version 0.19.8
+wandb: Run data is saved locally in /data/yusenp/NLP/KAN-LLaMA/wandb/run-20250331_151514-9uk23j3a
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run 16384-L1-5-LR-1e-05-Tokens-4.096e+06
+wandb: ⭐️ View project at https://wandb.ai/gulko-osu/sae_llama_3_2_1B
+wandb: 🚀 View run at https://wandb.ai/gulko-osu/sae_llama_3_2_1B/runs/9uk23j3a
+Using device: cuda
+Loaded pretrained model meta-llama/Llama-3.2-1B into HookedTransformer
+Creating new SAE
+Training SAE:   0%|          | 0/4096000 [00:00<?, ?it/s]
+Estimating norm scaling factor:   0%|          | 0/1000 [00:00<?, ?it/s][A
+Estimating norm scaling factor:   1%|          | 11/1000 [00:00<00:09, 108.91it/s][A
+Estimating norm scaling factor:   2%|▎         | 25/1000 [00:00<00:07, 122.71it/s][A
+Estimating norm scaling factor:   4%|▍         | 38/1000 [00:00<00:08, 109.84it/s][A
+Estimating norm scaling factor:   5%|▌         | 50/1000 [00:00<00:09, 104.18it/s][A
+Estimating norm scaling factor:   6%|▌         | 62/1000 [00:00<00:08, 106.85it/s][A
+Estimating norm scaling factor:   8%|▊         | 76/1000 [00:00<00:07, 116.31it/s][A
+Estimating norm scaling factor:   9%|▉         | 90/1000 [00:00<00:07, 122.87it/s][A
+Estimating norm scaling factor:  10%|█         | 104/1000 [00:00<00:07, 126.71it/s][A
+Estimating norm scaling factor:  12%|█▏        | 118/1000 [00:00<00:06, 129.17it/s][A
+Estimating norm scaling factor:  13%|█▎        | 132/1000 [00:01<00:06, 130.63it/s][A
+Estimating norm scaling factor:  15%|█▍        | 146/1000 [00:01<00:06, 132.02it/s][A
+Estimating norm scaling factor:  16%|█▌        | 160/1000 [00:01<00:06, 131.55it/s][A
+Estimating norm scaling factor:  17%|█▋        | 174/1000 [00:01<00:09, 91.57it/s] [A
+Estimating norm scaling factor:  19%|█▉        | 188/1000 [00:01<00:08, 100.72it/s][A
+Estimating norm scaling factor:  20%|██        | 201/1000 [00:01<00:07, 107.21it/s][A
+Estimating norm scaling factor:  22%|██▏       | 215/1000 [00:01<00:06, 113.82it/s][A
+Estimating norm scaling factor:  23%|██▎       | 229/1000 [00:01<00:06, 119.98it/s][A
+Estimating norm scaling factor:  24%|██▍       | 243/1000 [00:02<00:06, 124.14it/s][A
+Estimating norm scaling factor:  26%|██▌       | 257/1000 [00:02<00:05, 128.08it/s][A
+Estimating norm scaling factor:  27%|██▋       | 271/1000 [00:02<00:05, 129.38it/s][A
+Estimating norm scaling factor:  28%|██▊       | 285/1000 [00:02<00:05, 131.31it/s][A
+Estimating norm scaling factor:  30%|██▉       | 299/1000 [00:02<00:05, 132.83it/s][A
+Estimating norm scaling factor:  31%|███▏      | 313/1000 [00:02<00:05, 134.50it/s][A
+Estimating norm scaling factor:  33%|███▎      | 327/1000 [00:02<00:05, 133.59it/s][A
+Estimating norm scaling factor:  34%|███▍      | 341/1000 [00:02<00:04, 134.02it/s][A
+Estimating norm scaling factor:  36%|███▌      | 355/1000 [00:02<00:04, 133.93it/s][A
+Estimating norm scaling factor:  37%|███▋      | 369/1000 [00:03<00:04, 133.77it/s][A
+Estimating norm scaling factor:  38%|███▊      | 383/1000 [00:03<00:04, 132.81it/s][A
+Estimating norm scaling factor:  40%|███▉      | 397/1000 [00:03<00:04, 133.45it/s][A
+Estimating norm scaling factor:  41%|████      | 411/1000 [00:03<00:04, 133.95it/s][A
+Estimating norm scaling factor:  42%|████▎     | 425/1000 [00:03<00:04, 135.18it/s][A
+Estimating norm scaling factor:  44%|████▍     | 439/1000 [00:03<00:04, 133.95it/s][A
+Estimating norm scaling factor:  45%|████▌     | 453/1000 [00:03<00:04, 134.17it/s][A
+Estimating norm scaling factor:  47%|████▋     | 467/1000 [00:03<00:03, 133.76it/s][A
+Estimating norm scaling factor:  48%|████▊     | 481/1000 [00:03<00:03, 134.54it/s][A
+Estimating norm scaling factor:  50%|████▉     | 495/1000 [00:03<00:03, 134.78it/s][A
+Estimating norm scaling factor:  51%|█████     | 509/1000 [00:04<00:03, 135.54it/s][A/data/yusenp/NLP/KAN-LLaMA/sae_lens/training/activations_store.py:744: UserWarning: All samples in the training dataset have been exhausted, we are now beginning a new epoch with the same samples.
+  warnings.warn(
+
+Estimating norm scaling factor:  52%|█████▏    | 524/1000 [00:04<00:03, 137.65it/s][A
+Estimating norm scaling factor:  54%|█████▍    | 539/1000 [00:04<00:03, 140.09it/s][A
+Estimating norm scaling factor:  55%|█████▌    | 554/1000 [00:04<00:03, 124.72it/s][A
+Estimating norm scaling factor:  57%|█████▋    | 567/1000 [00:04<00:03, 117.19it/s][A
+Estimating norm scaling factor:  58%|█████▊    | 582/1000 [00:04<00:03, 125.51it/s][A
+Estimating norm scaling factor:  60%|█████▉    | 597/1000 [00:04<00:03, 131.94it/s][A
+Estimating norm scaling factor:  61%|██████    | 612/1000 [00:04<00:02, 136.42it/s][A
+Estimating norm scaling factor:  63%|██████▎   | 627/1000 [00:04<00:02, 139.76it/s][A
+Estimating norm scaling factor:  64%|██████▍   | 642/1000 [00:05<00:02, 142.07it/s][A
+Estimating norm scaling factor:  66%|██████▌   | 657/1000 [00:05<00:02, 144.01it/s][A
+Estimating norm scaling factor:  67%|██████▋   | 672/1000 [00:05<00:02, 145.04it/s][A
+Estimating norm scaling factor:  69%|██████▊   | 687/1000 [00:05<00:02, 145.78it/s][A
+Estimating norm scaling factor:  70%|███████   | 702/1000 [00:05<00:02, 146.18it/s][A
+Estimating norm scaling factor:  72%|███████▏  | 717/1000 [00:05<00:01, 146.86it/s][A
+Estimating norm scaling factor:  73%|███████▎  | 732/1000 [00:05<00:01, 147.26it/s][A
+Estimating norm scaling factor:  75%|███████▍  | 747/1000 [00:05<00:01, 147.81it/s][A
+Estimating norm scaling factor:  76%|███████▌  | 762/1000 [00:05<00:01, 147.74it/s][A
+Estimating norm scaling factor:  78%|███████▊  | 777/1000 [00:05<00:01, 147.85it/s][A
+Estimating norm scaling factor:  79%|███████▉  | 792/1000 [00:06<00:01, 147.64it/s][A
+Estimating norm scaling factor:  81%|████████  | 807/1000 [00:06<00:01, 147.68it/s][A
+Estimating norm scaling factor:  82%|████████▏ | 822/1000 [00:06<00:01, 147.67it/s][A
+Estimating norm scaling factor:  84%|████████▎ | 837/1000 [00:06<00:01, 147.85it/s][A
+Estimating norm scaling factor:  85%|████████▌ | 852/1000 [00:06<00:01, 147.79it/s][A
+Estimating norm scaling factor:  87%|████████▋ | 867/1000 [00:06<00:00, 147.68it/s][A
+Estimating norm scaling factor:  88%|████████▊ | 882/1000 [00:06<00:00, 148.11it/s][A
+Estimating norm scaling factor:  90%|████████▉ | 897/1000 [00:06<00:00, 148.20it/s][A
+Estimating norm scaling factor:  91%|█████████ | 912/1000 [00:06<00:00, 146.97it/s][A
+Estimating norm scaling factor:  93%|█████████▎| 927/1000 [00:06<00:00, 146.89it/s][A
+Estimating norm scaling factor:  94%|█████████▍| 942/1000 [00:07<00:00, 147.44it/s][A
+Estimating norm scaling factor:  96%|█████████▌| 957/1000 [00:07<00:00, 147.77it/s][A
+Estimating norm scaling factor:  97%|█████████▋| 972/1000 [00:07<00:00, 147.83it/s][A
+Estimating norm scaling factor:  99%|█████████▊| 987/1000 [00:07<00:00, 148.07it/s][AEstimating norm scaling factor: 100%|██████████| 1000/1000 [00:07<00:00, 133.95it/s]
+
+Estimating norm scaling factor:   0%|          | 0/1000 [00:00<?, ?it/s][A
+Estimating norm scaling factor:   1%|▏         | 14/1000 [00:00<00:07, 134.94it/s][A
+Estimating norm scaling factor:   3%|▎         | 28/1000 [00:00<00:07, 136.75it/s][A
+Estimating norm scaling factor:   4%|▍         | 42/1000 [00:00<00:08, 113.89it/s][A
+Estimating norm scaling factor:   5%|▌         | 54/1000 [00:00<00:08, 107.30it/s][A
+Estimating norm scaling factor:   7%|▋         | 68/1000 [00:00<00:08, 114.93it/s][A
+Estimating norm scaling factor:   8%|▊         | 82/1000 [00:00<00:07, 122.26it/s][A
+Estimating norm scaling factor:  10%|▉         | 96/1000 [00:00<00:07, 126.95it/s][A
+Estimating norm scaling factor:  11%|█         | 110/1000 [00:00<00:06, 130.65it/s][A
+Estimating norm scaling factor:  12%|█▏        | 124/1000 [00:00<00:06, 132.32it/s][A
+Estimating norm scaling factor:  14%|█▍        | 138/1000 [00:01<00:06, 133.84it/s][A
+Estimating norm scaling factor:  15%|█▌        | 152/1000 [00:01<00:06, 134.83it/s][A
+Estimating norm scaling factor:  17%|█▋        | 166/1000 [00:01<00:08, 93.53it/s] [A
+Estimating norm scaling factor:  18%|█▊        | 180/1000 [00:01<00:07, 102.92it/s][A
+Estimating norm scaling factor:  19%|█▉        | 194/1000 [00:01<00:07, 111.68it/s][A
+Estimating norm scaling factor:  21%|██        | 208/1000 [00:01<00:06, 118.37it/s][A
+Estimating norm scaling factor:  22%|██▏       | 222/1000 [00:01<00:06, 123.73it/s][A
+Estimating norm scaling factor:  24%|██▎       | 236/1000 [00:01<00:05, 127.72it/s][A
+Estimating norm scaling factor:  25%|██▌       | 250/1000 [00:02<00:05, 130.64it/s][A
+Estimating norm scaling factor:  26%|██▋       | 264/1000 [00:02<00:05, 132.59it/s][A
+Estimating norm scaling factor:  28%|██▊       | 278/1000 [00:02<00:05, 133.84it/s][A
+Estimating norm scaling factor:  29%|██▉       | 292/1000 [00:02<00:05, 134.42it/s][A
+Estimating norm scaling factor:  31%|███       | 306/1000 [00:02<00:05, 135.93it/s][A
+Estimating norm scaling factor:  32%|███▏      | 320/1000 [00:02<00:04, 136.92it/s][A
+Estimating norm scaling factor:  33%|███▎      | 334/1000 [00:02<00:04, 137.22it/s][A
+Estimating norm scaling factor:  35%|███▍      | 348/1000 [00:02<00:04, 136.72it/s][A
+Estimating norm scaling factor:  36%|███▌      | 362/1000 [00:02<00:04, 136.37it/s][A
+Estimating norm scaling factor:  38%|███▊      | 376/1000 [00:02<00:04, 136.39it/s][A
+Estimating norm scaling factor:  39%|███▉      | 390/1000 [00:03<00:04, 135.84it/s][A
+Estimating norm scaling factor:  40%|████      | 404/1000 [00:03<00:04, 136.44it/s][A
+Estimating norm scaling factor:  42%|████▏     | 418/1000 [00:03<00:04, 136.46it/s][A
+Estimating norm scaling factor:  43%|████▎     | 432/1000 [00:03<00:04, 137.40it/s][A
+Estimating norm scaling factor:  45%|████▍     | 446/1000 [00:03<00:04, 137.09it/s][A
+Estimating norm scaling factor:  46%|████▌     | 460/1000 [00:03<00:03, 137.87it/s][A
+Estimating norm scaling factor:  47%|████▋     | 474/1000 [00:03<00:03, 137.25it/s][A
+Estimating norm scaling factor:  49%|████▉     | 488/1000 [00:03<00:03, 138.00it/s][A
+Estimating norm scaling factor:  50%|█████     | 502/1000 [00:03<00:03, 137.83it/s][A
+Estimating norm scaling factor:  52%|█████▏    | 517/1000 [00:04<00:03, 138.81it/s][A
+Estimating norm scaling factor:  53%|█████▎    | 532/1000 [00:04<00:03, 141.77it/s][A
+Estimating norm scaling factor:  55%|█████▍    | 547/1000 [00:04<00:03, 133.30it/s][A
+Estimating norm scaling factor:  56%|█████▌    | 561/1000 [00:04<00:03, 122.19it/s][A
+Estimating norm scaling factor:  57%|█████▋    | 574/1000 [00:04<00:03, 122.11it/s][A
+Estimating norm scaling factor:  59%|█████▉    | 589/1000 [00:04<00:03, 129.55it/s][A
+Estimating norm scaling factor:  60%|██████    | 604/1000 [00:04<00:02, 135.24it/s][A
+Estimating norm scaling factor:  62%|██████▏   | 619/1000 [00:04<00:02, 139.01it/s][A
+Estimating norm scaling factor:  63%|██████▎   | 634/1000 [00:04<00:02, 141.54it/s][A
+Estimating norm scaling factor:  65%|██████▍   | 649/1000 [00:04<00:02, 143.40it/s][A
+Estimating norm scaling factor:  66%|██████▋   | 664/1000 [00:05<00:02, 144.34it/s][A
+Estimating norm scaling factor:  68%|██████▊   | 679/1000 [00:05<00:02, 145.82it/s][A
+Estimating norm scaling factor:  70%|██████▉   | 695/1000 [00:05<00:02, 147.25it/s][A
+Estimating norm scaling factor:  71%|███████   | 710/1000 [00:05<00:01, 147.53it/s][A
+Estimating norm scaling factor:  72%|███████▎  | 725/1000 [00:05<00:01, 147.35it/s][A
+Estimating norm scaling factor:  74%|███████▍  | 740/1000 [00:05<00:01, 147.66it/s][A
+Estimating norm scaling factor:  76%|███████▌  | 755/1000 [00:05<00:01, 148.27it/s][A
+Estimating norm scaling factor:  77%|███████▋  | 770/1000 [00:05<00:01, 147.99it/s][A
+Estimating norm scaling factor:  78%|███████▊  | 785/1000 [00:05<00:01, 147.91it/s][A
+Estimating norm scaling factor:  80%|████████  | 800/1000 [00:05<00:01, 148.06it/s][A
+Estimating norm scaling factor:  82%|████████▏ | 815/1000 [00:06<00:01, 148.32it/s][A
+Estimating norm scaling factor:  83%|████████▎ | 830/1000 [00:06<00:01, 148.18it/s][A
+Estimating norm scaling factor:  84%|████████▍ | 845/1000 [00:06<00:01, 147.67it/s][A
+Estimating norm scaling factor:  86%|████████▌ | 860/1000 [00:06<00:00, 147.25it/s][A
+Estimating norm scaling factor:  88%|████████▊ | 875/1000 [00:06<00:00, 148.00it/s][A
+Estimating norm scaling factor:  89%|████████▉ | 890/1000 [00:06<00:00, 148.08it/s][A
+Estimating norm scaling factor:  90%|█████████ | 905/1000 [00:06<00:00, 148.01it/s][A
+Estimating norm scaling factor:  92%|█████████▏| 920/1000 [00:06<00:00, 148.26it/s][A
+Estimating norm scaling factor:  94%|█████████▎| 935/1000 [00:06<00:00, 148.59it/s][A
+Estimating norm scaling factor:  95%|█████████▌| 950/1000 [00:07<00:00, 148.75it/s][A
+Estimating norm scaling factor:  96%|█████████▋| 965/1000 [00:07<00:00, 148.75it/s][A
+Estimating norm scaling factor:  98%|█████████▊| 980/1000 [00:07<00:00, 148.18it/s][A
+Estimating norm scaling factor: 100%|█████████▉| 995/1000 [00:07<00:00, 148.39it/s][AEstimating norm scaling factor: 100%|██████████| 1000/1000 [00:07<00:00, 136.13it/s]
+100| l0_loss: 4035.63232 | mse_loss: 3.24567:   0%|          | 0/4096000 [00:20<?, ?it/s]100| l0_loss: 4035.63232 | mse_loss: 3.24567:  10%|█         | 409600/4096000 [00:20<03:01, 20293.44it/s]200| l0_loss: 1317.04102 | mse_loss: 3.06246:  10%|█         | 409600/4096000 [00:26<03:01, 20293.44it/s]200| l0_loss: 1317.04102 | mse_loss: 3.06246:  20%|██        | 819200/4096000 [00:26<01:36, 33938.39it/s]300| l0_loss: 646.86768 | mse_loss: 3.02535:  20%|██        | 819200/4096000 [00:34<01:36, 33938.39it/s] 300| l0_loss: 646.86768 | mse_loss: 3.02535:  30%|███       | 1228800/4096000 [00:34<01:11, 40335.74it/s]400| l0_loss: 583.77197 | mse_loss: 2.99490:  30%|███       | 1228800/4096000 [00:39<01:11, 40335.74it/s]400| l0_loss: 583.77197 | mse_loss: 2.99490:  40%|████      | 1638400/4096000 [00:39<00:48, 50161.33it/s]500| l0_loss: 398.16895 | mse_loss: 2.98875:  40%|████      | 1638400/4096000 [00:47<00:48, 50161.33it/s]500| l0_loss: 398.16895 | mse_loss: 2.98875:  50%|█████     | 2048000/4096000 [00:47<00:40, 51094.51it/s]600| l0_loss: 290.81543 | mse_loss: 2.97135:  50%|█████     | 2048000/4096000 [00:55<00:40, 51094.51it/s]600| l0_loss: 290.81543 | mse_loss: 2.97135:  60%|██████    | 2457600/4096000 [00:55<00:31, 51542.09it/s]700| l0_loss: 367.39502 | mse_loss: 2.93506:  60%|██████    | 2457600/4096000 [01:01<00:31, 51542.09it/s]700| l0_loss: 367.39502 | mse_loss: 2.93506:  70%|███████   | 2867200/4096000 [01:01<00:22, 54197.76it/s]800| l0_loss: 453.43262 | mse_loss: 2.93095:  70%|███████   | 2867200/4096000 [01:08<00:22, 54197.76it/s]800| l0_loss: 453.43262 | mse_loss: 2.93095:  80%|████████  | 3276800/4096000 [01:08<00:14, 57041.64it/s]900| l0_loss: 405.11963 | mse_loss: 2.92310:  80%|████████  | 3276800/4096000 [01:16<00:14, 57041.64it/s]900| l0_loss: 405.11963 | mse_loss: 2.92310:  90%|█████████ | 3686400/4096000 [01:16<00:07, 55243.89it/s]1000| l0_loss: 419.19189 | mse_loss: 2.94314:  90%|█████████ | 3686400/4096000 [01:21<00:07, 55243.89it/s]1000| l0_loss: 419.19189 | mse_loss: 2.94314: 100%|██████████| 4096000/4096000 [01:21<00:00, 61076.63it/s]1000| l0_loss: 419.19189 | mse_loss: 2.94314: 100%|██████████| 4096000/4096000 [01:22<00:00, 49425.54it/s]
+wandb: uploading artifact sae_meta-llama__Llama-3.2-1B_blocks.5.hook_mlp_out_16384; uploading artifact sae_meta-llama__Llama-3.2-1B_blocks.5.hook_mlp_out_16384_log_feature_sparsity
+wandb: uploading artifact sae_meta-llama__Llama-3.2-1B_blocks.5.hook_mlp_out_16384
+wandb:                                                                                
+wandb: 
+wandb: Run history:
+wandb:      details/current_l1_coefficient ▁████████████████████████████████
+wandb:       details/current_learning_rate ▅█████▇▇▇▆▆▆▅▅▅▄▄▃▃▃▂▂▂▂▂▂▂▂▁▁▁▁▁
+wandb:           details/n_training_tokens ▁▁▁▂▂▂▂▃▃▃▃▃▄▄▄▄▅▅▅▅▅▆▆▆▆▆▇▇▇▇███
+wandb:                      losses/l0_loss █▅▃▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:                     losses/mse_loss █▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:                 losses/overall_loss █▅▃▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:          metrics/explained_variance ▁▇███████████████████████████████
+wandb:      metrics/explained_variance_std █▃▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:                          metrics/l0 █▃▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: metrics/mean_log10_feature_sparsity ▁
+wandb:                 sparsity/below_1e-5 ▁
+wandb:                 sparsity/below_1e-6 ▁
+wandb:              sparsity/dead_features ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:    sparsity/mean_passes_since_fired ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▂▁▂▁█▁▅▃▃▄▄▅▂▁▆▁▁▆
+wandb: 
+wandb: Run summary:
+wandb:      details/current_l1_coefficient 5
+wandb:       details/current_learning_rate 0.0
+wandb:           details/n_training_tokens 4055040
+wandb:                      losses/l0_loss 402.61963
+wandb:                     losses/mse_loss 2.91914
+wandb:                 losses/overall_loss 405.53876
+wandb:          metrics/explained_variance -0.09856
+wandb:      metrics/explained_variance_std 0.08574
+wandb:                          metrics/l0 80.52393
+wandb: metrics/mean_log10_feature_sparsity -1.84208
+wandb:                 sparsity/below_1e-5 0
+wandb:                 sparsity/below_1e-6 0
+wandb:              sparsity/dead_features 0
+wandb:    sparsity/mean_passes_since_fired 0.01685
+wandb: 
+wandb: 🚀 View run 16384-L1-5-LR-1e-05-Tokens-4.096e+06 at: https://wandb.ai/gulko-osu/sae_llama_3_2_1B/runs/9uk23j3a
+wandb: ⭐️ View project at: https://wandb.ai/gulko-osu/sae_llama_3_2_1B
+wandb: Synced 5 W&B file(s), 0 media file(s), 25 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20250331_151514-9uk23j3a/logs
+sae_trainer.py:348 {'model_performance_preservation': {'ce_loss_score': 0.012938974716524164, 'ce_loss_with_ablation': 2.3039071559906006, 'ce_loss_with_sae': 2.3013851642608643, 'ce_loss_without_sae': 2.1089928150177}, 'reconstruction_quality': {'explained_variance': -0.2353198528289795, 'mse': 16.21786880493164, 'cossim': 0.2854345738887787}, 'shrinkage': {'l2_norm_in': 45.41468048095703, 'l2_norm_out': 0.06539453566074371, 'l2_ratio': 0.0014896926004439592, 'relative_reconstruction_bias': 0.3203064203262329}, 'sparsity': {'l0': 564.3414306640625, 'l1': 14.149271011352539}, 'token_stats': {'total_tokens_eval_reconstruction': 1280, 'total_tokens_eval_sparsity_variance': 1280}}
+best_checkpoint_metric: 2.3013851642608643
+sae_trainer.py:348 {'model_performance_preservation': {'ce_loss_score': 0.008191989808669265, 'ce_loss_with_ablation': 2.454068899154663, 'ce_loss_with_sae': 2.4523026943206787, 'ce_loss_without_sae': 2.2384674549102783}, 'reconstruction_quality': {'explained_variance': -0.23128651082515717, 'mse': 16.174732208251953, 'cossim': 0.308826208114624}, 'shrinkage': {'l2_norm_in': 45.35268783569336, 'l2_norm_out': 0.05077780410647392, 'l2_ratio': 0.0011587576009333134, 'relative_reconstruction_bias': 0.18592076003551483}, 'sparsity': {'l0': 445.17578125, 'l1': 10.507367134094238}, 'token_stats': {'total_tokens_eval_reconstruction': 1280, 'total_tokens_eval_sparsity_variance': 1280}}
+best_checkpoint_metric: 2.3013851642608643
+sae_trainer.py:348 {'model_performance_preservation': {'ce_loss_score': 0.010746842011508941, 'ce_loss_with_ablation': 2.3934998512268066, 'ce_loss_with_sae': 2.391845703125, 'ce_loss_without_sae': 2.2395803928375244}, 'reconstruction_quality': {'explained_variance': -0.2239927500486374, 'mse': 16.45138931274414, 'cossim': 0.31180429458618164}, 'shrinkage': {'l2_norm_in': 45.73274230957031, 'l2_norm_out': 0.043518539518117905, 'l2_ratio': 0.0010025426745414734, 'relative_reconstruction_bias': 0.10967271775007248}, 'sparsity': {'l0': 333.4953308105469, 'l1': 8.324119567871094}, 'token_stats': {'total_tokens_eval_reconstruction': 1280, 'total_tokens_eval_sparsity_variance': 1280}}
+best_checkpoint_metric: 2.3013851642608643
+sae_trainer.py:348 {'model_performance_preservation': {'ce_loss_score': 0.02063106796116505, 'ce_loss_with_ablation': 2.2422943115234375, 'ce_loss_with_sae': 2.238091230392456, 'ce_loss_without_sae': 2.0385684967041016}, 'reconstruction_quality': {'explained_variance': -0.22972789406776428, 'mse': 16.346282958984375, 'cossim': 0.3018702566623688}, 'shrinkage': {'l2_norm_in': 45.600982666015625, 'l2_norm_out': 0.06887608021497726, 'l2_ratio': 0.0015753003535792232, 'relative_reconstruction_bias': 0.06946011632680893}, 'sparsity': {'l0': 333.38671875, 'l1': 13.022122383117676}, 'token_stats': {'total_tokens_eval_reconstruction': 1280, 'total_tokens_eval_sparsity_variance': 1280}}
+saved best checkpoint
+best_checkpoint_metric: 2.238091230392456
+sae_trainer.py:348 {'model_performance_preservation': {'ce_loss_score': 0.04012156946044702, 'ce_loss_with_ablation': 2.408463478088379, 'ce_loss_with_sae': 2.3995468616485596, 'ce_loss_without_sae': 2.1862235069274902}, 'reconstruction_quality': {'explained_variance': -0.23014867305755615, 'mse': 16.481420516967773, 'cossim': 0.28989773988723755}, 'shrinkage': {'l2_norm_in': 45.81547927856445, 'l2_norm_out': 0.09573031216859818, 'l2_ratio': 0.00217042351141572, 'relative_reconstruction_bias': 0.03732703998684883}, 'sparsity': {'l0': 315.31329345703125, 'l1': 16.69943618774414}, 'token_stats': {'total_tokens_eval_reconstruction': 1280, 'total_tokens_eval_sparsity_variance': 1280}}
+best_checkpoint_metric: 2.238091230392456
+sae_trainer.py:348 {'model_performance_preservation': {'ce_loss_score': 0.049511363581332055, 'ce_loss_with_ablation': 2.3132784366607666, 'ce_loss_with_sae': 2.303528308868408, 'ce_loss_without_sae': 2.116351366043091}, 'reconstruction_quality': {'explained_variance': -0.21165362000465393, 'mse': 16.56583595275879, 'cossim': 0.27981871366500854}, 'shrinkage': {'l2_norm_in': 45.926021575927734, 'l2_norm_out': 0.1176890879869461, 'l2_ratio': 0.0026507002767175436, 'relative_reconstruction_bias': 0.03657608479261398}, 'sparsity': {'l0': 324.62890625, 'l1': 20.268573760986328}, 'token_stats': {'total_tokens_eval_reconstruction': 1280, 'total_tokens_eval_sparsity_variance': 1280}}
+best_checkpoint_metric: 2.238091230392456
+training done!
