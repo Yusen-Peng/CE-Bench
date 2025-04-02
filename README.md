@@ -5,3 +5,7 @@
 ## Authors: Alex Gulko, Yusen Peng
 
 ![alt text](docs/NLP_pipeline.png "KAN-LLaMA pipeline")
+
+![alt text](docs/score_assignment.png "Score Hard Assignement approach")
+
+![alt text](docs/explain_simulate.png "Explain-then-Simulate aproach")
