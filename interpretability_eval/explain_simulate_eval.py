@@ -167,6 +167,7 @@ def main():
     # first 100 features - approach 3
 
     similarities = []
+    N_ITERATIONS_PER_NEURON = 10
 
     # Get the corresponding tokens and their activations
     tokens = tokenizer.convert_ids_to_tokens(tokens)
@@ -183,25 +184,33 @@ def main():
         simple_activations = simple_activations - np.min(simple_activations)
         simple_activations = simple_activations / np.max(simple_activations)
 
-        # explain
-        explanation = explain(simple_tokens, simple_activations, client)
-        #print("\n  Explanation from LLM:", explanation)
+        
+        similarity = 0
+        for run in range(N_ITERATIONS_PER_NEURON):
+            # explain
+            explanation = explain(simple_tokens, simple_activations, client)
+            #print("\n  Explanation from LLM:", explanation)
 
-        # simulate
-        for i in range(10):
-            simulated_pairs = simulate(simple_tokens, explanation, client)
-            if len(simulated_pairs) == len(simple_activations):
-                break
-            else:
-                print("The model is fcking idiot! simulated_pairs length is", len(simulated_pairs), "but simple_activations length is", len(simple_activations))
-        #print("\n  Simulated pairs:", simulated_pairs)
+            # simulate
+            for i in range(10):
+                simulated_pairs = simulate(simple_tokens, explanation, client)
+                if len(simulated_pairs) == len(simple_activations):
+                    break
+                else:
+                    print("The model is fcking idiot! simulated_pairs length is", len(simulated_pairs), "but simple_activations length is", len(simple_activations))
+            #print("\n  Simulated pairs:", simulated_pairs)
 
-        # similarity measure
-        similarity = cosine_similarity(
-            simple_activations.reshape(1, -1),
-            simulated_pairs.reshape(1, -1)
-        )[0][0]
-        print(f"\n  Cosine similarity {similarity} for neuron {feature_idx}")
+            # similarity measure
+            similarity_per_run = cosine_similarity(
+                simple_activations.reshape(1, -1),
+                simulated_pairs.reshape(1, -1)
+            )[0][0]
+            print(f"\n  Cosine similarity {similarity_per_run} for neuron {feature_idx} at run {run}/{N_ITERATIONS_PER_NEURON}")
+            similarity += similarity_per_run
+        
+        # average similarity for this neuron
+        similarity /= N_ITERATIONS_PER_NEURON
+        print(f"\n  Average cosine similarity for neuron {feature_idx} is {similarity}")
         similarities.append(similarity)
 
 

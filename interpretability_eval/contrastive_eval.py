@@ -87,7 +87,7 @@ def main():
     SCALE = 100
     interpretability_score = np.max(elementwise_distance) * SCALE
     print("="*50)
-    print(f"Contrastive interpretability score for {architecture} is {interpretability_score}")
+    print(f"Contrastive interpretability score for {architecture} is {interpretability_score:4f}")
 
 
 
