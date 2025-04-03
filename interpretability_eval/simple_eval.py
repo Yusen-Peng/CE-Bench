@@ -72,10 +72,13 @@ def main():
 
     feature_activations_sum = activations[0, :, :].sum(axis=0)  # Shape: (num_features,)
 
-    # randomly select 100 features
-    num_selected = min(100, num_features)
-    # random select
-    selected_feature_indices = np.random.choice(num_features, num_selected, replace=False)
+    # # randomly select 100 features -- appraoch 1
+    # num_selected = min(100, num_features)
+    # # random select
+    # selected_feature_indices = np.random.choice(num_features, num_selected, replace=False)
+
+
+    # alternatively, most activated features -- approach 2
     num_selected = min(100, num_features)
     selected_feature_indices = np.argsort(feature_activations_sum)[-num_selected:]
 

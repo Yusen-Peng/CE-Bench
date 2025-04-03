@@ -9,3 +9,5 @@
 ![alt text](docs/score_assignment.png "Score Hard Assignement approach")
 
 ![alt text](docs/explain_simulate.png "Explain-then-Simulate aproach")
+
+![alt text](docs/contrastive_eval.png "contrastive evaluation approach")
