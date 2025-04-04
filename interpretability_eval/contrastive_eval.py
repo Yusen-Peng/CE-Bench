@@ -35,9 +35,9 @@ def main():
     print("Tokenizer loaded!")
 
     # Load the trained SAE
-    architecture = "LLAMA_cache_gated"
+    architecture = "LLAMA_cache_kan_relu_dense"
     steps = "1k"
-    best_model = "best_2457600_ce_2.24055_ori_2.03857"
+    best_model = "best_2457600_ce_2.09549_ori_2.03857"
     sae_checkpoint_path = f"checkpoints/{architecture}/{steps}/{best_model}/"
     sae = SAE.load_from_pretrained(path=sae_checkpoint_path, device=device)
     print("SAE loaded!")
@@ -131,11 +131,12 @@ def main():
         print("=" * 50)
 
 
-        # normalization (optional)
-        V1 = V1 / (np.linalg.norm(V1) + 1e-12)
-        V2 = V2 / (np.linalg.norm(V2) + 1e-12)
+        # do joint normalization
+        V_joined = np.stack([V1, V2], axis=0)
+        V_joined_normalized = V_joined / (np.linalg.norm(V_joined) + 1e-12)
+        V1_joint_normalized, V2_joint_normalized = V_joined_normalized[0], V_joined_normalized[1]
 
-        elementwise_distance = np.abs(V1 - V2)
+        elementwise_distance = np.abs(V1_joint_normalized - V2_joint_normalized)
         SCALE = 100
         interpretability_score = np.max(elementwise_distance) * SCALE
         responsible_neuron = np.argmax(elementwise_distance)
