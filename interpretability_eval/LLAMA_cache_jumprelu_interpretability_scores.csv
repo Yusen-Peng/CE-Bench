@@ -1,0 +1,13 @@
+pair_index,interpretability_score,responsible_neuron,ground_truth_subject
+0,0.298840,473,temperature
+1,0.705062,2023,love
+2,0.119178,2023,pressure
+3,0.435639,146,volume
+4,0.849096,2023,entropy
+5,1.611243,2023,size
+6,0.099551,30,mass
+7,1.365757,2023,density
+8,0.329007,146,darkness
+9,0.023842,1195,brightness
+10,1.260869,146,empathy
+11,0.161478,146,sadness

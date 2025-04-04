@@ -35,9 +35,9 @@ def main():
     print("Tokenizer loaded!")
 
     # Load the trained SAE
-    architecture = "LLAMA_cache_only_kan"
+    architecture = "LLAMA_cache_gated"
     steps = "1k"
-    best_model = "best_2457600_ce_2.13012_ori_2.03857"
+    best_model = "best_2457600_ce_2.24055_ori_2.03857"
     sae_checkpoint_path = f"checkpoints/{architecture}/{steps}/{best_model}/"
     sae = SAE.load_from_pretrained(path=sae_checkpoint_path, device=device)
     print("SAE loaded!")
