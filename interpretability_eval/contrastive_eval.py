@@ -50,45 +50,99 @@ def main():
     )
     print("Model loaded!")
 
-    # contrastive text A and B
-    text_A = "The stock market crashed during the economic crisis in 2008, leading to a global recession."
-    text_B = "The stock market soared after the technology boom, resulting in record growth."
 
-    tokens_A = tokenizer(text_A, return_tensors="pt").to(device)
-    tokens_B = tokenizer(text_B, return_tensors="pt").to(device) 
-
-    # Extract activations from the correct layer
-    with torch.no_grad():
-        _, cache = model.run_with_cache(tokens_A.input_ids) 
-    hidden_states_A = cache["blocks.5.hook_mlp_out"]  # now we are poking layer 5
-
-    with torch.no_grad():
-        _, cache = model.run_with_cache(tokens_B.input_ids)
-    hidden_states_B = cache["blocks.5.hook_mlp_out"]  # now we are poking layer 5
-    
-    # Pass hidden states into SAE
-    with torch.no_grad():
-        activations_A = sae(hidden_states_A)
-        activations_B = sae(hidden_states_B)
-
-    # Convert activations to NumPy
-    activations_A = activations_A.to(dtype=torch.float32).detach().cpu().numpy()
-    activations_B = activations_B.to(dtype=torch.float32).detach().cpu().numpy()
-
-    print(activations_A.shape)
-    V1 = activations_A.mean(axis=1).squeeze(0)
-    V2 = activations_B.mean(axis=1).squeeze(0)
-
-    V1 = V1 / (np.linalg.norm(V1) + 1e-12)
-    V2 = V2 / (np.linalg.norm(V2) + 1e-12)
+    # load the contrastive dataset from huggingface
+    from datasets import load_dataset
+    dataset = load_dataset("GulkoA/contrastive-stories", split="train")
+    # print three columns: story1, story2, and subject
 
 
-    elementwise_distance = np.abs(V1 - V2)
-    SCALE = 100
-    interpretability_score = np.max(elementwise_distance) * SCALE
-    print("="*50)
-    print(f"Contrastive interpretability score for {architecture} is {interpretability_score:4f}")
+    import re
 
+    # Create a CSV file to store the results
+    with open(f"interpretability_eval/{architecture}_interpretability_scores.csv", "w") as f:
+        f.write("pair_index,interpretability_score,responsible_neuron,ground_truth_subject\n")
+
+    for pair_index in range(len(dataset)):
+
+        # filter out marked tokens
+        text_A_original = dataset[pair_index]["story1"]
+        text_B_original = dataset[pair_index]["story2"]
+        ground_truth_subject = dataset[pair_index]["subject"]
+        
+        # find all marked tokens
+        marked_tokens_A = re.findall(r"\*(.*?)\*", text_A_original)
+        marked_tokens_B = re.findall(r"\*(.*?)\*", text_B_original)
+
+
+        # remove only asterisks, not the tokens
+        text_A = text_A_original.replace("*", "")
+        text_B = text_B_original.replace("*", "")
+        
+        tokens_A = tokenizer(text_A, return_tensors="pt").to(device)
+        tokens_B = tokenizer(text_B, return_tensors="pt").to(device)
+
+        # Extract activations from the correct layer
+        with torch.no_grad():
+            _, cache = model.run_with_cache(tokens_A.input_ids) 
+        hidden_states_A = cache["blocks.5.hook_mlp_out"]  # now we are poking layer 5
+
+        with torch.no_grad():
+            _, cache = model.run_with_cache(tokens_B.input_ids)
+        hidden_states_B = cache["blocks.5.hook_mlp_out"]  # now we are poking layer 5
+
+        with torch.no_grad():
+            activations_A = sae(hidden_states_A)
+            activations_B = sae(hidden_states_B)
+
+        # Convert activations to NumPy
+        activations_A = activations_A.to(dtype=torch.float32).detach().cpu().numpy()
+        activations_B = activations_B.to(dtype=torch.float32).detach().cpu().numpy()
+
+        # compute V1 and V2 only for the marked tokens
+        V1 = np.zeros(activations_A.shape[2])
+        for token_index in range(activations_A.shape[1]):
+            # traverse each token
+            token_to_traverse = tokenizer.decode(tokens_A["input_ids"][0][token_index]) 
+
+            for marked_token in marked_tokens_A:
+                # NOTE: a prefix space is added to match the marked tokens
+                marked_token_prepended = " " + marked_token
+                if token_to_traverse == marked_token_prepended:
+                    # add the activations of this token to V1
+                    V1 += activations_A[0, token_index, :]
+                    print(f"V1:{marked_token}")
+                    break
+        
+        # compute V2 only for the marked tokens
+        V2 = np.zeros(activations_B.shape[2])   
+        for token_index in range(activations_B.shape[1]):
+            # traverse each token
+            token_to_traverse = tokenizer.decode(tokens_B["input_ids"][0][token_index]) 
+
+            for marked_token in marked_tokens_B:
+                # NOTE: a prefix space is added to match the marked tokens
+                marked_token_prepended = " " + marked_token
+                if token_to_traverse == marked_token_prepended:
+                    # add the activations of this token to V2
+                    V2 += activations_B[0, token_index, :]
+                    print(f"V2:{marked_token}")
+                    break
+        print("=" * 50)
+
+
+        # normalization (optional)
+        V1 = V1 / (np.linalg.norm(V1) + 1e-12)
+        V2 = V2 / (np.linalg.norm(V2) + 1e-12)
+
+        elementwise_distance = np.abs(V1 - V2)
+        SCALE = 100
+        interpretability_score = np.max(elementwise_distance) * SCALE
+        responsible_neuron = np.argmax(elementwise_distance)
+
+        # wirte them to a file
+        with open(f"interpretability_eval/{architecture}_interpretability_scores.csv", "a") as f:
+            f.write(f"{pair_index},{interpretability_score:4f},{responsible_neuron},{ground_truth_subject}\n")
 
 
 if __name__ == "__main__":
