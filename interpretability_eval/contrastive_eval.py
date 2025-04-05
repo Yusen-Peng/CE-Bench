@@ -156,7 +156,10 @@ def main():
 
         # take the average of I1 and I2
         I1 = I1 / (len(marked_tokens_A) + len(marked_tokens_B))
-        I2 = I2 / (len(tokens_A) + len(tokens_B) - (len(marked_tokens_A) + len(marked_tokens_B)))
+        num_tokens_A = len(tokens_A["input_ids"][0])
+        num_tokens_B = len(tokens_B["input_ids"][0])
+        I2 = I2 / (num_tokens_A + num_tokens_B - len(marked_tokens_A) - len(marked_tokens_B))
+
 
         # do joint normalization
         V_joined = np.stack([V1, V2], axis=0)
