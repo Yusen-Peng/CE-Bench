@@ -106,20 +106,20 @@ def main():
     print(f"Using device: {device}")
     
     # Load LLaMA tokenizer
-    #model_name = "meta-llama/Llama-3.2-1B"
-    model_name = "gpt2-small"
+    model_name = "meta-llama/Llama-3.2-1B"
+    #model_name = "gpt2-small"
     
-    #tokenizer = AutoTokenizer.from_pretrained(model_name)
-    tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
+    tokenizer = AutoTokenizer.from_pretrained(model_name)
+    #tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
 
     tokenizer.pad_token = tokenizer.eos_token
     print("Tokenizer loaded!")
 
     # Load the trained SAE
     # architecture = "LLAMA_cache_kan_relu_dense"
-    architecture = "GPT_cache_only_kan"
+    architecture = "LLAMA_cache_gated"
     steps = "1k"
-    best_model = "best_3686400_ce_2.35626_ori_2.33838"
+    best_model = "best_2457600_ce_2.24055_ori_2.03857"
     sae_checkpoint_path = f"checkpoints/{architecture}/{steps}/{best_model}/"
     sae = SAE.load_from_pretrained(path=sae_checkpoint_path, device=device)
     print("SAE loaded!")
@@ -133,7 +133,6 @@ def main():
     print("Model loaded!")
 
     # Example input text
-
     example_text = "The stock market crashed during the economic crisis in 2008, leading to a global recession."    
     stuff = tokenizer.__call__(example_text, return_special_tokens_mask=True)
     #print(stuff)
@@ -141,12 +140,15 @@ def main():
     special_mask = np.array(stuff['special_tokens_mask'])
     # Extract activations from the correct layer
     with torch.no_grad():
-        _, cache = model.run_with_cache(tokens) 
+        _, cache = model.run_with_cache(tokens)
     hidden_states = cache["blocks.5.hook_mlp_out"]  # LAYER 5!
 
     # Pass hidden states into SAE
     with torch.no_grad():
+        # sae() or sae.encode()?
         activations = sae(hidden_states)
+
+    print(f"activations {activations[0, :, 10:15]}")
 
     # Convert activations to NumPy
     activations = activations.to(dtype=torch.float32).detach().cpu().numpy()
@@ -167,7 +169,7 @@ def main():
     # first 100 features - approach 3
 
     similarities = []
-    N_ITERATIONS_PER_NEURON = 10
+    N_ITERATIONS_PER_NEURON = 5
 
     # Get the corresponding tokens and their activations
     tokens = tokenizer.convert_ids_to_tokens(tokens)
@@ -182,9 +184,9 @@ def main():
 
         #normalize the activations
         simple_activations = simple_activations - np.min(simple_activations)
-        simple_activations = simple_activations / np.max(simple_activations)
+        # add a small value to avoid division by zero!
+        simple_activations = simple_activations / (np.max(simple_activations) + 1e-10)
 
-        
         similarity = 0
         for run in range(N_ITERATIONS_PER_NEURON):
             # explain

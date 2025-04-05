@@ -10,16 +10,6 @@ from sae_lens import SAE, HookedSAETransformer
 
 
 def main():
-    # Load environment variables (API Key)
-    load_dotenv()
-    openai.api_key = os.getenv("OPENAI_API_KEY")
-
-    if not openai.api_key:
-        raise ValueError("OpenAI API key is missing! Make sure it's set in the .env file.")
-
-    # Initialize OpenAI Client
-    client = openai.OpenAI()
-
     # Set device
     device = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"Using device: {device}")
@@ -35,9 +25,9 @@ def main():
     print("Tokenizer loaded!")
 
     # Load the trained SAE
-    architecture = "LLAMA_cache_kan_relu_dense"
+    architecture = "LLAMA_cache_jumprelu"
     steps = "1k"
-    best_model = "best_2457600_ce_2.09549_ori_2.03857"
+    best_model = "best_2457600_ce_2.23809_ori_2.03857"
     sae_checkpoint_path = f"checkpoints/{architecture}/{steps}/{best_model}/"
     sae = SAE.load_from_pretrained(path=sae_checkpoint_path, device=device)
     print("SAE loaded!")
@@ -54,16 +44,18 @@ def main():
     # load the contrastive dataset from huggingface
     from datasets import load_dataset
     dataset = load_dataset("GulkoA/contrastive-stories", split="train")
-    # print three columns: story1, story2, and subject
-
-
     import re
 
     # Create a CSV file to store the results
     with open(f"interpretability_eval/{architecture}_interpretability_scores.csv", "w") as f:
         f.write("pair_index,interpretability_score,responsible_neuron,ground_truth_subject\n")
 
-    for pair_index in range(len(dataset)):
+    # raw V1 and V2
+    with open(f"interpretability_eval/{architecture}_raw_V1_V2.log", "w") as f:
+        f.write(f"RAW V1 AND V2 VECTORS FOR {architecture}\n")
+
+    total_rows = len(dataset)
+    for pair_index in range(total_rows):
 
         # filter out marked tokens
         text_A_original = dataset[pair_index]["story1"]
@@ -92,8 +84,8 @@ def main():
         hidden_states_B = cache["blocks.5.hook_mlp_out"]  # now we are poking layer 5
 
         with torch.no_grad():
-            activations_A = sae(hidden_states_A)
-            activations_B = sae(hidden_states_B)
+            activations_A = sae.encode(hidden_states_A)
+            activations_B = sae.encode(hidden_states_B)
 
         # Convert activations to NumPy
         activations_A = activations_A.to(dtype=torch.float32).detach().cpu().numpy()
@@ -130,21 +122,38 @@ def main():
                     break
         print("=" * 50)
 
+        # print raw V1 and V2 to a log file
+        with open(f"interpretability_eval/{architecture}_raw_V1_V2.log", "a") as f:
+            f.write("="*100 + "\n")
+            f.write(f"pair_index: {pair_index}\n")
+            # actually print out every element of V1 and V2
+            for num in V1.tolist():
+                f.write(f"{num:4f},")
+            f.write("\n")
+            for num in V2.tolist():
+                f.write(f"{num:4f},")
+            f.write("\n")
+        df = pd.DataFrame({"V1": V1, "V2": V2, "delta": V1 - V2, "abs_delta": np.abs(V1 - V2)})
+        df.to_csv(f"interpretability_eval/{architecture}_raw_V1_V2_{pair_index}.csv", index=True)
+
+
+        # take average as the last stage of condensing V1 and V2
+        V1 = V1 / len(marked_tokens_A)
+        V2 = V2 / len(marked_tokens_B)
 
         # do joint normalization
         V_joined = np.stack([V1, V2], axis=0)
-        V_joined_normalized = V_joined / (np.linalg.norm(V_joined) + 1e-12)
+        V_joined = V_joined - np.min(V_joined)
+        V_joined_normalized = V_joined / np.max(V_joined)
         V1_joint_normalized, V2_joint_normalized = V_joined_normalized[0], V_joined_normalized[1]
-
         elementwise_distance = np.abs(V1_joint_normalized - V2_joint_normalized)
-        SCALE = 100
-        interpretability_score = np.max(elementwise_distance) * SCALE
-        responsible_neuron = np.argmax(elementwise_distance)
+        contrastive_score = np.max(elementwise_distance)
+        #responsible_neuron = np.argmax(elementwise_distance)
 
         # wirte them to a file
-        with open(f"interpretability_eval/{architecture}_interpretability_scores.csv", "a") as f:
-            f.write(f"{pair_index},{interpretability_score:4f},{responsible_neuron},{ground_truth_subject}\n")
-
+        # with open(f"interpretability_eval/{architecture}_interpretability_scores.csv", "a") as f:
+        #     f.write(f"{pair_index},{interpretability_score:4f},{responsible_neuron},{ground_truth_subject}\n")
+        print(f"pair index: {pair_index}: contrastive score: {contrastive_score:4f}")
 
 if __name__ == "__main__":
     main()

@@ -413,18 +413,20 @@ class SAE(HookedRootModule):
                 sae_error = self.hook_sae_error(x - x_reconstruct_clean)
             sae_out = sae_out + sae_error
         return self.hook_sae_output(sae_out)
+
+    def encode(self, x: torch.Tensor) -> torch.Tensor:
+        """
+        Calculate SAE features from inputs
+        """
+        feature_acts = self.encode(x)
+        return feature_acts
     
     def process_sae_in(self, sae_in: torch.Tensor) -> torch.Tensor:
         sae_in = sae_in.to(self.dtype)
         sae_in = self.reshape_fn_in(sae_in)
         sae_in = self.hook_sae_input(sae_in)
         sae_in = self.run_time_activation_norm_fn_in(sae_in)
-
-        # Only subtract b_dec if we actually have it
-        if hasattr(self, "b_dec") and self.cfg.apply_b_dec_to_input:
-            return sae_in - self.b_dec
-        else:
-            return sae_in
+        return sae_in
 
     def encode_standard(
         self, x: Float[torch.Tensor, "... d_in"]
