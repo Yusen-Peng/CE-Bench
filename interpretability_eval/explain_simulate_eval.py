@@ -117,9 +117,9 @@ def main():
 
     # Load the trained SAE
     # architecture = "LLAMA_cache_kan_relu_dense"
-    architecture = "LLAMA_cache_gated"
+    architecture = "LLAMA_cache_kan_relu_dense"
     steps = "1k"
-    best_model = "best_2457600_ce_2.24055_ori_2.03857"
+    best_model = "best_2457600_ce_2.09549_ori_2.03857"
     sae_checkpoint_path = f"checkpoints/{architecture}/{steps}/{best_model}/"
     sae = SAE.load_from_pretrained(path=sae_checkpoint_path, device=device)
     print("SAE loaded!")
@@ -142,13 +142,18 @@ def main():
     with torch.no_grad():
         _, cache = model.run_with_cache(tokens)
     hidden_states = cache["blocks.5.hook_mlp_out"]  # LAYER 5!
+    
+    #hidden_states += 0.1 # does this make sense?
+    
+    
+    print(f"hidden_states {hidden_states[0, :, 10:17]}")
 
     # Pass hidden states into SAE
     with torch.no_grad():
-        # sae() or sae.encode()?
-        activations = sae(hidden_states)
+        activations = sae.encode(hidden_states)
 
-    print(f"activations {activations[0, :, 10:15]}")
+    print(f"activations {activations[0, :, 10:17]}")
+
 
     # Convert activations to NumPy
     activations = activations.to(dtype=torch.float32).detach().cpu().numpy()
@@ -181,6 +186,8 @@ def main():
 
         simple_tokens = [tokens[i] for i in range(len(tokens)) if special_mask[i] == 0]
         simple_activations = feature_activations[special_mask == 0]
+
+        #print(f"\n  Feature {feature_idx} activations: {simple_activations[0, :10]}")
 
         #normalize the activations
         simple_activations = simple_activations - np.min(simple_activations)

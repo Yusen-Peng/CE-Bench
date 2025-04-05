@@ -91,35 +91,48 @@ def main():
         activations_A = activations_A.to(dtype=torch.float32).detach().cpu().numpy()
         activations_B = activations_B.to(dtype=torch.float32).detach().cpu().numpy()
 
+
+        # keep track of I1 and I2 for independent study
+        I1 = np.zeros(activations_A.shape[2])
+        I2 = np.zeros(activations_B.shape[2])
+
         # compute V1 and V2 only for the marked tokens
         V1 = np.zeros(activations_A.shape[2])
         for token_index in range(activations_A.shape[1]):
             # traverse each token
             token_to_traverse = tokenizer.decode(tokens_A["input_ids"][0][token_index]) 
 
+            found = False
             for marked_token in marked_tokens_A:
                 # NOTE: a prefix space is added to match the marked tokens
                 marked_token_prepended = " " + marked_token
                 if token_to_traverse == marked_token_prepended:
                     # add the activations of this token to V1
                     V1 += activations_A[0, token_index, :]
-                    print(f"V1:{marked_token}")
+                    I1 += activations_A[0, token_index, :]
+                    found = True
                     break
+            if not found:
+                I2 += activations_A[0, token_index, :]
         
         # compute V2 only for the marked tokens
         V2 = np.zeros(activations_B.shape[2])   
         for token_index in range(activations_B.shape[1]):
             # traverse each token
             token_to_traverse = tokenizer.decode(tokens_B["input_ids"][0][token_index]) 
-
+            found = False
             for marked_token in marked_tokens_B:
                 # NOTE: a prefix space is added to match the marked tokens
                 marked_token_prepended = " " + marked_token
                 if token_to_traverse == marked_token_prepended:
                     # add the activations of this token to V2
                     V2 += activations_B[0, token_index, :]
-                    print(f"V2:{marked_token}")
+                    I1 += activations_B[0, token_index, :]
+                    found = True
+                    #print(f"V2:{marked_token}")
                     break
+            if not found:
+                I2 += activations_B[0, token_index, :]
         print("=" * 50)
 
         # print raw V1 and V2 to a log file
@@ -141,6 +154,10 @@ def main():
         V1 = V1 / len(marked_tokens_A)
         V2 = V2 / len(marked_tokens_B)
 
+        # take the average of I1 and I2
+        I1 = I1 / (len(marked_tokens_A) + len(marked_tokens_B))
+        I2 = I2 / (len(tokens_A) + len(tokens_B) - (len(marked_tokens_A) + len(marked_tokens_B)))
+
         # do joint normalization
         V_joined = np.stack([V1, V2], axis=0)
         V_joined = V_joined - np.min(V_joined)
@@ -148,13 +165,21 @@ def main():
         V1_joint_normalized, V2_joint_normalized = V_joined_normalized[0], V_joined_normalized[1]
         elementwise_distance = np.abs(V1_joint_normalized - V2_joint_normalized)
         contrastive_score = np.max(elementwise_distance)
-        #responsible_neuron = np.argmax(elementwise_distance)
+
+        # do the same thing for I1 and I2
+        I_joined = np.stack([I1, I2], axis=0)
+        I_joined = I_joined - np.min(I_joined)
+        I_joined_normalized = I_joined / np.max(I_joined)
+        I1_joint_normalized, I2_joint_normalized = I_joined_normalized[0], I_joined_normalized[1]
+        elementwise_distance = np.abs(I1_joint_normalized - I2_joint_normalized)
+        independent_score = np.max(elementwise_distance)
+
 
         # wirte them to a file
         # with open(f"interpretability_eval/{architecture}_interpretability_scores.csv", "a") as f:
         #     f.write(f"{pair_index},{interpretability_score:4f},{responsible_neuron},{ground_truth_subject}\n")
-        print(f"pair index: {pair_index}: contrastive score: {contrastive_score:4f}")
-
+        print(f"pair index: {pair_index}:\n contrastive score: {contrastive_score:4f}\n independent score: {independent_score:4f}\n")
+        print(f"interpretability score: {(contrastive_score + independent_score):4f}\n")
 if __name__ == "__main__":
     main()
 
