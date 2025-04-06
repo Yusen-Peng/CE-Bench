@@ -1,0 +1,32 @@
+Loaded pretrained model gpt2-small into HookedTransformer
+Tokenized prompt: ['<|endoftext|>', 'If', ' the', ' glass', ' falls', ' off', ' the', ' table', ',', ' it', ' will']
+Tokenized answer: [' break']
+Performance on answer token:
+Rank: 3        Logit: -116.40 Prob:  4.61% Token: | break|
+Top 0th token. Logit: -115.61 Prob: 10.18% Token: | fall|
+Top 1th token. Logit: -115.76 Prob:  8.81% Token: | be|
+Top 2th token. Logit: -116.32 Prob:  5.02% Token: | not|
+Top 3th token. Logit: -116.40 Prob:  4.61% Token: | break|
+Top 4th token. Logit: -116.54 Prob:  4.04% Token: | shatter|
+Top 5th token. Logit: -117.67 Prob:  1.30% Token: | cause|
+Top 6th token. Logit: -117.67 Prob:  1.30% Token: | go|
+Top 7th token. Logit: -117.70 Prob:  1.26% Token: | have|
+Top 8th token. Logit: -117.74 Prob:  1.22% Token: | explode|
+Top 9th token. Logit: -117.85 Prob:  1.08% Token: | look|
+Ranks of the answer tokens: [(' break', 3)]
+Tokenized prompt: ['<|endoftext|>', 'If', ' the', ' glass', ' falls', ' off', ' the', ' table', ',', ' it', ' will']
+Tokenized answer: [' break']
+Padded sae_out from torch.Size([1, 10, 768]) to torch.Size([1, 12, 768])
+Performance on answer token:
+Rank: 3        Logit: -118.90 Prob:  4.96% Token: | break|
+Top 0th token. Logit: -118.49 Prob:  7.42% Token: | be|
+Top 1th token. Logit: -118.65 Prob:  6.34% Token: | not|
+Top 2th token. Logit: -118.75 Prob:  5.76% Token: | fall|
+Top 3th token. Logit: -118.90 Prob:  4.96% Token: | break|
+Top 4th token. Logit: -119.40 Prob:  3.01% Token: | shatter|
+Top 5th token. Logit: -119.84 Prob:  1.94% Token: | cause|
+Top 6th token. Logit: -120.14 Prob:  1.43% Token: | have|
+Top 7th token. Logit: -120.41 Prob:  1.09% Token: | become|
+Top 8th token. Logit: -120.56 Prob:  0.94% Token: | melt|
+Top 9th token. Logit: -120.57 Prob:  0.93% Token: | go|
+Ranks of the answer tokens: [(' break', 3)]

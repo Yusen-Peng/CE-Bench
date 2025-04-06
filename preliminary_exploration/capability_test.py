@@ -6,7 +6,7 @@ import csv
 import numpy as np
 import matplotlib.pyplot as plt
 from datasets import load_dataset
-from transformers import AutoTokenizer
+from transformers import AutoTokenizer, GPT2Tokenizer
 from sae_lens import SAE, HookedSAETransformer
 from transformer_lens import utils
 from functools import partial
@@ -17,18 +17,21 @@ def main():
     device = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"Using device: {device}")
 
-    architecture = "RIGHT_kan_relu_dense_latent"
-    steps = "3k"
-    log_file = f"figures/{architecture}_{steps}_capability.log"
+    architecture = "GPT_cache_gated"
+    steps = "1k"
+    best_model = "best_3686400_ce_2.39366_ori_2.33838"
+    log_file = f"figures/{architecture}_{steps}_{best_model}_capability.log"
     sys.stdout = open(log_file, "w")
 
     # Load LLaMA 3.2 tokenizer
-    model_name = "meta-llama/Llama-3.2-1B"
-    tokenizer = AutoTokenizer.from_pretrained(model_name)
+    #model_name = "meta-llama/Llama-3.2-1B"
+    model_name = "gpt2-small"
+    #tokenizer = AutoTokenizer.from_pretrained(model_name)
+    tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
     tokenizer.pad_token = tokenizer.eos_token
 
     # Load the trained SAE from checkpoints
-    sae_checkpoint_path = f"checkpoints/{architecture}/{steps}"
+    sae_checkpoint_path = f"checkpoints/{architecture}/{steps}/{best_model}/"
     sae = SAE.load_from_pretrained(path=sae_checkpoint_path, device=device)
     sae.eval()
 

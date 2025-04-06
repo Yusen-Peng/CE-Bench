@@ -1,0 +1,33 @@
+sae.py:332 self.cfg.activation_fn_kwargs={'kan_hidden_size': 16384, 'kan_ae_type': 'only_kan'}
+Loaded pretrained model meta-llama/Llama-3.2-1B into HookedTransformer
+Tokenized prompt: ['<|begin_of_text|>', 'If', ' the', ' glass', ' falls', ' off', ' the', ' table', ',', ' it', ' will']
+Tokenized answer: [' break']
+Performance on answer token:
+Rank: 2        Logit: 20.85 Prob: 12.82% Token: | break|
+Top 0th token. Logit: 20.90 Prob: 13.47% Token: | be|
+Top 1th token. Logit: 20.87 Prob: 13.05% Token: | not|
+Top 2th token. Logit: 20.85 Prob: 12.82% Token: | break|
+Top 3th token. Logit: 20.04 Prob:  5.69% Token: | fall|
+Top 4th token. Logit: 19.89 Prob:  4.89% Token: | hit|
+Top 5th token. Logit: 18.78 Prob:  1.61% Token: | sh|
+Top 6th token. Logit: 18.72 Prob:  1.52% Token: | cause|
+Top 7th token. Logit: 18.59 Prob:  1.34% Token: | make|
+Top 8th token. Logit: 18.59 Prob:  1.33% Token: | have|
+Top 9th token. Logit: 18.52 Prob:  1.25% Token: | probably|
+Ranks of the answer tokens: [(' break', 2)]
+Tokenized prompt: ['<|begin_of_text|>', 'If', ' the', ' glass', ' falls', ' off', ' the', ' table', ',', ' it', ' will']
+Tokenized answer: [' break']
+Padded sae_out from torch.Size([1, 10, 2048]) to torch.Size([1, 12, 2048])
+Performance on answer token:
+Rank: 2        Logit: 21.05 Prob: 13.17% Token: | break|
+Top 0th token. Logit: 21.25 Prob: 16.07% Token: | not|
+Top 1th token. Logit: 21.17 Prob: 14.84% Token: | be|
+Top 2th token. Logit: 21.05 Prob: 13.17% Token: | break|
+Top 3th token. Logit: 19.88 Prob:  4.06% Token: | fall|
+Top 4th token. Logit: 19.80 Prob:  3.75% Token: | hit|
+Top 5th token. Logit: 19.13 Prob:  1.93% Token: | cause|
+Top 6th token. Logit: 19.00 Prob:  1.69% Token: | sh|
+Top 7th token. Logit: 18.88 Prob:  1.50% Token: | probably|
+Top 8th token. Logit: 18.70 Prob:  1.25% Token: | make|
+Top 9th token. Logit: 18.58 Prob:  1.11% Token: | still|
+Ranks of the answer tokens: [(' break', 2)]

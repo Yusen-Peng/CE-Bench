@@ -25,19 +25,19 @@ def main():
     print(f"Using device: {device}")
     
     # Load LLaMA tokenizer
-    model_name = "meta-llama/Llama-3.2-1B"
-    #model_name = "gpt2-small"
+    #model_name = "meta-llama/Llama-3.2-1B"
+    model_name = "gpt2-small"
     
-    tokenizer = AutoTokenizer.from_pretrained(model_name)
-    #tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
+    #tokenizer = AutoTokenizer.from_pretrained(model_name)
+    tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
 
     tokenizer.pad_token = tokenizer.eos_token
     print("Tokenizer loaded!")
 
     # Load the trained SAE
-    architecture = "LLAMA_cache_kan_relu_dense"
+    architecture = "GPT_cache_kan_relu_dense"
     steps = "1k"
-    best_model = "best_2457600_ce_2.09549_ori_2.03857"
+    best_model = "best_3686400_ce_2.34855_ori_2.33838"
     sae_checkpoint_path = f"checkpoints/{architecture}/{steps}/{best_model}/"
     sae = SAE.load_from_pretrained(path=sae_checkpoint_path, device=device)
     print("SAE loaded!")

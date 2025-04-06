@@ -117,9 +117,9 @@ def main():
 
     # Load the trained SAE
     # architecture = "LLAMA_cache_kan_relu_dense"
-    architecture = "LLAMA_cache_kan_relu_dense"
+    architecture = "LLAMA_cache_jumprelu"
     steps = "1k"
-    best_model = "best_2457600_ce_2.09549_ori_2.03857"
+    best_model = "best_2457600_ce_2.23809_ori_2.03857"
     sae_checkpoint_path = f"checkpoints/{architecture}/{steps}/{best_model}/"
     sae = SAE.load_from_pretrained(path=sae_checkpoint_path, device=device)
     print("SAE loaded!")
@@ -142,39 +142,26 @@ def main():
     with torch.no_grad():
         _, cache = model.run_with_cache(tokens)
     hidden_states = cache["blocks.5.hook_mlp_out"]  # LAYER 5!
-    
-    #hidden_states += 0.1 # does this make sense?
-    
-    
-    print(f"hidden_states {hidden_states[0, :, 10:17]}")
-
+        
     # Pass hidden states into SAE
     with torch.no_grad():
         activations = sae.encode(hidden_states)
 
-    print(f"activations {activations[0, :, 10:17]}")
-
-
     # Convert activations to NumPy
     activations = activations.to(dtype=torch.float32).detach().cpu().numpy()
 
-    # Select top 100 activated features
-    num_features = activations.shape[2]
-
+    # Filter out features that are never activated / dead neurons (i.e., their total activation is 0)
     feature_activations_sum = activations[0, :, :].sum(axis=0)
+    nonzero_feature_indices = np.nonzero(feature_activations_sum)[0]
 
-    # # randomly select features - approach 1
-    # num_selected = min(100, num_features)
-    # selected_feature_indices = np.random.choice(num_features, num_selected, replace=False)
-    
-    # 50 most activated features - approach 2
-    num_selected = min(100, num_features)
-    selected_feature_indices = np.argsort(feature_activations_sum)[-num_selected:]
+    print(f"Number of nonzero-activated features: {len(nonzero_feature_indices)}")
 
-    # first 100 features - approach 3
+    # Randomly sample up to 100 from the nonzero-activated features
+    num_selected = min(100, len(nonzero_feature_indices))
+    selected_feature_indices = np.random.choice(nonzero_feature_indices, size=num_selected, replace=False)
 
     similarities = []
-    N_ITERATIONS_PER_NEURON = 5
+    N_ITERATIONS_PER_NEURON = 1
 
     # Get the corresponding tokens and their activations
     tokens = tokenizer.convert_ids_to_tokens(tokens)
@@ -186,8 +173,6 @@ def main():
 
         simple_tokens = [tokens[i] for i in range(len(tokens)) if special_mask[i] == 0]
         simple_activations = feature_activations[special_mask == 0]
-
-        #print(f"\n  Feature {feature_idx} activations: {simple_activations[0, :10]}")
 
         #normalize the activations
         simple_activations = simple_activations - np.min(simple_activations)
