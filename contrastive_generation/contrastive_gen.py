@@ -55,7 +55,7 @@ def query_openai(prompt: list, model, client: OpenAI, temperature: float = 0.7, 
         return ""
 
 # Generate dataset from prompts
-def generate_dataset(subjects: List[str], model: str, output_file: str = "generated_dataset.json") -> List[Dict[str, Any]]:
+def generate_dataset(subjects: List[str], model: str, output_file: str = "generated_dataset.json", stories_per_subject=1) -> List[Dict[str, Any]]:
     """
     Generate responses from OpenAI API based on prompts and save as dataset
     
@@ -70,10 +70,9 @@ def generate_dataset(subjects: List[str], model: str, output_file: str = "genera
     client = setup_openai_api()
     results = []
     
-    stories_per_subject = 5
-    progress = tqdm(sorted(subjects * stories_per_subject), desc="Generating contrastive stories")
+    progress = tqdm((subjects * stories_per_subject), desc="Generating contrastive stories")
     for subject in progress:
-        progress.set_postfix_str(f"Subject: {subject}")
+        progress.set_postfix_str(f"subject: {subject}")
 
         prompt0, prompt_high, prompt_low = contrastive_prompt(subject, "extremely high", "extremely low", highlight_subject=True)
         tqdm.write(f"High: {prompt_high}")
@@ -146,21 +145,88 @@ def main():
     # Example prompts
     subjects = [
         "temperature",
-        # "love",
+        "love",
         # "pressure",
-        # "volume",
+        "volume",
         # "entropy",
-        # "size",
-        # "mass",
+        "size",
+        "mass",
         # "density",
-        # "darkness",
-        # "brightness",
-        # "empathy",
-        # "sadness",
+        "darkness",
+        "brightness",
+        "empathy",
+        "sadness",
+        "intelligence",
+        "confidence",
+        "clarity",
+        "precision",
+        "complexity",
+        "intensity",
+        "resolution",
+        # "stability",
+        # "robustness",
+        # "sensitivity",
+        # "acuity",
+        "motivation",
+        "creativity",
+        "efficiency",
+        "energy",
+        # "coherence",
+        # "capacity",
+        # "focus",
+        # "reliability",
+        # "flexibility",
+        # "saturation",
+        # "density",
+        # "performance",
+        # "resistance (to something)",
+        # "reactivity",
+        # "fidelity",
+        # "alignment",
+        # "engagement",
+        # "awareness",
+        # "risk tolerance",
+        # "ambition",
+        # "inhibition",
+        # "latency",
+
+        "curiosity",
+        "courage",
+        "kindness",
+        "ambition",
+        "self-awareness",
+        "jealousy",
+        "hope",
+        "desperation",
+        "trust",
+        "fear",
+        "love",
+        "honor",
+        "greed",
+        "loyalty",
+        "arrogance",
+        "wisdom",
+        "strength (emotional or physical)",
+        "clarity of purpose",
+        "control (self-control or control over others)",
+        "sense of justice",
+        "attachment",
+        "confidence",
+        "resentment",
+        "chaos (internal or external)",
+        "imagination",
+        "belief (in self, others, or ideals)",
+        "patience",
+        "sense of wonder",
+        "faith (not necessarily religious)",
+        "empathy",
+        "willpower",
+        "detachment",
+        "authenticity",
     ]
 
     # Generate responses
-    generated_data = generate_dataset(subjects, model="gpt-4o")
+    generated_data = generate_dataset(subjects, model="gpt-4o", stories_per_subject=2)
     
     # Create HuggingFace dataset
     hf_dataset = create_hf_dataset(generated_data)
