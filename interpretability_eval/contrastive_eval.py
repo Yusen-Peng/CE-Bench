@@ -25,9 +25,11 @@ def main():
     print("Tokenizer loaded!")
 
     # Load the trained SAE
+    #architecture = "LLAMA_cache_kan_relu_dense"
     architecture = "LLAMA_cache_jumprelu"
     steps = "1k"
-    best_model = "best_2457600_ce_2.23809_ori_2.03857"
+    #best_model = "best_2457600_ce_2.09549_ori_2.03857" # kan-relu-dense
+    best_model = "best_2457600_ce_2.23809_ori_2.03857"  # jumprelu
     sae_checkpoint_path = f"checkpoints/{architecture}/{steps}/{best_model}/"
     sae = SAE.load_from_pretrained(path=sae_checkpoint_path, device=device)
     print("SAE loaded!")
@@ -44,6 +46,7 @@ def main():
     # load the contrastive dataset from huggingface
     from datasets import load_dataset
     dataset = load_dataset("GulkoA/contrastive-stories", split="train")
+    #dataset = 
     import re
 
     # Create a CSV file to store the results
@@ -53,6 +56,11 @@ def main():
     # raw V1 and V2
     with open(f"interpretability_eval/{architecture}_raw_V1_V2.log", "w") as f:
         f.write(f"RAW V1 AND V2 VECTORS FOR {architecture}\n")
+
+
+    contrastive_scores = []
+    independent_scores = []
+    interpretability_scores = []
 
     total_rows = len(dataset)
     for pair_index in range(total_rows):
@@ -183,6 +191,23 @@ def main():
         #     f.write(f"{pair_index},{interpretability_score:4f},{responsible_neuron},{ground_truth_subject}\n")
         print(f"pair index: {pair_index}:\n contrastive score: {contrastive_score:4f}\n independent score: {independent_score:4f}\n")
         print(f"interpretability score: {(contrastive_score + independent_score):4f}\n")
+
+        # append the scores to the lists
+        contrastive_scores.append(contrastive_score)
+        independent_scores.append(independent_score)
+        interpretability_scores.append(contrastive_score + independent_score)
+
+    # compute the average for contrastive and independent scores, and overall interpretability score
+    contrastive_scores = np.array(contrastive_scores)
+    independent_scores = np.array(independent_scores)
+    interpretability_scores = np.array(interpretability_scores)
+    contrastive_score_mean = np.mean(contrastive_scores)
+    independent_score_mean = np.mean(independent_scores)
+    interpretability_score_mean = np.mean(interpretability_scores)
+    print(f"Contrastive score mean: {contrastive_score_mean:4f}")
+    print(f"Independent score mean: {independent_score_mean:4f}")
+    print(f"Interpretability score mean: {interpretability_score_mean:4f}")
+    
 if __name__ == "__main__":
     main()
 

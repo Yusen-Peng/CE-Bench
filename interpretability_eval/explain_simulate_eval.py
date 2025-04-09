@@ -117,9 +117,15 @@ def main():
 
     # Load the trained SAE
     # architecture = "LLAMA_cache_kan_relu_dense"
-    architecture = "LLAMA_cache_jumprelu"
+
+    # jumprelu is 80% 1.0 alternating with 20% 0.0
+    # is it conssitently 80% then? roughly
+    # kan is like actually numbers between 0.0 and 1.0 (like 0.4, 0.3...)
+    # cosine simiarlity
+
+    architecture = "LLAMA_cache_kan_relu_dense"
     steps = "1k"
-    best_model = "best_2457600_ce_2.23809_ori_2.03857"
+    best_model = "best_2457600_ce_2.09549_ori_2.03857"
     sae_checkpoint_path = f"checkpoints/{architecture}/{steps}/{best_model}/"
     sae = SAE.load_from_pretrained(path=sae_checkpoint_path, device=device)
     print("SAE loaded!")
@@ -158,6 +164,7 @@ def main():
 
     # Randomly sample up to 100 from the nonzero-activated features
     num_selected = min(100, len(nonzero_feature_indices))
+    np.random.seed(42)  # For reproducibility
     selected_feature_indices = np.random.choice(nonzero_feature_indices, size=num_selected, replace=False)
 
     similarities = []
