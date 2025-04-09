@@ -15,13 +15,16 @@ def setup_openai_api():
     return client
 
 def contrastive_prompt(subject: str, subject_prefix1: str, subject_prefix2: str, highlight_subject: bool=True) -> str:
+    prompt0 = f"""
+    Write a short simple story focusing on {subject.upper()}. Write freely, but focus especially on {subject}. Make sure this subject is consistent across the entire story. {f"All words that are somewhat related to {subject} must be highlighted with *" if highlight_subject else ""}
+    """
     prompt1 = f"""
-    Write a short simple story about {subject_prefix1} {subject}. Write freely, but focus especially on {subject_prefix1} {subject}. Make sure this subject is consistent across the entire story. {f"All words that are related to {subject} must be highlighted with *" if highlight_subject else ""}
+    Now, rewrite it to make it about {subject.upper()} specifically being {subject_prefix1.upper()}. Write freely, but focus especially on {subject_prefix1} {subject}. Make sure this subject is consistent across the entire story. {f"All words that are somewhat related to {subject} must be highlighted with *" if highlight_subject else ""}
     """
     prompt2 = f"""
-    Now, edit this story to make it about {subject_prefix2} {subject} instead of {subject_prefix1} {subject}. Only change the required words to make it about {subject_prefix2} {subject}, but keep the story coherent. {f"All words that are related to {subject} must be highlighted with *" if highlight_subject else ""}
+    Now, edit this story to make it about {subject.upper()} being {subject_prefix2.upper()} instead of {subject_prefix1} {subject}. Only change the required words to make it about {subject_prefix2} {subject}, but keep the story coherent. {f"All words that are somewhat related to {subject} must be highlighted with *" if highlight_subject else ""}
     """
-    return prompt1, prompt2
+    return prompt0, prompt1, prompt2
 
 # Function to query OpenAI API
 def query_openai(prompt: list, model, client: OpenAI, temperature: float = 0.7, max_tokens: int = 256) -> str:
@@ -71,14 +74,26 @@ def generate_dataset(subjects: List[str], model: str, output_file: str = "genera
     progress = tqdm(sorted(subjects * stories_per_subject), desc="Generating contrastive stories")
     for subject in progress:
         progress.set_postfix_str(f"Subject: {subject}")
-        prompt_high, prompt_low = contrastive_prompt(subject, "high", "the opposite of high", highlight_subject=True)
+
+        prompt0, prompt_high, prompt_low = contrastive_prompt(subject, "extremely high", "extremely low", highlight_subject=True)
+        tqdm.write(f"High: {prompt_high}")
+        tqdm.write(f"Low: {prompt_low}")
+
+        response0 = query_openai([
+            {"role": "user", "content": prompt0},
+        ], model=model, client=client)
+        tqdm.write(f"0: {response0}")
 
         response_high = query_openai([
+            {"role": "user", "content": prompt0},
+            {"role": "assistant", "content": response0},
             {"role": "user", "content": prompt_high},
         ], model=model, client=client)
         tqdm.write(f"High: {response_high}")
 
         response_low = query_openai([
+            {"role": "user", "content": prompt0},
+            {"role": "assistant", "content": response0},
             {"role": "user", "content": prompt_high},
             {"role": "assistant", "content": response_high},
             {"role": "user", "content": prompt_low},
@@ -88,6 +103,7 @@ def generate_dataset(subjects: List[str], model: str, output_file: str = "genera
         
         if response_high and response_low:
             entry = {
+                "story0": response0,
                 "story1": response_high,
                 "story2": response_low,
                 "subject": subject,
@@ -117,6 +133,7 @@ def create_hf_dataset(data: List[Dict[str, Any]], dataset_name: str = "openai_ge
     """
     # Create dataset from dict
     dataset = datasets.Dataset.from_dict({
+        "story0": [entry["story0"] for entry in data],
         "story1": [entry["story1"] for entry in data],
         "story2": [entry["story2"] for entry in data],
         "subject": [entry["subject"] for entry in data],
@@ -129,17 +146,17 @@ def main():
     # Example prompts
     subjects = [
         "temperature",
-        "love",
-        "pressure",
-        "volume",
+        # "love",
+        # "pressure",
+        # "volume",
         # "entropy",
-        "size",
-        "mass",
+        # "size",
+        # "mass",
         # "density",
-        "darkness",
-        "brightness",
-        "empathy",
-        "sadness",
+        # "darkness",
+        # "brightness",
+        # "empathy",
+        # "sadness",
     ]
 
     # Generate responses
@@ -149,14 +166,16 @@ def main():
     hf_dataset = create_hf_dataset(generated_data)
     # old_dataset = datasets.load_dataset("GulkoA/contrastive-stories")
     # hf_dataset = datasets.concatenate_datasets([old_dataset["train"], hf_dataset])
-    
+    # get last 50 entries
+    # hf_dataset = old_dataset["train"].select(range(12, len(old_dataset["train"])))
+
     # Show dataset info
     print(hf_dataset)
     
     # Optional: Push to HuggingFace Hub
     if len(hf_dataset) > 0:
       hf_dataset.save_to_disk("contrastive_stories")
-      hf_dataset.push_to_hub("GulkoA/contrastive-stories")
+      hf_dataset.push_to_hub("GulkoA/contrastive-stories", split="v2")
     
     return hf_dataset
 

@@ -102,10 +102,15 @@ def main():
 
         # keep track of I1 and I2 for independent study
         I1 = np.zeros(activations_A.shape[2])
+        I1_token_num = 0
         I2 = np.zeros(activations_B.shape[2])
-
+        I2_token_num = 0
         # compute V1 and V2 only for the marked tokens
         V1 = np.zeros(activations_A.shape[2])
+        V1_token_num = 0
+        V2 = np.zeros(activations_B.shape[2])
+        V2_token_num = 0
+
         for token_index in range(activations_A.shape[1]):
             # traverse each token
             token_to_traverse = tokenizer.decode(tokens_A["input_ids"][0][token_index]) 
@@ -117,11 +122,14 @@ def main():
                 if token_to_traverse == marked_token_prepended:
                     # add the activations of this token to V1
                     V1 += activations_A[0, token_index, :]
+                    V1_token_num += 1
                     I1 += activations_A[0, token_index, :]
+                    I1_token_num += 1
                     found = True
                     break
             if not found:
                 I2 += activations_A[0, token_index, :]
+                I2_token_num += 1
         
         # compute V2 only for the marked tokens
         V2 = np.zeros(activations_B.shape[2])   
@@ -135,13 +143,21 @@ def main():
                 if token_to_traverse == marked_token_prepended:
                     # add the activations of this token to V2
                     V2 += activations_B[0, token_index, :]
+                    V2_token_num += 1
                     I1 += activations_B[0, token_index, :]
+                    I1_token_num += 1
                     found = True
                     #print(f"V2:{marked_token}")
                     break
             if not found:
                 I2 += activations_B[0, token_index, :]
+                I2_token_num += 1
         print("=" * 50)
+
+        V1 = V1 / V1_token_num
+        V2 = V2 / V2_token_num
+        I1 = I1 / I1_token_num
+        I2 = I2 / I2_token_num
 
         # print raw V1 and V2 to a log file
         with open(f"interpretability_eval/{architecture}_raw_V1_V2.log", "a") as f:
@@ -159,14 +175,14 @@ def main():
 
 
         # take average as the last stage of condensing V1 and V2
-        V1 = V1 / len(marked_tokens_A)
-        V2 = V2 / len(marked_tokens_B)
+        # V1 = V1 / len(marked_tokens_A)
+        # V2 = V2 / len(marked_tokens_B)
 
         # take the average of I1 and I2
-        I1 = I1 / (len(marked_tokens_A) + len(marked_tokens_B))
-        num_tokens_A = len(tokens_A["input_ids"][0])
-        num_tokens_B = len(tokens_B["input_ids"][0])
-        I2 = I2 / (num_tokens_A + num_tokens_B - len(marked_tokens_A) - len(marked_tokens_B))
+        # I1 = I1 / (len(marked_tokens_A) + len(marked_tokens_B))
+        # num_tokens_A = len(tokens_A["input_ids"][0])
+        # num_tokens_B = len(tokens_B["input_ids"][0])
+        # I2 = I2 / (num_tokens_A + num_tokens_B - len(marked_tokens_A) - len(marked_tokens_B))
 
 
         # do joint normalization
@@ -174,28 +190,30 @@ def main():
         V_joined = V_joined - np.min(V_joined)
         V_joined_normalized = V_joined / np.max(V_joined)
         V1_joint_normalized, V2_joint_normalized = V_joined_normalized[0], V_joined_normalized[1]
-        elementwise_distance = np.abs(V1_joint_normalized - V2_joint_normalized)
-        contrastive_score = np.max(elementwise_distance)
+        elementwise_contrast_distance = np.abs(V1_joint_normalized - V2_joint_normalized)
+        contrastive_score = np.max(elementwise_contrast_distance)
 
         # do the same thing for I1 and I2
         I_joined = np.stack([I1, I2], axis=0)
         I_joined = I_joined - np.min(I_joined)
         I_joined_normalized = I_joined / np.max(I_joined)
         I1_joint_normalized, I2_joint_normalized = I_joined_normalized[0], I_joined_normalized[1]
-        elementwise_distance = np.abs(I1_joint_normalized - I2_joint_normalized)
-        independent_score = np.max(elementwise_distance)
+        elementwise_independence_distance = np.abs(I1_joint_normalized - I2_joint_normalized)
+        independence_score = np.max(elementwise_independence_distance)
 
+        elementwise_interpretability_score = elementwise_contrast_distance + elementwise_independence_distance
+        interpretability_score = np.max(elementwise_interpretability_score)
 
         # wirte them to a file
         # with open(f"interpretability_eval/{architecture}_interpretability_scores.csv", "a") as f:
         #     f.write(f"{pair_index},{interpretability_score:4f},{responsible_neuron},{ground_truth_subject}\n")
-        print(f"pair index: {pair_index}:\n contrastive score: {contrastive_score:4f}\n independent score: {independent_score:4f}\n")
-        print(f"interpretability score: {(contrastive_score + independent_score):4f}\n")
+        print(f"pair index: {pair_index} {ground_truth_subject}:\n contrastive score: {contrastive_score:4f}\n independent score: {independence_score:4f}\n interpretability score: {interpretability_score:4f}\n")
+        # print(f"interpretability score: {(contrastive_score + independence_score):4f}\n")
 
         # append the scores to the lists
         contrastive_scores.append(contrastive_score)
-        independent_scores.append(independent_score)
-        interpretability_scores.append(contrastive_score + independent_score)
+        independent_scores.append(independence_score)
+        interpretability_scores.append(interpretability_score)
 
     # compute the average for contrastive and independent scores, and overall interpretability score
     contrastive_scores = np.array(contrastive_scores)
