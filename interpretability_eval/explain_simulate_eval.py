@@ -106,26 +106,36 @@ def main():
     print(f"Using device: {device}")
     
     # Load LLaMA tokenizer
-    model_name = "meta-llama/Llama-3.2-1B"
-    #model_name = "gpt2-small"
+    #model_name = "meta-llama/Llama-3.2-1B"
+    model_name = "gpt2-small"
     
-    tokenizer = AutoTokenizer.from_pretrained(model_name)
-    #tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
+    #tokenizer = AutoTokenizer.from_pretrained(model_name)
+    tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
 
     tokenizer.pad_token = tokenizer.eos_token
     print("Tokenizer loaded!")
 
     # Load the trained SAE
-    # architecture = "LLAMA_cache_kan_relu_dense"
+    #architecture = "LLAMA_cache_only_kan"
+    #architecture = "LLAMA_cache_kan_relu_dense"
+    #architecture = "LLAMA_cache_jumprelu"
+    #architecture = "LLAMA_cache_gated"
+    #architecture = "GPT_cache_kan_relu_dense"
+    #architecture = "GPT_cache_only_kan"
+    #architecture = "GPT_cache_gated"
+    architecture = "GPT_cache_jumprelu"
 
-    # jumprelu is 80% 1.0 alternating with 20% 0.0
-    # is it conssitently 80% then? roughly
-    # kan is like actually numbers between 0.0 and 1.0 (like 0.4, 0.3...)
-    # cosine simiarlity
-
-    architecture = "LLAMA_cache_kan_relu_dense"
     steps = "1k"
-    best_model = "best_2457600_ce_2.09549_ori_2.03857"
+    #best_model = "best_2457600_ce_2.13012_ori_2.03857" # llama only kan
+    #best_model = "best_2457600_ce_2.09549_ori_2.03857" # kan-relu-dense
+    #best_model = "best_2457600_ce_2.23809_ori_2.03857"  # jumprelu
+    #best_model = "best_2457600_ce_2.24055_ori_2.03857" # gated
+
+    #best_model = "best_3686400_ce_2.34855_ori_2.33838" # gpt2 kan-relu-dense
+    #best_model = "best_3686400_ce_2.35626_ori_2.33838" # gpt2 only kan
+    #best_model = "best_3686400_ce_2.39366_ori_2.33838" # gpt2 gated
+    best_model = "best_3686400_ce_2.37705_ori_2.33838" # gpt2 jumprelu
+
     sae_checkpoint_path = f"checkpoints/{architecture}/{steps}/{best_model}/"
     sae = SAE.load_from_pretrained(path=sae_checkpoint_path, device=device)
     print("SAE loaded!")
@@ -159,16 +169,22 @@ def main():
     # Filter out features that are never activated / dead neurons (i.e., their total activation is 0)
     feature_activations_sum = activations[0, :, :].sum(axis=0)
     nonzero_feature_indices = np.nonzero(feature_activations_sum)[0]
+    nonzero_activations = feature_activations_sum[nonzero_feature_indices]
 
     print(f"Number of nonzero-activated features: {len(nonzero_feature_indices)}")
-
-    # Randomly sample up to 100 from the nonzero-activated features
+    
+    # 100 most activated features
     num_selected = min(100, len(nonzero_feature_indices))
-    np.random.seed(42)  # For reproducibility
-    selected_feature_indices = np.random.choice(nonzero_feature_indices, size=num_selected, replace=False)
+    selected_feature_indices = np.argsort(nonzero_activations)[-num_selected:]
+
+    # verify the selected neurons' activations
+    print("Selected neurons' activations:")
+    for idx in selected_feature_indices:
+        print(f"Neuron {idx}: {nonzero_activations[idx]}")
+    
 
     similarities = []
-    N_ITERATIONS_PER_NEURON = 1
+    N_ITERATIONS_PER_NEURON = 5
 
     # Get the corresponding tokens and their activations
     tokens = tokenizer.convert_ids_to_tokens(tokens)

@@ -25,11 +25,15 @@ def main():
     print("Tokenizer loaded!")
 
     # Load the trained SAE
+    architecture = "LLAMA_cache_only_kan"
     #architecture = "LLAMA_cache_kan_relu_dense"
-    architecture = "LLAMA_cache_jumprelu"
+    #architecture = "LLAMA_cache_jumprelu"
+    ##architecture = "LLAMA_cache_gated"
     steps = "1k"
+    best_model = "best_2457600_ce_2.13012_ori_2.03857"
     #best_model = "best_2457600_ce_2.09549_ori_2.03857" # kan-relu-dense
-    best_model = "best_2457600_ce_2.23809_ori_2.03857"  # jumprelu
+    #best_model = "best_2457600_ce_2.23809_ori_2.03857"  # jumprelu
+    #best_model = "best_2457600_ce_2.24055_ori_2.03857" # gated
     sae_checkpoint_path = f"checkpoints/{architecture}/{steps}/{best_model}/"
     sae = SAE.load_from_pretrained(path=sae_checkpoint_path, device=device)
     print("SAE loaded!")
@@ -61,6 +65,8 @@ def main():
     contrastive_scores = []
     independent_scores = []
     interpretability_scores = []
+
+    neuron_interpretability_score_subject_pairs = {}
 
     total_rows = len(dataset)
     for pair_index in range(total_rows):
@@ -99,6 +105,9 @@ def main():
         activations_A = activations_A.to(dtype=torch.float32).detach().cpu().numpy()
         activations_B = activations_B.to(dtype=torch.float32).detach().cpu().numpy()
 
+        # baseline
+        # activations_A = np.random.rand(*activations_A.shape)
+        # activations_B = np.random.rand(*activations_B.shape)
 
         # keep track of I1 and I2 for independent study
         I1 = np.zeros(activations_A.shape[2])
@@ -147,17 +156,16 @@ def main():
                     I1 += activations_B[0, token_index, :]
                     I1_token_num += 1
                     found = True
-                    #print(f"V2:{marked_token}")
                     break
             if not found:
                 I2 += activations_B[0, token_index, :]
                 I2_token_num += 1
         print("=" * 50)
 
-        V1 = V1 / V1_token_num
-        V2 = V2 / V2_token_num
-        I1 = I1 / I1_token_num
-        I2 = I2 / I2_token_num
+        V1 = V1 / V1_token_num if V1_token_num > 0 else V1
+        V2 = V2 / V2_token_num if V2_token_num > 0 else V2
+        I1 = I1 / I1_token_num if I1_token_num > 0 else I1
+        I2 = I2 / I2_token_num if I2_token_num > 0 else I2
 
         # print raw V1 and V2 to a log file
         with open(f"interpretability_eval/{architecture}_raw_V1_V2.log", "a") as f:
@@ -174,35 +182,28 @@ def main():
         df.to_csv(f"interpretability_eval/{architecture}_raw_V1_V2_{pair_index}.csv", index=True)
 
 
-        # take average as the last stage of condensing V1 and V2
-        # V1 = V1 / len(marked_tokens_A)
-        # V2 = V2 / len(marked_tokens_B)
-
-        # take the average of I1 and I2
-        # I1 = I1 / (len(marked_tokens_A) + len(marked_tokens_B))
-        # num_tokens_A = len(tokens_A["input_ids"][0])
-        # num_tokens_B = len(tokens_B["input_ids"][0])
-        # I2 = I2 / (num_tokens_A + num_tokens_B - len(marked_tokens_A) - len(marked_tokens_B))
-
-
-        # do joint normalization
-        V_joined = np.stack([V1, V2], axis=0)
-        V_joined = V_joined - np.min(V_joined)
-        V_joined_normalized = V_joined / np.max(V_joined)
-        V1_joint_normalized, V2_joint_normalized = V_joined_normalized[0], V_joined_normalized[1]
-        elementwise_contrast_distance = np.abs(V1_joint_normalized - V2_joint_normalized)
-        contrastive_score = np.max(elementwise_contrast_distance)
-
-        # do the same thing for I1 and I2
-        I_joined = np.stack([I1, I2], axis=0)
-        I_joined = I_joined - np.min(I_joined)
-        I_joined_normalized = I_joined / np.max(I_joined)
-        I1_joint_normalized, I2_joint_normalized = I_joined_normalized[0], I_joined_normalized[1]
-        elementwise_independence_distance = np.abs(I1_joint_normalized - I2_joint_normalized)
-        independence_score = np.max(elementwise_independence_distance)
-
+        elementwise_contrast_distance = np.abs(V1 - V2)
+        contrastive_score = np.max(elementwise_contrast_distance) / np.average(elementwise_contrast_distance)
+        elementwise_independence_distance = np.abs(I1 - I2)
+        independence_score = np.max(elementwise_independence_distance) / np.average(elementwise_independence_distance)
         elementwise_interpretability_score = elementwise_contrast_distance + elementwise_independence_distance
-        interpretability_score = np.max(elementwise_interpretability_score)
+
+        """
+            Responsibility Clustering
+        """
+        # clustering neurons into different interpreter groups based on their highest interpretability score 
+        for neuron_index in range(len(elementwise_interpretability_score)):
+            # check if the neuron index is already in the dictionary
+            if neuron_index not in neuron_interpretability_score_subject_pairs:
+                neuron_interpretability_score_subject_pairs[neuron_index] = [elementwise_interpretability_score[neuron_index], ground_truth_subject]
+            else:
+                # if it is, check if the current interpretability score is higher than the previous one
+                if elementwise_interpretability_score[neuron_index] > neuron_interpretability_score_subject_pairs[neuron_index][0]:
+                    neuron_interpretability_score_subject_pairs[neuron_index] = [elementwise_interpretability_score[neuron_index], ground_truth_subject]
+        
+
+        # compute the interpretability score for the entire sparse autoencoder
+        interpretability_score = np.max(elementwise_interpretability_score) / np.average(elementwise_interpretability_score)
 
         # wirte them to a file
         # with open(f"interpretability_eval/{architecture}_interpretability_scores.csv", "a") as f:
@@ -225,6 +226,14 @@ def main():
     print(f"Contrastive score mean: {contrastive_score_mean:4f}")
     print(f"Independent score mean: {independent_score_mean:4f}")
     print(f"Interpretability score mean: {interpretability_score_mean:4f}")
+
+    # responsible neurons are regrouped based on subject and written to a CSV file
+    # create a dataframe from the dictionary
+    df = pd.DataFrame.from_dict(neuron_interpretability_score_subject_pairs, orient='index', columns=['interpretability_score', 'subject'])
+    # reorder by subject
+    df = df.sort_values(by='subject')
+    # save to csv
+    df.to_csv(f"interpretability_eval/{architecture}_responsible_neurons.csv", index=True) # we need to keep track of the indices
     
 if __name__ == "__main__":
     main()
