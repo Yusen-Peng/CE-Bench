@@ -76,17 +76,27 @@ def main():
         text_B_original = dataset[pair_index]["story2"]
         ground_truth_subject = dataset[pair_index]["subject"]
         
-        # find all marked tokens
-        marked_tokens_A = re.findall(r"\*(.*?)\*", text_A_original)
-        marked_tokens_B = re.findall(r"\*(.*?)\*", text_B_original)
+        # # find all marked tokens
+        # marked_tokens_A = re.findall(r"\*(.*?)\*", text_A_original)
+        # marked_tokens_B = re.findall(r"\*(.*?)\*", text_B_original)
 
 
-        # remove only asterisks, not the tokens
-        text_A = text_A_original.replace("*", "")
-        text_B = text_B_original.replace("*", "")
+        # # remove only asterisks, not the tokens
+        # text_A = text_A_original.replace("*", "")
+        # text_B = text_B_original.replace("*", "")
         
-        tokens_A = tokenizer(text_A, return_tensors="pt").to(device)
-        tokens_B = tokenizer(text_B, return_tensors="pt").to(device)
+        tokens_A = tokenizer(text_A_original, return_tensors="pt").to(device)
+        tokens_B = tokenizer(text_B_original, return_tensors="pt").to(device)
+
+        # find all marked tokens and record ids of all marked tokens
+        marked_tokens_ids_A = []
+        marked_tokens_ids_B = []
+        for token_index in range(tokens_A["input_ids"].shape[0]):
+            string = tokenizer.decode(tokens_A["input_ids"][0][token_index])
+            print(string)
+        quit()
+
+        # ignore everything below - testing
 
         # Extract activations from the correct layer
         with torch.no_grad():
