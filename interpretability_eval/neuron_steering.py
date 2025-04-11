@@ -18,7 +18,7 @@ def fire_multiple_neurons(activation, hook, sae: SAE, neuron_list, scale):
     return new_activation
     
 
-def autoregressive_generate(model, tokenizer, prompt, max_new_tokens=50, device="cuda"):
+def autoregressive_generate(model, tokenizer, prompt, max_new_tokens=20, device="cuda"):
     model.eval()
     input_ids = tokenizer(prompt, return_tensors="pt")["input_ids"].to(device)
 
@@ -58,16 +58,22 @@ def main():
     print("SAE loaded!")
 
     # steer one particular set of neurons with the common subject from the csv file
-    target_subject = "temperature"
+    target_subject = "wisdom"
     # Load the CSV file
     csv_file_path = f"interpretability_eval/{architecture}_responsible_neurons.csv"
     df = pd.read_csv(csv_file_path)
 
     # filter the DataFrame for the specific subject
-    subject_neurons = df[df["subject"] == target_subject].iloc[:, 0].to_list()
+    #subject_neurons = df[df["subject"] == target_subject].iloc[:, 0].to_list()
 
-    print(f"Steering neurons for subject: {target_subject}")
-    #print(f"Neuron indices: {subject_neurons}")
+
+    # FIXME: alternative: take the neuron with the highest activation instead all of them in subject_neurons group
+    subject_neurons = df[df["subject"] == target_subject]
+    best_neuron_row = subject_neurons.loc[subject_neurons["interpretability_score"].idxmax()]
+    best_neuron_index = best_neuron_row.iloc[0]
+    print(f"Best neuron index for subject '{target_subject}': {best_neuron_index}")
+    subject_neurons = [best_neuron_index]
+    
 
     model = HookedSAETransformer.from_pretrained_no_processing(
         model_name,
@@ -77,11 +83,16 @@ def main():
     print("Model loaded!")
 
 
-    prompt = "Once upon a time, "
+    prompt = "Time-series anomaly detection is a fundamental task across scientific fields and industries. However, the field has long faced the “elephant in the room:” critical issues including flawed datasets, biased evaluation measures, and inconsistent benchmarking practices that have remained largely ignored and unaddressed."
+    # model.add_hook(
+    #     "blocks.5.hook_mlp_out",
+    #     partial(fire_multiple_neurons, sae=sae, neuron_list=subject_neurons, scale=1),
+    #     "fwd"
+    # )
     baseline_output = autoregressive_generate(model, tokenizer, prompt, device=device)
     print("\nBaseline generation:", baseline_output)
 
-    SCALE = 50.0
+    SCALE = 1000
     model.add_hook(
         "blocks.5.hook_mlp_out",
         partial(fire_multiple_neurons, sae=sae, neuron_list=subject_neurons, scale=SCALE),

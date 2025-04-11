@@ -5,6 +5,7 @@ import openai
 import os
 import pandas as pd
 from dotenv import load_dotenv
+from tqdm import tqdm
 from transformers import AutoTokenizer, GPT2Tokenizer
 from sae_lens import SAE, HookedSAETransformer
 
@@ -25,14 +26,14 @@ def main():
     print("Tokenizer loaded!")
 
     # Load the trained SAE
-    architecture = "LLAMA_cache_only_kan"
+    #architecture = "LLAMA_cache_only_kan"
     #architecture = "LLAMA_cache_kan_relu_dense"
-    #architecture = "LLAMA_cache_jumprelu"
+    architecture = "LLAMA_cache_jumprelu"
     ##architecture = "LLAMA_cache_gated"
     steps = "1k"
-    best_model = "best_2457600_ce_2.13012_ori_2.03857"
+    #best_model = "best_2457600_ce_2.13012_ori_2.03857" # only kan
     #best_model = "best_2457600_ce_2.09549_ori_2.03857" # kan-relu-dense
-    #best_model = "best_2457600_ce_2.23809_ori_2.03857"  # jumprelu
+    best_model = "best_2457600_ce_2.23809_ori_2.03857"  # jumprelu
     #best_model = "best_2457600_ce_2.24055_ori_2.03857" # gated
     sae_checkpoint_path = f"checkpoints/{architecture}/{steps}/{best_model}/"
     sae = SAE.load_from_pretrained(path=sae_checkpoint_path, device=device)
@@ -49,7 +50,7 @@ def main():
 
     # load the contrastive dataset from huggingface
     from datasets import load_dataset
-    dataset = load_dataset("GulkoA/contrastive-stories", split="train")
+    dataset = load_dataset("GulkoA/contrastive-stories-v1", split="train")
     #dataset = 
     import re
 
@@ -69,7 +70,7 @@ def main():
     neuron_interpretability_score_subject_pairs = {}
 
     total_rows = len(dataset)
-    for pair_index in range(total_rows):
+    for pair_index in tqdm(range(total_rows)):
 
         # filter out marked tokens
         text_A_original = dataset[pair_index]["story1"]
@@ -85,26 +86,55 @@ def main():
         # text_A = text_A_original.replace("*", "")
         # text_B = text_B_original.replace("*", "")
         
-        tokens_A = tokenizer(text_A_original, return_tensors="pt").to(device)
-        tokens_B = tokenizer(text_B_original, return_tensors="pt").to(device)
+        tokenizer.add_special_tokens({"additional_special_tokens": ["<subject>", "</subject>"]})
+        subject_tokens = tokenizer.convert_tokens_to_ids(["<subject>", "</subject>"])
+        # print(subject_tokens)
+        tokens = [tokenizer(text_A_original).to(device)["input_ids"], tokenizer(text_B_original).to(device)["input_ids"]]
+        clean_tokens = [[],[]]
 
         # find all marked tokens and record ids of all marked tokens
-        marked_tokens_ids_A = []
-        marked_tokens_ids_B = []
-        for token_index in range(tokens_A["input_ids"].shape[0]):
-            string = tokenizer.decode(tokens_A["input_ids"][0][token_index])
-            print(string)
-        quit()
+        marked_tokens_indices = [[], []]
+        in_subject = False
+        # print(tokens_A["input_ids"])
+        for story_i in range(2):
+            for token_index in range(len(tokens[story_i])):
+                token_id = tokens[story_i][token_index]
+                string = tokenizer.decode(token_id)
+                # print(f"token index: {token_id} {string}")
+                if in_subject:
+                    if token_id == subject_tokens[1]:
+                        in_subject = False
+                    else:
+                        marked_tokens_indices[story_i].append(len(clean_tokens[story_i]))
+                        clean_tokens[story_i].append(token_id)
+                elif token_id == subject_tokens[0]:
+                    in_subject = True
+                else:
+                    clean_tokens[story_i].append(token_id)
+
+        # remove the subject tokens
+        
+        # for i, clean_token in enumerate(clean_tokens_A):
+        #     if i in marked_tokens_indeces_A:
+        #         print("*", end=" ")
+        #     print(tokenizer.decode(clean_token), end=" ")
+        
+        # for marked_token_id in marked_tokens_indeces_A:
+        #     print(f"marked token id: {marked_token_id} {tokenizer.decode(clean_tokens_A[marked_token_id])}")
+        # quit()
 
         # ignore everything below - testing
 
         # Extract activations from the correct layer
+        clean_tokens_A = torch.tensor(clean_tokens[0]).to(device)
+        clean_tokens_B = torch.tensor(clean_tokens[1]).to(device)
+
         with torch.no_grad():
-            _, cache = model.run_with_cache(tokens_A.input_ids) 
+            _, cache = model.run_with_cache(clean_tokens_A) 
         hidden_states_A = cache["blocks.5.hook_mlp_out"]  # now we are poking layer 5
 
         with torch.no_grad():
-            _, cache = model.run_with_cache(tokens_B.input_ids)
+            _, cache = model.run_with_cache(clean_tokens_B)
         hidden_states_B = cache["blocks.5.hook_mlp_out"]  # now we are poking layer 5
 
         with torch.no_grad():
@@ -130,47 +160,34 @@ def main():
         V2 = np.zeros(activations_B.shape[2])
         V2_token_num = 0
 
-        for token_index in range(activations_A.shape[1]):
-            # traverse each token
-            token_to_traverse = tokenizer.decode(tokens_A["input_ids"][0][token_index]) 
+        print(len(marked_tokens_indices[0]), activations_A.shape)
 
-            found = False
-            for marked_token in marked_tokens_A:
-                # NOTE: a prefix space is added to match the marked tokens
-                marked_token_prepended = " " + marked_token
-                if token_to_traverse == marked_token_prepended:
-                    # add the activations of this token to V1
-                    V1 += activations_A[0, token_index, :]
-                    V1_token_num += 1
-                    I1 += activations_A[0, token_index, :]
-                    I1_token_num += 1
-                    found = True
-                    break
-            if not found:
+        for token_index, token_id in enumerate(clean_tokens[0]):
+            # NOTE: a prefix space is added to match the marked tokens
+            if token_id in marked_tokens_indices[0]:
+                # add the activations of this token to V1
+                V1 += activations_A[0, token_index, :]
+                V1_token_num += 1
+                I1 += activations_A[0, token_index, :]
+                I1_token_num += 1
+            else:
                 I2 += activations_A[0, token_index, :]
                 I2_token_num += 1
         
-        # compute V2 only for the marked tokens
-        V2 = np.zeros(activations_B.shape[2])   
-        for token_index in range(activations_B.shape[1]):
-            # traverse each token
-            token_to_traverse = tokenizer.decode(tokens_B["input_ids"][0][token_index]) 
-            found = False
-            for marked_token in marked_tokens_B:
-                # NOTE: a prefix space is added to match the marked tokens
-                marked_token_prepended = " " + marked_token
-                if token_to_traverse == marked_token_prepended:
-                    # add the activations of this token to V2
-                    V2 += activations_B[0, token_index, :]
-                    V2_token_num += 1
-                    I1 += activations_B[0, token_index, :]
-                    I1_token_num += 1
-                    found = True
-                    break
-            if not found:
+        for token_index, token_id in enumerate(clean_tokens[1]):
+            # NOTE: a prefix space is added to match the marked tokens
+            if token_id in marked_tokens_indices[1]:
+                # add the activations of this token to V1
+                V2 += activations_B[0, token_index, :]
+                V2_token_num += 1
+                I1 += activations_B[0, token_index, :]
+                I1_token_num += 1
+            else:
                 I2 += activations_B[0, token_index, :]
                 I2_token_num += 1
-        print("=" * 50)
+
+
+        # print("=" * 50)
 
         V1 = V1 / V1_token_num if V1_token_num > 0 else V1
         V2 = V2 / V2_token_num if V2_token_num > 0 else V2
@@ -188,14 +205,16 @@ def main():
             for num in V2.tolist():
                 f.write(f"{num:4f},")
             f.write("\n")
-        df = pd.DataFrame({"V1": V1, "V2": V2, "delta": V1 - V2, "abs_delta": np.abs(V1 - V2)})
-        df.to_csv(f"interpretability_eval/{architecture}_raw_V1_V2_{pair_index}.csv", index=True)
+        # df = pd.DataFrame({"V1": V1, "V2": V2, "delta": V1 - V2, "abs_delta": np.abs(V1 - V2)})
+        # df.to_csv(f"interpretability_eval/{architecture}_raw_V1_V2_{pair_index}.csv", index=True)
 
 
         elementwise_contrast_distance = np.abs(V1 - V2)
-        contrastive_score = np.max(elementwise_contrast_distance) / np.average(elementwise_contrast_distance)
+        avg = np.average(elementwise_contrast_distance) if np.average(elementwise_contrast_distance) != 0 else 1
+        contrastive_score = np.max(elementwise_contrast_distance) / avg
         elementwise_independence_distance = np.abs(I1 - I2)
-        independence_score = np.max(elementwise_independence_distance) / np.average(elementwise_independence_distance)
+        avg = np.average(elementwise_independence_distance) if np.average(elementwise_independence_distance) != 0 else 1
+        independence_score = np.max(elementwise_independence_distance) / avg
         elementwise_interpretability_score = elementwise_contrast_distance + elementwise_independence_distance
 
         """
@@ -218,7 +237,7 @@ def main():
         # wirte them to a file
         # with open(f"interpretability_eval/{architecture}_interpretability_scores.csv", "a") as f:
         #     f.write(f"{pair_index},{interpretability_score:4f},{responsible_neuron},{ground_truth_subject}\n")
-        print(f"pair index: {pair_index} {ground_truth_subject}:\n contrastive score: {contrastive_score:4f}\n independent score: {independence_score:4f}\n interpretability score: {interpretability_score:4f}\n")
+        tqdm.write(f"pair index: {pair_index} {ground_truth_subject}:\n contrastive score: {contrastive_score:4f}\n independent score: {independence_score:4f}\n interpretability score: {interpretability_score:4f}\n")
         # print(f"interpretability score: {(contrastive_score + independence_score):4f}\n")
 
         # append the scores to the lists
@@ -233,9 +252,9 @@ def main():
     contrastive_score_mean = np.mean(contrastive_scores)
     independent_score_mean = np.mean(independent_scores)
     interpretability_score_mean = np.mean(interpretability_scores)
-    print(f"Contrastive score mean: {contrastive_score_mean:4f}")
-    print(f"Independent score mean: {independent_score_mean:4f}")
-    print(f"Interpretability score mean: {interpretability_score_mean:4f}")
+    tqdm.write(f"Contrastive score mean: {contrastive_score_mean:4f}")
+    tqdm.write(f"Independent score mean: {independent_score_mean:4f}")
+    tqdm.write(f"Interpretability score mean: {interpretability_score_mean:4f}")
 
     # responsible neurons are regrouped based on subject and written to a CSV file
     # create a dataframe from the dictionary
