@@ -180,8 +180,7 @@ class SAE(HookedRootModule):
             self.initialize_weights_kan()
             self.encode = self.encode_kan
         elif self.cfg.architecture == "step":
-            self.initialize_weights_basic()
-            self.activation_fn = StepsActivation(step_size=0.1)
+            self.initialize_weights_step()
             self.encode = self.encode_step
         else:
             raise ValueError(f"Invalid architecture: {self.cfg.architecture}")
@@ -341,6 +340,12 @@ class SAE(HookedRootModule):
             kan_ae_type=self.cfg.activation_fn_kwargs["kan_ae_type"],
             bottleneck_size=self.cfg.d_sae,
         ).to(self.device, self.dtype)
+
+    def initialize_weights_step(self):
+        self.step_size = nn.Parameter(
+            torch.full((self.cfg.d_sae,), 0.1, dtype=self.dtype, device=self.device)
+        )
+        self.initialize_weights_basic()
 
     @overload
     def to(

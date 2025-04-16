@@ -94,6 +94,39 @@ class JumpReLU(torch.autograd.Function):
         )
         return x_grad, threshold_grad, None
 
+class StepsActivation(torch.autograd.Function):
+    @staticmethod
+    def forward(
+        x: torch.Tensor,
+        step_size: torch.Tensor,
+        bandwidth: float,  # noqa: ARG004
+    ) -> torch.Tensor:
+        return torch.floor(x / step_size) * step_size 
+    
+    @staticmethod
+    def setup_context(
+        ctx: Any, inputs: tuple[torch.Tensor, torch.Tensor, float], output: torch.Tensor
+    ) -> None:
+        x, step_size, bandwidth = inputs
+        del output
+        ctx.save_for_backward(x, step_size)
+        ctx.bandwidth = bandwidth
+
+    @staticmethod
+    def backward(  # type: ignore[override]
+        ctx: Any, grad_output: torch.Tensor
+    ) -> tuple[torch.Tensor, None, None]:
+        x, step_size = ctx.saved_tensors
+        bandwidth = ctx.bandwidth
+
+        x_grad = grad_output
+        step_size_grad = torch.sum(
+            -(1.0 / bandwidth) * rectangle((x - step_size) / bandwidth) * grad_output,
+            dim=0,
+        )
+
+        return x_grad, step_size_grad, None
+
 
 @dataclass
 class TrainStepOutput:
@@ -264,6 +297,9 @@ class TrainingSAE(SAE):
         
         elif cfg.architecture == "kan":
             self.encode_with_hidden_pre_fn = self.encode_with_hidden_pre_kan
+        elif cfg.architecture == "step":
+            self.encode_with_hidden_pre_fn = self.encode_with_hidden_pre_step
+            self.bandwidth = cfg.jumprelu_bandwidth
         else:
             raise ValueError(f"Unknown architecture: {cfg.architecture}")
 
@@ -376,6 +412,30 @@ class TrainingSAE(SAE):
         # store the raw code as "hidden_pre," or store the final hidden layer pre-activation
         hidden_pre = code
         return code, hidden_pre
+
+    def encode_with_hidden_pre_step(
+        self, x: Float[torch.Tensor, "... d_in"]
+    ) -> tuple[Float[torch.Tensor, "... d_sae"], Float[torch.Tensor, "... d_sae"]]:
+        sae_in = self.process_sae_in(x)
+
+        # Step activation function
+        hidden_pre = sae_in @ self.W_enc + self.b_enc
+
+        if self.training:
+            hidden_pre = (
+                hidden_pre + torch.randn_like(hidden_pre) * self.cfg.noise_scale
+            )
+
+        step_size = nn.Parameter(
+            torch.full((self.cfg.d_sae,), 0.1, dtype=self.dtype, device=self.device)
+        )
+        # print(f"step_size: {step_size}")
+
+        feature_acts = StepsActivation.apply(
+            hidden_pre, step_size, self.bandwidth
+        )
+
+        return feature_acts, hidden_pre
 
     def decode(self, feature_acts: torch.Tensor) -> torch.Tensor:
         return super().decode(feature_acts)

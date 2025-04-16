@@ -53,11 +53,11 @@ def main():
     n_checkpoints = 5
     cfg = LanguageModelSAERunnerConfig(
         **model_config["Llama-3.2-1B"],
-        architecture="gated",
+        architecture="step",
         #activation_fn_kwargs={"kan_hidden_size": 2048 * 8, "kan_ae_type": "only_kan"},
         #model_name="meta-llama/Llama-3.2-1B",
         # model_name="tiny-stories-1L-21M",
-        #cached_activations_path="GulkoA/TinyStories-Llama-3.2-1B-cache-100k", # for llama
+        # cached_activations_path="GulkoA/TinyStories-Llama-3.2-1B-cache-100k", # for llama
         #cached_activations_path="GulkoA/TinyStories-gpt2-cache-100k", # for gpt2
         #cached_activations_path="./cache_activations/gpt2_tinystories", # for gpt2 locally
         use_cached_activations=True,
