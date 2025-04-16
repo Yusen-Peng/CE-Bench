@@ -179,6 +179,10 @@ class SAE(HookedRootModule):
         elif self.cfg.architecture == "kan":
             self.initialize_weights_kan()
             self.encode = self.encode_kan
+        elif self.cfg.architecture == "step":
+            self.initialize_weights_basic()
+            self.activation_fn = StepsActivation(step_size=0.1)
+            self.encode = self.encode_step
         else:
             raise ValueError(f"Invalid architecture: {self.cfg.architecture}")
 
@@ -483,13 +487,22 @@ class SAE(HookedRootModule):
         hidden_pre = self.hook_sae_acts_pre(sae_in)
         bottleneck = self.kan_autoencoder.encoder(hidden_pre)
         return self.hook_sae_acts_post(bottleneck)
+    
+    def encode_step(
+        self, x: Float[torch.Tensor, "... d_in"]
+    ) -> Float[torch.Tensor, "... d_sae"]:
+        sae_in = self.process_sae_in(x)
+        
+        hidden_pre = self.hook_sae_acts_pre(sae_in @ self.W_enc + self.b_enc)
+        return self.hook_sae_acts_post(self.activation_fn(hidden_pre))
+        
 
     def decode(
         self, feature_acts: Float[torch.Tensor, "... d_sae"]
     ) -> Float[torch.Tensor, "... d_in"]:
         """Decodes SAE feature activation tensor into a reconstructed input activation tensor."""
         
-        if self.cfg.architecture in ["standard", "topk", "gated", "jumprelu"]:
+        if self.cfg.architecture in ["standard", "topk", "gated", "jumprelu", "step"]:
             # "... d_sae, d_sae d_in -> ... d_in",
             sae_out = self.hook_sae_recons(
                 self.apply_finetuning_scaling_factor(feature_acts) @ self.W_dec + self.b_dec
@@ -768,6 +781,19 @@ class TopK(nn.Module):
         return result
 
 
+class StepsActivation(nn.Module):
+    def __init__(self, step_size: float = 1.0):
+
+        super().__init__()
+        self.step_size = step_size
+
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        # Apply the step function
+        x = torch.floor(x / self.step_size) * self.step_size
+
+        # Make sure the output is the same shape as the input
+        return x
 
 
 
