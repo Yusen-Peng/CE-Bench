@@ -18,8 +18,8 @@ def main():
     print(f"Using device: {device}")
     
     # Load LLaMA tokenizer
-    #model_name = "meta-llama/Llama-3.2-1B"
-    model_name = "gpt2-small"
+    model_name = "meta-llama/Llama-3.2-1B"
+    #model_name = "gpt2-small"
     
     #tokenizer = AutoTokenizer.from_pretrained(model_name)
     tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
@@ -28,30 +28,33 @@ def main():
     print("Tokenizer loaded!")
 
     # Load the trained SAE
-    experiment_name = "GPT_baseline_crop"
-
+    experiment_name = "Gemma-2-2b_jumprelu"
 
     #architecture = "LLAMA_cache_only_kan"
     #architecture = "LLAMA_cache_kan_relu_dense"
-    #architecture = "LLAMA_cache_jumprelu"
+    # architecture = "LLAMA_cache_jumprelu"
     #architecture = "LLAMA_cache_gated"
     #architecture = "GPT_cache_jumprelu"
     #architecture = "GPT_cache_kan_relu_dense"
     #architecture = "GPT_cache_only_kan"
-    architecture = "GPT_cache_gated"
-    steps = "1k"
+    #architecture = "GPT_cache_gated"
+    architecture = "Gemma-2-2b" # Gemma-2-2b
+    steps = "244k"
 
     ### LLAMA
     #best_model = "best_2457600_ce_2.13012_ori_2.03857" # only kan
     #best_model = "best_2457600_ce_2.09549_ori_2.03857" # kan-relu-dense
-    #best_model = "best_2457600_ce_2.23809_ori_2.03857"  # jumprelu
+    # best_model = "best_2457600_ce_2.23809_ori_2.03857"  # jumprelu
     #best_model = "best_2457600_ce_2.24055_ori_2.03857" # gated
 
     ### GPT2
     #best_model = "best_3686400_ce_2.37705_ori_2.33838" # gpt2 jumprelu
     #best_model = "best_3686400_ce_2.34855_ori_2.33838" # gpt2 kan-relu-dense
     #best_model = "best_3686400_ce_2.35626_ori_2.33838" # gpt2 only kan
-    best_model = "best_3686400_ce_2.39366_ori_2.33838" # gpt2 gated
+    #best_model = "best_3686400_ce_2.39366_ori_2.33838" # gpt2 gated
+
+    ### Gemma-2-2b
+    best_model = "width-2pow16_trainer_0" # only kan
 
     generate_histograms = True
     log_vectors = False
@@ -61,9 +64,22 @@ def main():
     os.makedirs(f"{logs_folder}/histograms", exist_ok=True)
     os.makedirs(f"{logs_folder}/raw", exist_ok=True)
 
-    sae_checkpoint_path = f"checkpoints/{architecture}/{steps}/{best_model}/"
-    sae = SAE.load_from_pretrained(path=sae_checkpoint_path, device=device)
+    # load SAE
+    # sae_checkpoint_path = f"checkpoints/{architecture}/{steps}/{best_model}/"
+    # sae = SAE.load_from_pretrained(path=sae_checkpoint_path, device=device)
+
+    # load from huggingface
+    sae = SAE.from_pretrained(
+        release="adamkarvonen/saebench_gemma-2-2b_width-2pow12_date-0108",
+        sae_id="JumpRelu_gemma-2-2b__0108/resid_post_layer_12/trainer_0",
+        device=device,
+    )
     print("SAE loaded!")
+
+
+
+    return
+
 
     # Load the model using HookedSAETransformer
     model = HookedSAETransformer.from_pretrained_no_processing(
@@ -77,17 +93,7 @@ def main():
     # load the contrastive dataset from huggingface
     from datasets import load_dataset
     dataset = load_dataset("GulkoA/contrastive-stories-v1", split="train")
-    #dataset = 
     import re
-
-    # # Create a CSV file to store the results
-    # with open(f"{logs_folder}/interpretability_scores.csv", "w") as f:
-    #     f.write("pair_index,interpretability_score,responsible_neuron,ground_truth_subject\n")
-
-    # # raw V1 and V2
-    # with open(f"{logs_folder}/raw_V1_V2.log", "w") as f:
-    #     f.write(f"RAW V1 AND V2 VECTORS FOR {experiment_name}\n")
-
 
     contrastive_scores = []
     independent_scores = []
@@ -107,16 +113,7 @@ def main():
 
         if "relevance to " in ground_truth_subject:
             continue
-        
-        # # find all marked tokens
-        # marked_tokens_A = re.findall(r"\*(.*?)\*", text_A_original)
-        # marked_tokens_B = re.findall(r"\*(.*?)\*", text_B_original)
-
-
-        # # remove only asterisks, not the tokens
-        # text_A = text_A_original.replace("*", "")
-        # text_B = text_B_original.replace("*", "")
-        
+    
         tokenizer.add_special_tokens({"additional_special_tokens": ["<subject>", "</subject>"]})
         subject_tokens = tokenizer.convert_tokens_to_ids(["<subject>", "</subject>"])
         # print(subject_tokens)
@@ -169,10 +166,10 @@ def main():
         hidden_states_B = cache["blocks.5.hook_mlp_out"]  # now we are poking layer 5
 
         with torch.no_grad():
-            # activations_A = sae.encode(hidden_states_A)
-            # activations_B = sae.encode(hidden_states_B)
-            activations_A = hidden_states_A
-            activations_B = hidden_states_B
+            activations_A = sae.encode(hidden_states_A)
+            activations_B = sae.encode(hidden_states_B)
+            # activations_A = hidden_states_A
+            # activations_B = hidden_states_B
 
         # Convert activations to NumPy
         activations_A = activations_A.to(dtype=torch.float32).detach().cpu().numpy()
@@ -202,6 +199,8 @@ def main():
                 I1 += activations_A[0, token_index, :]
                 I1_token_num += 1
             else:
+                V1 += activations_A[0, token_index, :] # FIXME: if average over everything
+                V1_token_num += 1
                 I2 += activations_A[0, token_index, :]
                 I2_token_num += 1
         
@@ -214,28 +213,16 @@ def main():
                 I1 += activations_B[0, token_index, :]
                 I1_token_num += 1
             else:
+                V2 += activations_B[0, token_index, :] # FIXME: if average over everything
+                V2_token_num += 1
                 I2 += activations_B[0, token_index, :]
                 I2_token_num += 1
-
-
-        # print("=" * 50)
 
         V1 = V1 / V1_token_num if V1_token_num > 0 else V1
         V2 = V2 / V2_token_num if V2_token_num > 0 else V2
         I1 = I1 / I1_token_num if I1_token_num > 0 else I1
         I2 = I2 / I2_token_num if I2_token_num > 0 else I2
 
-        # print raw V1 and V2 to a log file
-        # with open(f"{logs_folder}/raw_V1_V2.log", "a") as f:
-        #     f.write("="*100 + "\n")
-        #     f.write(f"pair_index: {pair_index}\n")
-        #     # actually print out every element of V1 and V2
-        #     for num in V1.tolist():
-        #         f.write(f"{num:4f},")
-        #     f.write("\n")
-        #     for num in V2.tolist():
-        #         f.write(f"{num:4f},")
-        #     f.write("\n")
 
         if log_vectors:
             df = pd.DataFrame({"V1": V1, "V2": V2, "delta": V1 - V2, "abs_delta": np.abs(V1 - V2)})
@@ -302,8 +289,6 @@ def main():
             
             plt.savefig(f"{logs_folder}/histograms/{pair_index}.png")
             plt.close()
-
-
 
         """
             Responsibility Clustering

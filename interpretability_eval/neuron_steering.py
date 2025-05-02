@@ -47,7 +47,7 @@ def main():
     print(f"Using device: {device}")
 
     # NOTE: CHANGE IT EVERY TIME
-    experiment_name = "GPT_jumprelu_crop"
+    experiment_name = "LLAMA_jumprelu_crop"
     print(f"Experiment name: {experiment_name}")
     print("=" * 80)
     results_json = json.load(open(f"interpretability_eval/{experiment_name}/results.json"))
@@ -117,7 +117,7 @@ def main():
     df = pd.read_csv(f"interpretability_eval/{experiment_name}/interpretability_scores_per_subject.csv")
     # print(df.columns)
     # FIXME: alternative: take the neuron with the highest activation instead all of them in subject_neurons group
-    subject_neurons = df.sort_values(by=target_subject, ascending=False).head(5)
+    subject_neurons = df.sort_values(by=target_subject, ascending=False).head(10)
 
     # take top 10 neurons rows for their interpretability scores use sort + head
     # best_neuron_row = subject_neurons.sort_values(by="interpretability_score", ascending=False).head(50)
@@ -135,11 +135,11 @@ def main():
     )
     print("Model loaded!")
 
-    prompt = "Once upon a time, a girl named Holly "
+    prompt = "She was walking in a park when suddenly she saw a person running towards her."
     baseline_output = autoregressive_generate(model, tokenizer, prompt, device=device)
     print("\nBaseline generation:", baseline_output)
 
-    SCALE = 100
+    SCALE = 500
     model.add_hook(
         "blocks.5.hook_mlp_out",
         partial(fire_multiple_sae_neurons, sae=sae, neuron_list=subject_neurons, scale=SCALE),

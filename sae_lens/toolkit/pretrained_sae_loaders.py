@@ -58,10 +58,19 @@ def sae_lens_loader(
     cfg_dict = get_sae_config(release, sae_id=sae_id, options=options)
     repo_id, folder_name = get_repo_id_and_folder_name(release, sae_id=sae_id)
 
-    weights_filename = f"{folder_name}/sae_weights.safetensors"
-    sae_path = hf_hub_download(
-        repo_id=repo_id, filename=weights_filename, force_download=force_download
-    )
+    filenames = ["sae_weights.safetensors", "ae.pt"]
+
+    for filename in filenames:
+        try:
+            weights_filename = f"{folder_name}/{filename}"
+
+            sae_path = hf_hub_download(
+                repo_id=repo_id, filename=weights_filename, force_download=force_download
+            )
+            print(f"SAE path: {sae_path}")
+            break
+        except EntryNotFoundError:
+            continue
 
     # TODO: Make this cleaner. I hate try except statements.
     try:
@@ -105,10 +114,16 @@ def get_sae_config_from_hf(
     Returns:
         Dict[str, Any]: The configuration dictionary for the SAE.
     """
-    cfg_filename = f"{folder_name}/cfg.json"
-    cfg_path = hf_hub_download(
-        repo_id=repo_id, filename=cfg_filename, force_download=options.force_download
-    )
+    filenames = ["cfg.json", "config.json", "c.json"]
+    for filename in filenames:
+        try: 
+            cfg_filename = f"{folder_name}/{filename}"
+            cfg_path = hf_hub_download(
+                repo_id=repo_id, filename=cfg_filename, force_download=options.force_download
+            )
+            break
+        except EntryNotFoundError:
+            continue
 
     with open(cfg_path) as f:
         cfg_dict = json.load(f)
@@ -214,14 +229,23 @@ def read_sae_from_disk(
     """
     Given a loaded dictionary and a path to a weight file, load the weights and return the state_dict.
     """
-    if dtype is None:
-        dtype = DTYPE_MAP[cfg_dict["dtype"]]
+    # support .pt files by using torch.load
+    if weight_path.endswith('.pt'):
+        loaded = torch.load(weight_path, map_location=device)
+        # convert loaded tensors to target dtype
+        if dtype is None:
+            dtype = DTYPE_MAP.get(cfg_dict.get('dtype'), torch.float32)
+            cfg_dict['dtype'] = dtype
+            state_dict = {k: (v.to(dtype=dtype) if isinstance(v, torch.Tensor) else v)
+                      for k, v in loaded.items()}
 
-    state_dict = {}
-    with safe_open(weight_path, framework="pt", device=device) as f:  # type: ignore
-        for k in f.keys():  # noqa: SIM118
-            state_dict[k] = f.get_tensor(k).to(dtype=dtype)
-
+    else:
+        state_dict = {}
+        with safe_open(weight_path, framework="pt", device=device) as f:  # type: ignore
+            for k in f.keys():  # noqa: SIM118
+                state_dict[k] = f.get_tensor(k).to(dtype=dtype)
+            dtype = DTYPE_MAP[cfg_dict["dtype"]]
+         
     # if bool and True, then it's the April update method of normalizing activations and hasn't been folded in.
     if "scaling_factor" in state_dict:
         # we were adding it anyway for a period of time but are no longer doing so.
