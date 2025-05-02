@@ -229,22 +229,14 @@ def read_sae_from_disk(
     """
     Given a loaded dictionary and a path to a weight file, load the weights and return the state_dict.
     """
-    # support .pt files by using torch.load
-    if weight_path.endswith('.pt'):
-        loaded = torch.load(weight_path, map_location=device)
-        # convert loaded tensors to target dtype
-        if dtype is None:
-            dtype = DTYPE_MAP.get(cfg_dict.get('dtype'), torch.float32)
-            cfg_dict['dtype'] = dtype
-            state_dict = {k: (v.to(dtype=dtype) if isinstance(v, torch.Tensor) else v)
-                      for k, v in loaded.items()}
+    
+    state_dict = {}
+    with safe_open(weight_path, framework="pt", device=device) as f:  # type: ignore
+        for k in f.keys():  # noqa: SIM118
+            state_dict[k] = f.get_tensor(k).to(dtype=dtype)
 
-    else:
-        state_dict = {}
-        with safe_open(weight_path, framework="pt", device=device) as f:  # type: ignore
-            for k in f.keys():  # noqa: SIM118
-                state_dict[k] = f.get_tensor(k).to(dtype=dtype)
-            dtype = DTYPE_MAP[cfg_dict["dtype"]]
+    if dtype is None:
+        dtype = DTYPE_MAP[cfg_dict["dtype"]]
          
     # if bool and True, then it's the April update method of normalizing activations and hasn't been folded in.
     if "scaling_factor" in state_dict:

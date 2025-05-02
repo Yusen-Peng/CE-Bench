@@ -16,18 +16,18 @@ def setup_openai_api():
 
 def contrastive_prompt(subject: str, subject_prefix1: str, subject_prefix2: str, highlight_subject: bool=True) -> str:
     prompt0 = f"""
-    Write a short simple story focusing on {subject.upper()}. Write freely, but focus especially on {subject}. Make sure this subject is consistent across the entire story. {f"All words that are somewhat related to {subject} must be highlighted with *" if highlight_subject else ""}
+    Write a short simple story focusing on {subject.upper()}. Write freely, but focus especially on {subject}. Make sure this subject is consistent across the entire story. {f"Make sure that all tokens you think are related to {subject} must be marked with <subject></subject>" if highlight_subject else ""}
     """
     prompt1 = f"""
-    Now, rewrite it to make it about {subject.upper()} specifically being {subject_prefix1.upper()}. Write freely, but focus especially on {subject_prefix1} {subject}. Make sure this subject is consistent across the entire story. {f"All words that are somewhat related to {subject} must be highlighted with *" if highlight_subject else ""}
+    Now, make it about {subject.upper()} specifically being {subject_prefix1.upper()}. Write freely, but focus especially on {subject_prefix1} {subject}. Make sure this subject is consistent across the entire story. {f"Make sure that every word you think are directly related to {subject_prefix1} {subject} must be marked with <subject></subject>" if highlight_subject else ""}
     """
     prompt2 = f"""
-    Now, edit this story to make it about {subject.upper()} being {subject_prefix2.upper()} instead of {subject_prefix1} {subject}. Only change the required words to make it about {subject_prefix2} {subject}, but keep the story coherent. {f"All words that are somewhat related to {subject} must be highlighted with *" if highlight_subject else ""}
+    Now, make it about {subject.upper()} being {subject_prefix2.upper()} instead of {subject_prefix1} {subject}. Only change the required words to make it about {subject_prefix2} {subject}, but keep the story coherent. {f"Make sure that every word you think are directly related to {subject_prefix2} {subject} must be marked with <subject></subject>" if highlight_subject else ""}
     """
     return prompt0, prompt1, prompt2
 
 # Function to query OpenAI API
-def query_openai(prompt: list, model, client: OpenAI, temperature: float = 0.7, max_tokens: int = 256) -> str:
+def query_openai(prompt: list, model, client: OpenAI, temperature: float = 0.7) -> str:
     """
     Query OpenAI API with a prompt
     
@@ -55,7 +55,7 @@ def query_openai(prompt: list, model, client: OpenAI, temperature: float = 0.7, 
         return ""
 
 # Generate dataset from prompts
-def generate_dataset(subjects: List[str], model: str, output_file: str = "generated_dataset.json", stories_per_subject=1) -> List[Dict[str, Any]]:
+def generate_dataset(subjects: List[str], model: str, output_file: str = "generated_dataset.json", stories_per_subject: int=1) -> List[Dict[str, Any]]:
     """
     Generate responses from OpenAI API based on prompts and save as dataset
     
@@ -70,7 +70,8 @@ def generate_dataset(subjects: List[str], model: str, output_file: str = "genera
     client = setup_openai_api()
     results = []
     
-    progress = tqdm((subjects * stories_per_subject), desc="Generating contrastive stories")
+    progress = tqdm(sorted(subjects * stories_per_subject), desc="Generating contrastive stories")
+    file = open(output_file, 'w')
     for subject in progress:
         progress.set_postfix_str(f"subject: {subject}")
 
@@ -80,7 +81,7 @@ def generate_dataset(subjects: List[str], model: str, output_file: str = "genera
 
         response0 = query_openai([
             {"role": "user", "content": prompt0},
-        ], model=model, client=client)
+        ], model=model, client=client, temperature=0.9)
         tqdm.write(f"0: {response0}")
 
         response_high = query_openai([
@@ -91,7 +92,7 @@ def generate_dataset(subjects: List[str], model: str, output_file: str = "genera
         tqdm.write(f"High: {response_high}")
 
         response_low = query_openai([
-            {"role": "user", "content": prompt0},
+            {"role": "user", "content": prompt0},   
             {"role": "assistant", "content": response0},
             {"role": "user", "content": prompt_high},
             {"role": "assistant", "content": response_high},
@@ -112,10 +113,12 @@ def generate_dataset(subjects: List[str], model: str, output_file: str = "genera
             # Optional: Sleep to avoid rate limits
             time.sleep(1)
     
-    # Save raw results to file
-    with open(output_file, 'w') as f:
-        json.dump(results, f, indent=2)
+        # Save raw results to file
+        file.seek(0)
+        file.write(json.dumps(results, indent=2))
+        file.flush()
     
+    file.close()
     return results
 
 # Convert results to HuggingFace dataset
@@ -146,12 +149,12 @@ def main():
     subjects = [
         "temperature",
         "love",
-        # "pressure",
+        "pressure",
         "volume",
-        # "entropy",
+        "entropy",
         "size",
         "mass",
-        # "density",
+        "physical density",
         "darkness",
         "brightness",
         "empathy",
@@ -163,17 +166,22 @@ def main():
         "complexity",
         "intensity",
         "resolution",
-        # "stability",
-        # "robustness",
-        # "sensitivity",
-        # "acuity",
+        "stability",
+        "robustness",
+        "sensitivity",
+        "emotional attachment",
+        "lawfulness (legal)",
+        "lawfulness (moral)",
+        "integrity",
+        "honesty",
+        "acuity",
         "motivation",
         "creativity",
         "efficiency",
         "energy",
-        # "coherence",
-        # "capacity",
-        # "focus",
+        "coherence",
+        "capacity",
+        "focus",
         # "reliability",
         # "flexibility",
         # "saturation",
@@ -186,7 +194,7 @@ def main():
         # "engagement",
         # "awareness",
         # "risk tolerance",
-        # "ambition",
+        # "ambition",   
         # "inhibition",
         # "latency",
 
@@ -206,31 +214,112 @@ def main():
         "loyalty",
         "arrogance",
         "wisdom",
-        "strength (emotional or physical)",
+        "emotional strength",
+        "physical strength",
         "clarity of purpose",
-        "control (self-control or control over others)",
+        "self-control",
+        "control over others",
         "sense of justice",
         "attachment",
         "confidence",
         "resentment",
-        "chaos (internal or external)",
+        "chaos (internal)",
+        "order (internal)",
         "imagination",
         "belief (in self, others, or ideals)",
         "patience",
         "sense of wonder",
-        "faith (not necessarily religious)",
+        "faith",
         "empathy",
         "willpower",
         "detachment",
         "authenticity",
+
+        "energy",
+        "motivation",
+        "focus",
+        "clarity (mental or emotional)",
+        "stress",
+        "anxiety",
+        "patience",
+        "productivity",
+        "creativity",
+        "confidence",
+        "curiosity",
+        "discipline",
+        "mood",
+        "hope",
+        "inspiration",
+        "social battery",
+        "self-esteem",
+        "emotional bandwidth",
+        "mental load",
+        "burnout",
+        "organization",
+        "satisfaction",
+        "overwhelm",
+        "engagement (with work, people, ideas)",
+        "drive",
+        "openness",
+        "resilience",
+        "mental noise",
+        "presence (as in “being present”)",
+        "self-compassion",
+        "impulsivity",
+        "tiredness",
+        "interest",
+        "frustration",
+        "connectedness",
+        "relevance to golden gate bridge",
+        "relevance to new york city",
+        "relevance to the state of ohio",
+        "compliance",
+        "success",
+
+
+
+        "social equality and justice",
+        "diversity and inclusion",
+        "awareness (of privilege, systems, injustice)",
+        "empathy (across identity/experience)",
+        "accountability",
+        "allyship",
+        "tolerance",
+        "bias",
+        "privilege",
+        "justice sensitivity",
+        "openness to critique",
+        "willingness to learn",
+        "moral clarity",
+        "intersectionality awareness",
+        "cultural humility",
+        "activism (level of engagement)",
+        "complicity",
+        "civic engagement",
+        "sense of fairness",
+        "emotional labor",
+        "social responsibility",
+        "inclusiveness",
+        "representation",
+        "voice (feeling heard or having space)",
+        "power (felt or exerted)",
+        "solidarity",
+        "radical compassion",
+        "systemic thinking",
     ]
+    subjects = list(set(subjects))
+    print(f"Subjects: {len(subjects)}")
+
+    # subjects = subjects[:3]
 
     # Generate responses
-    generated_data = generate_dataset(subjects, model="gpt-4o", stories_per_subject=2)
+    # generated_data = generate_dataset(subjects, model="gpt-4o", stories_per_subject=5)
     
     # Create HuggingFace dataset
-    hf_dataset = create_hf_dataset(generated_data)
-    # old_dataset = datasets.load_dataset("GulkoA/contrastive-stories")
+    # hf_dataset = create_hf_dataset(generated_data)
+    old_dataset = datasets.load_from_disk("contrastive_stories")
+    hf_dataset = old_dataset
+    
     # hf_dataset = datasets.concatenate_datasets([old_dataset["train"], hf_dataset])
     # get last 50 entries
     # hf_dataset = old_dataset["train"].select(range(12, len(old_dataset["train"])))
@@ -239,9 +328,9 @@ def main():
     print(hf_dataset)
     
     # Optional: Push to HuggingFace Hub
-    if len(hf_dataset) > 0:
-      hf_dataset.save_to_disk("contrastive_stories")
-      hf_dataset.push_to_hub("GulkoA/contrastive-stories", split="v2")
+    # if len(hf_dataset) > 0:
+    #   hf_dataset.save_to_disk("contrastive_stories")
+    #   hf_dataset.push_to_hub("GulkoA/contrastive-stories-v1")
     
     return hf_dataset
 
