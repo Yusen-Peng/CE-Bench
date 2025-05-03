@@ -1,437 +1,0 @@
-Using device: cuda
-Loaded pretrained model gpt2-small into HookedTransformer
-Downloading data:   0%|          | 0/319 [00:00<?, ?files/s]Downloading data:  31%|███       | 98/319 [00:03<00:08, 26.17files/s]Downloading data:  32%|███▏      | 101/319 [00:10<00:28,  7.52files/s]Downloading data:  32%|███▏      | 103/319 [00:17<00:55,  3.87files/s]Downloading data:  33%|███▎      | 104/319 [00:20<01:13,  2.92files/s]Downloading data:  33%|███▎      | 105/319 [00:24<01:40,  2.12files/s]Downloading data:  33%|███▎      | 106/319 [00:27<02:10,  1.64files/s]Downloading data:  34%|███▎      | 107/319 [00:31<02:54,  1.21files/s]Downloading data:  34%|███▍      | 108/319 [00:35<03:39,  1.04s/files]Downloading data:  34%|███▍      | 109/319 [00:38<04:25,  1.26s/files]Downloading data:  34%|███▍      | 110/319 [00:41<05:15,  1.51s/files]Downloading data:  35%|███▍      | 111/319 [00:47<07:37,  2.20s/files]Downloading data:  35%|███▌      | 112/319 [00:50<08:34,  2.48s/files]Downloading data:  35%|███▌      | 113/319 [00:55<10:28,  3.05s/files]Downloading data:  36%|███▌      | 114/319 [00:58<10:26,  3.05s/files]Downloading data:  36%|███▌      | 115/319 [01:02<11:05,  3.26s/files]Downloading data:  36%|███▋      | 116/319 [01:06<11:18,  3.34s/files]Downloading data:  37%|███▋      | 117/319 [01:10<11:34,  3.44s/files]Downloading data:  37%|███▋      | 118/319 [01:13<11:25,  3.41s/files]Downloading data:  37%|███▋      | 119/319 [01:18<13:09,  3.95s/files]Downloading data:  38%|███▊      | 120/319 [01:22<12:34,  3.79s/files]Downloading data:  38%|███▊      | 121/319 [01:25<12:09,  3.68s/files]Downloading data:  38%|███▊      | 122/319 [01:30<12:57,  3.95s/files]Downloading data:  39%|███▊      | 123/319 [01:33<12:01,  3.68s/files]Downloading data:  39%|███▉      | 124/319 [01:36<11:56,  3.68s/files]Downloading data:  39%|███▉      | 125/319 [01:42<13:31,  4.18s/files]Downloading data:  39%|███▉      | 126/319 [01:46<13:14,  4.12s/files]Downloading data:  40%|███▉      | 127/319 [01:49<12:32,  3.92s/files]Downloading data:  40%|████      | 128/319 [01:54<13:51,  4.36s/files]Downloading data:  40%|████      | 129/319 [02:03<18:09,  5.73s/files]Downloading data:  41%|████      | 130/319 [02:07<15:32,  4.93s/files]Downloading data:  41%|████      | 131/319 [02:10<13:38,  4.36s/files]Downloading data:  41%|████▏     | 132/319 [02:14<14:07,  4.53s/files]Downloading data:  42%|████▏     | 133/319 [02:17<12:18,  3.97s/files]Downloading data:  42%|████▏     | 134/319 [02:20<11:29,  3.73s/files]Downloading data:  42%|████▏     | 135/319 [02:23<10:41,  3.48s/files]Downloading data:  43%|████▎     | 136/319 [02:26<10:09,  3.33s/files]Downloading data:  43%|████▎     | 137/319 [02:30<10:10,  3.35s/files]Downloading data:  43%|████▎     | 138/319 [02:37<13:58,  4.63s/files]Downloading data:  44%|████▎     | 139/319 [02:40<12:27,  4.15s/files]Downloading data:  44%|████▍     | 140/319 [02:44<12:04,  4.05s/files]Downloading data:  44%|████▍     | 141/319 [02:54<17:38,  5.95s/files]Downloading data:  45%|████▍     | 142/319 [02:59<15:57,  5.41s/files]Downloading data:  45%|████▍     | 143/319 [03:01<13:39,  4.65s/files]Downloading data:  45%|████▌     | 144/319 [03:05<12:15,  4.20s/files]Downloading data:  45%|████▌     | 145/319 [03:08<11:38,  4.01s/files]Downloading data:  46%|████▌     | 146/319 [03:14<12:50,  4.46s/files]Downloading data:  46%|████▌     | 147/319 [03:19<13:49,  4.82s/files]Downloading data:  46%|████▋     | 148/319 [03:23<12:53,  4.52s/files]Downloading data:  47%|████▋     | 149/319 [03:27<11:58,  4.23s/files]Downloading data:  47%|████▋     | 150/319 [03:30<11:06,  3.94s/files]Downloading data:  47%|████▋     | 151/319 [03:33<10:36,  3.79s/files]Downloading data:  48%|████▊     | 152/319 [03:36<09:56,  3.57s/files]Downloading data:  48%|████▊     | 153/319 [03:40<09:34,  3.46s/files]Downloading data:  48%|████▊     | 154/319 [03:42<08:55,  3.24s/files]Downloading data:  49%|████▊     | 155/319 [03:46<08:45,  3.21s/files]Downloading data:  49%|████▉     | 156/319 [03:50<09:25,  3.47s/files]Downloading data:  49%|████▉     | 157/319 [03:55<11:02,  4.09s/files]Downloading data:  50%|████▉     | 158/319 [03:59<10:23,  3.87s/files]Downloading data:  50%|████▉     | 159/319 [04:01<09:28,  3.55s/files]Downloading data:  50%|█████     | 160/319 [04:05<09:30,  3.59s/files]Downloading data:  50%|█████     | 161/319 [04:09<09:55,  3.77s/files]Downloading data:  51%|█████     | 162/319 [04:13<09:51,  3.77s/files]Downloading data:  51%|█████     | 163/319 [04:17<09:56,  3.82s/files]Downloading data:  51%|█████▏    | 164/319 [04:21<10:03,  3.89s/files]Downloading data:  52%|█████▏    | 165/319 [04:24<09:38,  3.76s/files]Downloading data:  52%|█████▏    | 166/319 [04:28<09:26,  3.70s/files]Downloading data:  52%|█████▏    | 167/319 [04:34<11:25,  4.51s/files]Downloading data:  53%|█████▎    | 168/319 [04:38<10:30,  4.18s/files]Downloading data:  53%|█████▎    | 169/319 [04:41<09:35,  3.84s/files]Downloading data:  53%|█████▎    | 170/319 [04:45<09:34,  3.86s/files]Downloading data:  54%|█████▎    | 171/319 [04:48<08:56,  3.63s/files]Downloading data:  54%|█████▍    | 172/319 [04:51<08:42,  3.56s/files]Downloading data:  54%|█████▍    | 173/319 [04:55<08:35,  3.53s/files]Downloading data:  55%|█████▍    | 174/319 [04:58<08:08,  3.37s/files]Downloading data:  55%|█████▍    | 175/319 [05:01<07:47,  3.25s/files]Downloading data:  55%|█████▌    | 176/319 [05:05<08:34,  3.60s/files]Downloading data:  55%|█████▌    | 177/319 [05:08<08:17,  3.51s/files]Downloading data:  56%|█████▌    | 178/319 [05:12<08:34,  3.65s/files]Downloading data:  56%|█████▌    | 179/319 [05:16<08:38,  3.70s/files]Downloading data:  56%|█████▋    | 180/319 [05:19<08:19,  3.60s/files]Downloading data:  57%|█████▋    | 181/319 [05:26<10:06,  4.40s/files]Downloading data:  57%|█████▋    | 182/319 [05:30<09:49,  4.30s/files]Downloading data:  57%|█████▋    | 183/319 [05:33<09:09,  4.04s/files]Downloading data:  58%|█████▊    | 184/319 [05:38<09:16,  4.12s/files]Downloading data:  58%|█████▊    | 185/319 [05:41<08:45,  3.92s/files]Downloading data:  58%|█████▊    | 186/319 [05:47<09:46,  4.41s/files]Downloading data:  59%|█████▊    | 187/319 [05:51<09:57,  4.53s/files]Downloading data:  59%|█████▉    | 188/319 [05:55<09:00,  4.13s/files]Downloading data:  59%|█████▉    | 189/319 [06:02<11:24,  5.27s/files]Downloading data:  60%|█████▉    | 190/319 [06:06<10:14,  4.77s/files]Downloading data:  60%|█████▉    | 191/319 [06:10<09:36,  4.51s/files]Downloading data:  60%|██████    | 192/319 [06:13<08:41,  4.11s/files]Downloading data:  61%|██████    | 193/319 [06:16<08:05,  3.86s/files]Downloading data:  61%|██████    | 194/319 [06:20<07:43,  3.71s/files]Downloading data:  61%|██████    | 195/319 [06:23<07:23,  3.57s/files]Downloading data:  61%|██████▏   | 196/319 [06:27<07:18,  3.57s/files]Downloading data:  62%|██████▏   | 197/319 [06:37<11:16,  5.54s/files]Downloading data:  62%|██████▏   | 198/319 [06:40<09:45,  4.84s/files]Downloading data:  62%|██████▏   | 199/319 [06:44<08:57,  4.48s/files]Downloading data:  63%|██████▎   | 200/319 [06:47<08:11,  4.13s/files]Downloading data:  63%|██████▎   | 201/319 [06:50<07:47,  3.96s/files]Downloading data:  63%|██████▎   | 202/319 [06:55<08:00,  4.11s/files]Downloading data:  64%|██████▎   | 203/319 [06:59<07:42,  3.98s/files]Downloading data:  64%|██████▍   | 204/319 [07:12<13:12,  6.89s/files]Downloading data:  64%|██████▍   | 205/319 [07:16<11:06,  5.85s/files]Downloading data:  65%|██████▍   | 206/319 [07:20<09:57,  5.28s/files]Downloading data:  65%|██████▍   | 207/319 [07:23<08:44,  4.68s/files]Downloading data:  65%|██████▌   | 208/319 [07:26<07:42,  4.17s/files]Downloading data:  66%|██████▌   | 209/319 [07:29<07:13,  3.94s/files]Downloading data:  66%|██████▌   | 210/319 [07:34<07:22,  4.06s/files]Downloading data:  66%|██████▌   | 211/319 [07:37<06:52,  3.82s/files]Downloading data:  66%|██████▋   | 212/319 [07:41<06:41,  3.76s/files]Downloading data:  67%|██████▋   | 213/319 [07:44<06:22,  3.60s/files]Downloading data:  67%|██████▋   | 214/319 [07:48<06:28,  3.70s/files]Downloading data:  67%|██████▋   | 215/319 [07:52<06:30,  3.76s/files]Downloading data:  68%|██████▊   | 216/319 [07:55<06:19,  3.68s/files]Downloading data:  68%|██████▊   | 217/319 [07:58<06:01,  3.55s/files]Downloading data:  68%|██████▊   | 218/319 [08:03<06:30,  3.87s/files]Downloading data:  69%|██████▊   | 219/319 [08:08<07:15,  4.35s/files]Downloading data:  69%|██████▉   | 220/319 [08:12<06:50,  4.14s/files]Downloading data:  69%|██████▉   | 221/319 [08:16<06:25,  3.94s/files]Downloading data:  70%|██████▉   | 222/319 [08:19<06:02,  3.73s/files]Downloading data:  70%|██████▉   | 223/319 [08:24<06:26,  4.03s/files]Downloading data:  70%|███████   | 224/319 [08:27<06:01,  3.80s/files]Downloading data:  71%|███████   | 225/319 [08:30<05:42,  3.64s/files]Downloading data:  71%|███████   | 226/319 [08:33<05:29,  3.54s/files]Downloading data:  71%|███████   | 227/319 [08:40<06:48,  4.44s/files]Downloading data:  71%|███████▏  | 228/319 [08:43<06:10,  4.07s/files]Downloading data:  72%|███████▏  | 229/319 [08:47<05:55,  3.95s/files]Downloading data:  72%|███████▏  | 230/319 [08:51<06:04,  4.10s/files]Downloading data:  72%|███████▏  | 231/319 [08:55<05:45,  3.92s/files]Downloading data:  73%|███████▎  | 232/319 [08:58<05:19,  3.67s/files]Downloading data:  73%|███████▎  | 233/319 [09:03<05:44,  4.00s/files]Downloading data:  73%|███████▎  | 234/319 [09:06<05:24,  3.82s/files]Downloading data:  74%|███████▎  | 235/319 [09:10<05:32,  3.96s/files]Downloading data:  74%|███████▍  | 236/319 [09:16<06:06,  4.42s/files]Downloading data:  74%|███████▍  | 237/319 [09:19<05:37,  4.11s/files]Downloading data:  75%|███████▍  | 238/319 [09:22<05:08,  3.81s/files]Downloading data:  75%|███████▍  | 239/319 [09:26<04:59,  3.74s/files]Downloading data:  75%|███████▌  | 240/319 [09:29<04:51,  3.70s/files]Downloading data:  76%|███████▌  | 241/319 [09:33<04:43,  3.63s/files]Downloading data:  76%|███████▌  | 242/319 [09:37<04:41,  3.65s/files]Downloading data:  76%|███████▌  | 243/319 [09:40<04:31,  3.58s/files]Downloading data:  76%|███████▋  | 244/319 [09:44<04:34,  3.66s/files]Downloading data:  77%|███████▋  | 245/319 [09:48<04:32,  3.68s/files]Downloading data:  77%|███████▋  | 246/319 [09:51<04:18,  3.53s/files]Downloading data:  77%|███████▋  | 247/319 [09:54<04:07,  3.44s/files]Downloading data:  78%|███████▊  | 248/319 [09:58<04:22,  3.70s/files]Downloading data:  78%|███████▊  | 249/319 [10:03<04:34,  3.92s/files]Downloading data:  78%|███████▊  | 250/319 [10:08<04:56,  4.30s/files]Downloading data:  79%|███████▊  | 251/319 [10:11<04:30,  3.98s/files]Downloading data:  79%|███████▉  | 252/319 [10:14<04:08,  3.71s/files]Downloading data:  79%|███████▉  | 253/319 [10:17<03:46,  3.44s/files]Downloading data:  80%|███████▉  | 254/319 [10:20<03:37,  3.34s/files]Downloading data:  80%|███████▉  | 255/319 [10:25<04:04,  3.83s/files]Downloading data:  80%|████████  | 256/319 [10:31<04:34,  4.35s/files]Downloading data:  81%|████████  | 257/319 [10:34<04:07,  4.00s/files]Downloading data:  81%|████████  | 258/319 [10:37<03:47,  3.74s/files]Downloading data:  81%|████████  | 259/319 [10:42<03:59,  3.99s/files]Downloading data:  82%|████████▏ | 260/319 [10:55<06:42,  6.82s/files]Downloading data:  82%|████████▏ | 261/319 [10:58<05:35,  5.79s/files]Downloading data:  82%|████████▏ | 262/319 [11:01<04:41,  4.94s/files]Downloading data:  82%|████████▏ | 263/319 [11:35<12:36, 13.51s/files]Downloading data:  83%|████████▎ | 264/319 [11:39<09:40, 10.56s/files]Downloading data:  83%|████████▎ | 265/319 [11:42<07:28,  8.31s/files]Downloading data:  83%|████████▎ | 266/319 [11:45<05:58,  6.77s/files]Downloading data:  84%|████████▎ | 267/319 [11:48<04:55,  5.68s/files]Downloading data:  84%|████████▍ | 268/319 [11:51<04:11,  4.94s/files]Downloading data:  84%|████████▍ | 269/319 [11:54<03:41,  4.44s/files]Downloading data:  85%|████████▍ | 270/319 [11:59<03:36,  4.42s/files]Downloading data:  85%|████████▍ | 271/319 [12:04<03:37,  4.53s/files]Downloading data:  85%|████████▌ | 272/319 [12:07<03:13,  4.12s/files]Downloading data:  86%|████████▌ | 273/319 [12:10<02:52,  3.75s/files]Downloading data:  86%|████████▌ | 274/319 [12:13<02:41,  3.59s/files]Downloading data:  86%|████████▌ | 275/319 [12:16<02:31,  3.43s/files]Downloading data:  87%|████████▋ | 276/319 [12:20<02:31,  3.53s/files]Downloading data:  87%|████████▋ | 277/319 [12:22<02:18,  3.29s/files]Downloading data:  87%|████████▋ | 278/319 [12:25<02:11,  3.22s/files]Downloading data:  87%|████████▋ | 279/319 [12:30<02:19,  3.49s/files]Downloading data:  88%|████████▊ | 280/319 [12:33<02:11,  3.37s/files]Downloading data:  88%|████████▊ | 281/319 [12:36<02:08,  3.38s/files]Downloading data:  88%|████████▊ | 282/319 [12:39<02:05,  3.38s/files]Downloading data:  89%|████████▊ | 283/319 [12:42<01:58,  3.28s/files]Downloading data:  89%|████████▉ | 284/319 [12:46<02:00,  3.44s/files]Downloading data:  89%|████████▉ | 285/319 [12:50<01:56,  3.44s/files]Downloading data:  90%|████████▉ | 286/319 [12:53<01:48,  3.28s/files]Downloading data:  90%|████████▉ | 287/319 [12:56<01:42,  3.21s/files]Downloading data:  90%|█████████ | 288/319 [13:01<02:01,  3.91s/files]Downloading data:  91%|█████████ | 289/319 [13:05<02:00,  4.00s/files]Downloading data:  91%|█████████ | 290/319 [13:09<01:56,  4.01s/files]Downloading data:  91%|█████████ | 291/319 [13:14<01:58,  4.25s/files]Downloading data:  92%|█████████▏| 292/319 [13:18<01:46,  3.96s/files]Downloading data:  92%|█████████▏| 293/319 [13:22<01:44,  4.02s/files]Downloading data:  92%|█████████▏| 294/319 [13:25<01:33,  3.75s/files]Downloading data:  92%|█████████▏| 295/319 [13:28<01:25,  3.56s/files]Downloading data:  93%|█████████▎| 296/319 [13:32<01:23,  3.63s/files]Downloading data:  93%|█████████▎| 297/319 [13:35<01:19,  3.62s/files]Downloading data:  93%|█████████▎| 298/319 [13:40<01:22,  3.93s/files]Downloading data:  94%|█████████▎| 299/319 [13:44<01:16,  3.81s/files]Downloading data:  94%|█████████▍| 300/319 [13:47<01:07,  3.57s/files]Downloading data:  94%|█████████▍| 301/319 [13:50<01:03,  3.51s/files]Downloading data:  95%|█████████▍| 302/319 [13:54<01:04,  3.79s/files]Downloading data:  95%|█████████▍| 303/319 [13:58<01:01,  3.82s/files]Downloading data:  95%|█████████▌| 304/319 [14:01<00:54,  3.62s/files]Downloading data:  96%|█████████▌| 305/319 [14:05<00:49,  3.52s/files]Downloading data:  96%|█████████▌| 306/319 [14:08<00:44,  3.46s/files]Downloading data:  96%|█████████▌| 307/319 [14:11<00:41,  3.43s/files]Downloading data:  97%|█████████▋| 308/319 [14:15<00:36,  3.35s/files]Downloading data:  97%|█████████▋| 309/319 [14:19<00:36,  3.69s/files]Downloading data:  97%|█████████▋| 310/319 [14:22<00:31,  3.52s/files]Downloading data:  97%|█████████▋| 311/319 [14:26<00:27,  3.49s/files]Downloading data:  98%|█████████▊| 312/319 [14:57<01:23, 11.92s/files]Downloading data:  98%|█████████▊| 313/319 [15:05<01:03, 10.64s/files]Downloading data:  98%|█████████▊| 314/319 [15:10<00:44,  8.95s/files]Downloading data:  99%|█████████▊| 315/319 [15:13<00:29,  7.35s/files]Downloading data:  99%|█████████▉| 316/319 [15:18<00:19,  6.37s/files]Downloading data:  99%|█████████▉| 317/319 [15:21<00:10,  5.37s/files]Downloading data: 100%|█████████▉| 318/319 [15:24<00:04,  4.86s/files]Downloading data: 100%|██████████| 319/319 [15:27<00:00,  4.34s/files]Downloading data: 100%|██████████| 319/319 [15:27<00:00,  2.91s/files]
-Generating train split:   0%|          | 0/101120 [00:00<?, ? examples/s]Generating train split:   0%|          | 317/101120 [00:01<10:32, 159.43 examples/s]Generating train split:   1%|          | 634/101120 [00:04<10:46, 155.40 examples/s]Generating train split:   1%|          | 951/101120 [00:06<10:46, 154.92 examples/s]Generating train split:   1%|▏         | 1268/101120 [00:08<10:48, 153.86 examples/s]Generating train split:   2%|▏         | 1585/101120 [00:10<10:46, 153.88 examples/s]Generating train split:   2%|▏         | 1902/101120 [00:12<10:47, 153.26 examples/s]Generating train split:   2%|▏         | 2219/101120 [00:14<10:43, 153.73 examples/s]Generating train split:   3%|▎         | 2536/101120 [00:16<10:39, 154.25 examples/s]Generating train split:   3%|▎         | 2853/101120 [00:18<10:27, 156.58 examples/s]Generating train split:   3%|▎         | 3170/101120 [00:20<10:28, 155.92 examples/s]Generating train split:   3%|▎         | 3487/101120 [00:22<10:27, 155.63 examples/s]Generating train split:   4%|▍         | 3804/101120 [00:24<10:29, 154.51 examples/s]Generating train split:   4%|▍         | 4121/101120 [00:26<10:29, 154.00 examples/s]Generating train split:   4%|▍         | 4438/101120 [00:28<10:28, 153.93 examples/s]Generating train split:   5%|▍         | 4755/101120 [00:30<10:26, 153.74 examples/s]Generating train split:   5%|▌         | 5072/101120 [00:32<10:25, 153.64 examples/s]Generating train split:   5%|▌         | 5389/101120 [00:34<10:21, 154.08 examples/s]Generating train split:   6%|▌         | 5706/101120 [00:36<10:15, 155.04 examples/s]Generating train split:   6%|▌         | 6023/101120 [00:38<10:15, 154.47 examples/s]Generating train split:   6%|▋         | 6340/101120 [00:41<10:13, 154.60 examples/s]Generating train split:   7%|▋         | 6657/101120 [00:43<10:15, 153.59 examples/s]Generating train split:   7%|▋         | 6974/101120 [00:45<10:10, 154.28 examples/s]Generating train split:   7%|▋         | 7291/101120 [00:47<10:10, 153.81 examples/s]Generating train split:   8%|▊         | 7608/101120 [00:49<10:03, 155.01 examples/s]Generating train split:   8%|▊         | 7925/101120 [00:51<10:01, 154.82 examples/s]Generating train split:   8%|▊         | 8242/101120 [00:53<10:01, 154.37 examples/s]Generating train split:   8%|▊         | 8559/101120 [00:55<10:02, 153.69 examples/s]Generating train split:   9%|▉         | 8876/101120 [00:57<10:04, 152.60 examples/s]Generating train split:   9%|▉         | 9193/101120 [00:59<09:59, 153.23 examples/s]Generating train split:   9%|▉         | 9510/101120 [01:01<09:54, 154.05 examples/s]Generating train split:  10%|▉         | 9827/101120 [01:03<09:50, 154.54 examples/s]Generating train split:  10%|█         | 10144/101120 [01:05<09:50, 154.01 examples/s]Generating train split:  10%|█         | 10461/101120 [01:07<09:50, 153.65 examples/s]Generating train split:  11%|█         | 10778/101120 [01:09<09:47, 153.73 examples/s]Generating train split:  11%|█         | 11095/101120 [01:11<09:45, 153.69 examples/s]Generating train split:  11%|█▏        | 11412/101120 [01:13<09:40, 154.49 examples/s]Generating train split:  12%|█▏        | 11729/101120 [01:16<09:39, 154.15 examples/s]Generating train split:  12%|█▏        | 12046/101120 [01:18<09:37, 154.36 examples/s]Generating train split:  12%|█▏        | 12363/101120 [01:20<09:32, 154.97 examples/s]Generating train split:  13%|█▎        | 12680/101120 [01:22<09:32, 154.51 examples/s]Generating train split:  13%|█▎        | 12997/101120 [01:24<09:33, 153.56 examples/s]Generating train split:  13%|█▎        | 13314/101120 [01:26<09:33, 152.98 examples/s]Generating train split:  13%|█▎        | 13631/101120 [01:28<09:30, 153.34 examples/s]Generating train split:  14%|█▍        | 13948/101120 [01:30<09:29, 153.16 examples/s]Generating train split:  14%|█▍        | 14265/101120 [01:32<09:30, 152.26 examples/s]Generating train split:  14%|█▍        | 14582/101120 [01:34<09:23, 153.69 examples/s]Generating train split:  15%|█▍        | 14899/101120 [01:36<09:20, 153.89 examples/s]Generating train split:  15%|█▌        | 15216/101120 [01:38<09:21, 153.05 examples/s]Generating train split:  15%|█▌        | 15533/101120 [01:41<09:51, 144.59 examples/s]Generating train split:  16%|█▌        | 15850/101120 [01:43<09:50, 144.49 examples/s]Generating train split:  16%|█▌        | 16167/101120 [01:45<09:36, 147.32 examples/s]Generating train split:  16%|█▋        | 16484/101120 [01:47<09:30, 148.42 examples/s]Generating train split:  17%|█▋        | 16801/101120 [01:49<09:26, 148.82 examples/s]Generating train split:  17%|█▋        | 17118/101120 [01:51<09:18, 150.50 examples/s]Generating train split:  17%|█▋        | 17435/101120 [01:53<09:11, 151.65 examples/s]Generating train split:  18%|█▊        | 17752/101120 [01:55<09:05, 152.77 examples/s]Generating train split:  18%|█▊        | 18069/101120 [01:57<09:05, 152.31 examples/s]Generating train split:  18%|█▊        | 18386/101120 [01:59<08:59, 153.47 examples/s]Generating train split:  18%|█▊        | 18703/101120 [02:02<08:54, 154.11 examples/s]Generating train split:  19%|█▉        | 19020/101120 [02:04<08:54, 153.58 examples/s]Generating train split:  19%|█▉        | 19337/101120 [02:06<08:50, 154.11 examples/s]Generating train split:  19%|█▉        | 19654/101120 [02:08<08:48, 154.29 examples/s]Generating train split:  20%|█▉        | 19971/101120 [02:10<08:54, 151.94 examples/s]Generating train split:  20%|██        | 20288/101120 [02:12<08:46, 153.55 examples/s]Generating train split:  20%|██        | 20605/101120 [02:14<09:00, 148.84 examples/s]Generating train split:  21%|██        | 20922/101120 [02:16<08:57, 149.21 examples/s]Generating train split:  21%|██        | 21239/101120 [02:18<08:50, 150.46 examples/s]Generating train split:  21%|██▏       | 21556/101120 [02:20<08:43, 152.07 examples/s]Generating train split:  22%|██▏       | 21873/101120 [02:22<08:41, 151.94 examples/s]Generating train split:  22%|██▏       | 22190/101120 [02:24<08:37, 152.60 examples/s]Generating train split:  22%|██▏       | 22507/101120 [02:27<08:31, 153.57 examples/s]Generating train split:  23%|██▎       | 22824/101120 [02:29<08:25, 154.84 examples/s]Generating train split:  23%|██▎       | 23141/101120 [02:31<08:22, 155.09 examples/s]Generating train split:  23%|██▎       | 23458/101120 [02:33<08:22, 154.56 examples/s]Generating train split:  24%|██▎       | 23775/101120 [02:35<08:18, 155.25 examples/s]Generating train split:  24%|██▍       | 24092/101120 [02:37<08:20, 154.00 examples/s]Generating train split:  24%|██▍       | 24409/101120 [02:39<08:19, 153.42 examples/s]Generating train split:  24%|██▍       | 24726/101120 [02:41<08:15, 154.10 examples/s]Generating train split:  25%|██▍       | 25043/101120 [02:43<08:13, 154.09 examples/s]Generating train split:  25%|██▌       | 25360/101120 [02:45<08:12, 153.91 examples/s]Generating train split:  25%|██▌       | 25677/101120 [02:47<08:22, 150.12 examples/s]Generating train split:  26%|██▌       | 25994/101120 [02:49<08:29, 147.38 examples/s]Generating train split:  26%|██▌       | 26311/101120 [02:52<08:30, 146.60 examples/s]Generating train split:  26%|██▋       | 26628/101120 [02:54<08:29, 146.26 examples/s]Generating train split:  27%|██▋       | 26945/101120 [02:56<08:30, 145.33 examples/s]Generating train split:  27%|██▋       | 27262/101120 [02:58<08:32, 144.20 examples/s]Generating train split:  27%|██▋       | 27579/101120 [03:00<08:29, 144.40 examples/s]Generating train split:  28%|██▊       | 27896/101120 [03:03<08:24, 145.00 examples/s]Generating train split:  28%|██▊       | 28213/101120 [03:05<08:20, 145.72 examples/s]Generating train split:  28%|██▊       | 28530/101120 [03:07<08:23, 144.25 examples/s]Generating train split:  29%|██▊       | 28847/101120 [03:09<08:19, 144.73 examples/s]Generating train split:  29%|██▉       | 29164/101120 [03:11<08:14, 145.42 examples/s]Generating train split:  29%|██▉       | 29481/101120 [03:14<08:10, 145.99 examples/s]Generating train split:  29%|██▉       | 29798/101120 [03:16<08:10, 145.49 examples/s]Generating train split:  30%|██▉       | 30115/101120 [03:18<08:06, 145.91 examples/s]Generating train split:  30%|███       | 30432/101120 [03:20<08:00, 147.01 examples/s]Generating train split:  30%|███       | 30749/101120 [03:22<08:00, 146.44 examples/s]Generating train split:  31%|███       | 31066/101120 [03:24<07:56, 146.95 examples/s]Generating train split:  31%|███       | 31383/101120 [03:27<07:56, 146.40 examples/s]Generating train split:  31%|███▏      | 31700/101120 [03:29<07:57, 145.44 examples/s]Generating train split:  32%|███▏      | 32017/101120 [03:31<07:57, 144.67 examples/s]Generating train split:  32%|███▏      | 32334/101120 [03:33<07:56, 144.35 examples/s]Generating train split:  32%|███▏      | 32651/101120 [03:35<07:54, 144.38 examples/s]Generating train split:  33%|███▎      | 32968/101120 [03:37<07:47, 145.71 examples/s]Generating train split:  33%|███▎      | 33285/101120 [03:40<07:42, 146.78 examples/s]Generating train split:  33%|███▎      | 33602/101120 [03:42<07:42, 146.00 examples/s]Generating train split:  34%|███▎      | 33919/101120 [03:44<07:43, 145.01 examples/s]Generating train split:  34%|███▍      | 34236/101120 [03:46<07:26, 149.85 examples/s]Generating train split:  34%|███▍      | 34553/101120 [03:48<07:25, 149.44 examples/s]Generating train split:  34%|███▍      | 34870/101120 [03:50<07:22, 149.86 examples/s]Generating train split:  35%|███▍      | 35187/101120 [03:52<07:16, 151.12 examples/s]Generating train split:  35%|███▌      | 35504/101120 [03:54<07:11, 151.93 examples/s]Generating train split:  35%|███▌      | 35821/101120 [03:56<07:07, 152.77 examples/s]Generating train split:  36%|███▌      | 36138/101120 [03:58<07:02, 153.65 examples/s]Generating train split:  36%|███▌      | 36455/101120 [04:00<06:59, 154.22 examples/s]Generating train split:  36%|███▋      | 36772/101120 [04:03<07:00, 153.13 examples/s]Generating train split:  37%|███▋      | 37089/101120 [04:05<06:56, 153.57 examples/s]Generating train split:  37%|███▋      | 37406/101120 [04:07<06:58, 152.24 examples/s]Generating train split:  37%|███▋      | 37723/101120 [04:09<07:12, 146.53 examples/s]Generating train split:  38%|███▊      | 38040/101120 [04:11<07:07, 147.53 examples/s]Generating train split:  38%|███▊      | 38357/101120 [04:13<07:02, 148.38 examples/s]Generating train split:  38%|███▊      | 38674/101120 [04:15<06:59, 148.88 examples/s]Generating train split:  39%|███▊      | 38991/101120 [04:18<06:56, 149.05 examples/s]Generating train split:  39%|███▉      | 39308/101120 [04:20<06:53, 149.61 examples/s]Generating train split:  39%|███▉      | 39625/101120 [04:22<06:53, 148.78 examples/s]Generating train split:  39%|███▉      | 39942/101120 [04:24<06:56, 146.78 examples/s]Generating train split:  40%|███▉      | 40259/101120 [04:26<06:52, 147.53 examples/s]Generating train split:  40%|████      | 40576/101120 [04:28<06:50, 147.36 examples/s]Generating train split:  40%|████      | 40893/101120 [04:30<06:45, 148.44 examples/s]Generating train split:  41%|████      | 41210/101120 [04:32<06:41, 149.34 examples/s]Generating train split:  41%|████      | 41527/101120 [04:35<06:39, 149.35 examples/s]Generating train split:  41%|████▏     | 41844/101120 [04:37<06:37, 149.11 examples/s]Generating train split:  42%|████▏     | 42161/101120 [04:39<06:42, 146.47 examples/s]Generating train split:  42%|████▏     | 42478/101120 [04:41<06:36, 147.81 examples/s]Generating train split:  42%|████▏     | 42795/101120 [04:43<06:33, 148.14 examples/s]Generating train split:  43%|████▎     | 43112/101120 [04:45<06:30, 148.38 examples/s]Generating train split:  43%|████▎     | 43429/101120 [04:47<06:28, 148.64 examples/s]Generating train split:  43%|████▎     | 43746/101120 [04:50<06:26, 148.28 examples/s]Generating train split:  44%|████▎     | 44063/101120 [04:52<06:24, 148.23 examples/s]Generating train split:  44%|████▍     | 44380/101120 [04:54<06:21, 148.55 examples/s]Generating train split:  44%|████▍     | 44697/101120 [04:56<06:20, 148.36 examples/s]Generating train split:  45%|████▍     | 45014/101120 [04:58<06:15, 149.28 examples/s]Generating train split:  45%|████▍     | 45331/101120 [05:00<06:12, 149.63 examples/s]Generating train split:  45%|████▌     | 45648/101120 [05:02<06:12, 148.74 examples/s]Generating train split:  45%|████▌     | 45965/101120 [05:05<06:09, 149.17 examples/s]Generating train split:  46%|████▌     | 46282/101120 [05:07<06:08, 148.81 examples/s]Generating train split:  46%|████▌     | 46599/101120 [05:09<06:09, 147.55 examples/s]Generating train split:  46%|████▋     | 46916/101120 [05:11<06:07, 147.46 examples/s]Generating train split:  47%|████▋     | 47233/101120 [05:13<06:03, 148.15 examples/s]Generating train split:  47%|████▋     | 47550/101120 [05:15<06:09, 145.15 examples/s]Generating train split:  47%|████▋     | 47867/101120 [05:18<06:07, 144.86 examples/s]Generating train split:  48%|████▊     | 48184/101120 [05:20<06:04, 145.38 examples/s]Generating train split:  48%|████▊     | 48501/101120 [05:22<05:59, 146.21 examples/s]Generating train split:  48%|████▊     | 48818/101120 [05:24<05:56, 146.77 examples/s]Generating train split:  49%|████▊     | 49135/101120 [05:26<05:54, 146.78 examples/s]Generating train split:  49%|████▉     | 49452/101120 [05:29<06:10, 139.52 examples/s]Generating train split:  49%|████▉     | 49769/101120 [05:31<06:06, 140.22 examples/s]Generating train split:  50%|████▉     | 50086/101120 [05:33<06:03, 140.55 examples/s]Generating train split:  50%|████▉     | 50403/101120 [05:35<05:59, 140.98 examples/s]Generating train split:  50%|█████     | 50720/101120 [05:38<05:53, 142.53 examples/s]Generating train split:  50%|█████     | 51037/101120 [05:40<05:45, 144.84 examples/s]Generating train split:  51%|█████     | 51354/101120 [05:42<05:43, 145.05 examples/s]Generating train split:  51%|█████     | 51671/101120 [05:44<05:38, 146.06 examples/s]Generating train split:  51%|█████▏    | 51988/101120 [05:46<05:35, 146.28 examples/s]Generating train split:  52%|█████▏    | 52305/101120 [05:48<05:34, 146.01 examples/s]Generating train split:  52%|█████▏    | 52622/101120 [05:51<05:32, 145.84 examples/s]Generating train split:  52%|█████▏    | 52939/101120 [05:53<05:29, 146.26 examples/s]Generating train split:  53%|█████▎    | 53256/101120 [05:55<05:26, 146.52 examples/s]Generating train split:  53%|█████▎    | 53573/101120 [05:57<05:25, 146.15 examples/s]Generating train split:  53%|█████▎    | 53890/101120 [05:59<05:29, 143.14 examples/s]Generating train split:  54%|█████▎    | 54207/101120 [06:02<05:25, 144.03 examples/s]Generating train split:  54%|█████▍    | 54524/101120 [06:04<05:21, 145.06 examples/s]Generating train split:  54%|█████▍    | 54841/101120 [06:06<05:20, 144.40 examples/s]Generating train split:  55%|█████▍    | 55158/101120 [06:08<05:18, 144.49 examples/s]Generating train split:  55%|█████▍    | 55475/101120 [06:10<05:20, 142.50 examples/s]Generating train split:  55%|█████▌    | 55792/101120 [06:13<05:14, 143.96 examples/s]Generating train split:  55%|█████▌    | 56109/101120 [06:15<05:11, 144.51 examples/s]Generating train split:  56%|█████▌    | 56426/101120 [06:17<05:07, 145.47 examples/s]Generating train split:  56%|█████▌    | 56743/101120 [06:19<05:05, 145.49 examples/s]Generating train split:  56%|█████▋    | 57060/101120 [06:21<05:02, 145.48 examples/s]Generating train split:  57%|█████▋    | 57377/101120 [06:23<04:59, 146.27 examples/s]Generating train split:  57%|█████▋    | 57694/101120 [06:26<04:59, 145.08 examples/s]Generating train split:  57%|█████▋    | 58011/101120 [06:28<04:54, 146.44 examples/s]Generating train split:  58%|█████▊    | 58328/101120 [06:30<04:51, 146.70 examples/s]Generating train split:  58%|█████▊    | 58645/101120 [06:32<04:48, 147.13 examples/s]Generating train split:  58%|█████▊    | 58962/101120 [06:34<04:48, 146.04 examples/s]Generating train split:  59%|█████▊    | 59279/101120 [06:36<04:49, 144.74 examples/s]Generating train split:  59%|█████▉    | 59596/101120 [06:39<04:44, 145.71 examples/s]Generating train split:  59%|█████▉    | 59913/101120 [06:41<04:39, 147.35 examples/s]Generating train split:  60%|█████▉    | 60230/101120 [06:43<04:39, 146.53 examples/s]Generating train split:  60%|█████▉    | 60547/101120 [06:45<04:35, 147.29 examples/s]Generating train split:  60%|██████    | 60864/101120 [06:47<04:26, 151.18 examples/s]Generating train split:  61%|██████    | 61181/101120 [06:49<04:24, 151.19 examples/s]Generating train split:  61%|██████    | 61498/101120 [06:51<04:25, 149.30 examples/s]Generating train split:  61%|██████    | 61815/101120 [06:53<04:24, 148.62 examples/s]Generating train split:  61%|██████▏   | 62132/101120 [06:56<04:23, 148.16 examples/s]Generating train split:  62%|██████▏   | 62449/101120 [06:58<04:19, 149.11 examples/s]Generating train split:  62%|██████▏   | 62766/101120 [07:00<04:18, 148.37 examples/s]Generating train split:  62%|██████▏   | 63083/101120 [07:02<04:23, 144.54 examples/s]Generating train split:  63%|██████▎   | 63400/101120 [07:04<04:15, 147.75 examples/s]Generating train split:  63%|██████▎   | 63717/101120 [07:06<04:14, 147.08 examples/s]Generating train split:  63%|██████▎   | 64034/101120 [07:08<04:11, 147.34 examples/s]Generating train split:  64%|██████▎   | 64351/101120 [07:11<04:11, 146.41 examples/s]Generating train split:  64%|██████▍   | 64668/101120 [07:13<04:06, 147.59 examples/s]Generating train split:  64%|██████▍   | 64985/101120 [07:15<04:04, 147.62 examples/s]Generating train split:  65%|██████▍   | 65302/101120 [07:17<04:02, 147.42 examples/s]Generating train split:  65%|██████▍   | 65619/101120 [07:19<04:00, 147.63 examples/s]Generating train split:  65%|██████▌   | 65936/101120 [07:21<03:57, 148.39 examples/s]Generating train split:  66%|██████▌   | 66253/101120 [07:23<03:54, 148.97 examples/s]Generating train split:  66%|██████▌   | 66570/101120 [07:26<03:54, 147.31 examples/s]Generating train split:  66%|██████▌   | 66887/101120 [07:28<03:52, 147.36 examples/s]Generating train split:  66%|██████▋   | 67204/101120 [07:30<03:50, 147.01 examples/s]Generating train split:  67%|██████▋   | 67521/101120 [07:32<03:53, 144.18 examples/s]Generating train split:  67%|██████▋   | 67838/101120 [07:34<03:50, 144.52 examples/s]Generating train split:  67%|██████▋   | 68155/101120 [07:37<03:45, 145.94 examples/s]Generating train split:  68%|██████▊   | 68472/101120 [07:39<03:42, 146.49 examples/s]Generating train split:  68%|██████▊   | 68789/101120 [07:41<03:38, 147.76 examples/s]Generating train split:  68%|██████▊   | 69106/101120 [07:43<03:40, 144.99 examples/s]Generating train split:  69%|██████▊   | 69423/101120 [07:45<03:36, 146.10 examples/s]Generating train split:  69%|██████▉   | 69740/101120 [07:47<03:33, 146.88 examples/s]Generating train split:  69%|██████▉   | 70057/101120 [07:50<03:34, 144.59 examples/s]Generating train split:  70%|██████▉   | 70374/101120 [07:52<03:31, 145.38 examples/s]Generating train split:  70%|██████▉   | 70691/101120 [07:54<03:26, 147.08 examples/s]Generating train split:  70%|███████   | 71008/101120 [07:56<03:24, 147.23 examples/s]Generating train split:  71%|███████   | 71325/101120 [07:58<03:23, 146.74 examples/s]Generating train split:  71%|███████   | 71642/101120 [08:00<03:22, 145.88 examples/s]Generating train split:  71%|███████   | 71959/101120 [08:02<03:17, 147.83 examples/s]Generating train split:  71%|███████▏  | 72276/101120 [08:05<03:15, 147.27 examples/s]Generating train split:  72%|███████▏  | 72593/101120 [08:07<03:14, 146.52 examples/s]Generating train split:  72%|███████▏  | 72910/101120 [08:09<03:12, 146.29 examples/s]Generating train split:  72%|███████▏  | 73227/101120 [08:11<03:13, 143.82 examples/s]Generating train split:  73%|███████▎  | 73544/101120 [08:14<03:12, 143.42 examples/s]Generating train split:  73%|███████▎  | 73861/101120 [08:16<03:10, 142.92 examples/s]Generating train split:  73%|███████▎  | 74178/101120 [08:18<03:08, 142.80 examples/s]Generating train split:  74%|███████▎  | 74495/101120 [08:20<03:06, 142.75 examples/s]Generating train split:  74%|███████▍  | 74812/101120 [08:22<03:04, 142.95 examples/s]Generating train split:  74%|███████▍  | 75129/101120 [08:25<03:02, 142.65 examples/s]Generating train split:  75%|███████▍  | 75446/101120 [08:27<03:00, 142.37 examples/s]Generating train split:  75%|███████▍  | 75763/101120 [08:29<02:57, 142.79 examples/s]Generating train split:  75%|███████▌  | 76080/101120 [08:31<02:56, 141.96 examples/s]Generating train split:  76%|███████▌  | 76397/101120 [08:34<02:54, 141.32 examples/s]Generating train split:  76%|███████▌  | 76714/101120 [08:36<02:49, 144.39 examples/s]Generating train split:  76%|███████▌  | 77031/101120 [08:38<02:44, 146.02 examples/s]Generating train split:  76%|███████▋  | 77348/101120 [08:40<02:45, 143.91 examples/s]Generating train split:  77%|███████▋  | 77665/101120 [08:42<02:44, 142.73 examples/s]Generating train split:  77%|███████▋  | 77982/101120 [08:44<02:39, 144.85 examples/s]Generating train split:  77%|███████▋  | 78299/101120 [08:47<02:37, 144.65 examples/s]Generating train split:  78%|███████▊  | 78616/101120 [08:49<02:36, 144.23 examples/s]Generating train split:  78%|███████▊  | 78933/101120 [08:51<02:32, 145.03 examples/s]Generating train split:  78%|███████▊  | 79250/101120 [08:53<02:30, 145.47 examples/s]Generating train split:  79%|███████▊  | 79567/101120 [08:55<02:28, 145.25 examples/s]Generating train split:  79%|███████▉  | 79884/101120 [08:58<02:26, 144.86 examples/s]Generating train split:  79%|███████▉  | 80201/101120 [09:00<02:24, 144.48 examples/s]Generating train split:  80%|███████▉  | 80518/101120 [09:02<02:22, 144.97 examples/s]Generating train split:  80%|███████▉  | 80835/101120 [09:04<02:20, 144.48 examples/s]Generating train split:  80%|████████  | 81152/101120 [09:06<02:19, 143.34 examples/s]Generating train split:  81%|████████  | 81469/101120 [09:09<02:15, 144.60 examples/s]Generating train split:  81%|████████  | 81786/101120 [09:11<02:14, 143.60 examples/s]Generating train split:  81%|████████  | 82103/101120 [09:13<02:13, 142.78 examples/s]Generating train split:  82%|████████▏ | 82420/101120 [09:15<02:11, 142.62 examples/s]Generating train split:  82%|████████▏ | 82737/101120 [09:18<02:09, 142.15 examples/s]Generating train split:  82%|████████▏ | 83054/101120 [09:20<02:07, 141.89 examples/s]Generating train split:  82%|████████▏ | 83371/101120 [09:22<02:06, 140.80 examples/s]Generating train split:  83%|████████▎ | 83688/101120 [09:24<02:04, 139.74 examples/s]Generating train split:  83%|████████▎ | 84005/101120 [09:27<02:01, 141.15 examples/s]Generating train split:  83%|████████▎ | 84322/101120 [09:29<01:57, 142.66 examples/s]Generating train split:  84%|████████▎ | 84639/101120 [09:31<01:58, 139.14 examples/s]Generating train split:  84%|████████▍ | 84956/101120 [09:33<01:55, 139.80 examples/s]Generating train split:  84%|████████▍ | 85273/101120 [09:36<01:51, 141.73 examples/s]Generating train split:  85%|████████▍ | 85590/101120 [09:38<01:47, 144.85 examples/s]Generating train split:  85%|████████▍ | 85907/101120 [09:40<01:45, 144.20 examples/s]Generating train split:  85%|████████▌ | 86224/101120 [09:42<01:41, 146.44 examples/s]Generating train split:  86%|████████▌ | 86541/101120 [09:44<01:38, 148.47 examples/s]Generating train split:  86%|████████▌ | 86858/101120 [09:46<01:35, 149.70 examples/s]Generating train split:  86%|████████▌ | 87175/101120 [09:48<01:34, 147.17 examples/s]Generating train split:  87%|████████▋ | 87492/101120 [09:51<01:33, 146.34 examples/s]Generating train split:  87%|████████▋ | 87809/101120 [09:53<01:29, 149.05 examples/s]Generating train split:  87%|████████▋ | 88126/101120 [09:55<01:27, 148.20 examples/s]Generating train split:  87%|████████▋ | 88443/101120 [09:57<01:27, 145.15 examples/s]Generating train split:  88%|████████▊ | 88760/101120 [09:59<01:26, 142.14 examples/s]Generating train split:  88%|████████▊ | 89077/101120 [10:01<01:23, 144.34 examples/s]Generating train split:  88%|████████▊ | 89394/101120 [10:04<01:21, 143.60 examples/s]Generating train split:  89%|████████▊ | 89711/101120 [10:06<01:18, 144.53 examples/s]Generating train split:  89%|████████▉ | 90028/101120 [10:08<01:16, 145.67 examples/s]Generating train split:  89%|████████▉ | 90345/101120 [10:10<01:13, 146.26 examples/s]Generating train split:  90%|████████▉ | 90662/101120 [10:12<01:12, 145.03 examples/s]Generating train split:  90%|████████▉ | 90979/101120 [10:15<01:10, 144.66 examples/s]Generating train split:  90%|█████████ | 91296/101120 [10:17<01:07, 146.23 examples/s]Generating train split:  91%|█████████ | 91613/101120 [10:19<01:05, 144.96 examples/s]Generating train split:  91%|█████████ | 91930/101120 [10:21<01:04, 143.38 examples/s]Generating train split:  91%|█████████ | 92247/101120 [10:23<01:02, 142.62 examples/s]Generating train split:  92%|█████████▏| 92564/101120 [10:26<00:58, 145.91 examples/s]Generating train split:  92%|█████████▏| 92881/101120 [10:28<00:58, 141.90 examples/s]Generating train split:  92%|█████████▏| 93198/101120 [10:30<00:56, 140.07 examples/s]Generating train split:  92%|█████████▏| 93515/101120 [10:32<00:54, 140.21 examples/s]Generating train split:  93%|█████████▎| 93832/101120 [10:35<00:51, 141.56 examples/s]Generating train split:  93%|█████████▎| 94149/101120 [10:37<00:49, 139.97 examples/s]Generating train split:  93%|█████████▎| 94466/101120 [10:39<00:47, 140.89 examples/s]Generating train split:  94%|█████████▎| 94783/101120 [10:41<00:44, 142.30 examples/s]Generating train split:  94%|█████████▍| 95100/101120 [10:43<00:41, 144.93 examples/s]Generating train split:  94%|█████████▍| 95417/101120 [10:46<00:39, 144.67 examples/s]Generating train split:  95%|█████████▍| 95734/101120 [10:48<00:37, 142.39 examples/s]Generating train split:  95%|█████████▍| 96051/101120 [10:50<00:35, 144.27 examples/s]Generating train split:  95%|█████████▌| 96368/101120 [10:52<00:32, 146.12 examples/s]Generating train split:  96%|█████████▌| 96685/101120 [10:54<00:30, 146.33 examples/s]Generating train split:  96%|█████████▌| 97002/101120 [10:57<00:29, 141.11 examples/s]Generating train split:  96%|█████████▌| 97319/101120 [10:59<00:27, 139.75 examples/s]Generating train split:  97%|█████████▋| 97636/101120 [11:01<00:24, 140.99 examples/s]Generating train split:  97%|█████████▋| 97953/101120 [11:03<00:22, 142.68 examples/s]Generating train split:  97%|█████████▋| 98270/101120 [11:06<00:19, 142.84 examples/s]Generating train split:  97%|█████████▋| 98587/101120 [11:08<00:17, 145.08 examples/s]Generating train split:  98%|█████████▊| 98904/101120 [11:10<00:15, 144.65 examples/s]Generating train split:  98%|█████████▊| 99221/101120 [11:13<00:13, 137.75 examples/s]Generating train split:  98%|█████████▊| 99538/101120 [11:15<00:11, 139.83 examples/s]Generating train split:  99%|█████████▊| 99855/101120 [11:17<00:08, 143.38 examples/s]Generating train split:  99%|█████████▉| 100172/101120 [11:19<00:06, 144.95 examples/s]Generating train split:  99%|█████████▉| 100488/101120 [11:21<00:04, 142.80 examples/s]Generating train split: 100%|█████████▉| 100804/101120 [11:23<00:02, 144.25 examples/s]Generating train split: 100%|██████████| 101120/101120 [11:26<00:00, 144.76 examples/s]Generating train split: 100%|██████████| 101120/101120 [11:26<00:00, 147.37 examples/s]
-wandb: Using wandb-core as the SDK backend.  Please refer to https://wandb.me/wandb-core for more information.
-wandb: Currently logged in as: alexgulko (gulko-osu) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
-wandb: Tracking run with wandb version 0.19.8
-wandb: Run data is saved locally in /data/yusenp/NLP/KAN-LLaMA/wandb/run-20250330_005458-4f4e6485
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run 6144-L1-5-LR-1e-05-Tokens-4.096e+06
-wandb: ⭐️ View project at https://wandb.ai/gulko-osu/gpt2-small
-wandb: 🚀 View run at https://wandb.ai/gulko-osu/gpt2-small/runs/4f4e6485
-Creating new SAE
-Training SAE:   0%|          | 0/4096000 [00:00<?, ?it/s]
-Estimating norm scaling factor:   0%|          | 0/1000 [00:00<?, ?it/s][A
-Estimating norm scaling factor:   0%|          | 2/1000 [00:00<00:50, 19.77it/s][A
-Estimating norm scaling factor:   1%|          | 7/1000 [00:00<00:31, 31.34it/s][A
-Estimating norm scaling factor:   1%|          | 12/1000 [00:00<00:25, 38.56it/s][A
-Estimating norm scaling factor:   2%|▏         | 16/1000 [00:00<00:29, 33.78it/s][A
-Estimating norm scaling factor:   2%|▏         | 21/1000 [00:00<00:25, 38.02it/s][A
-Estimating norm scaling factor:   3%|▎         | 27/1000 [00:00<00:23, 41.08it/s][A
-Estimating norm scaling factor:   3%|▎         | 33/1000 [00:00<00:22, 42.51it/s][A
-Estimating norm scaling factor:   4%|▍         | 39/1000 [00:00<00:21, 44.08it/s][A
-Estimating norm scaling factor:   4%|▍         | 44/1000 [00:01<00:21, 45.25it/s][A
-Estimating norm scaling factor:   5%|▍         | 49/1000 [00:01<00:30, 31.25it/s][A
-Estimating norm scaling factor:   5%|▌         | 53/1000 [00:01<00:34, 27.60it/s][A
-Estimating norm scaling factor:   6%|▌         | 57/1000 [00:01<00:33, 28.44it/s][A
-Estimating norm scaling factor:   6%|▌         | 61/1000 [00:01<00:40, 23.07it/s][A
-Estimating norm scaling factor:   6%|▋         | 64/1000 [00:02<00:39, 23.99it/s][A
-Estimating norm scaling factor:   7%|▋         | 67/1000 [00:02<00:43, 21.67it/s][A
-Estimating norm scaling factor:   7%|▋         | 71/1000 [00:02<00:38, 24.08it/s][A
-Estimating norm scaling factor:   8%|▊         | 75/1000 [00:02<00:37, 24.51it/s][A
-Estimating norm scaling factor:   8%|▊         | 79/1000 [00:02<00:37, 24.66it/s][A
-Estimating norm scaling factor:   8%|▊         | 82/1000 [00:02<00:44, 20.61it/s][A
-Estimating norm scaling factor:   8%|▊         | 85/1000 [00:03<00:43, 20.92it/s][A
-Estimating norm scaling factor:   9%|▉         | 88/1000 [00:03<00:40, 22.74it/s][A
-Estimating norm scaling factor:   9%|▉         | 91/1000 [00:03<00:55, 16.35it/s][A
-Estimating norm scaling factor:   9%|▉         | 93/1000 [00:03<00:55, 16.39it/s][A
-Estimating norm scaling factor:  10%|▉         | 97/1000 [00:03<00:46, 19.26it/s][A
-Estimating norm scaling factor:  10%|█         | 100/1000 [00:03<00:43, 20.52it/s][A
-Estimating norm scaling factor:  10%|█         | 103/1000 [00:04<00:49, 18.06it/s][A
-Estimating norm scaling factor:  10%|█         | 105/1000 [00:04<00:50, 17.68it/s][A
-Estimating norm scaling factor:  11%|█         | 108/1000 [00:04<00:44, 20.08it/s][A
-Estimating norm scaling factor:  11%|█         | 111/1000 [00:04<00:45, 19.75it/s][A
-Estimating norm scaling factor:  11%|█▏        | 114/1000 [00:04<00:43, 20.38it/s][A
-Estimating norm scaling factor:  12%|█▏        | 117/1000 [00:04<00:46, 19.19it/s][A
-Estimating norm scaling factor:  12%|█▏        | 121/1000 [00:04<00:44, 19.64it/s][A
-Estimating norm scaling factor:  12%|█▎        | 125/1000 [00:05<00:41, 20.95it/s][A
-Estimating norm scaling factor:  13%|█▎        | 129/1000 [00:05<00:37, 23.12it/s][A
-Estimating norm scaling factor:  13%|█▎        | 132/1000 [00:05<00:35, 24.14it/s][A
-Estimating norm scaling factor:  14%|█▎        | 135/1000 [00:05<00:49, 17.51it/s][A
-Estimating norm scaling factor:  14%|█▍        | 139/1000 [00:05<00:44, 19.42it/s][A
-Estimating norm scaling factor:  14%|█▍        | 143/1000 [00:05<00:39, 21.96it/s][A
-Estimating norm scaling factor:  15%|█▍        | 146/1000 [00:06<00:36, 23.45it/s][A
-Estimating norm scaling factor:  15%|█▍        | 149/1000 [00:06<00:41, 20.30it/s][A
-Estimating norm scaling factor:  15%|█▌        | 152/1000 [00:06<00:39, 21.70it/s][A
-Estimating norm scaling factor:  16%|█▌        | 155/1000 [00:06<00:46, 18.27it/s][A
-Estimating norm scaling factor:  16%|█▌        | 159/1000 [00:06<00:43, 19.42it/s][A
-Estimating norm scaling factor:  16%|█▋        | 163/1000 [00:06<00:37, 22.14it/s][A
-Estimating norm scaling factor:  17%|█▋        | 166/1000 [00:07<00:40, 20.60it/s][A
-Estimating norm scaling factor:  17%|█▋        | 169/1000 [00:07<00:47, 17.32it/s][A
-Estimating norm scaling factor:  17%|█▋        | 173/1000 [00:07<00:41, 19.98it/s][A
-Estimating norm scaling factor:  18%|█▊        | 176/1000 [00:07<00:39, 21.12it/s][A
-Estimating norm scaling factor:  18%|█▊        | 179/1000 [00:07<00:41, 19.72it/s][A
-Estimating norm scaling factor:  18%|█▊        | 182/1000 [00:07<00:39, 20.51it/s][A
-Estimating norm scaling factor:  18%|█▊        | 185/1000 [00:08<00:42, 19.29it/s][A
-Estimating norm scaling factor:  19%|█▉        | 189/1000 [00:08<00:40, 19.81it/s][A
-Estimating norm scaling factor:  19%|█▉        | 192/1000 [00:08<00:38, 20.80it/s][A
-Estimating norm scaling factor:  20%|█▉        | 195/1000 [00:08<00:38, 20.69it/s][A
-Estimating norm scaling factor:  20%|█▉        | 199/1000 [00:08<00:38, 20.89it/s][A
-Estimating norm scaling factor:  20%|██        | 203/1000 [00:08<00:36, 21.62it/s][A
-Estimating norm scaling factor:  21%|██        | 207/1000 [00:09<00:35, 22.29it/s][A
-Estimating norm scaling factor:  21%|██        | 210/1000 [00:09<00:36, 21.73it/s][A
-Estimating norm scaling factor:  21%|██▏       | 213/1000 [00:09<00:39, 20.00it/s][A
-Estimating norm scaling factor:  22%|██▏       | 217/1000 [00:09<00:36, 21.56it/s][A
-Estimating norm scaling factor:  22%|██▏       | 221/1000 [00:09<00:30, 25.18it/s][A
-Estimating norm scaling factor:  23%|██▎       | 227/1000 [00:09<00:24, 32.21it/s][A
-Estimating norm scaling factor:  23%|██▎       | 231/1000 [00:09<00:25, 29.60it/s][A
-Estimating norm scaling factor:  24%|██▎       | 235/1000 [00:10<00:29, 25.99it/s][A
-Estimating norm scaling factor:  24%|██▍       | 238/1000 [00:10<00:28, 26.62it/s][A
-Estimating norm scaling factor:  24%|██▍       | 243/1000 [00:10<00:24, 30.43it/s][A
-Estimating norm scaling factor:  25%|██▍       | 249/1000 [00:10<00:20, 36.12it/s][A
-Estimating norm scaling factor:  26%|██▌       | 255/1000 [00:10<00:18, 40.46it/s][A
-Estimating norm scaling factor:  26%|██▌       | 261/1000 [00:10<00:16, 44.41it/s][A
-Estimating norm scaling factor:  27%|██▋       | 267/1000 [00:10<00:16, 44.17it/s][A
-Estimating norm scaling factor:  27%|██▋       | 272/1000 [00:11<00:23, 31.17it/s][A
-Estimating norm scaling factor:  28%|██▊       | 277/1000 [00:11<00:21, 33.39it/s][A
-Estimating norm scaling factor:  28%|██▊       | 283/1000 [00:11<00:19, 37.38it/s][A
-Estimating norm scaling factor:  29%|██▉       | 289/1000 [00:11<00:16, 42.11it/s][A
-Estimating norm scaling factor:  29%|██▉       | 294/1000 [00:11<00:16, 43.80it/s][A
-Estimating norm scaling factor:  30%|██▉       | 299/1000 [00:11<00:16, 41.34it/s][A
-Estimating norm scaling factor:  30%|███       | 304/1000 [00:11<00:16, 43.07it/s][A
-Estimating norm scaling factor:  31%|███       | 309/1000 [00:11<00:15, 44.02it/s][A
-Estimating norm scaling factor:  31%|███▏      | 314/1000 [00:12<00:19, 35.28it/s][A
-Estimating norm scaling factor:  32%|███▏      | 322/1000 [00:12<00:15, 45.19it/s][A
-Estimating norm scaling factor:  33%|███▎      | 330/1000 [00:12<00:12, 53.17it/s][A
-Estimating norm scaling factor:  34%|███▎      | 336/1000 [00:12<00:12, 53.97it/s][A
-Estimating norm scaling factor:  34%|███▍      | 342/1000 [00:12<00:11, 55.00it/s][A
-Estimating norm scaling factor:  35%|███▍      | 348/1000 [00:12<00:11, 56.34it/s][A
-Estimating norm scaling factor:  36%|███▌      | 355/1000 [00:12<00:11, 57.10it/s][A
-Estimating norm scaling factor:  36%|███▌      | 361/1000 [00:12<00:11, 53.77it/s][A
-Estimating norm scaling factor:  37%|███▋      | 367/1000 [00:13<00:11, 54.59it/s][A
-Estimating norm scaling factor:  37%|███▋      | 373/1000 [00:13<00:12, 51.99it/s][A
-Estimating norm scaling factor:  38%|███▊      | 379/1000 [00:13<00:12, 47.80it/s][A
-Estimating norm scaling factor:  38%|███▊      | 385/1000 [00:13<00:14, 42.01it/s][A
-Estimating norm scaling factor:  39%|███▉      | 390/1000 [00:13<00:16, 36.25it/s][A
-Estimating norm scaling factor:  39%|███▉      | 394/1000 [00:13<00:16, 35.73it/s][A
-Estimating norm scaling factor:  40%|███▉      | 398/1000 [00:13<00:20, 29.12it/s][A
-Estimating norm scaling factor:  40%|████      | 402/1000 [00:14<00:19, 30.77it/s][A
-Estimating norm scaling factor:  41%|████      | 407/1000 [00:14<00:18, 32.85it/s][A
-Estimating norm scaling factor:  41%|████      | 411/1000 [00:14<00:22, 26.72it/s][A
-Estimating norm scaling factor:  42%|████▏     | 417/1000 [00:14<00:18, 32.08it/s][A
-Estimating norm scaling factor:  42%|████▏     | 423/1000 [00:14<00:17, 33.19it/s][A
-Estimating norm scaling factor:  43%|████▎     | 427/1000 [00:14<00:19, 29.53it/s][A
-Estimating norm scaling factor:  43%|████▎     | 431/1000 [00:15<00:23, 24.43it/s][A
-Estimating norm scaling factor:  43%|████▎     | 434/1000 [00:15<00:24, 22.65it/s][A
-Estimating norm scaling factor:  44%|████▎     | 437/1000 [00:15<00:28, 19.96it/s][A
-Estimating norm scaling factor:  44%|████▍     | 441/1000 [00:15<00:26, 20.87it/s][A
-Estimating norm scaling factor:  44%|████▍     | 445/1000 [00:15<00:24, 22.20it/s][A
-Estimating norm scaling factor:  45%|████▍     | 449/1000 [00:16<00:22, 24.14it/s][A
-Estimating norm scaling factor:  45%|████▌     | 452/1000 [00:16<00:22, 24.91it/s][A
-Estimating norm scaling factor:  46%|████▌     | 455/1000 [00:16<00:26, 20.52it/s][A
-Estimating norm scaling factor:  46%|████▌     | 458/1000 [00:16<00:25, 21.09it/s][A
-Estimating norm scaling factor:  46%|████▌     | 461/1000 [00:16<00:29, 18.24it/s][A
-Estimating norm scaling factor:  46%|████▋     | 465/1000 [00:16<00:26, 20.39it/s][A
-Estimating norm scaling factor:  47%|████▋     | 469/1000 [00:17<00:25, 20.99it/s][A
-Estimating norm scaling factor:  47%|████▋     | 472/1000 [00:17<00:25, 21.00it/s][A
-Estimating norm scaling factor:  48%|████▊     | 475/1000 [00:17<00:27, 19.33it/s][A
-Estimating norm scaling factor:  48%|████▊     | 479/1000 [00:17<00:23, 21.80it/s][A
-Estimating norm scaling factor:  48%|████▊     | 483/1000 [00:17<00:23, 21.82it/s][A
-Estimating norm scaling factor:  49%|████▊     | 486/1000 [00:17<00:23, 22.19it/s][A
-Estimating norm scaling factor:  49%|████▉     | 489/1000 [00:17<00:25, 20.07it/s][A
-Estimating norm scaling factor:  49%|████▉     | 493/1000 [00:18<00:23, 21.69it/s][A
-Estimating norm scaling factor:  50%|████▉     | 497/1000 [00:18<00:22, 22.69it/s][A
-Estimating norm scaling factor:  50%|█████     | 501/1000 [00:18<00:21, 23.22it/s][A
-Estimating norm scaling factor:  50%|█████     | 505/1000 [00:18<00:22, 21.84it/s][A
-Estimating norm scaling factor:  51%|█████     | 509/1000 [00:18<00:21, 22.61it/s][A
-Estimating norm scaling factor:  51%|█████▏    | 513/1000 [00:18<00:20, 23.63it/s][A
-Estimating norm scaling factor:  52%|█████▏    | 517/1000 [00:19<00:20, 23.16it/s][A
-Estimating norm scaling factor:  52%|█████▏    | 520/1000 [00:19<00:20, 23.85it/s][A
-Estimating norm scaling factor:  52%|█████▏    | 523/1000 [00:19<00:21, 22.35it/s][A
-Estimating norm scaling factor:  53%|█████▎    | 527/1000 [00:19<00:20, 22.53it/s][A
-Estimating norm scaling factor:  53%|█████▎    | 531/1000 [00:19<00:20, 23.10it/s][A
-Estimating norm scaling factor:  54%|█████▎    | 535/1000 [00:20<00:22, 20.97it/s][A
-Estimating norm scaling factor:  54%|█████▍    | 538/1000 [00:20<00:21, 21.89it/s][A
-Estimating norm scaling factor:  54%|█████▍    | 541/1000 [00:20<00:24, 19.12it/s][A
-Estimating norm scaling factor:  55%|█████▍    | 545/1000 [00:20<00:21, 20.78it/s][A
-Estimating norm scaling factor:  55%|█████▍    | 548/1000 [00:20<00:25, 17.46it/s][A
-Estimating norm scaling factor:  55%|█████▌    | 550/1000 [00:20<00:26, 17.29it/s][A
-Estimating norm scaling factor:  55%|█████▌    | 552/1000 [00:20<00:26, 17.03it/s][A
-Estimating norm scaling factor:  56%|█████▌    | 555/1000 [00:21<00:25, 17.25it/s][A
-Estimating norm scaling factor:  56%|█████▌    | 561/1000 [00:21<00:17, 25.11it/s][A
-Estimating norm scaling factor:  57%|█████▋    | 567/1000 [00:21<00:13, 32.77it/s][A
-Estimating norm scaling factor:  57%|█████▋    | 571/1000 [00:21<00:12, 34.40it/s][A
-Estimating norm scaling factor:  57%|█████▊    | 575/1000 [00:21<00:12, 32.70it/s][A
-Estimating norm scaling factor:  58%|█████▊    | 579/1000 [00:21<00:12, 33.43it/s][A
-Estimating norm scaling factor:  58%|█████▊    | 585/1000 [00:21<00:10, 38.09it/s][A
-Estimating norm scaling factor:  59%|█████▉    | 591/1000 [00:21<00:09, 41.11it/s][A
-Estimating norm scaling factor:  60%|█████▉    | 596/1000 [00:22<00:12, 31.85it/s][A
-Estimating norm scaling factor:  60%|██████    | 600/1000 [00:22<00:14, 28.27it/s][A
-Estimating norm scaling factor:  60%|██████    | 604/1000 [00:22<00:13, 29.94it/s][A
-Estimating norm scaling factor:  61%|██████    | 609/1000 [00:22<00:11, 32.82it/s][A
-Estimating norm scaling factor:  61%|██████▏   | 613/1000 [00:22<00:11, 34.34it/s][A
-Estimating norm scaling factor:  62%|██████▏   | 619/1000 [00:22<00:09, 39.79it/s][A
-Estimating norm scaling factor:  62%|██████▎   | 625/1000 [00:22<00:08, 42.36it/s][A
-Estimating norm scaling factor:  63%|██████▎   | 630/1000 [00:23<00:08, 43.77it/s][A
-Estimating norm scaling factor:  64%|██████▎   | 635/1000 [00:23<00:09, 39.97it/s][A
-Estimating norm scaling factor:  64%|██████▍   | 641/1000 [00:23<00:08, 43.47it/s][A
-Estimating norm scaling factor:  65%|██████▍   | 647/1000 [00:23<00:07, 45.24it/s][A
-Estimating norm scaling factor:  65%|██████▌   | 653/1000 [00:23<00:07, 47.66it/s][A
-Estimating norm scaling factor:  66%|██████▌   | 659/1000 [00:23<00:06, 50.07it/s][A
-Estimating norm scaling factor:  66%|██████▋   | 665/1000 [00:23<00:06, 49.38it/s][A
-Estimating norm scaling factor:  67%|██████▋   | 670/1000 [00:23<00:06, 47.42it/s][A
-Estimating norm scaling factor:  68%|██████▊   | 675/1000 [00:24<00:08, 39.75it/s][A
-Estimating norm scaling factor:  68%|██████▊   | 680/1000 [00:24<00:07, 41.89it/s][A
-Estimating norm scaling factor:  68%|██████▊   | 685/1000 [00:24<00:09, 31.81it/s][A
-Estimating norm scaling factor:  69%|██████▉   | 691/1000 [00:24<00:08, 34.65it/s][A
-Estimating norm scaling factor:  70%|██████▉   | 696/1000 [00:24<00:08, 37.75it/s][A
-Estimating norm scaling factor:  70%|███████   | 701/1000 [00:24<00:07, 37.83it/s][A
-Estimating norm scaling factor:  71%|███████   | 707/1000 [00:24<00:07, 40.82it/s][A
-Estimating norm scaling factor:  71%|███████▏  | 713/1000 [00:25<00:06, 42.81it/s][A
-Estimating norm scaling factor:  72%|███████▏  | 719/1000 [00:25<00:06, 46.64it/s][A
-Estimating norm scaling factor:  72%|███████▎  | 725/1000 [00:25<00:05, 47.70it/s][A
-Estimating norm scaling factor:  73%|███████▎  | 730/1000 [00:25<00:05, 47.85it/s][A
-Estimating norm scaling factor:  74%|███████▎  | 735/1000 [00:25<00:06, 43.46it/s][A
-Estimating norm scaling factor:  74%|███████▍  | 741/1000 [00:25<00:05, 46.24it/s][A
-Estimating norm scaling factor:  75%|███████▍  | 746/1000 [00:25<00:05, 47.07it/s][A
-Estimating norm scaling factor:  75%|███████▌  | 751/1000 [00:25<00:05, 41.86it/s][A
-Estimating norm scaling factor:  76%|███████▌  | 756/1000 [00:26<00:06, 38.84it/s][A
-Estimating norm scaling factor:  76%|███████▌  | 761/1000 [00:26<00:06, 34.64it/s][A
-Estimating norm scaling factor:  76%|███████▋  | 765/1000 [00:26<00:08, 26.99it/s][A
-Estimating norm scaling factor:  77%|███████▋  | 769/1000 [00:26<00:08, 25.71it/s][A
-Estimating norm scaling factor:  77%|███████▋  | 773/1000 [00:26<00:09, 25.04it/s][A
-Estimating norm scaling factor:  78%|███████▊  | 776/1000 [00:27<00:09, 23.62it/s][A
-Estimating norm scaling factor:  78%|███████▊  | 779/1000 [00:27<00:10, 20.72it/s][A
-Estimating norm scaling factor:  78%|███████▊  | 783/1000 [00:27<00:09, 22.11it/s][A
-Estimating norm scaling factor:  79%|███████▊  | 787/1000 [00:27<00:10, 20.53it/s][A
-Estimating norm scaling factor:  79%|███████▉  | 790/1000 [00:27<00:10, 20.42it/s][A
-Estimating norm scaling factor:  79%|███████▉  | 793/1000 [00:27<00:11, 18.68it/s][A
-Estimating norm scaling factor:  80%|███████▉  | 795/1000 [00:28<00:11, 18.05it/s][A
-Estimating norm scaling factor:  80%|███████▉  | 799/1000 [00:28<00:09, 20.61it/s][A
-Estimating norm scaling factor:  80%|████████  | 803/1000 [00:28<00:09, 20.90it/s][A
-Estimating norm scaling factor:  81%|████████  | 807/1000 [00:28<00:09, 20.12it/s][A
-Estimating norm scaling factor:  81%|████████  | 811/1000 [00:28<00:09, 20.64it/s][A
-Estimating norm scaling factor:  82%|████████▏ | 815/1000 [00:28<00:08, 21.90it/s][A
-Estimating norm scaling factor:  82%|████████▏ | 818/1000 [00:29<00:07, 23.14it/s][A
-Estimating norm scaling factor:  82%|████████▏ | 821/1000 [00:29<00:10, 16.73it/s][A
-Estimating norm scaling factor:  82%|████████▎ | 825/1000 [00:29<00:09, 18.59it/s][A
-Estimating norm scaling factor:  83%|████████▎ | 828/1000 [00:29<00:08, 20.33it/s][A
-Estimating norm scaling factor:  83%|████████▎ | 831/1000 [00:29<00:08, 18.80it/s][A
-Estimating norm scaling factor:  84%|████████▎ | 835/1000 [00:29<00:07, 21.18it/s][A
-Estimating norm scaling factor:  84%|████████▍ | 838/1000 [00:30<00:07, 21.95it/s][A
-Estimating norm scaling factor:  84%|████████▍ | 841/1000 [00:30<00:07, 21.37it/s][A
-Estimating norm scaling factor:  84%|████████▍ | 845/1000 [00:30<00:06, 24.17it/s][A
-Estimating norm scaling factor:  85%|████████▌ | 851/1000 [00:30<00:04, 31.31it/s][A
-Estimating norm scaling factor:  86%|████████▌ | 857/1000 [00:30<00:04, 35.25it/s][A
-Estimating norm scaling factor:  86%|████████▌ | 861/1000 [00:30<00:03, 35.07it/s][A
-Estimating norm scaling factor:  87%|████████▋ | 866/1000 [00:30<00:03, 38.31it/s][A
-Estimating norm scaling factor:  87%|████████▋ | 871/1000 [00:30<00:03, 40.65it/s][A
-Estimating norm scaling factor:  88%|████████▊ | 877/1000 [00:31<00:02, 43.31it/s][A
-Estimating norm scaling factor:  88%|████████▊ | 883/1000 [00:31<00:02, 46.32it/s][A
-Estimating norm scaling factor:  89%|████████▉ | 889/1000 [00:31<00:02, 49.83it/s][A
-Estimating norm scaling factor:  90%|████████▉ | 895/1000 [00:31<00:02, 41.38it/s][A
-Estimating norm scaling factor:  90%|█████████ | 900/1000 [00:31<00:02, 42.90it/s][A
-Estimating norm scaling factor:  90%|█████████ | 905/1000 [00:31<00:02, 41.42it/s][A
-Estimating norm scaling factor:  91%|█████████ | 911/1000 [00:31<00:02, 43.10it/s][A
-Estimating norm scaling factor:  92%|█████████▏| 917/1000 [00:31<00:01, 44.07it/s][A
-Estimating norm scaling factor:  92%|█████████▏| 923/1000 [00:32<00:01, 47.89it/s][A
-Estimating norm scaling factor:  93%|█████████▎| 928/1000 [00:32<00:02, 34.64it/s][A
-Estimating norm scaling factor:  93%|█████████▎| 933/1000 [00:32<00:02, 31.97it/s][A
-Estimating norm scaling factor:  94%|█████████▎| 937/1000 [00:32<00:02, 29.07it/s][A
-Estimating norm scaling factor:  94%|█████████▍| 941/1000 [00:32<00:02, 27.63it/s][A
-Estimating norm scaling factor:  94%|█████████▍| 944/1000 [00:33<00:02, 25.07it/s][A
-Estimating norm scaling factor:  95%|█████████▍| 947/1000 [00:33<00:02, 24.89it/s][A
-Estimating norm scaling factor:  95%|█████████▌| 953/1000 [00:33<00:01, 30.53it/s][A
-Estimating norm scaling factor:  96%|█████████▌| 957/1000 [00:33<00:01, 25.65it/s][A
-Estimating norm scaling factor:  96%|█████████▌| 962/1000 [00:33<00:01, 30.54it/s][A
-Estimating norm scaling factor:  97%|█████████▋| 967/1000 [00:33<00:00, 33.13it/s][A
-Estimating norm scaling factor:  97%|█████████▋| 971/1000 [00:33<00:00, 34.05it/s][A
-Estimating norm scaling factor:  98%|█████████▊| 975/1000 [00:33<00:00, 34.40it/s][A
-Estimating norm scaling factor:  98%|█████████▊| 981/1000 [00:34<00:00, 38.06it/s][A
-Estimating norm scaling factor:  99%|█████████▊| 987/1000 [00:34<00:00, 42.37it/s][A
-Estimating norm scaling factor:  99%|█████████▉| 992/1000 [00:34<00:00, 44.13it/s][A
-Estimating norm scaling factor: 100%|█████████▉| 997/1000 [00:34<00:00, 44.33it/s][AEstimating norm scaling factor: 100%|██████████| 1000/1000 [00:34<00:00, 29.02it/s]
-
-Estimating norm scaling factor:   0%|          | 0/1000 [00:00<?, ?it/s][A
-Estimating norm scaling factor:   0%|          | 4/1000 [00:00<00:25, 38.60it/s][A
-Estimating norm scaling factor:   1%|          | 9/1000 [00:00<00:23, 43.04it/s][A
-Estimating norm scaling factor:   2%|▏         | 15/1000 [00:00<00:20, 48.59it/s][A
-Estimating norm scaling factor:   2%|▏         | 23/1000 [00:00<00:16, 57.71it/s][A
-Estimating norm scaling factor:   3%|▎         | 31/1000 [00:00<00:15, 63.36it/s][A
-Estimating norm scaling factor:   4%|▍         | 39/1000 [00:00<00:14, 68.09it/s][A
-Estimating norm scaling factor:   5%|▍         | 47/1000 [00:00<00:13, 71.21it/s][A
-Estimating norm scaling factor:   6%|▌         | 55/1000 [00:00<00:15, 62.70it/s][A
-Estimating norm scaling factor:   6%|▌         | 62/1000 [00:01<00:15, 61.17it/s][A
-Estimating norm scaling factor:   7%|▋         | 69/1000 [00:01<00:15, 60.62it/s][A
-Estimating norm scaling factor:   8%|▊         | 77/1000 [00:01<00:14, 64.65it/s][A
-Estimating norm scaling factor:   8%|▊         | 85/1000 [00:01<00:13, 66.20it/s][A
-Estimating norm scaling factor:   9%|▉         | 93/1000 [00:01<00:13, 69.42it/s][A
-Estimating norm scaling factor:  10%|█         | 101/1000 [00:01<00:18, 47.37it/s][A
-Estimating norm scaling factor:  11%|█         | 107/1000 [00:01<00:18, 48.22it/s][A
-Estimating norm scaling factor:  12%|█▏        | 115/1000 [00:01<00:16, 54.15it/s][A
-Estimating norm scaling factor:  12%|█▏        | 123/1000 [00:02<00:14, 58.67it/s][A
-Estimating norm scaling factor:  13%|█▎        | 131/1000 [00:02<00:13, 63.10it/s][A
-Estimating norm scaling factor:  14%|█▍        | 140/1000 [00:02<00:12, 68.93it/s][A
-Estimating norm scaling factor:  15%|█▍        | 148/1000 [00:02<00:12, 66.94it/s][A
-Estimating norm scaling factor:  16%|█▌        | 155/1000 [00:02<00:14, 60.12it/s][A
-Estimating norm scaling factor:  16%|█▌        | 162/1000 [00:02<00:14, 59.43it/s][A
-Estimating norm scaling factor:  17%|█▋        | 169/1000 [00:02<00:13, 60.99it/s][A
-Estimating norm scaling factor:  18%|█▊        | 177/1000 [00:02<00:12, 64.79it/s][A
-Estimating norm scaling factor:  18%|█▊        | 185/1000 [00:03<00:12, 67.54it/s][A
-Estimating norm scaling factor:  19%|█▉        | 193/1000 [00:03<00:11, 69.49it/s][A
-Estimating norm scaling factor:  20%|██        | 201/1000 [00:03<00:12, 62.26it/s][A
-Estimating norm scaling factor:  21%|██        | 208/1000 [00:03<00:13, 59.98it/s][A
-Estimating norm scaling factor:  22%|██▏       | 215/1000 [00:03<00:12, 61.33it/s][A
-Estimating norm scaling factor:  22%|██▏       | 223/1000 [00:03<00:11, 65.27it/s][A
-Estimating norm scaling factor:  23%|██▎       | 231/1000 [00:03<00:15, 50.24it/s][A
-Estimating norm scaling factor:  24%|██▎       | 237/1000 [00:03<00:14, 51.39it/s][A
-Estimating norm scaling factor:  24%|██▍       | 243/1000 [00:04<00:14, 51.24it/s][A
-Estimating norm scaling factor:  25%|██▍       | 249/1000 [00:04<00:14, 51.66it/s][A
-Estimating norm scaling factor:  26%|██▌       | 257/1000 [00:04<00:13, 56.80it/s][A
-Estimating norm scaling factor:  26%|██▋       | 265/1000 [00:04<00:11, 61.51it/s][A
-Estimating norm scaling factor:  27%|██▋       | 273/1000 [00:04<00:11, 65.29it/s][A
-Estimating norm scaling factor:  28%|██▊       | 281/1000 [00:04<00:10, 68.74it/s][A
-Estimating norm scaling factor:  29%|██▉       | 289/1000 [00:04<00:10, 65.13it/s][A
-Estimating norm scaling factor:  30%|██▉       | 296/1000 [00:04<00:11, 62.26it/s][A
-Estimating norm scaling factor:  30%|███       | 303/1000 [00:05<00:11, 58.13it/s][A
-Estimating norm scaling factor:  31%|███       | 311/1000 [00:05<00:10, 62.97it/s][A
-Estimating norm scaling factor:  32%|███▏      | 320/1000 [00:05<00:09, 68.66it/s][A
-Estimating norm scaling factor:  33%|███▎      | 328/1000 [00:05<00:09, 70.33it/s][A
-Estimating norm scaling factor:  34%|███▎      | 337/1000 [00:05<00:08, 73.89it/s][A
-Estimating norm scaling factor:  34%|███▍      | 345/1000 [00:05<00:09, 68.29it/s][A
-Estimating norm scaling factor:  35%|███▌      | 352/1000 [00:05<00:09, 65.95it/s][A
-Estimating norm scaling factor:  36%|███▌      | 359/1000 [00:05<00:10, 61.07it/s][A
-Estimating norm scaling factor:  37%|███▋      | 367/1000 [00:05<00:09, 64.07it/s][A
-Estimating norm scaling factor:  37%|███▋      | 374/1000 [00:06<00:13, 47.61it/s][A
-Estimating norm scaling factor:  38%|███▊      | 381/1000 [00:06<00:11, 51.93it/s][A
-Estimating norm scaling factor:  39%|███▊      | 387/1000 [00:06<00:11, 51.53it/s][A
-Estimating norm scaling factor:  39%|███▉      | 393/1000 [00:06<00:11, 51.21it/s][A
-Estimating norm scaling factor:  40%|████      | 401/1000 [00:06<00:10, 55.92it/s][A
-Estimating norm scaling factor:  41%|████      | 408/1000 [00:06<00:10, 58.72it/s][A
-Estimating norm scaling factor:  42%|████▏     | 416/1000 [00:06<00:09, 63.10it/s][A
-Estimating norm scaling factor:  42%|████▏     | 424/1000 [00:07<00:08, 66.77it/s][A
-Estimating norm scaling factor:  43%|████▎     | 431/1000 [00:07<00:08, 65.81it/s][A
-Estimating norm scaling factor:  44%|████▍     | 438/1000 [00:07<00:09, 61.97it/s][A
-Estimating norm scaling factor:  44%|████▍     | 445/1000 [00:07<00:09, 57.71it/s][A
-Estimating norm scaling factor:  45%|████▌     | 452/1000 [00:07<00:09, 60.83it/s][A
-Estimating norm scaling factor:  46%|████▌     | 459/1000 [00:07<00:08, 62.70it/s][A
-Estimating norm scaling factor:  47%|████▋     | 466/1000 [00:07<00:08, 64.18it/s][A
-Estimating norm scaling factor:  47%|████▋     | 473/1000 [00:07<00:08, 65.65it/s][A
-Estimating norm scaling factor:  48%|████▊     | 481/1000 [00:07<00:07, 65.59it/s][A
-Estimating norm scaling factor:  49%|████▉     | 488/1000 [00:08<00:08, 62.20it/s][A
-Estimating norm scaling factor:  50%|████▉     | 495/1000 [00:08<00:08, 57.88it/s][A
-Estimating norm scaling factor:  50%|█████     | 503/1000 [00:08<00:08, 61.26it/s][A
-Estimating norm scaling factor:  51%|█████     | 510/1000 [00:08<00:10, 47.30it/s][A
-Estimating norm scaling factor:  52%|█████▏    | 518/1000 [00:08<00:08, 54.20it/s][A
-Estimating norm scaling factor:  52%|█████▎    | 525/1000 [00:08<00:08, 54.45it/s][A
-Estimating norm scaling factor:  53%|█████▎    | 531/1000 [00:08<00:08, 52.87it/s][A
-Estimating norm scaling factor:  54%|█████▎    | 537/1000 [00:08<00:08, 52.27it/s][A
-Estimating norm scaling factor:  55%|█████▍    | 545/1000 [00:09<00:07, 57.42it/s][A
-Estimating norm scaling factor:  55%|█████▌    | 553/1000 [00:09<00:07, 61.81it/s][A
-Estimating norm scaling factor:  56%|█████▌    | 561/1000 [00:09<00:06, 65.62it/s][A
-Estimating norm scaling factor:  57%|█████▋    | 570/1000 [00:09<00:05, 71.84it/s][A
-Estimating norm scaling factor:  58%|█████▊    | 578/1000 [00:09<00:06, 65.14it/s][A
-Estimating norm scaling factor:  58%|█████▊    | 585/1000 [00:09<00:07, 58.80it/s][A
-Estimating norm scaling factor:  59%|█████▉    | 592/1000 [00:09<00:07, 57.60it/s][A
-Estimating norm scaling factor:  60%|█████▉    | 599/1000 [00:09<00:06, 60.47it/s][A
-Estimating norm scaling factor:  61%|██████    | 607/1000 [00:10<00:06, 64.62it/s][A
-Estimating norm scaling factor:  62%|██████▏   | 616/1000 [00:10<00:05, 70.66it/s][A
-Estimating norm scaling factor:  62%|██████▏   | 624/1000 [00:10<00:05, 69.08it/s][A
-Estimating norm scaling factor:  63%|██████▎   | 632/1000 [00:10<00:05, 62.59it/s][A
-Estimating norm scaling factor:  64%|██████▍   | 639/1000 [00:10<00:06, 57.87it/s][A
-Estimating norm scaling factor:  64%|██████▍   | 645/1000 [00:10<00:07, 44.53it/s][A
-Estimating norm scaling factor:  65%|██████▌   | 653/1000 [00:10<00:06, 51.68it/s][A
-Estimating norm scaling factor:  66%|██████▌   | 662/1000 [00:11<00:05, 59.37it/s][A
-Estimating norm scaling factor:  67%|██████▋   | 669/1000 [00:11<00:05, 56.40it/s][A
-Estimating norm scaling factor:  68%|██████▊   | 676/1000 [00:11<00:05, 55.68it/s][A
-Estimating norm scaling factor:  68%|██████▊   | 682/1000 [00:11<00:05, 55.96it/s][A
-Estimating norm scaling factor:  69%|██████▉   | 690/1000 [00:11<00:05, 60.91it/s][A
-Estimating norm scaling factor:  70%|██████▉   | 698/1000 [00:11<00:04, 64.59it/s][A
-Estimating norm scaling factor:  70%|███████   | 705/1000 [00:11<00:04, 65.97it/s][A
-Estimating norm scaling factor:  71%|███████   | 712/1000 [00:11<00:04, 64.47it/s][A
-Estimating norm scaling factor:  72%|███████▏  | 719/1000 [00:11<00:04, 57.63it/s][A
-Estimating norm scaling factor:  72%|███████▎  | 725/1000 [00:12<00:04, 55.15it/s][A
-Estimating norm scaling factor:  73%|███████▎  | 731/1000 [00:12<00:04, 55.56it/s][A
-Estimating norm scaling factor:  74%|███████▍  | 739/1000 [00:12<00:04, 59.90it/s][A
-Estimating norm scaling factor:  75%|███████▍  | 746/1000 [00:12<00:04, 61.84it/s][A
-Estimating norm scaling factor:  75%|███████▌  | 754/1000 [00:12<00:03, 65.89it/s][A
-Estimating norm scaling factor:  76%|███████▋  | 763/1000 [00:12<00:03, 66.94it/s][A
-Estimating norm scaling factor:  77%|███████▋  | 770/1000 [00:12<00:03, 62.84it/s][A
-Estimating norm scaling factor:  78%|███████▊  | 777/1000 [00:12<00:03, 56.99it/s][A
-Estimating norm scaling factor:  78%|███████▊  | 783/1000 [00:13<00:04, 43.48it/s][A
-Estimating norm scaling factor:  79%|███████▉  | 791/1000 [00:13<00:04, 50.33it/s][A
-Estimating norm scaling factor:  80%|███████▉  | 799/1000 [00:13<00:03, 55.94it/s][A
-Estimating norm scaling factor:  81%|████████  | 806/1000 [00:13<00:03, 56.08it/s][A
-Estimating norm scaling factor:  81%|████████  | 812/1000 [00:13<00:03, 54.86it/s][A
-Estimating norm scaling factor:  82%|████████▏ | 818/1000 [00:13<00:03, 55.08it/s][A
-Estimating norm scaling factor:  82%|████████▎ | 825/1000 [00:13<00:02, 58.77it/s][A
-Estimating norm scaling factor:  83%|████████▎ | 833/1000 [00:13<00:02, 63.82it/s][A
-Estimating norm scaling factor:  84%|████████▍ | 841/1000 [00:14<00:02, 66.67it/s][A
-Estimating norm scaling factor:  85%|████████▍ | 849/1000 [00:14<00:02, 69.17it/s][A
-Estimating norm scaling factor:  86%|████████▌ | 857/1000 [00:14<00:02, 64.31it/s][A
-Estimating norm scaling factor:  86%|████████▋ | 864/1000 [00:14<00:02, 61.81it/s][A
-Estimating norm scaling factor:  87%|████████▋ | 871/1000 [00:14<00:02, 59.66it/s][A
-Estimating norm scaling factor:  88%|████████▊ | 879/1000 [00:14<00:01, 63.72it/s][A
-Estimating norm scaling factor:  89%|████████▊ | 887/1000 [00:14<00:01, 66.94it/s][A
-Estimating norm scaling factor:  90%|████████▉ | 895/1000 [00:14<00:01, 68.74it/s][A
-Estimating norm scaling factor:  90%|█████████ | 903/1000 [00:14<00:01, 70.69it/s][A
-Estimating norm scaling factor:  91%|█████████ | 911/1000 [00:15<00:01, 63.81it/s][A
-Estimating norm scaling factor:  92%|█████████▏| 918/1000 [00:15<00:01, 42.91it/s][A
-Estimating norm scaling factor:  92%|█████████▎| 925/1000 [00:15<00:01, 47.60it/s][A
-Estimating norm scaling factor:  93%|█████████▎| 933/1000 [00:15<00:01, 53.36it/s][A
-Estimating norm scaling factor:  94%|█████████▍| 941/1000 [00:15<00:01, 58.90it/s][A
-Estimating norm scaling factor:  95%|█████████▍| 948/1000 [00:15<00:00, 59.46it/s][A
-Estimating norm scaling factor:  96%|█████████▌| 955/1000 [00:16<00:00, 54.65it/s][A
-Estimating norm scaling factor:  96%|█████████▌| 961/1000 [00:16<00:00, 55.74it/s][A
-Estimating norm scaling factor:  97%|█████████▋| 969/1000 [00:16<00:00, 60.79it/s][A
-Estimating norm scaling factor:  98%|█████████▊| 977/1000 [00:16<00:00, 65.37it/s][A
-Estimating norm scaling factor:  99%|█████████▊| 986/1000 [00:16<00:00, 71.12it/s][A
-Estimating norm scaling factor:  99%|█████████▉| 994/1000 [00:16<00:00, 71.99it/s][AEstimating norm scaling factor: 100%|██████████| 1000/1000 [00:16<00:00, 59.96it/s]
-100| l0_loss: 9119.12305 | mse_loss: 18.37895:   0%|          | 0/4096000 [00:56<?, ?it/s]100| l0_loss: 9119.12305 | mse_loss: 18.37895:  10%|█         | 409600/4096000 [00:56<08:24, 7302.97it/s]200| l0_loss: 5993.64160 | mse_loss: 17.61637:  10%|█         | 409600/4096000 [01:02<08:24, 7302.97it/s]200| l0_loss: 5993.64160 | mse_loss: 17.61637:  20%|██        | 819200/4096000 [01:02<03:33, 15345.72it/s]300| l0_loss: 7414.24561 | mse_loss: 17.04705:  20%|██        | 819200/4096000 [01:08<03:33, 15345.72it/s]300| l0_loss: 7414.24561 | mse_loss: 17.04705:  30%|███       | 1228800/4096000 [01:08<02:03, 23274.56it/s]400| l0_loss: 9649.96875 | mse_loss: 16.34445:  30%|███       | 1228800/4096000 [01:13<02:03, 23274.56it/s]400| l0_loss: 9649.96875 | mse_loss: 16.34445:  40%|████      | 1638400/4096000 [01:13<01:14, 32776.27it/s]500| l0_loss: 12469.83301 | mse_loss: 15.25021:  40%|████      | 1638400/4096000 [01:20<01:14, 32776.27it/s]500| l0_loss: 12469.83301 | mse_loss: 15.25021:  50%|█████     | 2048000/4096000 [01:20<00:51, 39764.71it/s]600| l0_loss: 14853.74512 | mse_loss: 14.39041:  50%|█████     | 2048000/4096000 [01:26<00:51, 39764.71it/s]600| l0_loss: 14853.74512 | mse_loss: 14.39041:  60%|██████    | 2457600/4096000 [01:26<00:35, 45933.27it/s]700| l0_loss: 16006.22949 | mse_loss: 14.09904:  60%|██████    | 2457600/4096000 [01:31<00:35, 45933.27it/s]700| l0_loss: 16006.22949 | mse_loss: 14.09904:  70%|███████   | 2867200/4096000 [01:31<00:22, 53485.89it/s]800| l0_loss: 16709.91797 | mse_loss: 13.83560:  70%|███████   | 2867200/4096000 [01:37<00:22, 53485.89it/s]800| l0_loss: 16709.91797 | mse_loss: 13.83560:  80%|████████  | 3276800/4096000 [01:37<00:14, 57321.24it/s]900| l0_loss: 16996.37109 | mse_loss: 13.61147:  80%|████████  | 3276800/4096000 [01:44<00:14, 57321.24it/s]900| l0_loss: 16996.37109 | mse_loss: 13.61147:  90%|█████████ | 3686400/4096000 [01:44<00:07, 58129.50it/s]1000| l0_loss: 17206.24219 | mse_loss: 13.77229:  90%|█████████ | 3686400/4096000 [01:48<00:07, 58129.50it/s]1000| l0_loss: 17206.24219 | mse_loss: 13.77229: 100%|██████████| 4096000/4096000 [01:48<00:00, 65038.25it/s]1000| l0_loss: 17206.24219 | mse_loss: 13.77229: 100%|██████████| 4096000/4096000 [01:49<00:00, 37498.34it/s]
-wandb: uploading artifact sae_gpt2-small_blocks.5.hook_mlp_out_6144
-wandb: uploading history steps 29-33, summary, console lines 2-2
-wandb:                                                                                
-wandb: 
-wandb: Run history:
-wandb:      details/current_l1_coefficient ▁████████████████████████████████
-wandb:       details/current_learning_rate ▅█████▇▇▇▆▆▆▅▅▅▄▄▃▃▃▂▂▂▂▂▂▂▂▁▁▁▁▁
-wandb:           details/n_training_tokens ▁▁▁▂▂▂▂▃▃▃▃▃▄▄▄▄▅▅▅▅▅▆▆▆▆▆▇▇▇▇███
-wandb:                      losses/l0_loss ▄▆▄▂▁▁▁▁▂▂▂▃▃▄▄▅▅▆▆▇▇▇▇▇█████████
-wandb:                     losses/mse_loss █▅▄▄▃▃▃▃▃▃▃▃▃▂▂▂▂▂▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁
-wandb:                 losses/overall_loss ▄▆▄▂▁▁▁▁▂▂▂▃▃▄▄▅▅▆▆▇▇▇▇▇█████████
-wandb:          metrics/explained_variance ▁▄▅▅▆▅▆▆▆▆▆▆▆▇▇▇▇▇▇██████████████
-wandb:      metrics/explained_variance_std █▄▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▂▁▂▂
-wandb:                          metrics/l0 █▆▃▂▁▁▁▁▁▂▂▃▃▃▄▄▅▅▆▆▆▇▇▇▇▇▇▇▇▇▇▇▇
-wandb: metrics/mean_log10_feature_sparsity ▁
-wandb:                 sparsity/below_1e-5 ▁
-wandb:                 sparsity/below_1e-6 ▁
-wandb:              sparsity/dead_features ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
-wandb:    sparsity/mean_passes_since_fired ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
-wandb: 
-wandb: Run summary:
-wandb:      details/current_l1_coefficient 5
-wandb:       details/current_learning_rate 0.0
-wandb:           details/n_training_tokens 4055040
-wandb:                      losses/l0_loss 17155.14062
-wandb:                     losses/mse_loss 13.66335
-wandb:                 losses/overall_loss 17168.80469
-wandb:          metrics/explained_variance 0.17799
-wandb:      metrics/explained_variance_std 0.12122
-wandb:                          metrics/l0 3431.02832
-wandb: metrics/mean_log10_feature_sparsity -0.42
-wandb:                 sparsity/below_1e-5 0
-wandb:                 sparsity/below_1e-6 0
-wandb:              sparsity/dead_features 0
-wandb:    sparsity/mean_passes_since_fired 0
-wandb: 
-wandb: 🚀 View run 6144-L1-5-LR-1e-05-Tokens-4.096e+06 at: https://wandb.ai/gulko-osu/gpt2-small/runs/4f4e6485
-wandb: ⭐️ View project at: https://wandb.ai/gulko-osu/gpt2-small
-wandb: Synced 5 W&B file(s), 0 media file(s), 33 artifact file(s) and 0 other file(s)
-wandb: Find logs at: ./wandb/run-20250330_005458-4f4e6485/logs
-sae_trainer.py:348 {'model_performance_preservation': {'ce_loss_score': 0.021397148810901996, 'ce_loss_with_ablation': 2.4649271965026855, 'ce_loss_with_sae': 2.4633848667144775, 'ce_loss_without_sae': 2.39284610748291}, 'reconstruction_quality': {'explained_variance': -0.07260829210281372, 'mse': 1.6234991550445557, 'cossim': 0.09775637835264206}, 'shrinkage': {'l2_norm_in': 27.610960006713867, 'l2_norm_out': 1.5843762159347534, 'l2_ratio': 0.05202960968017578, 'relative_reconstruction_bias': 2.2494378089904785}, 'sparsity': {'l0': 1331.6717529296875, 'l1': 44.05525207519531}, 'token_stats': {'total_tokens_eval_reconstruction': 5120, 'total_tokens_eval_sparsity_variance': 5120}}
-best_checkpoint_metric: 2.4633848667144775
-sae_trainer.py:348 {'model_performance_preservation': {'ce_loss_score': 0.09817719247935647, 'ce_loss_with_ablation': 2.45281982421875, 'ce_loss_with_sae': 2.446453094482422, 'ce_loss_without_sae': 2.387970447540283}, 'reconstruction_quality': {'explained_variance': -0.05010467395186424, 'mse': 1.5819871425628662, 'cossim': 0.19464637339115143}, 'shrinkage': {'l2_norm_in': 27.587238311767578, 'l2_norm_out': 1.900107741355896, 'l2_ratio': 0.06744497269392014, 'relative_reconstruction_bias': 0.5560756325721741}, 'sparsity': {'l0': 1507.7978515625, 'l1': 70.23113250732422}, 'token_stats': {'total_tokens_eval_reconstruction': 5120, 'total_tokens_eval_sparsity_variance': 5120}}
-saved best checkpoint
-best_checkpoint_metric: 2.446453094482422
-sae_trainer.py:348 {'model_performance_preservation': {'ce_loss_score': 0.16173723800581022, 'ce_loss_with_ablation': 2.489475727081299, 'ce_loss_with_sae': 2.478100299835205, 'ce_loss_without_sae': 2.419142961502075}, 'reconstruction_quality': {'explained_variance': 0.018682850524783134, 'mse': 1.4900846481323242, 'cossim': 0.37097856402397156}, 'shrinkage': {'l2_norm_in': 27.71942710876465, 'l2_norm_out': 3.4070332050323486, 'l2_ratio': 0.12473555654287338, 'relative_reconstruction_bias': 0.34741559624671936}, 'sparsity': {'l0': 2253.613525390625, 'l1': 189.42161560058594}, 'token_stats': {'total_tokens_eval_reconstruction': 5120, 'total_tokens_eval_sparsity_variance': 5120}}
-best_checkpoint_metric: 2.446453094482422
-sae_trainer.py:348 {'model_performance_preservation': {'ce_loss_score': 0.2507219523594905, 'ce_loss_with_ablation': 2.4256060123443604, 'ce_loss_with_sae': 2.4112818241119385, 'ce_loss_without_sae': 2.368474245071411}, 'reconstruction_quality': {'explained_variance': 0.0721169114112854, 'mse': 1.3935070037841797, 'cossim': 0.4414556622505188}, 'shrinkage': {'l2_norm_in': 27.462289810180664, 'l2_norm_out': 4.458203315734863, 'l2_ratio': 0.16515718400478363, 'relative_reconstruction_bias': 0.3766046166419983}, 'sparsity': {'l0': 3008.084716796875, 'l1': 308.06982421875}, 'token_stats': {'total_tokens_eval_reconstruction': 5120, 'total_tokens_eval_sparsity_variance': 5120}}
-saved best checkpoint
-best_checkpoint_metric: 2.4112818241119385
-sae_trainer.py:348 {'model_performance_preservation': {'ce_loss_score': 0.3031253901809125, 'ce_loss_with_ablation': 2.498117208480835, 'ce_loss_with_sae': 2.4761219024658203, 'ce_loss_without_sae': 2.425555467605591}, 'reconstruction_quality': {'explained_variance': 0.1005510464310646, 'mse': 1.3745800256729126, 'cossim': 0.4785761833190918}, 'shrinkage': {'l2_norm_in': 27.74542236328125, 'l2_norm_out': 5.168727874755859, 'l2_ratio': 0.18910928070545197, 'relative_reconstruction_bias': 0.3976948857307434}, 'sparsity': {'l0': 3303.609375, 'l1': 372.0629577636719}, 'token_stats': {'total_tokens_eval_reconstruction': 5120, 'total_tokens_eval_sparsity_variance': 5120}}
-best_checkpoint_metric: 2.4112818241119385
-sae_trainer.py:348 {'model_performance_preservation': {'ce_loss_score': 0.3901788969960792, 'ce_loss_with_ablation': 2.4018008708953857, 'ce_loss_with_sae': 2.377054214477539, 'ce_loss_without_sae': 2.338376998901367}, 'reconstruction_quality': {'explained_variance': 0.10591685771942139, 'mse': 1.3233250379562378, 'cossim': 0.48090410232543945}, 'shrinkage': {'l2_norm_in': 27.300718307495117, 'l2_norm_out': 5.220379829406738, 'l2_ratio': 0.19419042766094208, 'relative_reconstruction_bias': 0.40728312730789185}, 'sparsity': {'l0': 3401.412109375, 'l1': 382.001953125}, 'token_stats': {'total_tokens_eval_reconstruction': 5120, 'total_tokens_eval_sparsity_variance': 5120}}
-saved best checkpoint
-best_checkpoint_metric: 2.377054214477539
-training done!
