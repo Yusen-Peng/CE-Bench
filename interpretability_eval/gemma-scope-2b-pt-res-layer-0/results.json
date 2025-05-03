@@ -1,0 +1,11 @@
+{
+    "experiment_name": "gemma-scope-2b-pt-res-layer-0",
+    "architecture": "Gemma-2-2b",
+    "steps": "244k",
+    "best_model": "width-2pow16_trainer_0",
+    "model_name": "google/gemma-2-2b",
+    "contrastive_score_mean": 61.415869872043054,
+    "independent_score_mean": 86.89730002988624,
+    "interpretability_score_mean": 85.12949232869323,
+    "total_rows": 500
+}

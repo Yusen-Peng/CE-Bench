@@ -16,3 +16,4 @@ cache_activations/
 tiny-stories-1L-21M-cache/
 *.csv
 eval_results/
+intepretability_eval/

@@ -21,3 +21,45 @@ We also hypothesize that if neurons activate more differently between marked tok
 ## Interpretability Score
 we also hypothesize that the simple summation of them can be a naive yet reasonable indicator of the interpretability of sparse autoencoder probing: interpretable neurons, or interpretable sparse autoencoders as a whole, should demonstrate both strong contrastivity and independence.
 
+## Results
+
+### Depth of Layers
+
+basic config: gemma-scope-2b-pt-res, width 16k, JumpReLU
+
+| layer | contrastive score | independent score | interpretability score |
+| ----- | ----------------- | ----------------- | ---------------------- |
+| 0 | 61.415870 | 86.897300 | 85.129492 |
+| 5 | 46.207552 | 74.556141 | 72.927920 |
+| 10 | 48.909567 | 70.636590 | 69.308634 |
+| 15 | 50.526650 | 60.138965 | 56.371155 |
+| 20 | 61.976547 | 65.189159 | 62.676539 |
+| 25 | 91.259533 | 97.893998 | 96.487685 |
+
+### Type of Layers
+
+basic config: gemma-scope-2b-pt
+
+| layer | contrastive score | independent score | interpretability score |
+| ----- | ----------------- | ----------------- | ---------------------- |
+| residual stream | TBD | TBD | TBD |
+| MLP | TBD | TBD | TBD |
+| MLP-canonical | TBD | TBD | TBD |
+| Attnetion | TBD | TBD | TBD |
+| Attention-canonical | TBD | TBD | TBD |
+
+### Width of Latent Space
+
+basic config: gemma-scope-2b-pt-res
+
+| layer | contrastive score | independent score | interpretability score |
+| ----- | ----------------- | ----------------- | ---------------------- |
+| 16k | TBD | TBD | TBD |
+| 32k | TBD | TBD | TBD |
+| 65k | TBD | TBD | TBD |
+| 131k | TBD | TBD | TBD |
+| 262k | TBD | TBD | TBD |
+| 524k | TBD | TBD | TBD |
+| 1000k | TBD | TBD | TBD |
+
+### Architecture of Sparse Autoencoders

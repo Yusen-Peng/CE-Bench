@@ -69,7 +69,7 @@ def run_eval(
     tokenizer.pad_token = tokenizer.eos_token
     print("Tokenizer loaded!")
 
-    experiment_name = "Gemma-2-2b_jumprelu"
+    experiment_name = "gemma-scope-2b-pt-res-layer-1"
     architecture = "Gemma-2-2b" # Gemma-2-2b
     steps = "244k"
     best_model = "width-2pow16_trainer_0" # only kan
@@ -138,7 +138,6 @@ def run_eval(
                 else:
                     clean_tokens[story_i].append(token_id)
             
-            tqdm.write(f"story {story_i} marked tokens: {len(marked_tokens_indices[story_i])}")
 
         # Extract activations from the correct layer
         clean_tokens_A = torch.tensor(clean_tokens[0]).to(device)
@@ -175,7 +174,6 @@ def run_eval(
         for token_index, token_id in enumerate(clean_tokens[0]):
             if token_index in marked_tokens_indices[0]:
                 # add the activations of this token to V1
-                # tqdm.write(f"token: {token_index} {token_id} {tokenizer.decode(token_id)}")
                 V1 += activations_A[0, token_index, :]
                 V1_token_num += 1
                 I1 += activations_A[0, token_index, :]
@@ -287,7 +285,6 @@ def run_eval(
                     neuron_interpretability_score_subject_pairs[neuron_index] = [elementwise_interpretability_score[neuron_index], ground_truth_subject]
         
 
-        tqdm.write(f"pair index: {pair_index} {ground_truth_subject}:\n contrastive score: {contrastive_score:4f}\n independent score: {independence_score:4f}\n interpretability score: {interpretability_score:4f}\n")
 
         # append the scores to the lists
         contrastive_scores.append(contrastive_score)
