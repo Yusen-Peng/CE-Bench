@@ -30,11 +30,31 @@ basic config: gemma-scope-2b-pt-res, width 16k, JumpReLU
 | layer | contrastive score | independent score | interpretability score |
 | ----- | ----------------- | ----------------- | ---------------------- |
 | 0 | TBD | TBD | TBD |
+| 1 | TBD | TBD | TBD |
+| 2 | TBD | TBD | TBD |
+| 3 | TBD | TBD | TBD |
+| 4 | TBD | TBD | TBD |
 | 5 | TBD | TBD | TBD |
-| 10 |  |  |  |
-| 15 |  |  |  |
-| 20 |  |  |  |
-| 25 | |  |  |
+| 6 | TBD | TBD | TBD |
+| 7 | TBD | TBD | TBD |
+| 8 | TBD | TBD | TBD |
+| 9 | TBD | TBD | TBD |
+| 10 | TBD | TBD | TBD |
+| 11 | TBD | TBD | TBD |
+| 12 | TBD | TBD | TBD |
+| 13 | TBD | TBD | TBD |
+| 14 | TBD | TBD | TBD |
+| 15 | TBD | TBD | TBD |
+| 16 | TBD | TBD | TBD |
+| 17 | TBD | TBD | TBD |
+| 18 | TBD | TBD | TBD |
+| 19 | TBD | TBD | TBD |
+| 20 | TBD | TBD | TBD |
+| 21 | TBD | TBD | TBD |
+| 22 | TBD | TBD | TBD |
+| 23 | TBD | TBD | TBD |
+| 24 | TBD | TBD | TBD |
+| 25 | TBD | TBD | TBD |
 
 ### Type of Layers
 
@@ -74,3 +94,7 @@ basic config: gemma-scope-2b-pt-res
 | p-anneal | TBD | TBD | TBD |
 | matryoshka | TBD | TBD | TBD |
 
+
+## command
+
+cores python ce_bench/CE_Bench.py --sae_regex_pattern "gemma-scope-2b-pt-res" --sae_block_pattern "layer_0/width_16k/average_l0_.*"
