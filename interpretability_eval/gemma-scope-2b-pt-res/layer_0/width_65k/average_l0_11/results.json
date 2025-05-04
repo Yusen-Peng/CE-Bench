@@ -1,22 +1,19 @@
 {
     "sae_release": "gemma-scope-2b-pt-res",
-    "sae_id": "layer_20/width_16k/average_l0_139",
-    "architecture": "gemma-2-2b",
-    "best_model": "width-2pow16_trainer_0",
-    "model_name": "google/gemma-2-2b",
-    "contrastive_score_mean": 41.42695174856284,
-    "independent_score_mean": 46.11414929419449,
-    "interpretability_score_mean": 42.081164365945405,
+    "sae_id": "layer_0/width_65k/average_l0_11",
+    "contrastive_score_mean": 49.86669344951197,
+    "independent_score_mean": 97.56950223470471,
+    "interpretability_score_mean": 91.86837292700699,
     "total_rows": 500,
     "sae_config": {
         "architecture": "jumprelu",
         "d_in": 2304,
-        "d_sae": 16384,
+        "d_sae": 65536,
         "dtype": "torch.bfloat16",
         "device": "cuda",
         "model_name": "gemma-2-2b",
-        "hook_name": "blocks.20.hook_resid_post",
-        "hook_layer": 20,
+        "hook_name": "blocks.0.hook_resid_post",
+        "hook_layer": 0,
         "hook_head_index": null,
         "activation_fn_str": "relu",
         "activation_fn_kwargs": {},
@@ -34,5 +31,5 @@
             null
         ]
     },
-    "date": "2025-05-04 02:25:30"
+    "date": "2025-05-04 11:48:32"
 }
