@@ -5,6 +5,7 @@ from transformers import GPT2Tokenizer, AutoTokenizer
 from sae_lens import SAE, HookedSAETransformer
 import os
 import json
+import sae_bench.sae_bench_utils.general_utils as general_utils
 
 def fire_multiple_sae_neurons(activation, hook, sae: SAE, neuron_list, scale):
     # 1. Encode to latent space
@@ -47,7 +48,7 @@ def main():
     print(f"Using device: {device}")
 
     # NOTE: CHANGE IT EVERY TIME
-    experiment_name = "LLAMA_jumprelu_crop"
+    experiment_name = "gemma-scope-2b-pt-res-layer-25"
     print(f"Experiment name: {experiment_name}")
     print("=" * 80)
     results_json = json.load(open(f"interpretability_eval/{experiment_name}/results.json"))
@@ -101,12 +102,17 @@ def main():
     best_model = results_json["best_model"]
 
 
-    sae_checkpoint_path = f"checkpoints/{architecture}/{steps}/{best_model}/"
-    sae = SAE.load_from_pretrained(path=sae_checkpoint_path, device=device)
+    sae_checkpoint_path = f"checkpoints/{steps}/{best_model}/"
+    sae_release = results_json["sae_release"]
+    sae_id = results_json["sae_id"]
+    # sae = SAE.load_from_pretrained(path=sae_checkpoint_path, device=device)
+    sae_id, sae, sparsity = general_utils.load_and_format_sae(
+        sae_release, sae_id, device
+    )  # type: ignore
     print("SAE loaded!")
 
     # steer one particular set of neurons with the common subject from the csv file
-    target_subject = "sense of justice"
+    target_subject = "mood"
     print(f"Target subject: {target_subject}")
     print("=" * 80)
     # Load the CSV file
@@ -135,11 +141,11 @@ def main():
     )
     print("Model loaded!")
 
-    prompt = "She was walking in a park when suddenly she saw a person running towards her."
+    prompt = "She was walking in a park when suddenly "
     baseline_output = autoregressive_generate(model, tokenizer, prompt, device=device)
     print("\nBaseline generation:", baseline_output)
 
-    SCALE = 500
+    SCALE = 100
     model.add_hook(
         "blocks.5.hook_mlp_out",
         partial(fire_multiple_sae_neurons, sae=sae, neuron_list=subject_neurons, scale=SCALE),
