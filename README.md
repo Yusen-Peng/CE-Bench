@@ -29,12 +29,12 @@ basic config: gemma-scope-2b-pt-res, width 16k, JumpReLU
 
 | layer | contrastive score | independent score | interpretability score |
 | ----- | ----------------- | ----------------- | ---------------------- |
-| 0 | 61.415870 | 86.897300 | 85.129492 |
-| 5 | 46.207552 | 74.556141 | 72.927920 |
-| 10 | 48.909567 | 70.636590 | 69.308634 |
-| 15 | 50.526650 | 60.138965 | 56.371155 |
-| 20 | 61.976547 | 65.189159 | 62.676539 |
-| 25 | 91.259533 | 97.893998 | 96.487685 |
+| 0 | TBD | TBD | TBD |
+| 5 | TBD | TBD | TBD |
+| 10 |  |  |  |
+| 15 |  |  |  |
+| 20 |  |  |  |
+| 25 | |  |  |
 
 ### Type of Layers
 
@@ -63,3 +63,14 @@ basic config: gemma-scope-2b-pt-res
 | 1000k | TBD | TBD | TBD |
 
 ### Architecture of Sparse Autoencoders
+
+| SAE | contrastive score | independent score | interpretability score |
+| ----- | ----------------- | ----------------- | ---------------------- |
+| standard | TBD | TBD | TBD |
+| top-k | TBD | TBD | TBD |
+| gated | TBD | TBD | TBD |
+| jumprelu | TBD | TBD | TBD |
+| batch-top-k | TBD | TBD | TBD |
+| p-anneal | TBD | TBD | TBD |
+| matryoshka | TBD | TBD | TBD |
+

@@ -1,0 +1,38 @@
+{
+    "sae_release": "gemma-scope-2b-pt-res",
+    "sae_id": "layer_20/width_16k/average_l0_139",
+    "architecture": "gemma-2-2b",
+    "best_model": "width-2pow16_trainer_0",
+    "model_name": "google/gemma-2-2b",
+    "contrastive_score_mean": 41.42695174856284,
+    "independent_score_mean": 46.11414929419449,
+    "interpretability_score_mean": 42.081164365945405,
+    "total_rows": 500,
+    "sae_config": {
+        "architecture": "jumprelu",
+        "d_in": 2304,
+        "d_sae": 16384,
+        "dtype": "torch.bfloat16",
+        "device": "cuda",
+        "model_name": "gemma-2-2b",
+        "hook_name": "blocks.20.hook_resid_post",
+        "hook_layer": 20,
+        "hook_head_index": null,
+        "activation_fn_str": "relu",
+        "activation_fn_kwargs": {},
+        "apply_b_dec_to_input": false,
+        "finetuning_scaling_factor": false,
+        "sae_lens_training_version": null,
+        "prepend_bos": true,
+        "dataset_path": "monology/pile-uncopyrighted",
+        "dataset_trust_remote_code": true,
+        "context_size": 1024,
+        "normalize_activations": null,
+        "neuronpedia_id": null,
+        "model_from_pretrained_kwargs": {},
+        "seqpos_slice": [
+            null
+        ]
+    },
+    "date": "2025-05-04 02:25:30"
+}
