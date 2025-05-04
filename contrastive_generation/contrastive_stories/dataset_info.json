@@ -1,0 +1,24 @@
+{
+  "citation": "",
+  "description": "",
+  "features": {
+    "story0": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "story1": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "story2": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "subject": {
+      "dtype": "string",
+      "_type": "Value"
+    }
+  },
+  "homepage": "",
+  "license": ""
+}
