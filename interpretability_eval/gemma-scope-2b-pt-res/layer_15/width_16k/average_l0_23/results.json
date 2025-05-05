@@ -1,9 +1,9 @@
 {
     "sae_release": "gemma-scope-2b-pt-res",
-    "sae_id": "layer_12/width_16k/average_l0_176",
-    "contrastive_score_mean": 38.25134291894657,
-    "independent_score_mean": 46.44243596657035,
-    "interpretability_score_mean": 44.24748063234939,
+    "sae_id": "layer_15/width_16k/average_l0_23",
+    "contrastive_score_mean": 57.07321716780515,
+    "independent_score_mean": 51.59813830582137,
+    "interpretability_score_mean": 50.631366065113816,
     "total_rows": 500,
     "sae_config": {
         "architecture": "jumprelu",
@@ -12,8 +12,8 @@
         "dtype": "torch.bfloat16",
         "device": "cuda",
         "model_name": "gemma-2-2b",
-        "hook_name": "blocks.12.hook_resid_post",
-        "hook_layer": 12,
+        "hook_name": "blocks.15.hook_resid_post",
+        "hook_layer": 15,
         "hook_head_index": null,
         "activation_fn_str": "relu",
         "activation_fn_kwargs": {},
@@ -25,11 +25,11 @@
         "dataset_trust_remote_code": true,
         "context_size": 1024,
         "normalize_activations": null,
-        "neuronpedia_id": "gemma-2-2b/12-gemmascope-res-16k__l0-176",
+        "neuronpedia_id": null,
         "model_from_pretrained_kwargs": {},
         "seqpos_slice": [
             null
         ]
     },
-    "date": "2025-05-05 06:02:11"
+    "date": "2025-05-04 20:38:36"
 }
