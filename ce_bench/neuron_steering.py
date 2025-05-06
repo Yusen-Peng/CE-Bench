@@ -13,10 +13,24 @@ def fire_multiple_sae_neurons(activation, hook, sae: SAE, neuron_list, scale):
 
     # 2. Fire up the chosen neurons
     # latents[..., neuron_list] modifies the last dimension
-    latents[..., neuron_list] *= scale
+    latents[..., neuron_list] += scale
 
     # 3. Decode back to the original hidden dimension
     new_activation = sae.decode(latents)
+
+    # new_activation = activation.clone()
+    return new_activation
+
+def shift_v_neurons_apply(activation, hook, sae: SAE, vector, scale):
+    # 1. Encode to latent space
+    # latents = sae.encode(activation)  # shape [batch, seq_len, sae_latent_dim]
+
+    # 2. Fire up the chosen neurons
+    # latents[..., neuron_list] modifies the last dimension
+    new_latents = vector
+
+    # 3. Decode back to the original hidden dimension
+    new_activation = activation + sae.decode(new_latents) * scale
 
     # new_activation = activation.clone()
     return new_activation
@@ -45,30 +59,18 @@ def autoregressive_generate(model, tokenizer, prompt, max_new_tokens=20, device=
 def main():
     # NOTE: CHANGE THESE GUYS EVERY TIME
     target_subject = "sense of justice"
-    experiment_name = f"gemma-scope-2b-pt-res/layer_12/width_262k/average_l0_121"
-    top_neurons = 20
-    SCALE = 10
+    experiment_name = f"gemma-scope-2b-pt-res/layer_12/width_16k/average_l0_22"
+    metric = "interpretability"
+    df = pd.read_csv(f"interpretability_eval/{experiment_name}/{metric}_scores_per_subject.csv")
+    top_neurons = 100
+    SCALE = 0.1
+    #prompt = "Shrek (Mike Myers) leads a solitary life in his swamp. A group of peasants gathers in front of his house with the goal of hunting down"
+    prompt = "Despite opposition, she always chose the path that aligned with her beliefs"
 
+    # SAE baseline
+    # She is a very kind person, and she has a strong sense of responsibility. She is a very good person. She is a very good person. She is
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    # top 5 neurons, scale = 10, contrastive metric
 
     # Set device
     device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -76,6 +78,7 @@ def main():
     print(f"Experiment name: {experiment_name}")
     print("=" * 80)
     results_json = json.load(open(f"interpretability_eval/{experiment_name}/results.json"))
+    shift_v = pd.read_csv(f"interpretability_eval/{experiment_name}/shift_v_per_subject_mean.csv")
     print(f"Results JSON loaded from {experiment_name}/results.json")
     print(f"Experiment name: {experiment_name}")
 
@@ -96,12 +99,9 @@ def main():
     print(f"Target subject: {target_subject}")
     print("=" * 80)
 
-    df = pd.read_csv(f"interpretability_eval/{experiment_name}/independence_scores_per_subject.csv")
     # print(df.columns)
     # FIXME: alternative: take the neuron with the highest activation instead all of them in subject_neurons group
     subject_neurons = df.sort_values(by=target_subject, ascending=False).head(top_neurons)
-
-
 
     best_neuron_row_ids = subject_neurons["Unnamed: 0"].tolist()
 
@@ -119,16 +119,23 @@ def main():
     tokenizer.pad_token = tokenizer.eos_token
     print("Tokenizer loaded!")
 
-    prompt = "She is a very kind person, and she has a strong"
-    baseline_output = autoregressive_generate(model, tokenizer, prompt, device=device)
+    baseline_output = autoregressive_generate(model, tokenizer, prompt, device=device, max_new_tokens=32)
     print("\nBaseline generation:", baseline_output)
 
+    # model.add_hook(
+    #     sae.cfg.hook_name,
+    #     partial(fire_multiple_sae_neurons, sae=sae, neuron_list=subject_neurons, scale=SCALE),
+    #     "fwd"
+    # )
+
+    shift_v_neurons = torch.tensor(shift_v[target_subject].tolist()).to(device)
     model.add_hook(
         sae.cfg.hook_name,
-        partial(fire_multiple_sae_neurons, sae=sae, neuron_list=subject_neurons, scale=SCALE),
+        partial(shift_v_neurons_apply, sae=sae, vector=shift_v_neurons, scale=SCALE),
         "fwd"
     )
-    steered_output = autoregressive_generate(model, tokenizer, prompt, device=device)
+
+    steered_output = autoregressive_generate(model, tokenizer, prompt, device=device, max_new_tokens=32)
     print("\nSteered generation:", steered_output)
 
 

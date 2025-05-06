@@ -21,7 +21,7 @@ We also hypothesize that if neurons activate more differently between marked tok
 ## Interpretability Score
 we also hypothesize that the simple summation of them can be a naive yet reasonable indicator of the interpretability of sparse autoencoder probing: interpretable neurons, or interpretable sparse autoencoders as a whole, should demonstrate both strong contrastivity and independence.
 
-## Results
+## Benchmark Result Analysis
 
 ### Depth of Layers
 
@@ -75,6 +75,19 @@ basic config: gemma-scope-2b-pt-res
 | matryoshka | TBD | TBD | TBD |
 
 
-## command
+## Steering Result Analysis
+
+
+| metric | # top neurons | scale | steering evaluation |
+| ------ | ---------- | ---- | ---------------- |
+| interpretability | 5 | 10 | TBD |
+| contrastive | 5 | 10 | TBD |
+| independent | 5 | 10 | TBD |
+
+
+
+## command zoo
 
 cores python ce_bench/CE_Bench.py --sae_regex_pattern "gemma-scope-2b-pt-res" --sae_block_pattern "layer_0/width_16k/average_l0_.*"
+
+cores python ce_bench/neuron_steering.py

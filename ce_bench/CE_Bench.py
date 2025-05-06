@@ -45,7 +45,7 @@ def run_eval_once(
      
     print(f"Running evaluation for {sae_release} {sae_id}")
 
-    sae_id, sae, sparsity = load_sae(
+    sae_id, sae, _ = load_sae(
         sae_release, sae_id, device, config.llm_dtype
     )
     
@@ -69,6 +69,8 @@ def run_eval_once(
     interpretability_scores_per_subject = defaultdict(list)
     elementwise_contrastive_scores_per_subject = defaultdict(list)
     elementwise_independence_scores_per_subject = defaultdict(list)
+
+    shift_v_per_subect = defaultdict(list)
 
     neuron_interpretability_score_subject_pairs = {}
 
@@ -176,6 +178,9 @@ def run_eval_once(
         if log_vectors:
             df = pd.DataFrame({"V1": V1, "V2": V2, "delta": V1 - V2, "abs_delta": np.abs(V1 - V2)})
             df.to_csv(f"{logs_folder}/raw/V1_V2_{pair_index}.csv", index=True)
+
+        shift_v = V2 - V1
+        shift_v_per_subect[ground_truth_subject].append(shift_v)
 
         elementwise_contrast_distance = torch.abs(V1 - V2)
         elementwise_contrastive_score = elementwise_contrast_distance - torch.mean(elementwise_contrast_distance)
@@ -285,6 +290,14 @@ def run_eval_once(
     tqdm.write(f"Contrastive score mean: {contrastive_score_mean:4f}")
     tqdm.write(f"Independent score mean: {independent_score_mean:4f}")
     tqdm.write(f"Interpretability score mean: {interpretability_score_mean:4f}")
+
+    shift_v_per_subject_mean = {}
+    for subject, shifts in shift_v_per_subect.items():
+        all_shifts = np.stack(shifts, axis=0)
+        shift_v_per_subject_mean[subject] = np.mean(all_shifts, axis=0).tolist()
+    # save the shift_v_per_subject_mean to a CSV file
+    df = pd.DataFrame.from_dict(shift_v_per_subject_mean, orient='index').T
+    df.to_csv(f"{logs_folder}/shift_v_per_subject_mean.csv", index=True, header=True)
 
     interpretability_scores_per_neuron_per_subject = {}
     for subject, scores in elementwise_interpretability_scores_per_subject.items():
