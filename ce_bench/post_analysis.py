@@ -17,7 +17,7 @@ from sae_lens import SAE, HookedSAETransformer
 from collections import defaultdict
 import matplotlib.pyplot as plt
 import json
-from typing import Any
+from typing import Any, List
 import sae_bench.sae_bench_utils.activation_collection as activation_collection
 import sae_bench.sae_bench_utils.general_utils as general_utils
 from sae_bench.evals.autointerp.eval_config import AutoInterpEvalConfig
@@ -147,8 +147,91 @@ def depth_analysis(sae_release: str, width: str):
 
 
 
-def layer_type_analysis(sae_release: str, layer: str, width: str):
-    pass
+def layer_type_analysis(sae_release_series: str, type_pool: List[str], layer: str, width: str):
+    results_by_type = {}
+
+    for layer_type in type_pool:
+        sae_release = f"{sae_release_series}{layer_type}"
+        base_path = os.path.expanduser(f"interpretability_eval/{sae_release}/{layer}/width_{width}")        
+        scores = []
+
+        for sparsity_folder in os.listdir(base_path):
+            results_path = os.path.join(base_path, sparsity_folder, "results.json")
+
+            try:
+                with open(results_path, "r") as f:
+                    results = json.load(f)
+                    contrastive = results.get("contrastive_score_mean")
+                    independence = results.get("independent_score_mean")
+                    interpretability = results.get("interpretability_score_mean")
+                    if all(v is not None for v in [contrastive, independence, interpretability]):
+                        scores.append((contrastive, independence, interpretability))
+            except json.JSONDecodeError:
+                print(f"Invalid JSON in {results_path}")
+
+        if scores:
+            results_by_type[layer_type] = scores
+
+    # Prepare data
+    layer_type_indices = []
+    contrastive_avgs = []
+    independence_avgs = []
+    interpretability_avgs = []
+
+    contrastive_points = []
+    independence_points = []
+    interpretability_points = []
+
+    for i, layer_type in enumerate(type_pool):
+        scores = results_by_type.get(layer_type, [])
+        if not scores:
+            continue
+
+        layer_type_indices.append(i)
+
+        for score in scores:
+            contrastive_points.append((i, score[0]))
+            independence_points.append((i, score[1]))
+            interpretability_points.append((i, score[2]))
+
+        contrastive_avgs.append(np.mean([s[0] for s in scores]))
+        independence_avgs.append(np.mean([s[1] for s in scores]))
+        interpretability_avgs.append(np.mean([s[2] for s in scores]))
+
+    # Plot
+    fig, axs = plt.subplots(1, 3, figsize=(15, 4))
+    fig.suptitle(f"Score vs. Layer Type for {sae_release_series} at {layer} with width {width}", fontsize=14)
+
+    xticks = list(range(len(type_pool)))
+    axs[0].scatter(*zip(*contrastive_points), alpha=1.0, color='skyblue', s=20, label="All Sparsities")
+    axs[0].plot(layer_type_indices, contrastive_avgs, color='blue', marker='o', markersize=2, label="Avg")
+    axs[0].set_title("Contrastive Score")
+    axs[0].set_xticks(xticks)
+    axs[0].set_xticklabels(type_pool)
+    axs[0].set_ylabel("Score")
+    axs[0].grid(True)
+    axs[0].legend()
+
+    axs[1].scatter(*zip(*independence_points), alpha=1.0, color='lightgreen', s=20, label="All Sparsities")
+    axs[1].plot(layer_type_indices, independence_avgs, color='green', marker='o', markersize=2, label="Avg")
+    axs[1].set_title("Independence Score")
+    axs[1].set_xticks(xticks)
+    axs[1].set_xticklabels(type_pool)
+    axs[1].set_ylabel("Score")
+    axs[1].grid(True)
+    axs[1].legend()
+
+    axs[2].scatter(*zip(*interpretability_points), alpha=1.0, color='violet', s=20, label="All Sparsities")
+    axs[2].plot(layer_type_indices, interpretability_avgs, color='purple', marker='o', markersize=2, label="Avg")
+    axs[2].set_title("Interpretability Score")
+    axs[2].set_xticks(xticks)
+    axs[2].set_xticklabels(type_pool)
+    axs[2].set_ylabel("Score")
+    axs[2].grid(True)
+    axs[2].legend()
+
+    plt.tight_layout(rect=[0, 0, 1, 0.95])
+    plt.savefig(f"figures/layer_type_analysis_{sae_release_series}_{layer}_{width}.png")
 
 
 def width_analysis(sae_release: str, layer: str):
@@ -286,7 +369,18 @@ if __name__ == "__main__":
         )
 
     elif args.task_name == "layer_type":
-        layer_type_analysis()
+        sae_release_series = "gemma-scope-2b-pt-"
+        type_pool = ["att", "mlp", "res"]
+        layer = "layer_12"
+        width = "16k"
+
+        layer_type_analysis(
+            sae_release_series=sae_release_series,
+            type_pool=type_pool,
+            layer=layer,
+            width=width,
+        )
+            
     elif args.task_name == "width":
         sae_release = "gemma-scope-2b-pt-res"
         layer = "layer_12"
