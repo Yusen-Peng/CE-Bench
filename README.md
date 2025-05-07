@@ -25,55 +25,19 @@ we also hypothesize that the simple summation of them can be a naive yet reasona
 
 ### Depth of Layers
 
-basic config: gemma-scope-2b-pt-res, width 16k, JumpReLU
-
-| layer | contrastive score | independent score | interpretability score |
-| ----- | ----------------- | ----------------- | ---------------------- |
-| 0 | TBD | TBD | TBD |
-| 5 | TBD | TBD | TBD |
-| 10 | TBD | TBD | TBD |
-| 15 | TBD | TBD | TBD |
-| 20 | TBD | TBD | TBD |
-| 25 | TBD | TBD | TBD |
+[depth](figures/depth_analysis_gemma-scope-2b-pt-res_16k.png)
 
 ### Type of Layers
 
-basic config: gemma-scope-2b-pt
-
-| layer | contrastive score | independent score | interpretability score |
-| ----- | ----------------- | ----------------- | ---------------------- |
-| residual stream | TBD | TBD | TBD |
-| MLP | TBD | TBD | TBD |
-| MLP-canonical | TBD | TBD | TBD |
-| Attnetion | TBD | TBD | TBD |
-| Attention-canonical | TBD | TBD | TBD |
+[layer type](figures/layer_type_analysis_gemma-scope-2b-pt-_layer_12_16k.png)
 
 ### Width of Latent Space
 
-basic config: gemma-scope-2b-pt-res
-
-| layer | contrastive score | independent score | interpretability score |
-| ----- | ----------------- | ----------------- | ---------------------- |
-| 16k | TBD | TBD | TBD |
-| 32k | TBD | TBD | TBD |
-| 65k | TBD | TBD | TBD |
-| 131k | TBD | TBD | TBD |
-| 262k | TBD | TBD | TBD |
-| 524k | TBD | TBD | TBD |
-| 1000k | TBD | TBD | TBD |
+[width](figures/width_analysis_gemma-scope-2b-pt-res_layer_12.png)
 
 ### Architecture of Sparse Autoencoders
 
-| SAE | contrastive score | independent score | interpretability score |
-| ----- | ----------------- | ----------------- | ---------------------- |
-| standard | TBD | TBD | TBD |
-| top-k | TBD | TBD | TBD |
-| gated | TBD | TBD | TBD |
-| jumprelu | TBD | TBD | TBD |
-| batch-top-k | TBD | TBD | TBD |
-| p-anneal | TBD | TBD | TBD |
-| matryoshka | TBD | TBD | TBD |
-
+[sae](figures/sae_analysis_sae_bench_pythia70m_sweep_4.png)
 
 ## Steering Result Analysis
 

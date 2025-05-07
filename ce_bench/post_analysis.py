@@ -337,11 +337,93 @@ def width_analysis(sae_release: str, layer: str):
     plt.show()
 
 
-def sae_analysis():
-    pass
+def sae_analysis(sae_release_series: str, sae_pool: List[str], block_num: int):
+    results_by_sae = {}
+    block_prefix = f"blocks.{block_num}.hook_resid_post"
 
+    for sae_variant in sae_pool:
+        sae_release = f"{sae_release_series}{sae_variant}"
+        base_path = os.path.expanduser(f"interpretability_eval/{sae_release}")
 
+        scores = []
+        for subfolder in os.listdir(base_path):
+            results_path = os.path.join(base_path, subfolder, "results.json")
+            try:
+                with open(results_path, "r") as f:
+                    results = json.load(f)
+                    contrastive = results.get("contrastive_score_mean")
+                    independence = results.get("independent_score_mean")
+                    interpretability = results.get("interpretability_score_mean")
+                    if all(v is not None for v in [contrastive, independence, interpretability]):
+                        scores.append((contrastive, independence, interpretability))
+            except json.JSONDecodeError:
+                print(f"[WARN] Invalid JSON: {results_path}")
 
+        if scores:
+            results_by_sae[sae_variant] = scores
+
+    # Prepare plot data
+    sae_indices = []
+    contrastive_avgs = []
+    independence_avgs = []
+    interpretability_avgs = []
+
+    contrastive_points = []
+    independence_points = []
+    interpretability_points = []
+
+    for i, sae_variant in enumerate(sae_pool):
+        scores = results_by_sae.get(sae_variant, [])
+        sae_indices.append(i)
+        for s in scores:
+            contrastive_points.append((i, s[0]))
+            independence_points.append((i, s[1]))
+            interpretability_points.append((i, s[2]))
+
+        contrastive_avgs.append(np.mean([s[0] for s in scores]))
+        independence_avgs.append(np.mean([s[1] for s in scores]))
+        interpretability_avgs.append(np.mean([s[2] for s in scores]))
+
+    # Plot
+    fig, axs = plt.subplots(1, 3, figsize=(15, 4))
+    fig.suptitle(f"Score vs. SAE Variant (Block {block_num})", fontsize=14)
+
+    # truncate each sae from the pool up to "_"
+    sae_pool = [sae.split("_")[0] for sae in sae_pool]
+    xticks = list(range(len(sae_pool)))
+
+    # Contrastive
+    axs[0].scatter(*zip(*contrastive_points), alpha=1.0, color='skyblue', s=20, label="All Runs")
+    axs[0].plot(sae_indices, contrastive_avgs, color='blue', marker='o', markersize=2, label="Avg")
+    axs[0].set_title("Contrastive Score")
+    axs[0].set_xticks(xticks)
+    axs[0].set_xticklabels(sae_pool, rotation=15)
+    axs[0].set_ylabel("Score")
+    axs[0].grid(True)
+    axs[0].legend()
+
+    # Independence
+    axs[1].scatter(*zip(*independence_points), alpha=1.0, color='lightgreen', s=20, label="All Runs")
+    axs[1].plot(sae_indices, independence_avgs, color='green', marker='o', markersize=2, label="Avg")
+    axs[1].set_title("Independence Score")
+    axs[1].set_xticks(xticks)
+    axs[1].set_xticklabels(sae_pool, rotation=15)
+    axs[1].set_ylabel("Score")
+    axs[1].grid(True)
+    axs[1].legend()
+
+    # Interpretability
+    axs[2].scatter(*zip(*interpretability_points), alpha=1.0, color='violet', s=20, label="All Runs")
+    axs[2].plot(sae_indices, interpretability_avgs, color='purple', marker='o', markersize=2, label="Avg")
+    axs[2].set_title("Interpretability Score")
+    axs[2].set_xticks(xticks)
+    axs[2].set_xticklabels(sae_pool, rotation=15)
+    axs[2].set_ylabel("Score")
+    axs[2].grid(True)
+    axs[2].legend()
+
+    plt.tight_layout(rect=[0, 0, 1, 0.95])
+    plt.savefig(f"figures/sae_analysis_{sae_release_series}{block_num}.png")
 
 def arg_parser():
     parser = argparse.ArgumentParser(description="Post analysis of neuron steering")
@@ -389,8 +471,18 @@ if __name__ == "__main__":
             layer=layer,
         )
     elif args.task_name == "sae":
-        sae_analysis()
+        sae_release_series = "sae_bench_pythia70m_sweep_"
+        sae_pool = ["gated_ctx128_0730", "panneal_ctx128_0730", "standard_ctx128_0712", "topk_ctx128_0730"]
+        block_num = 4
+
+        sae_analysis(
+            sae_release_series=sae_release_series,
+            sae_pool=sae_pool,
+            block_num=block_num,
+        )
     else:
         raise ValueError(f"Unknown task name: {args.task_name}")
+    
+
 
 
