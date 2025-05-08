@@ -85,33 +85,8 @@ def run_eval_once(
         text_A_original = dataset[pair_index]["story1"]
         text_B_original = dataset[pair_index]["story2"]
         ground_truth_subject = dataset[pair_index]["subject"]
-
-
         tokenizer = model.tokenizer
-    
-        #tokenizer.add_special_tokens({"additional_special_tokens": ["<subject>", "</subject>"]})
-        #subject_tokens = tokenizer.convert_tokens_to_ids(["<subject>", "</subject>"])
-        # print(subject_tokens)
         tokens = [tokenizer(text_A_original).to(device)["input_ids"], tokenizer(text_B_original).to(device)["input_ids"]]
-        #clean_tokens = [[],[]]
-
-        # find all marked tokens and record ids of all marked tokens
-        # marked_tokens_indices = [[], []]
-        # in_subject = False
-        # print(tokens_A["input_ids"])
-        # for story_i in range(2):
-        #     for token_index in range(len(tokens[story_i])):
-        #         token_id = tokens[story_i][token_index]
-        #         if in_subject:
-        #             if token_id == subject_tokens[1]:
-        #                 in_subject = False
-        #             else:
-        #                 marked_tokens_indices[story_i].append(len(clean_tokens[story_i]))
-        #                 clean_tokens[story_i].append(token_id)
-        #         elif token_id == subject_tokens[0]:
-        #             in_subject = True
-        #         else:
-        #             clean_tokens[story_i].append(token_id)
             
 
         # Extract activations from the correct layer

@@ -11122,7 +11122,7 @@ sae_bench_gemma-2-2b_topk_width-2pow12_date-1109:
   repo_id: canrager/saebench_gemma-2-2b_width-2pow12_date-1109
   saes:
   - id: blocks.12.hook_resid_post__trainer_0
-    neuronpedia: gemma-2-2b/12-sae_bench-topk-res-4k__trainer_0_step_final
+    #neuronpedia: gemma-2-2b/12-sae_bench-topk-res-4k__trainer_0_step_final
     path: gemma-2-2b_topk_width-2pow12_date-1109/resid_post_layer_12/trainer_0
   - id: blocks.12.hook_resid_post__trainer_0_step_0
     neuronpedia: gemma-2-2b/12-sae_bench-topk-res-4k__trainer_0_step_0
@@ -13974,12 +13974,12 @@ gemma-3-1b-res-matryoshka-dc:
 sae_bench_gemma-2-2b_batch_top_k_width-2pow16_date-0107:
   conversion_func: dictionary_learning_1
   links:
-    model: https://huggingface.co/gemma-2-2b
+    model: https://huggingface.co/google/gemma-2-2b
   model: gemma-2-2b
   repo_id: canrager/saebench_gemma-2-2b_width-2pow16_date-0107
   saes:
   - id: blocks.12.hook_resid_post__trainer_0
-    neuronpedia: gemma-2-2b/12-sae_bench-batch_top_k-res-64k__trainer_0_step_final
+    #neuronpedia: gemma-2-2b/12-sae_bench-batch_top_k-res-64k__trainer_0_step_final
     path: gemma-2-2b_batch_top_k_width-2pow16_date-0107/resid_post_layer_12/trainer_0
   - id: blocks.12.hook_resid_post__trainer_1
     neuronpedia: gemma-2-2b/12-sae_bench-batch_top_k-res-64k__trainer_1_step_final
