@@ -23,14 +23,14 @@ def fire_multiple_sae_neurons(activation, hook, sae: SAE, neuron_list, scale):
 
 def shift_v_neurons_apply(activation, hook, sae: SAE, vector, scale):
     # 1. Encode to latent space
-    # latents = sae.encode(activation)  # shape [batch, seq_len, sae_latent_dim]
+    latents = sae.encode(activation)  # shape [batch, seq_len, sae_latent_dim]
 
     # 2. Fire up the chosen neurons
     # latents[..., neuron_list] modifies the last dimension
-    new_latents = vector
+    new_latents = latents + vector * scale
 
     # 3. Decode back to the original hidden dimension
-    new_activation = activation + sae.decode(new_latents) * scale
+    new_activation = sae.decode(new_latents)
 
     # new_activation = activation.clone()
     return new_activation
@@ -58,14 +58,14 @@ def autoregressive_generate(model, tokenizer, prompt, max_new_tokens=20, device=
 
 def main():
     # NOTE: CHANGE THESE GUYS EVERY TIME
-    target_subject = "sense of justice"
+    target_subject = "knowledge"
     experiment_name = f"gemma-scope-2b-pt-res/layer_12/width_16k/average_l0_22"
     metric = "interpretability"
     df = pd.read_csv(f"interpretability_eval/{experiment_name}/{metric}_scores_per_subject.csv")
     top_neurons = 100
-    SCALE = 0.1
+    SCALE = 0.5
     #prompt = "Shrek (Mike Myers) leads a solitary life in his swamp. A group of peasants gathers in front of his house with the goal of hunting down"
-    prompt = "Despite opposition, she always chose the path that aligned with her beliefs"
+    prompt = "How did I drop my GPA? I am a student at a university and this semester, "
 
     # SAE baseline
     # She is a very kind person, and she has a strong sense of responsibility. She is a very good person. She is a very good person. She is

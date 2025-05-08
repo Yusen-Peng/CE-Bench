@@ -76,6 +76,9 @@ def run_eval_once(
 
     total_rows = len(dataset)
     # total_rows = 10
+
+    all_activations = []
+
     for pair_index in tqdm(range(total_rows)):
 
         # filter out marked tokens
@@ -83,39 +86,37 @@ def run_eval_once(
         text_B_original = dataset[pair_index]["story2"]
         ground_truth_subject = dataset[pair_index]["subject"]
 
-        if "relevance to " in ground_truth_subject:
-            continue
 
         tokenizer = model.tokenizer
     
-        tokenizer.add_special_tokens({"additional_special_tokens": ["<subject>", "</subject>"]})
-        subject_tokens = tokenizer.convert_tokens_to_ids(["<subject>", "</subject>"])
+        #tokenizer.add_special_tokens({"additional_special_tokens": ["<subject>", "</subject>"]})
+        #subject_tokens = tokenizer.convert_tokens_to_ids(["<subject>", "</subject>"])
         # print(subject_tokens)
         tokens = [tokenizer(text_A_original).to(device)["input_ids"], tokenizer(text_B_original).to(device)["input_ids"]]
-        clean_tokens = [[],[]]
+        #clean_tokens = [[],[]]
 
         # find all marked tokens and record ids of all marked tokens
-        marked_tokens_indices = [[], []]
-        in_subject = False
+        # marked_tokens_indices = [[], []]
+        # in_subject = False
         # print(tokens_A["input_ids"])
-        for story_i in range(2):
-            for token_index in range(len(tokens[story_i])):
-                token_id = tokens[story_i][token_index]
-                if in_subject:
-                    if token_id == subject_tokens[1]:
-                        in_subject = False
-                    else:
-                        marked_tokens_indices[story_i].append(len(clean_tokens[story_i]))
-                        clean_tokens[story_i].append(token_id)
-                elif token_id == subject_tokens[0]:
-                    in_subject = True
-                else:
-                    clean_tokens[story_i].append(token_id)
+        # for story_i in range(2):
+        #     for token_index in range(len(tokens[story_i])):
+        #         token_id = tokens[story_i][token_index]
+        #         if in_subject:
+        #             if token_id == subject_tokens[1]:
+        #                 in_subject = False
+        #             else:
+        #                 marked_tokens_indices[story_i].append(len(clean_tokens[story_i]))
+        #                 clean_tokens[story_i].append(token_id)
+        #         elif token_id == subject_tokens[0]:
+        #             in_subject = True
+        #         else:
+        #             clean_tokens[story_i].append(token_id)
             
 
         # Extract activations from the correct layer
-        clean_tokens_A = torch.tensor(clean_tokens[0]).to(device)
-        clean_tokens_B = torch.tensor(clean_tokens[1]).to(device)
+        clean_tokens_A = torch.tensor(tokens[0]).to(device)
+        clean_tokens_B = torch.tensor(tokens[1]).to(device)
 
         with torch.no_grad():
             _, cache = model.run_with_cache(clean_tokens_A) 
@@ -131,55 +132,55 @@ def run_eval_once(
 
         # keep track of I1 and I2 for independent study
         I1 = torch.zeros(activations_A.shape[2])
-        I1_token_num = 0
-        I2 = torch.zeros(activations_B.shape[2])
-        I2_token_num = 0    
+        I1_token_num = 0 
         # compute V1 and V2 only for the marked tokens
         V1 = torch.zeros(activations_A.shape[2])
         V1_token_num = 0
         V2 = torch.zeros(activations_B.shape[2])
         V2_token_num = 0
 
-        for token_index, token_id in enumerate(clean_tokens[0]):
-            if token_index in marked_tokens_indices[0]:
-                # add the activations of this token to V1
-                V1 += activations_A[0, token_index, :]
-                V1_token_num += 1
-                I1 += activations_A[0, token_index, :]
-                I1_token_num += 1
-            else:
-                # FIXME: if average over everything
-                V1 += activations_A[0, token_index, :] 
-                V1_token_num += 1
-                I2 += activations_A[0, token_index, :]
-                I2_token_num += 1
-        
-        for token_index, token_id in enumerate(clean_tokens[1]):
-            # NOTE: a prefix space is added to match the marked tokens
-            if token_index in marked_tokens_indices[1]:
-                # add the activations of this token to V1
-                V2 += activations_B[0, token_index, :]
-                V2_token_num += 1
-                I1 += activations_B[0, token_index, :]
-                I1_token_num += 1
-            else:
-                # FIXME: if average over everything
-                V2 += activations_B[0, token_index, :] 
-                V2_token_num += 1
-                I2 += activations_B[0, token_index, :]
-                I2_token_num += 1
+        for token_index, token_id in enumerate(tokens[0]):
+            # FIXME: if average over everything
+            V1 += activations_A[0, token_index, :] 
+            V1_token_num += 1
+
+            I1 += activations_A[0, token_index, :]
+            I1_token_num += 1
+
+        for token_index, token_id in enumerate(tokens[1]):
+            # FIXME: if average over everything
+            V2 += activations_B[0, token_index, :] 
+            V2_token_num += 1
+
+            I1 += activations_B[0, token_index, :]
+            I1_token_num += 1
 
         V1 = V1 / V1_token_num if V1_token_num > 0 else V1
         V2 = V2 / V2_token_num if V2_token_num > 0 else V2
         I1 = I1 / I1_token_num if I1_token_num > 0 else I1
-        I2 = I2 / I2_token_num if I2_token_num > 0 else I2
 
+        all_activations.append((V1, V2, I1, ground_truth_subject))
 
         if log_vectors:
             df = pd.DataFrame({"V1": V1, "V2": V2, "delta": V1 - V2, "abs_delta": np.abs(V1 - V2)})
             df.to_csv(f"{logs_folder}/raw/V1_V2_{pair_index}.csv", index=True)
 
-        shift_v = V2 - V1
+
+    print(f"V1: {V1.shape}, V2: {V2.shape}, I1: {I1.shape}")
+
+    I2 = torch.zeros(activations_B.shape[2])
+    I2_token_num = len(all_activations)
+
+    for V1, V2, I1, ground_truth_subject in all_activations:
+        I2 += I2
+    I2 = I2 / I2_token_num if I2_token_num > 0 else I2
+
+    print(f"V1: {V1.shape}, V2: {V2.shape}, I1: {I1.shape}, I2: {I2.shape}")
+    for pair_index, (V1, V2, I1, ground_truth_subject) in tqdm(enumerate(all_activations)):
+
+        # compute the contrastive and independent scores
+
+        shift_v = I1 - I2
         shift_v_per_subect[ground_truth_subject].append(shift_v)
 
         elementwise_contrast_distance = torch.abs(V1 - V2)
@@ -347,6 +348,7 @@ def run_eval_once(
     df.to_csv(f"{logs_folder}/responsible_neurons.csv", index=True) # we need to keep track of the indices
 
     results = {
+        "contrastive_dataset": "GulkoA/contrastive-stories-v2",
         "sae_release": sae_release,
         "sae_id": sae_id,
         "contrastive_score_mean": contrastive_score_mean,
@@ -401,9 +403,9 @@ def run_eval(
     output_path: str,
 ) -> dict[str, Any]:
     # os.makedirs(output_path, exist_ok=True)
-
-
-    dataset = load_dataset("GulkoA/contrastive-stories-v1", split="train")
+    dataset_path = "GulkoA/contrastive-stories-v2"
+    print(f"loading dataset {dataset_path}")
+    dataset = load_dataset(dataset_path, split="train")
 
     # this is nasty - I hate this - I know there is a better way
     args = [

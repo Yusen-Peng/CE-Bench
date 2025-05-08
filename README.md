@@ -23,21 +23,37 @@ we also hypothesize that the simple summation of them can be a naive yet reasona
 
 ## Benchmark Result Analysis
 
+### Architecture of Sparse Autoencoders
+
+### our result (preliminary):
+
+SAE suite: sae_bench_pythia70m
+
+![sae](figures/sae_analysis_sae_bench_pythia70m_sweep_4.png)
+
+### SAEBench result:
+
+SAE suite: 65k width Gemma-2-2B
+
+![alt text](docs/SAEBench_sae_cmp.png)
+
 ### Depth of Layers
+
+SAE suite: 16k gemma-scope-2b-pt-res
 
 ![depth](figures/depth_analysis_gemma-scope-2b-pt-res_16k.png)
 
 ### Type of Layers
 
+### our result (preliminary)
+
 ![layer type](figures/layer_type_analysis_gemma-scope-2b-pt-_layer_12_16k.png)
 
 ### Width of Latent Space
 
+### our result (preliminary):
+
 ![width](figures/width_analysis_gemma-scope-2b-pt-res_layer_12.png)
-
-### Architecture of Sparse Autoencoders
-
-![sae](figures/sae_analysis_sae_bench_pythia70m_sweep_4.png)
 
 ## Steering Result Analysis
 
@@ -52,6 +68,6 @@ we also hypothesize that the simple summation of them can be a naive yet reasona
 
 ## command zoo
 
-cores python ce_bench/CE_Bench.py --sae_regex_pattern "gemma-scope-2b-pt-res" --sae_block_pattern "layer_0/width_16k/average_l0_.*"
+cores python ce_bench/CE_Bench.py --sae_regex_pattern "gemma-scope-2b-pt-res" --sae_block_pattern "layer_12/width_16k/average_l0_.*"
 
 cores python ce_bench/neuron_steering.py
