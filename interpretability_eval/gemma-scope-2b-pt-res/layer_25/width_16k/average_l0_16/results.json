@@ -1,10 +1,11 @@
 {
+    "contrastive_dataset": "GulkoA/contrastive-stories-v2",
     "sae_release": "gemma-scope-2b-pt-res",
     "sae_id": "layer_25/width_16k/average_l0_16",
-    "contrastive_score_mean": 69.92749513449128,
-    "independent_score_mean": 82.51731768735905,
-    "interpretability_score_mean": 82.07985860293674,
-    "total_rows": 500,
+    "contrastive_score_mean": 56.1439754486084,
+    "independent_score_mean": 81.07894620895385,
+    "interpretability_score_mean": 72.49659700393677,
+    "total_rows": 80,
     "sae_config": {
         "architecture": "jumprelu",
         "d_in": 2304,
@@ -31,5 +32,5 @@
             null
         ]
     },
-    "date": "2025-05-05 05:09:31"
+    "date": "2025-05-08 06:55:00"
 }

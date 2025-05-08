@@ -27,6 +27,7 @@ we also hypothesize that the simple summation of them can be a naive yet reasona
 
 ### our result (preliminary):
 
+dataset: GulkoA/contrastive-stories-v1
 SAE suite: sae_bench_pythia70m
 
 ![sae](figures/sae_analysis_sae_bench_pythia70m_sweep_4.png)
@@ -39,6 +40,7 @@ SAE suite: 65k width Gemma-2-2B
 
 ### Depth of Layers
 
+dataset: GulkoA/contrastive-stories-v2
 SAE suite: 16k gemma-scope-2b-pt-res
 
 ![depth](figures/depth_analysis_gemma-scope-2b-pt-res_16k.png)
@@ -47,11 +49,18 @@ SAE suite: 16k gemma-scope-2b-pt-res
 
 ### our result (preliminary)
 
+
+dataset: GulkoA/contrastive-stories-v1
+SAE suite: gemma-scope-2b-pt at layer 12, 16k width
+
 ![layer type](figures/layer_type_analysis_gemma-scope-2b-pt-_layer_12_16k.png)
 
 ### Width of Latent Space
 
 ### our result (preliminary):
+
+dataset: GulkoA/contrastive-stories-v2
+SAE suite: 16k gemma-scope-2b-pt-res at layer 12
 
 ![width](figures/width_analysis_gemma-scope-2b-pt-res_layer_12.png)
 
