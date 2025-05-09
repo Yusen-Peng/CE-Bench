@@ -323,7 +323,7 @@ def run_eval_once(
     df.to_csv(f"{logs_folder}/responsible_neurons.csv", index=True) # we need to keep track of the indices
 
     results = {
-        "contrastive_dataset": "GulkoA/contrastive-stories-v2",
+        "contrastive_dataset": "GulkoA/contrastive-stories-v3",
         "sae_release": sae_release,
         "sae_id": sae_id,
         "contrastive_score_mean": contrastive_score_mean,
@@ -378,7 +378,7 @@ def run_eval(
     output_path: str,
 ) -> dict[str, Any]:
     # os.makedirs(output_path, exist_ok=True)
-    dataset_path = "GulkoA/contrastive-stories-v2"
+    dataset_path = "GulkoA/contrastive-stories-v3"
     print(f"loading dataset {dataset_path}")
     dataset = load_dataset(dataset_path, split="train")
 
@@ -396,7 +396,7 @@ def run_eval(
 
     print(f"Running evaluation for {len(args)} SAEs on {device}")
 
-    with Pool(3) as pool:
+    with Pool(1) as pool:
         pool.map(run_eval_once_pool, args)
 
 def create_config_and_selected_saes(

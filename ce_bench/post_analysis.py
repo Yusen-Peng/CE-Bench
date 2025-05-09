@@ -337,13 +337,13 @@ def width_analysis(sae_release: str, layer: str):
     plt.show()
 
 
-def sae_analysis(sae_release_series: str, sae_pool: List[str], block_num: int):
+def sae_analysis(sae_release_series: str, sae_pool: List[str], block_num: int, dataset_ver: str):
     results_by_sae = {}
     block_prefix = f"blocks.{block_num}.hook_resid_post"
 
     for sae_variant in sae_pool:
         sae_release = f"{sae_release_series}{sae_variant}"
-        base_path = os.path.expanduser(f"interpretability_eval/{sae_release}")
+        base_path = os.path.expanduser(f"{dataset_ver}_results/{sae_release}")
 
         scores = []
         for subfolder in os.listdir(base_path):
@@ -362,7 +362,16 @@ def sae_analysis(sae_release_series: str, sae_pool: List[str], block_num: int):
         if scores:
             results_by_sae[sae_variant] = scores
 
-    # Prepare plot data
+    average_scores_by_sae = {
+        variant: (
+            np.mean([s[0] for s in scores]),
+            np.mean([s[1] for s in scores]),
+            np.mean([s[2] for s in scores]),
+        )
+        for variant, scores in results_by_sae.items()
+    }
+
+    # Visualization (unchanged)
     sae_indices = []
     contrastive_avgs = []
     independence_avgs = []
@@ -380,50 +389,113 @@ def sae_analysis(sae_release_series: str, sae_pool: List[str], block_num: int):
             independence_points.append((i, s[1]))
             interpretability_points.append((i, s[2]))
 
-        contrastive_avgs.append(np.mean([s[0] for s in scores]))
-        independence_avgs.append(np.mean([s[1] for s in scores]))
-        interpretability_avgs.append(np.mean([s[2] for s in scores]))
+        contrastive_avgs.append(np.mean([s[0] for s in scores]) if scores else None)
+        independence_avgs.append(np.mean([s[1] for s in scores]) if scores else None)
+        interpretability_avgs.append(np.mean([s[2] for s in scores]) if scores else None)
 
     # Plot
     fig, axs = plt.subplots(1, 3, figsize=(15, 4))
-    fig.suptitle(f"Score vs. SAE Variant (Block {block_num})", fontsize=14)
+    fig.suptitle(f"Score vs. SAE Variant (Block {block_num}) for dataset {dataset_ver}", fontsize=14)
 
-    # truncate each sae from the pool up to "_"
-    sae_pool = [sae.split("_")[0] for sae in sae_pool]
-    xticks = list(range(len(sae_pool)))
+    # Truncate SAE variant names
+    sae_labels = [sae.split("_")[0] for sae in sae_pool]
+    sae_labels = ["p_anneal" if s == "p" else s for s in sae_labels]
+    xticks = list(range(len(sae_labels)))
 
-    # Contrastive
     axs[0].scatter(*zip(*contrastive_points), alpha=1.0, color='skyblue', s=20, label="All Runs")
     axs[0].plot(sae_indices, contrastive_avgs, color='blue', marker='o', markersize=2, label="Avg")
     axs[0].set_title("Contrastive Score")
     axs[0].set_xticks(xticks)
-    axs[0].set_xticklabels(sae_pool, rotation=15)
+    axs[0].set_xticklabels(sae_labels, rotation=15)
     axs[0].set_ylabel("Score")
     axs[0].grid(True)
     axs[0].legend()
 
-    # Independence
     axs[1].scatter(*zip(*independence_points), alpha=1.0, color='lightgreen', s=20, label="All Runs")
     axs[1].plot(sae_indices, independence_avgs, color='green', marker='o', markersize=2, label="Avg")
     axs[1].set_title("Independence Score")
     axs[1].set_xticks(xticks)
-    axs[1].set_xticklabels(sae_pool, rotation=15)
+    axs[1].set_xticklabels(sae_labels, rotation=15)
     axs[1].set_ylabel("Score")
     axs[1].grid(True)
     axs[1].legend()
 
-    # Interpretability
     axs[2].scatter(*zip(*interpretability_points), alpha=1.0, color='violet', s=20, label="All Runs")
     axs[2].plot(sae_indices, interpretability_avgs, color='purple', marker='o', markersize=2, label="Avg")
     axs[2].set_title("Interpretability Score")
     axs[2].set_xticks(xticks)
-    axs[2].set_xticklabels(sae_pool, rotation=15)
+    axs[2].set_xticklabels(sae_labels, rotation=15)
     axs[2].set_ylabel("Score")
     axs[2].grid(True)
     axs[2].legend()
 
     plt.tight_layout(rect=[0, 0, 1, 0.95])
-    plt.savefig(f"figures/sae_analysis_{sae_release_series}{block_num}.png")
+    plt.savefig(f"figures/sae_analysis_{sae_release_series}{block_num}_{dataset_ver}.png")
+
+    return results_by_sae, average_scores_by_sae
+
+
+
+
+def plot_v2_vs_v3_scores(v2_avg: dict, v3_avg: dict, sae_pool: list):
+    score_types = ["contrastive", "independence", "interpretability"]
+    colors = ['skyblue', 'lightgreen', 'violet']
+
+    # Map each SAE variant to a display label (truncate before first underscore)
+    sae_labels = [s.split("_")[0] for s in sae_pool]
+    sae_labels = ["p_anneal" if label == "p" else label for label in sae_labels]
+
+    # Store unpacked score arrays
+    v2_scores = {k: [] for k in score_types}
+    v3_scores = {k: [] for k in score_types}
+    valid_labels = []
+
+    for sae, label in zip(sae_pool, sae_labels):
+        v2_tuple = v2_avg.get(sae)
+        v3_tuple = v3_avg.get(sae)
+
+        if v2_tuple and v3_tuple:
+            v2_scores["contrastive"].append(v2_tuple[0])
+            v2_scores["independence"].append(v2_tuple[1])
+            v2_scores["interpretability"].append(v2_tuple[2])
+
+            v3_scores["contrastive"].append(v3_tuple[0])
+            v3_scores["independence"].append(v3_tuple[1])
+            v3_scores["interpretability"].append(v3_tuple[2])
+
+            valid_labels.append(label)
+        else:
+            print(f"[WARN] Missing data for {sae}")
+
+    fig, axs = plt.subplots(1, 3, figsize=(15, 4))
+    fig.suptitle("v2 vs. v3 Score Comparison per SAE Variant", fontsize=14)
+
+    for i, score_type in enumerate(score_types):
+        x = v2_scores[score_type]
+        y = v3_scores[score_type]
+
+        axs[i].scatter(x, y, color=colors[i], s=40, label="SAE Variants")
+
+        # Diagonal line
+        min_val = min(x + y)
+        max_val = max(x + y)
+        axs[i].plot([min_val, max_val], [min_val, max_val], 'k--', alpha=0.6, label="y = x")
+
+        # Annotations
+        for j, label in enumerate(valid_labels):
+            axs[i].annotate(label, (x[j] + 0.5, y[j] + 0.5), fontsize=8)
+
+        axs[i].set_title(f"{score_type.capitalize()} Score")
+        axs[i].set_xlabel("v2")
+        axs[i].set_ylabel("v3")
+        axs[i].grid(True)
+        axs[i].set_aspect('equal', adjustable='box')
+        axs[i].legend(loc='upper left', fontsize=8)
+
+    plt.tight_layout(rect=[0, 0, 1, 0.95])
+    plt.savefig("figures/v2_vs_v3_score_scatter.png")
+    plt.show()
+
 
 def arg_parser():
     parser = argparse.ArgumentParser(description="Post analysis of neuron steering")
@@ -471,15 +543,31 @@ if __name__ == "__main__":
             layer=layer,
         )
     elif args.task_name == "sae":
-        sae_release_series = "sae_bench_pythia70m_sweep_"
-        sae_pool = ["gated_ctx128_0730", "panneal_ctx128_0730", "standard_ctx128_0712", "topk_ctx128_0730"]
-        block_num = 4
-
-        sae_analysis(
+        sae_release_series = "sae_bench_gemma-2-2b_"
+        sae_pool = ["batch_top_k_width-2pow16_date-0107", 
+                    "gated_width-2pow16_date-0107", 
+                    "p_anneal_width-2pow16_date-0107", 
+                    "standard_new_width-2pow16_date-0107",
+                    "top_k_width-2pow16_date-0107"
+                    ]
+        block_num = 12
+        dataset_ver_1 = "v2"
+        v2_runs, v2_avg = sae_analysis(
             sae_release_series=sae_release_series,
             sae_pool=sae_pool,
             block_num=block_num,
+            dataset_ver=dataset_ver_1,
         )
+
+        dataset_ver_2 = "v3"
+        v3_runs, v3_avg = sae_analysis(
+            sae_release_series=sae_release_series,
+            sae_pool=sae_pool,
+            block_num=block_num,
+            dataset_ver=dataset_ver_2,
+        )
+
+        plot_v2_vs_v3_scores(v2_avg, v3_avg, sae_pool)
     else:
         raise ValueError(f"Unknown task name: {args.task_name}")
     
