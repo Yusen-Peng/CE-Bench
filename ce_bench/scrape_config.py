@@ -26,7 +26,7 @@ def sweep_meta(folder_name: str):
 
 def build_yaml_from_nested_structure(
     repo_id: str,
-    model_name: str = "gemma-2-2b",
+    model_name: str = "google/gemma-2-2b",
     out_yaml: str = "all_sweeps.yaml"
 ):
     repo_files = list_repo_files(repo_id, repo_type="model")
