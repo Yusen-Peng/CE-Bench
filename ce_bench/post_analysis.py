@@ -548,16 +548,18 @@ if __name__ == "__main__":
                     "gated_width-2pow16_date-0107", 
                     "p_anneal_width-2pow16_date-0107", 
                     "standard_new_width-2pow16_date-0107",
-                    "top_k_width-2pow16_date-0107"
+                    "top_k_width-2pow16_date-0107",
+                    "jump_relu_width-2pow16_date-0107",
+                    "matryoshka_batch_top_k_width-2pow16_date-0107"
                     ]
         block_num = 12
-        dataset_ver_1 = "v2"
-        v2_runs, v2_avg = sae_analysis(
-            sae_release_series=sae_release_series,
-            sae_pool=sae_pool,
-            block_num=block_num,
-            dataset_ver=dataset_ver_1,
-        )
+        # dataset_ver_1 = "v2"
+        # v2_runs, v2_avg = sae_analysis(
+        #     sae_release_series=sae_release_series,
+        #     sae_pool=sae_pool,
+        #     block_num=block_num,
+        #     dataset_ver=dataset_ver_1,
+        # )
 
         dataset_ver_2 = "v3"
         v3_runs, v3_avg = sae_analysis(
@@ -567,10 +569,6 @@ if __name__ == "__main__":
             dataset_ver=dataset_ver_2,
         )
 
-        plot_v2_vs_v3_scores(v2_avg, v3_avg, sae_pool)
+        # plot_v2_vs_v3_scores(v2_avg, v3_avg, sae_pool)
     else:
         raise ValueError(f"Unknown task name: {args.task_name}")
-    
-
-
-

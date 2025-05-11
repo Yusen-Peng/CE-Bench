@@ -2,10 +2,10 @@
     "contrastive_dataset": "GulkoA/contrastive-stories-v3",
     "sae_release": "sae_bench_gemma-2-2b_p_anneal_width-2pow16_date-0107",
     "sae_id": "blocks.12.hook_resid_post__trainer_0",
-    "contrastive_score_mean": 62.14001202216515,
-    "independent_score_mean": 76.61420890367948,
-    "interpretability_score_mean": 68.0974324446458,
-    "total_rows": 520,
+    "contrastive_score_mean": 61.770692990376396,
+    "independent_score_mean": 76.58999460660495,
+    "interpretability_score_mean": 67.85553539716281,
+    "total_rows": 1040,
     "sae_config": {
         "architecture": "standard",
         "d_in": 2304,
@@ -32,5 +32,5 @@
             null
         ]
     },
-    "date": "2025-05-09 20:59:10"
+    "date": "2025-05-11 05:44:06"
 }
