@@ -337,13 +337,13 @@ def width_analysis(sae_release: str, layer: str):
     plt.show()
 
 
-def sae_analysis(sae_release_series: str, sae_pool: List[str], block_num: int, dataset_ver: str):
+def sae_analysis(sae_release_series: str, sae_pool: List[str], block_num: int, dataset_ver: str, metric: str):
     results_by_sae = {}
     block_prefix = f"blocks.{block_num}.hook_resid_post"
 
     for sae_variant in sae_pool:
         sae_release = f"{sae_release_series}{sae_variant}"
-        base_path = os.path.expanduser(f"{dataset_ver}_results/{sae_release}")
+        base_path = os.path.expanduser(f"interpretability_eval/{sae_release}")
 
         scores = []
         for subfolder in os.listdir(base_path):
@@ -351,9 +351,9 @@ def sae_analysis(sae_release_series: str, sae_pool: List[str], block_num: int, d
             try:
                 with open(results_path, "r") as f:
                     results = json.load(f)
-                    contrastive = results.get("contrastive_score_mean")
-                    independence = results.get("independent_score_mean")
-                    interpretability = results.get("interpretability_score_mean")
+                    contrastive = results.get("contrastive_score_mean")[metric]
+                    independence = results.get("independent_score_mean")[metric]
+                    interpretability = results.get("interpretability_score_mean")[metric]
                     if all(v is not None for v in [contrastive, independence, interpretability]):
                         scores.append((contrastive, independence, interpretability))
             except json.JSONDecodeError:
@@ -395,7 +395,7 @@ def sae_analysis(sae_release_series: str, sae_pool: List[str], block_num: int, d
 
     # Plot
     fig, axs = plt.subplots(1, 3, figsize=(15, 4))
-    fig.suptitle(f"Score vs. SAE Variant (Block {block_num}) for dataset {dataset_ver}", fontsize=14)
+    fig.suptitle(f"Score vs. SAE Variant (Block {block_num}) for dataset {dataset_ver} with metric {metric}", fontsize=14)
 
     # Truncate SAE variant names
     sae_labels = [sae.split("_")[0] for sae in sae_pool]
@@ -430,7 +430,7 @@ def sae_analysis(sae_release_series: str, sae_pool: List[str], block_num: int, d
     axs[2].legend()
 
     plt.tight_layout(rect=[0, 0, 1, 0.95])
-    plt.savefig(f"figures/sae_analysis_{sae_release_series}{block_num}_{dataset_ver}.png")
+    plt.savefig(f"figures/sae_analysis_{sae_release_series}{block_num}_{dataset_ver}_{metric}.png")
 
     return results_by_sae, average_scores_by_sae
 
@@ -544,7 +544,8 @@ if __name__ == "__main__":
         )
     elif args.task_name == "sae":
         sae_release_series = "sae_bench_gemma-2-2b_"
-        sae_pool = ["batch_top_k_width-2pow16_date-0107", 
+        sae_pool = [
+                    "batch_top_k_width-2pow16_date-0107", 
                     "gated_width-2pow16_date-0107", 
                     "p_anneal_width-2pow16_date-0107", 
                     "standard_new_width-2pow16_date-0107",
@@ -562,12 +563,26 @@ if __name__ == "__main__":
         # )
 
         dataset_ver_2 = "v3"
-        v3_runs, v3_avg = sae_analysis(
-            sae_release_series=sae_release_series,
-            sae_pool=sae_pool,
-            block_num=block_num,
-            dataset_ver=dataset_ver_2,
-        )
+        metric_zoo = [
+            "max",
+            "mean",
+            "outlier_count_1_both",
+            "outlier_count_1_upper",
+            "outlier_count_2_both",
+            "outlier_count_2_upper",
+            "outlier_count_3_both",
+            "outlier_count_3_upper",
+        ]
+
+        for metric in metric_zoo:
+
+            v3_runs, v3_avg = sae_analysis(
+                sae_release_series=sae_release_series,
+                sae_pool=sae_pool,
+                block_num=block_num,
+                dataset_ver=dataset_ver_2,
+                metric=metric
+            )
 
         # plot_v2_vs_v3_scores(v2_avg, v3_avg, sae_pool)
     else:
