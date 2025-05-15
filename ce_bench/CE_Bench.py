@@ -65,7 +65,7 @@ def run_eval_once(
         sae_release, sae_id, device, config.llm_dtype
     )
     
-    generate_histograms = True
+    generate_histograms = False
     log_vectors = False
 
     logs_folder = f"interpretability_eval/{sae_release}/{sae_id}"
@@ -91,7 +91,6 @@ def run_eval_once(
     neuron_interpretability_score_subject_pairs = {}
 
     total_rows = len(dataset)
-    total_rows = 1
 
     all_activations = []
 

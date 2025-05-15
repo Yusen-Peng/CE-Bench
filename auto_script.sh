@@ -15,7 +15,7 @@ sae_patterns=(
 for pattern in "${sae_patterns[@]}"; do
   for trainer_id in {0..5}; do
     echo "Running pattern: $pattern | trainer: $trainer_id"
-    CUDA_VISIBLE_DEVICES=0 nohup taskset -c 20,21,22,23,24 python ce_bench/CE_Bench.py \
+    CUDA_VISIBLE_DEVICES=0 nohup taskset -c 10-22 python ce_bench/CE_Bench.py \
       --sae_regex_pattern "$pattern" \
       --sae_block_pattern "blocks.12.hook_resid_post__trainer_${trainer_id}"
     
