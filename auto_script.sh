@@ -2,9 +2,9 @@
 
 # List of SAE patterns
 sae_patterns=(
-  #"sae_bench_gemma-2-2b_batch_top_k_width-2pow16_date-0107"
-  #"sae_bench_gemma-2-2b_gated_width-2pow16_date-0107"
-  #"sae_bench_gemma-2-2b_p_anneal_width-2pow16_date-0107"
+  "sae_bench_gemma-2-2b_batch_top_k_width-2pow16_date-0107"
+  "sae_bench_gemma-2-2b_gated_width-2pow16_date-0107"
+  "sae_bench_gemma-2-2b_p_anneal_width-2pow16_date-0107"
   "sae_bench_gemma-2-2b_standard_new_width-2pow16_date-0107"
   "sae_bench_gemma-2-2b_top_k_width-2pow16_date-0107"
   "sae_bench_gemma-2-2b_jump_relu_width-2pow16_date-0107"

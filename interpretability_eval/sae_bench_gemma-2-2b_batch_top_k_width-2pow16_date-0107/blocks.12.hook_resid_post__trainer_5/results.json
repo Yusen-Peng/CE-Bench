@@ -1,38 +1,38 @@
 {
-    "contrastive_dataset": "GulkoA/contrastive-stories-v3",
+    "contrastive_dataset": "GulkoA/contrastive-stories-v4",
     "sae_release": "sae_bench_gemma-2-2b_batch_top_k_width-2pow16_date-0107",
     "sae_id": "blocks.12.hook_resid_post__trainer_5",
     "contrastive_score_mean": {
-        "max": 56.03928954417889,
-        "mean": -2.29892276155834e-11,
-        "outlier_count_1_both": 2225.7028846153844,
-        "outlier_count_1_upper": 2225.7028846153844,
-        "outlier_count_2_both": 1320.6259615384615,
-        "outlier_count_2_upper": 1320.6259615384615,
-        "outlier_count_3_both": 841.7471153846154,
-        "outlier_count_3_upper": 841.7471153846154
+        "max": 51.88246154785156,
+        "mean": -3.259629011154175e-09,
+        "outlier_count_1_both": 2068.0,
+        "outlier_count_1_upper": 2068.0,
+        "outlier_count_2_both": 1271.0,
+        "outlier_count_2_upper": 1271.0,
+        "outlier_count_3_both": 816.0,
+        "outlier_count_3_upper": 816.0
     },
     "independent_score_mean": {
-        "max": 60.23815576846783,
-        "mean": 6.067029272134488e-11,
-        "outlier_count_1_both": 1724.8365384615386,
-        "outlier_count_1_upper": 1724.8365384615386,
-        "outlier_count_2_both": 595.0105769230769,
-        "outlier_count_2_upper": 595.0105769230769,
-        "outlier_count_3_both": 235.09326923076924,
-        "outlier_count_3_upper": 235.09326923076924
+        "max": 55.656471252441406,
+        "mean": -6.05359673500061e-09,
+        "outlier_count_1_both": 1768.0,
+        "outlier_count_1_upper": 1768.0,
+        "outlier_count_2_both": 671.0,
+        "outlier_count_2_upper": 671.0,
+        "outlier_count_3_both": 243.0,
+        "outlier_count_3_upper": 243.0
     },
     "interpretability_score_mean": {
-        "max": 57.01661357146043,
-        "mean": 1.9342853472783016e-10,
-        "outlier_count_1_both": 1941.2384615384615,
-        "outlier_count_1_upper": 1941.2384615384615,
-        "outlier_count_2_both": 779.1769230769231,
-        "outlier_count_2_upper": 779.1769230769231,
-        "outlier_count_3_both": 334.5894230769231,
-        "outlier_count_3_upper": 334.5894230769231
+        "max": 55.090904235839844,
+        "mean": 1.3737007975578308e-08,
+        "outlier_count_1_both": 1978.0,
+        "outlier_count_1_upper": 1978.0,
+        "outlier_count_2_both": 867.0,
+        "outlier_count_2_upper": 867.0,
+        "outlier_count_3_both": 383.0,
+        "outlier_count_3_upper": 383.0
     },
-    "total_rows": 1040,
+    "total_rows": 1,
     "sae_config": {
         "architecture": "standard",
         "d_in": 2304,
@@ -59,5 +59,5 @@
             null
         ]
     },
-    "date": "2025-05-12 19:24:01"
+    "date": "2025-05-15 14:32:44"
 }

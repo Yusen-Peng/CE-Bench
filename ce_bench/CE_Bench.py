@@ -65,7 +65,7 @@ def run_eval_once(
         sae_release, sae_id, device, config.llm_dtype
     )
     
-    generate_histograms = False
+    generate_histograms = True
     log_vectors = False
 
     logs_folder = f"interpretability_eval/{sae_release}/{sae_id}"
@@ -91,7 +91,7 @@ def run_eval_once(
     neuron_interpretability_score_subject_pairs = {}
 
     total_rows = len(dataset)
-    # total_rows = 10
+    total_rows = 1
 
     all_activations = []
 
@@ -100,7 +100,7 @@ def run_eval_once(
         # filter out marked tokens
         text_A_original = dataset[pair_index]["story1"]
         text_B_original = dataset[pair_index]["story2"]
-        ground_truth_subject = dataset[pair_index]["subject"]
+        ground_truth_subject = dataset[pair_index]["subject_title"]
         tokenizer = model.tokenizer
         tokens = [tokenizer(text_A_original).to(device)["input_ids"], tokenizer(text_B_original).to(device)["input_ids"]]
             
@@ -229,47 +229,47 @@ def run_eval_once(
         elementwise_contrastive_score_np = elementwise_contrastive_score.numpy()
         elementwise_independence_score_np = elementwise_independence_score.numpy()
 
-        # if generate_histograms:
-        #     # Create a single row of plots with better title structure
-        #     plt.figure(figsize=(20, 5))  # Wider figure for one row
+        if generate_histograms:
+            # Create a single row of plots with better title structure
+            plt.figure(figsize=(20, 5))  # Wider figure for one row
             
-        #     # Set up title and subtitle
-        #     plt.suptitle(f"Interpretability Analysis - {ground_truth_subject}", fontsize=14, y=0.98)
-        #     plt.figtext(0.5, 0.91, 
-        #             f"Contrastive: {contrastive_score:.4f} | Independent: {independence_score:.4f} | Interpretability: {interpretability_score:.4f} | Story1: {text_A_original[:100]}...", 
-        #             ha="center", fontsize=12)
+            # Set up title and subtitle
+            plt.suptitle(f"Interpretability Analysis - {ground_truth_subject}", fontsize=14, y=0.98)
+            plt.figtext(0.5, 0.91, 
+                    f"Contrastive: {contrastive_score_zoo['max']:.4f} | Independent: {independence_score_zoo['max']:.4f} | Interpretability: {interpretability_score_zoo['max']:.4f} | Story1: {text_A_original[:100]}...", 
+                    ha="center", fontsize=12)
             
-        #     # Scatter plot
-        #     plt.subplot(1, 4, 1)
-        #     scatter = plt.scatter(elementwise_contrastive_score_np, elementwise_independence_score_np, 
-        #                 c=elementwise_interpretability_score_np, cmap='viridis')
-        #     plt.colorbar(scatter, label="Interpretability Score")
-        #     plt.xlabel("Contrastive Score")
-        #     plt.ylabel("Independent Score")
-        #     plt.title("Feature Space")
+            # Scatter plot
+            plt.subplot(1, 4, 1)
+            scatter = plt.scatter(elementwise_contrastive_score_np, elementwise_independence_score_np, 
+                        c=elementwise_interpretability_score_np, cmap='viridis')
+            plt.colorbar(scatter, label="Interpretability Score")
+            plt.xlabel("Contrastive Score")
+            plt.ylabel("Independent Score")
+            plt.title("Feature Space")
             
-        #     # Histograms in a row
-        #     plt.subplot(1, 4, 2)
-        #     plt.hist(elementwise_contrastive_score_np, bins=50)
-        #     plt.title("Contrastive Distribution")
-        #     plt.xlabel("z-score")
-        #     plt.ylabel("Frequency")
+            # Histograms in a row
+            plt.subplot(1, 4, 2)
+            plt.hist(elementwise_contrastive_score_np, bins=50)
+            plt.title("Contrastive Distribution")
+            plt.xlabel("z-score")
+            plt.ylabel("Frequency")
             
-        #     plt.subplot(1, 4, 3)
-        #     plt.hist(elementwise_independence_score_np, bins=50)
-        #     plt.title("Independence Distribution")
-        #     plt.xlabel("z-score")
+            plt.subplot(1, 4, 3)
+            plt.hist(elementwise_independence_score_np, bins=50)
+            plt.title("Independence Distribution")
+            plt.xlabel("z-score")
             
-        #     plt.subplot(1, 4, 4)
-        #     plt.hist(elementwise_interpretability_score_np, bins=50)
-        #     plt.title("Interpretability Distribution")
-        #     plt.xlabel("z-score")
+            plt.subplot(1, 4, 4)
+            plt.hist(elementwise_interpretability_score_np, bins=50)
+            plt.title("Interpretability Distribution")
+            plt.xlabel("z-score")
             
-        #     plt.tight_layout()
-        #     plt.subplots_adjust(top=0.85)  # Make room for the titles
+            plt.tight_layout()
+            plt.subplots_adjust(top=0.85)  # Make room for the titles
             
-        #     plt.savefig(f"{logs_folder}/histograms/{pair_index}.png")
-        #     plt.close()
+            plt.savefig(f"{logs_folder}/histograms/{pair_index}.png")
+            plt.close()
 
         """
             Responsibility Clustering
@@ -450,7 +450,7 @@ def run_eval_once(
     # df.to_csv(f"{logs_folder}/responsible_neurons.csv", index=True) # we need to keep track of the indices
 
     results = {
-        "contrastive_dataset": "GulkoA/contrastive-stories-v3",
+        "contrastive_dataset": "GulkoA/contrastive-stories-v4",
         "sae_release": sae_release,
         "sae_id": sae_id,
         "contrastive_score_mean": contrastive_score_mean,
@@ -505,7 +505,7 @@ def run_eval(
     output_path: str,
 ) -> dict[str, Any]:
     # os.makedirs(output_path, exist_ok=True)
-    dataset_path = "GulkoA/contrastive-stories-v3"
+    dataset_path = "GulkoA/contrastive-stories-v4"
     print(f"loading dataset {dataset_path}")
     dataset = load_dataset(dataset_path, split="train")
 
