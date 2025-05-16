@@ -1,0 +1,65 @@
+{
+    "contrastive_dataset": "GulkoA/contrastive-stories-v3",
+    "sae_release": "sae_bench_gemma-2-2b_top_k_width-2pow16_date-0107",
+    "sae_id": "blocks.12.hook_resid_post__trainer_4",
+    "contrastive_score_mean": {
+        "max": 81.31922126183143,
+        "mean": 2.7035779427163876e-10,
+        "outlier_count_1_both": 2149.1961538461537,
+        "outlier_count_1_upper": 2149.1961538461537,
+        "outlier_count_2_both": 1121.7836538461538,
+        "outlier_count_2_upper": 1121.7836538461538,
+        "outlier_count_3_both": 662.0326923076923,
+        "outlier_count_3_upper": 662.0326923076923
+    },
+    "independent_score_mean": {
+        "max": 93.81162888453557,
+        "mean": 1.7171259969472886e-10,
+        "outlier_count_1_both": 743.5375,
+        "outlier_count_1_upper": 743.5375,
+        "outlier_count_2_both": 258.80384615384617,
+        "outlier_count_2_upper": 258.80384615384617,
+        "outlier_count_3_both": 120.72115384615384,
+        "outlier_count_3_upper": 120.72115384615384
+    },
+    "interpretability_score_mean": {
+        "max": 89.22253598433275,
+        "mean": 2.5488239211531786e-10,
+        "outlier_count_1_both": 1050.8076923076924,
+        "outlier_count_1_upper": 1050.8076923076924,
+        "outlier_count_2_both": 412.16346153846155,
+        "outlier_count_2_upper": 412.16346153846155,
+        "outlier_count_3_both": 193.56923076923076,
+        "outlier_count_3_upper": 193.56923076923076
+    },
+    "total_rows": 1040,
+    "sae_config": {
+        "architecture": "standard",
+        "d_in": 2304,
+        "d_sae": 65536,
+        "dtype": "torch.bfloat16",
+        "device": "cuda",
+        "model_name": "gemma-2-2b",
+        "hook_name": "blocks.12.hook_resid_post",
+        "hook_layer": 12,
+        "hook_head_index": null,
+        "activation_fn_str": "topk",
+        "activation_fn_kwargs": {
+            "k": 320
+        },
+        "apply_b_dec_to_input": true,
+        "finetuning_scaling_factor": false,
+        "sae_lens_training_version": null,
+        "prepend_bos": true,
+        "dataset_path": "monology/pile-uncopyrighted",
+        "dataset_trust_remote_code": true,
+        "context_size": 1024,
+        "normalize_activations": "none",
+        "neuronpedia_id": null,
+        "model_from_pretrained_kwargs": {},
+        "seqpos_slice": [
+            null
+        ]
+    },
+    "date": "2025-05-12 22:03:33"
+}

@@ -1,0 +1,37 @@
+{
+    "sae_release": "sae_bench_pythia70m_sweep_topk_ctx128_0730",
+    "sae_id": "blocks.4.hook_resid_post__trainer_0",
+    "contrastive_score_mean": 28.503396051937774,
+    "independent_score_mean": 37.53462790656336,
+    "interpretability_score_mean": 35.57362188752165,
+    "total_rows": 500,
+    "sae_config": {
+        "architecture": "standard",
+        "d_in": 512,
+        "d_sae": 4096,
+        "dtype": "torch.float32",
+        "device": "cuda",
+        "model_name": "pythia-70m-deduped",
+        "hook_name": "blocks.4.hook_resid_post",
+        "hook_layer": 4,
+        "hook_head_index": null,
+        "activation_fn_str": "topk",
+        "activation_fn_kwargs": {
+            "k": 20
+        },
+        "apply_b_dec_to_input": true,
+        "finetuning_scaling_factor": false,
+        "sae_lens_training_version": null,
+        "prepend_bos": true,
+        "dataset_path": "monology/pile-uncopyrighted",
+        "dataset_trust_remote_code": true,
+        "context_size": 128,
+        "normalize_activations": "none",
+        "neuronpedia_id": "pythia-70m-deduped/4-sae_bench-topk-res-4k__trainer_0_step_final",
+        "model_from_pretrained_kwargs": {},
+        "seqpos_slice": [
+            null
+        ]
+    },
+    "date": "2025-05-07 04:47:02"
+}

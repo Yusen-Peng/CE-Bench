@@ -31,6 +31,22 @@ from multiprocessing import Pool
 from sae_lens.toolkit.pretrained_saes_directory import get_pretrained_saes_directory
 
 
+def outlier_counting_two_way(tensor: Tensor, num_sigmas: int = 1) -> int:
+    mean = tensor.mean()
+    std = tensor.std(unbiased=False)
+    lower_bound = mean - num_sigmas * std
+    upper_bound = mean + num_sigmas * std
+    outliers = (tensor < lower_bound) | (tensor > upper_bound)
+    return outliers.sum().item()
+
+def outlier_counting_one_way(tensor: Tensor, num_sigmas: int = 1) -> int:
+    mean = tensor.mean()
+    std = tensor.std(unbiased=False)
+    upper_bound = mean + num_sigmas * std
+    outliers = tensor > upper_bound
+    return outliers.sum().item()
+
+
 def run_eval_once(
     dataset: Dataset,
     device: str,
@@ -45,11 +61,11 @@ def run_eval_once(
      
     print(f"Running evaluation for {sae_release} {sae_id}")
 
-    sae_id, sae, sparsity = load_sae(
+    sae_id, sae, _ = load_sae(
         sae_release, sae_id, device, config.llm_dtype
     )
     
-    generate_histograms = False
+    generate_histograms = True
     log_vectors = False
 
     logs_folder = f"interpretability_eval/{sae_release}/{sae_id}"
@@ -70,50 +86,28 @@ def run_eval_once(
     elementwise_contrastive_scores_per_subject = defaultdict(list)
     elementwise_independence_scores_per_subject = defaultdict(list)
 
+    shift_v_per_subect = defaultdict(list)
+
     neuron_interpretability_score_subject_pairs = {}
 
     total_rows = len(dataset)
-    # total_rows = 10
+    total_rows = 1
+
+    all_activations = []
+
     for pair_index in tqdm(range(total_rows)):
 
         # filter out marked tokens
         text_A_original = dataset[pair_index]["story1"]
         text_B_original = dataset[pair_index]["story2"]
-        ground_truth_subject = dataset[pair_index]["subject"]
-
-        if "relevance to " in ground_truth_subject:
-            continue
-
+        ground_truth_subject = dataset[pair_index]["subject_title"]
         tokenizer = model.tokenizer
-    
-        tokenizer.add_special_tokens({"additional_special_tokens": ["<subject>", "</subject>"]})
-        subject_tokens = tokenizer.convert_tokens_to_ids(["<subject>", "</subject>"])
-        # print(subject_tokens)
         tokens = [tokenizer(text_A_original).to(device)["input_ids"], tokenizer(text_B_original).to(device)["input_ids"]]
-        clean_tokens = [[],[]]
-
-        # find all marked tokens and record ids of all marked tokens
-        marked_tokens_indices = [[], []]
-        in_subject = False
-        # print(tokens_A["input_ids"])
-        for story_i in range(2):
-            for token_index in range(len(tokens[story_i])):
-                token_id = tokens[story_i][token_index]
-                if in_subject:
-                    if token_id == subject_tokens[1]:
-                        in_subject = False
-                    else:
-                        marked_tokens_indices[story_i].append(len(clean_tokens[story_i]))
-                        clean_tokens[story_i].append(token_id)
-                elif token_id == subject_tokens[0]:
-                    in_subject = True
-                else:
-                    clean_tokens[story_i].append(token_id)
             
 
         # Extract activations from the correct layer
-        clean_tokens_A = torch.tensor(clean_tokens[0]).to(device)
-        clean_tokens_B = torch.tensor(clean_tokens[1]).to(device)
+        clean_tokens_A = torch.tensor(tokens[0]).to(device)
+        clean_tokens_B = torch.tensor(tokens[1]).to(device)
 
         with torch.no_grad():
             _, cache = model.run_with_cache(clean_tokens_A) 
@@ -129,78 +123,112 @@ def run_eval_once(
 
         # keep track of I1 and I2 for independent study
         I1 = torch.zeros(activations_A.shape[2])
-        I1_token_num = 0
-        I2 = torch.zeros(activations_B.shape[2])
-        I2_token_num = 0    
+        I1_token_num = 0 
         # compute V1 and V2 only for the marked tokens
         V1 = torch.zeros(activations_A.shape[2])
         V1_token_num = 0
         V2 = torch.zeros(activations_B.shape[2])
         V2_token_num = 0
 
-        for token_index, token_id in enumerate(clean_tokens[0]):
-            if token_index in marked_tokens_indices[0]:
-                # add the activations of this token to V1
-                V1 += activations_A[0, token_index, :]
-                V1_token_num += 1
-                I1 += activations_A[0, token_index, :]
-                I1_token_num += 1
-            else:
-                # FIXME: if average over everything
-                V1 += activations_A[0, token_index, :] 
-                V1_token_num += 1
-                I2 += activations_A[0, token_index, :]
-                I2_token_num += 1
-        
-        for token_index, token_id in enumerate(clean_tokens[1]):
-            # NOTE: a prefix space is added to match the marked tokens
-            if token_index in marked_tokens_indices[1]:
-                # add the activations of this token to V1
-                V2 += activations_B[0, token_index, :]
-                V2_token_num += 1
-                I1 += activations_B[0, token_index, :]
-                I1_token_num += 1
-            else:
-                # FIXME: if average over everything
-                V2 += activations_B[0, token_index, :] 
-                V2_token_num += 1
-                I2 += activations_B[0, token_index, :]
-                I2_token_num += 1
+        for token_index, token_id in enumerate(tokens[0]):
+            # FIXME: if average over everything
+            V1 += activations_A[0, token_index, :] 
+            V1_token_num += 1
+
+            I1 += activations_A[0, token_index, :]
+            I1_token_num += 1
+
+        for token_index, token_id in enumerate(tokens[1]):
+            # FIXME: if average over everything
+            V2 += activations_B[0, token_index, :] 
+            V2_token_num += 1
+
+            I1 += activations_B[0, token_index, :]
+            I1_token_num += 1
 
         V1 = V1 / V1_token_num if V1_token_num > 0 else V1
         V2 = V2 / V2_token_num if V2_token_num > 0 else V2
         I1 = I1 / I1_token_num if I1_token_num > 0 else I1
-        I2 = I2 / I2_token_num if I2_token_num > 0 else I2
 
+        all_activations.append((V1, V2, I1, ground_truth_subject))
 
         if log_vectors:
             df = pd.DataFrame({"V1": V1, "V2": V2, "delta": V1 - V2, "abs_delta": np.abs(V1 - V2)})
             df.to_csv(f"{logs_folder}/raw/V1_V2_{pair_index}.csv", index=True)
 
+
+    print(f"V1: {V1.shape}, V2: {V2.shape}, I1: {I1.shape}")
+
+    I2 = torch.zeros(activations_B.shape[2])
+    I2_token_num = len(all_activations)
+
+    for V1, V2, I1, ground_truth_subject in all_activations:
+        I2 += I2
+    I2 = I2 / I2_token_num if I2_token_num > 0 else I2
+
+    print(f"V1: {V1.shape}, V2: {V2.shape}, I1: {I1.shape}, I2: {I2.shape}")
+    for pair_index, (V1, V2, I1, ground_truth_subject) in tqdm(enumerate(all_activations)):
+
+        # compute the contrastive and independent scores
+
+        shift_v = I1 - I2
+        shift_v_per_subect[ground_truth_subject].append(shift_v)
+
         elementwise_contrast_distance = torch.abs(V1 - V2)
         elementwise_contrastive_score = elementwise_contrast_distance - torch.mean(elementwise_contrast_distance)
         st_dev = torch.std(elementwise_contrastive_score) if torch.std(elementwise_contrastive_score) != 0 else 1
         elementwise_contrastive_score /= st_dev
-        contrastive_score = torch.max(elementwise_contrastive_score).item()
+
+
+        contrastive_score_zoo = {
+            "max": torch.max(elementwise_contrastive_score).item(),
+            "mean": torch.mean(elementwise_contrastive_score).item(),
+            "outlier_count_1_both": outlier_counting_two_way(elementwise_contrastive_score, num_sigmas=1),
+            "outlier_count_1_upper": outlier_counting_one_way(elementwise_contrastive_score, num_sigmas=1),
+            "outlier_count_2_both": outlier_counting_two_way(elementwise_contrastive_score, num_sigmas=2),
+            "outlier_count_2_upper": outlier_counting_one_way(elementwise_contrastive_score, num_sigmas=2),
+            "outlier_count_3_both": outlier_counting_two_way(elementwise_contrastive_score, num_sigmas=3),
+            "outlier_count_3_upper": outlier_counting_one_way(elementwise_contrastive_score, num_sigmas=3),
+        }
 
         elementwise_independence_distance = torch.abs(I1 - I2)
         elementwise_independence_score = elementwise_independence_distance - torch.mean(elementwise_independence_distance)
         st_dev = torch.std(elementwise_independence_score) if torch.std(elementwise_independence_score) != 0 else 1
         elementwise_independence_score /= st_dev
-        independence_score = torch.max(elementwise_independence_score).item()
+
+        independence_score_zoo = {
+            "max": torch.max(elementwise_independence_score).item(),
+            "mean": torch.mean(elementwise_independence_score).item(),
+            "outlier_count_1_both": outlier_counting_two_way(elementwise_independence_score, num_sigmas=1),
+            "outlier_count_1_upper": outlier_counting_one_way(elementwise_independence_score, num_sigmas=1),
+            "outlier_count_2_both": outlier_counting_two_way(elementwise_independence_score, num_sigmas=2),
+            "outlier_count_2_upper": outlier_counting_one_way(elementwise_independence_score, num_sigmas=2),
+            "outlier_count_3_both": outlier_counting_two_way(elementwise_independence_score, num_sigmas=3),
+            "outlier_count_3_upper": outlier_counting_one_way(elementwise_independence_score, num_sigmas=3),
+        }
+
+
 
         elementwise_interpretability_distance = elementwise_contrast_distance + elementwise_independence_distance
         elementwise_interpretability_score = elementwise_interpretability_distance - torch.mean(elementwise_interpretability_distance)
         st_dev = torch.std(elementwise_interpretability_distance) if torch.std(elementwise_interpretability_distance) != 0 else 1
         elementwise_interpretability_score /= st_dev
-        interpretability_score = torch.max(elementwise_interpretability_score).item()
 
-        # tqdm.write(f"{pair_index}-{ground_truth_subject}-{elementwise_interpretability_score[:5]}")
-
+        interpretability_score_zoo = {
+            "max": torch.max(elementwise_interpretability_score).item(),
+            "mean": torch.mean(elementwise_interpretability_score).item(),
+            "outlier_count_1_both": outlier_counting_two_way(elementwise_interpretability_score, num_sigmas=1),
+            "outlier_count_1_upper": outlier_counting_one_way(elementwise_interpretability_score, num_sigmas=1),
+            "outlier_count_2_both": outlier_counting_two_way(elementwise_interpretability_score, num_sigmas=2),
+            "outlier_count_2_upper": outlier_counting_one_way(elementwise_interpretability_score, num_sigmas=2),
+            "outlier_count_3_both": outlier_counting_two_way(elementwise_interpretability_score, num_sigmas=3),
+            "outlier_count_3_upper": outlier_counting_one_way(elementwise_interpretability_score, num_sigmas=3),
+        }
 
         elementwise_interpretability_score_np = elementwise_interpretability_score.numpy()
         elementwise_contrastive_score_np = elementwise_contrastive_score.numpy()
         elementwise_independence_score_np = elementwise_independence_score.numpy()
+
         if generate_histograms:
             # Create a single row of plots with better title structure
             plt.figure(figsize=(20, 5))  # Wider figure for one row
@@ -208,7 +236,7 @@ def run_eval_once(
             # Set up title and subtitle
             plt.suptitle(f"Interpretability Analysis - {ground_truth_subject}", fontsize=14, y=0.98)
             plt.figtext(0.5, 0.91, 
-                    f"Contrastive: {contrastive_score:.4f} | Independent: {independence_score:.4f} | Interpretability: {interpretability_score:.4f} | Story1: {text_A_original[:100]}...", 
+                    f"Contrastive: {contrastive_score_zoo['max']:.4f} | Independent: {independence_score_zoo['max']:.4f} | Interpretability: {interpretability_score_zoo['max']:.4f} | Story1: {text_A_original[:100]}...", 
                     ha="center", fontsize=12)
             
             # Scatter plot
@@ -258,12 +286,13 @@ def run_eval_once(
         
 
 
-        # append the scores to the lists
-        contrastive_scores.append(contrastive_score)
-        independent_scores.append(independence_score)
-        interpretability_scores.append(interpretability_score)
+        # append the scores to the lists - for each metric in the zoo
+
+        contrastive_scores.append(contrastive_score_zoo)
+        independent_scores.append(independence_score_zoo)
+        interpretability_scores.append(interpretability_score_zoo)
         elementwise_interpretability_scores_per_subject[ground_truth_subject].append(elementwise_interpretability_score)
-        interpretability_scores_per_subject[ground_truth_subject].append(interpretability_score)
+        interpretability_scores_per_subject[ground_truth_subject].append(interpretability_score_zoo)
         elementwise_contrastive_scores_per_subject[ground_truth_subject].append(elementwise_contrastive_score_np)
         elementwise_independence_scores_per_subject[ground_truth_subject].append(elementwise_independence_score_np)
 
@@ -276,64 +305,152 @@ def run_eval_once(
     torch.cuda.empty_cache()
 
     # compute the average for contrastive and independent scores, and overall interpretability score
-    contrastive_scores = np.array(contrastive_scores)
-    independent_scores = np.array(independent_scores)
-    interpretability_scores = np.array(interpretability_scores)
-    contrastive_score_mean = np.mean(contrastive_scores)
-    independent_score_mean = np.mean(independent_scores)
-    interpretability_score_mean = np.mean(interpretability_scores)
-    tqdm.write(f"Contrastive score mean: {contrastive_score_mean:4f}")
-    tqdm.write(f"Independent score mean: {independent_score_mean:4f}")
-    tqdm.write(f"Interpretability score mean: {interpretability_score_mean:4f}")
+    contrastive_scores_max = []
+    contrastive_scores_mean = []
+    contrastive_scores_outlier_count_1_both = []
+    contrastive_scores_outlier_count_1_upper = []
+    contrastive_scores_outlier_count_2_both = []
+    contrastive_scores_outlier_count_2_upper = []
+    contrastive_scores_outlier_count_3_both = []
+    contrastive_scores_outlier_count_3_upper = []
 
-    interpretability_scores_per_neuron_per_subject = {}
-    for subject, scores in elementwise_interpretability_scores_per_subject.items():
-        all_stories = np.stack(scores, axis=0)
-        interpretability_scores_per_neuron_per_subject[subject] = np.mean(all_stories, axis=0).tolist()
+    for zoo in contrastive_scores:
+        contrastive_scores_max.append(zoo["max"])
+        contrastive_scores_mean.append(zoo["mean"])
+        contrastive_scores_outlier_count_1_both.append(zoo["outlier_count_1_both"])
+        contrastive_scores_outlier_count_1_upper.append(zoo["outlier_count_1_upper"])
+        contrastive_scores_outlier_count_2_both.append(zoo["outlier_count_2_both"])
+        contrastive_scores_outlier_count_2_upper.append(zoo["outlier_count_2_upper"])
+        contrastive_scores_outlier_count_3_both.append(zoo["outlier_count_3_both"])
+        contrastive_scores_outlier_count_3_upper.append(zoo["outlier_count_3_upper"])
     
-    average_interpretability_scores_per_subject = {}
-    for subject, scores in interpretability_scores_per_subject.items():
-        average_interpretability_scores_per_subject[subject] = np.mean(np.array(scores))
+    independent_scores_max = []
+    independent_scores_mean = []
+    independent_scores_outlier_count_1_both = []
+    independent_scores_outlier_count_1_upper = []
+    independent_scores_outlier_count_2_both = []
+    independent_scores_outlier_count_2_upper = []
+    independent_scores_outlier_count_3_both = []
+    independent_scores_outlier_count_3_upper = []
+    for zoo in independent_scores:
+        independent_scores_max.append(zoo["max"])
+        independent_scores_mean.append(zoo["mean"])
+        independent_scores_outlier_count_1_both.append(zoo["outlier_count_1_both"])
+        independent_scores_outlier_count_1_upper.append(zoo["outlier_count_1_upper"])
+        independent_scores_outlier_count_2_both.append(zoo["outlier_count_2_both"])
+        independent_scores_outlier_count_2_upper.append(zoo["outlier_count_2_upper"])
+        independent_scores_outlier_count_3_both.append(zoo["outlier_count_3_both"])
+        independent_scores_outlier_count_3_upper.append(zoo["outlier_count_3_upper"])
 
-    # save the interpretability scores per subject to a CSV file
-    df = pd.DataFrame.from_dict(interpretability_scores_per_neuron_per_subject, orient='index').T
-    df.to_csv(f"{logs_folder}/interpretability_scores_per_subject.csv", index=True, header=True)
+    interpretability_scores_max = []
+    interpretability_scores_mean = []
+    interpretability_scores_outlier_count_1_both = []
+    interpretability_scores_outlier_count_1_upper = []
+    interpretability_scores_outlier_count_2_both = []
+    interpretability_scores_outlier_count_2_upper = []
+    interpretability_scores_outlier_count_3_both = []
+    interpretability_scores_outlier_count_3_upper = []
+    for zoo in interpretability_scores:
+        interpretability_scores_max.append(zoo["max"])
+        interpretability_scores_mean.append(zoo["mean"])
+        interpretability_scores_outlier_count_1_both.append(zoo["outlier_count_1_both"])
+        interpretability_scores_outlier_count_1_upper.append(zoo["outlier_count_1_upper"])
+        interpretability_scores_outlier_count_2_both.append(zoo["outlier_count_2_both"])
+        interpretability_scores_outlier_count_2_upper.append(zoo["outlier_count_2_upper"])
+        interpretability_scores_outlier_count_3_both.append(zoo["outlier_count_3_both"])
+        interpretability_scores_outlier_count_3_upper.append(zoo["outlier_count_3_upper"])
+    
+    contrastive_score_mean = {
+        "max": np.mean(contrastive_scores_max),
+        "mean": np.mean(contrastive_scores_mean),
+        "outlier_count_1_both": np.mean(contrastive_scores_outlier_count_1_both),
+        "outlier_count_1_upper": np.mean(contrastive_scores_outlier_count_1_upper),
+        "outlier_count_2_both": np.mean(contrastive_scores_outlier_count_2_both),
+        "outlier_count_2_upper": np.mean(contrastive_scores_outlier_count_2_upper),
+        "outlier_count_3_both": np.mean(contrastive_scores_outlier_count_3_both),
+        "outlier_count_3_upper": np.mean(contrastive_scores_outlier_count_3_upper),
+    }
 
-    # compute and save contrastive and independence scores per neuron per subject
-    contrastive_scores_per_neuron_per_subject = {}
-    for subject, scores in elementwise_contrastive_scores_per_subject.items():
-        all_stories = np.stack(scores, axis=0)
-        contrastive_scores_per_neuron_per_subject[subject] = np.mean(all_stories, axis=0).tolist()
+    independent_score_mean = {
+        "max": np.mean(independent_scores_max),
+        "mean": np.mean(independent_scores_mean),
+        "outlier_count_1_both": np.mean(independent_scores_outlier_count_1_both),
+        "outlier_count_1_upper": np.mean(independent_scores_outlier_count_1_upper),
+        "outlier_count_2_both": np.mean(independent_scores_outlier_count_2_both),
+        "outlier_count_2_upper": np.mean(independent_scores_outlier_count_2_upper),
+        "outlier_count_3_both": np.mean(independent_scores_outlier_count_3_both),
+        "outlier_count_3_upper": np.mean(independent_scores_outlier_count_3_upper),
+    }
 
-    independence_scores_per_neuron_per_subject = {}
-    for subject, scores in elementwise_independence_scores_per_subject.items():
-        all_stories = np.stack(scores, axis=0)
-        independence_scores_per_neuron_per_subject[subject] = np.mean(all_stories, axis=0).tolist()
+    interpretability_score_mean = {
+        "max": np.mean(interpretability_scores_max),
+        "mean": np.mean(interpretability_scores_mean),
+        "outlier_count_1_both": np.mean(interpretability_scores_outlier_count_1_both),
+        "outlier_count_1_upper": np.mean(interpretability_scores_outlier_count_1_upper),
+        "outlier_count_2_both": np.mean(interpretability_scores_outlier_count_2_both),
+        "outlier_count_2_upper": np.mean(interpretability_scores_outlier_count_2_upper),
+        "outlier_count_3_both": np.mean(interpretability_scores_outlier_count_3_both),
+        "outlier_count_3_upper": np.mean(interpretability_scores_outlier_count_3_upper),
+    }
 
-    df_contrastive = pd.DataFrame.from_dict(contrastive_scores_per_neuron_per_subject, orient='index').T
-    df_contrastive.to_csv(f"{logs_folder}/contrastive_scores_per_subject.csv", index=True, header=True)
 
-    df_independence = pd.DataFrame.from_dict(independence_scores_per_neuron_per_subject, orient='index').T
-    df_independence.to_csv(f"{logs_folder}/independence_scores_per_subject.csv", index=True, header=True)
+    # shift_v_per_subject_mean = {}
+    # for subject, shifts in shift_v_per_subect.items():
+    #     all_shifts = np.stack(shifts, axis=0)
+    #     shift_v_per_subject_mean[subject] = np.mean(all_shifts, axis=0).tolist()
+    # # save the shift_v_per_subject_mean to a CSV file
+    # df = pd.DataFrame.from_dict(shift_v_per_subject_mean, orient='index').T
+    # df.to_csv(f"{logs_folder}/shift_v_per_subject_mean.csv", index=True, header=True)
 
-    neuron_interpretability_score_subject_pairs = {}
-    for i, row in df.iterrows():
-        subject_i = row.argmax()
-        neuron_interpretability_score_subject_pairs[i] = row[subject_i], df.columns[subject_i]
+    # interpretability_scores_per_neuron_per_subject = {}
+    # for subject, scores in elementwise_interpretability_scores_per_subject.items():
+    #     all_stories = np.stack(scores, axis=0)
+    #     interpretability_scores_per_neuron_per_subject[subject] = np.mean(all_stories, axis=0).tolist()
+    
+    # average_interpretability_scores_per_subject = {}
+    # for subject, scores in interpretability_scores_per_subject.items():
+    #     average_interpretability_scores_per_subject[subject] = np.mean(np.array(scores))
 
-    df = pd.DataFrame.from_dict(average_interpretability_scores_per_subject, orient='index', columns=['average_interpretability_score'])
-    df.sort_values(by='average_interpretability_score', ascending=False, inplace=True)
-    df.to_csv(f"{logs_folder}/average_interpretability_scores_per_subject.csv", index=True) # we need to keep track of the indices
+    # # save the interpretability scores per subject to a CSV file
+    # df = pd.DataFrame.from_dict(interpretability_scores_per_neuron_per_subject, orient='index').T
+    # df.to_csv(f"{logs_folder}/interpretability_scores_per_subject.csv", index=True, header=True)
 
-    # responsible neurons are regrouped based on subject and written to a CSV file
-    # create a dataframe from the dictionary
-    df = pd.DataFrame.from_dict(neuron_interpretability_score_subject_pairs, orient='index', columns=['interpretability_score', 'subject'])
-    # reorder by subject
-    df = df.sort_values(by='subject')
-    # save to csv
-    df.to_csv(f"{logs_folder}/responsible_neurons.csv", index=True) # we need to keep track of the indices
+    # # compute and save contrastive and independence scores per neuron per subject
+    # contrastive_scores_per_neuron_per_subject = {}
+    # for subject, scores in elementwise_contrastive_scores_per_subject.items():
+    #     all_stories = np.stack(scores, axis=0)
+    #     contrastive_scores_per_neuron_per_subject[subject] = np.mean(all_stories, axis=0).tolist()
+
+    # independence_scores_per_neuron_per_subject = {}
+    # for subject, scores in elementwise_independence_scores_per_subject.items():
+    #     all_stories = np.stack(scores, axis=0)
+    #     independence_scores_per_neuron_per_subject[subject] = np.mean(all_stories, axis=0).tolist()
+
+    # df_contrastive = pd.DataFrame.from_dict(contrastive_scores_per_neuron_per_subject, orient='index').T
+    # df_contrastive.to_csv(f"{logs_folder}/contrastive_scores_per_subject.csv", index=True, header=True)
+
+    # df_independence = pd.DataFrame.from_dict(independence_scores_per_neuron_per_subject, orient='index').T
+    # df_independence.to_csv(f"{logs_folder}/independence_scores_per_subject.csv", index=True, header=True)
+
+    # neuron_interpretability_score_subject_pairs = {}
+    # for i, row in df.iterrows():
+    #     subject_i = row.argmax()
+    #     neuron_interpretability_score_subject_pairs[i] = row[subject_i], df.columns[subject_i]
+
+    # df = pd.DataFrame.from_dict(average_interpretability_scores_per_subject, orient='index', columns=['average_interpretability_score'])
+    # df.sort_values(by='average_interpretability_score', ascending=False, inplace=True)
+    # df.to_csv(f"{logs_folder}/average_interpretability_scores_per_subject.csv", index=True) # we need to keep track of the indices
+
+    # # responsible neurons are regrouped based on subject and written to a CSV file
+    # # create a dataframe from the dictionary
+    # df = pd.DataFrame.from_dict(neuron_interpretability_score_subject_pairs, orient='index', columns=['interpretability_score', 'subject'])
+    # # reorder by subject
+    # df = df.sort_values(by='subject')
+    # # save to csv
+    # df.to_csv(f"{logs_folder}/responsible_neurons.csv", index=True) # we need to keep track of the indices
 
     results = {
+        "contrastive_dataset": "GulkoA/contrastive-stories-v4",
         "sae_release": sae_release,
         "sae_id": sae_id,
         "contrastive_score_mean": contrastive_score_mean,
@@ -388,9 +505,9 @@ def run_eval(
     output_path: str,
 ) -> dict[str, Any]:
     # os.makedirs(output_path, exist_ok=True)
-
-
-    dataset = load_dataset("GulkoA/contrastive-stories-v1", split="train")
+    dataset_path = "GulkoA/contrastive-stories-v4"
+    print(f"loading dataset {dataset_path}")
+    dataset = load_dataset(dataset_path, split="train")
 
     # this is nasty - I hate this - I know there is a better way
     args = [
@@ -406,7 +523,7 @@ def run_eval(
 
     print(f"Running evaluation for {len(args)} SAEs on {device}")
 
-    with Pool(3) as pool:
+    with Pool(1) as pool:
         pool.map(run_eval_once_pool, args)
 
 def create_config_and_selected_saes(
