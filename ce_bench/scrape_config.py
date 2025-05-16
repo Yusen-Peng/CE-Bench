@@ -83,7 +83,7 @@ def build_yaml_from_nested_structure(
 
 if __name__ == "__main__":
     build_yaml_from_nested_structure(
-        repo_id="canrager/saebench_gemma-2-2b_width-2pow16_date-0107",
+        repo_id="canrager/saebench_gemma-2-2b_width-2pow12_date-0107",
         model_name="gemma-2-2b",
         out_yaml="ce_bench/all_sweeps.yaml"
     )

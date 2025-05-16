@@ -1,0 +1,63 @@
+{
+    "contrastive_dataset": "GulkoA/contrastive-stories-v4",
+    "sae_release": "sae_bench_gemma-2-2b_p_anneal_width-2pow16_date-0107",
+    "sae_id": "blocks.12.hook_resid_post__trainer_2",
+    "contrastive_score_mean": {
+        "max": 73.74767488784791,
+        "mean": -3.5301491152495145e-11,
+        "outlier_count_1_both": 2170.2926,
+        "outlier_count_1_upper": 2170.2926,
+        "outlier_count_2_both": 1152.9166,
+        "outlier_count_2_upper": 1152.9166,
+        "outlier_count_3_both": 706.6752,
+        "outlier_count_3_upper": 706.6752
+    },
+    "independent_score_mean": {
+        "max": 173.0883335296631,
+        "mean": -5.7850411394611e-11,
+        "outlier_count_1_both": 1082.4132,
+        "outlier_count_1_upper": 1082.4132,
+        "outlier_count_2_both": 452.4032,
+        "outlier_count_2_upper": 452.4032,
+        "outlier_count_3_both": 241.9152,
+        "outlier_count_3_upper": 241.9152
+    },
+    "interpretability_score_mean": {
+        "max": 150.73061569213868,
+        "mean": -2.800370566546917e-11,
+        "outlier_count_1_both": 1590.3324,
+        "outlier_count_1_upper": 1590.3324,
+        "outlier_count_2_both": 706.7402,
+        "outlier_count_2_upper": 706.7402,
+        "outlier_count_3_both": 385.7426,
+        "outlier_count_3_upper": 385.7426
+    },
+    "total_rows": 5000,
+    "sae_config": {
+        "architecture": "standard",
+        "d_in": 2304,
+        "d_sae": 65536,
+        "dtype": "torch.bfloat16",
+        "device": "cuda",
+        "model_name": "gemma-2-2b",
+        "hook_name": "blocks.12.hook_resid_post",
+        "hook_layer": 12,
+        "hook_head_index": null,
+        "activation_fn_str": "relu",
+        "activation_fn_kwargs": {},
+        "apply_b_dec_to_input": true,
+        "finetuning_scaling_factor": false,
+        "sae_lens_training_version": null,
+        "prepend_bos": true,
+        "dataset_path": "monology/pile-uncopyrighted",
+        "dataset_trust_remote_code": true,
+        "context_size": 1024,
+        "normalize_activations": "none",
+        "neuronpedia_id": null,
+        "model_from_pretrained_kwargs": {},
+        "seqpos_slice": [
+            null
+        ]
+    },
+    "date": "2025-05-16 01:18:59"
+}

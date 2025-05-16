@@ -1,5 +1,6 @@
 import argparse
 import os
+import csv
 import time
 import torch
 from openai import OpenAI
@@ -8,6 +9,11 @@ from tabulate import tabulate
 from torch import Tensor
 from tqdm import tqdm
 from transformer_lens import HookedTransformer
+from sklearn.preprocessing import StandardScaler
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import r2_score
 import torch
 import torch.nn as nn
 import numpy as np
@@ -337,103 +343,241 @@ def width_analysis(sae_release: str, layer: str):
     plt.show()
 
 
-def sae_analysis(sae_release_series: str, sae_pool: List[str], block_num: int, dataset_ver: str, metric: str):
-    results_by_sae = {}
+# def sae_analysis(sae_release_series: str, sae_pool: List[str], block_num: int, dataset_ver: str, metric: str):
+#     results_by_sae = {}
+#     block_prefix = f"blocks.{block_num}.hook_resid_post"
+
+#     for sae_variant in sae_pool:
+#         sae_release = f"{sae_release_series}{sae_variant}"
+#         base_path = os.path.expanduser(f"interpretability_eval/{sae_release}")
+
+#         scores = []
+#         for subfolder in os.listdir(base_path):
+#             results_path = os.path.join(base_path, subfolder, "results.json")
+#             try:
+#                 with open(results_path, "r") as f:
+#                     results = json.load(f)
+#                     contrastive = results.get("contrastive_score_mean")[metric]
+#                     independence = results.get("independent_score_mean")[metric]
+#                     if all(v is not None for v in [contrastive, independence]):
+#                         scores.append((contrastive, independence))
+#             except json.JSONDecodeError:
+#                 print(f"[WARN] Invalid JSON: {results_path}")
+
+#         if scores:
+#             results_by_sae[sae_variant] = scores
+
+#     average_scores_by_sae = {
+#         variant: (
+#             np.mean([s[0] for s in scores]),
+#             np.mean([s[1] for s in scores]),
+#             np.mean([s[2] for s in scores]),
+#         )
+#         for variant, scores in results_by_sae.items()
+#     }
+
+
+
+
+#     # Visualization (unchanged)
+#     sae_indices = []
+#     contrastive_avgs = []
+#     independence_avgs = []
+#     #interpretability_avgs = []
+
+#     contrastive_points = []
+#     independence_points = []
+#     #interpretability_points = []
+
+
+#     # create a single CSV file to save results for each SAE variant
+#     #csv_file_path = os.path.join(base_path, f"sae_analysis_{dataset_ver}_{metric}.csv")
+
+
+#     for i, sae_variant in enumerate(sae_pool):
+#         scores = results_by_sae.get(sae_variant, [])
+#         sae_indices.append(i)
+#         for s in scores:
+#             contrastive_points.append((i, s[0]))
+#             independence_points.append((i, s[1]))
+#             #interpretability_points.append((i, s[2]))
+
+#         contrastive_avgs.append(np.mean([s[0] for s in scores]) if scores else None)
+#         independence_avgs.append(np.mean([s[1] for s in scores]) if scores else None)
+#         #interpretability_avgs.append(np.mean([s[2] for s in scores]) if scores else None)
+
+
+#     # Truncate SAE variant names
+#     sae_labels = [sae.split("_")[0] for sae in sae_pool]
+#     sae_labels = ["p_anneal" if s == "p" else s for s in sae_labels]
+#     xticks = list(range(len(sae_labels)))
+
+
+
+
+
+#     # # Plot
+#     # fig, axs = plt.subplots(1, 3, figsize=(15, 4))
+#     # fig.suptitle(f"Score vs. SAE Variant (Block {block_num}) for dataset {dataset_ver} with metric {metric}", fontsize=14)
+
+
+
+#     # axs[0].scatter(*zip(*contrastive_points), alpha=1.0, color='skyblue', s=20, label="All Runs")
+#     # axs[0].plot(sae_indices, contrastive_avgs, color='blue', marker='o', markersize=2, label="Avg")
+#     # axs[0].set_title("Contrastive Score")
+#     # axs[0].set_xticks(xticks)
+#     # axs[0].set_xticklabels(sae_labels, rotation=15)
+#     # axs[0].set_ylabel("Score")
+#     # axs[0].grid(True)
+#     # axs[0].legend()
+
+#     # axs[1].scatter(*zip(*independence_points), alpha=1.0, color='lightgreen', s=20, label="All Runs")
+#     # axs[1].plot(sae_indices, independence_avgs, color='green', marker='o', markersize=2, label="Avg")
+#     # axs[1].set_title("Independence Score")
+#     # axs[1].set_xticks(xticks)
+#     # axs[1].set_xticklabels(sae_labels, rotation=15)
+#     # axs[1].set_ylabel("Score")
+#     # axs[1].grid(True)
+#     # axs[1].legend()
+
+#     # axs[2].scatter(*zip(*interpretability_points), alpha=1.0, color='violet', s=20, label="All Runs")
+#     # axs[2].plot(sae_indices, interpretability_avgs, color='purple', marker='o', markersize=2, label="Avg")
+#     # axs[2].set_title("Interpretability Score")
+#     # axs[2].set_xticks(xticks)
+#     # axs[2].set_xticklabels(sae_labels, rotation=15)
+#     # axs[2].set_ylabel("Score")
+#     # axs[2].grid(True)
+#     # axs[2].legend()
+
+#     # plt.tight_layout(rect=[0, 0, 1, 0.95])
+#     # plt.savefig(f"figures/sae_analysis_{sae_release_series}{block_num}_{dataset_ver}_{metric}.png")
+
+#     # return results_by_sae, average_scores_by_sae
+
+
+
+import seaborn as sns
+def sae_analysis(
+    sae_release_series: str,
+    sae_pool: List[str],
+    block_num: int,
+    dataset_ver: str,
+    metric: str,
+    output_csv: str = "ce_bench/sae_scores.csv"
+):
     block_prefix = f"blocks.{block_num}.hook_resid_post"
+    rows = []
 
     for sae_variant in sae_pool:
         sae_release = f"{sae_release_series}{sae_variant}"
         base_path = os.path.expanduser(f"interpretability_eval/{sae_release}")
 
-        scores = []
+        if not os.path.exists(base_path):
+            print(f"Warning: {base_path} does not exist. Skipping.")
+            continue
+
         for subfolder in os.listdir(base_path):
             results_path = os.path.join(base_path, subfolder, "results.json")
+            if not os.path.exists(results_path):
+                print(f"Missing: {results_path}")
+                continue
+
             try:
                 with open(results_path, "r") as f:
                     results = json.load(f)
-                    contrastive = results.get("contrastive_score_mean")[metric]
-                    independence = results.get("independent_score_mean")[metric]
-                    interpretability = results.get("interpretability_score_mean")[metric]
-                    if all(v is not None for v in [contrastive, independence, interpretability]):
-                        scores.append((contrastive, independence, interpretability))
-            except json.JSONDecodeError:
-                print(f"[WARN] Invalid JSON: {results_path}")
+                    contrastive = results.get("contrastive_score_mean", {}).get(metric)
+                    independence = results.get("independent_score_mean", {}).get(metric)
 
-        if scores:
-            results_by_sae[sae_variant] = scores
+                    if contrastive is not None and independence is not None:
+                        rows.append([sae_variant, subfolder, contrastive, independence])
+                    else:
+                        print(f"Incomplete scores in {results_path}")
+            except Exception as e:
+                print(f"Error reading {results_path}: {e}")
 
-    average_scores_by_sae = {
-        variant: (
-            np.mean([s[0] for s in scores]),
-            np.mean([s[1] for s in scores]),
-            np.mean([s[2] for s in scores]),
+            except Exception as e:
+                print(f"Error reading ce_bench/saes_metrics.json: {e}")
+
+    # Write to CSV
+    with open(output_csv, mode="w", newline="") as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(["sae_variant", "subfolder", "contrastive_score", "independent_score"])
+        writer.writerows(rows)
+
+    print(f"Wrote results to {output_csv}")
+
+
+def train_linear_regression(csv_file: str):
+    df = pd.read_csv(csv_file)
+
+    # Truncate sae_variant to prefix before "_width"
+    df["sae_group"] = df["sae_variant"].apply(lambda x: x.split("_width")[0])
+
+    # Features and target
+    X_raw = df[["contrastive_score", "independent_score", "sparsity"]]
+    y = df["ground_truth"]
+
+    scaler = StandardScaler()
+    X = scaler.fit_transform(X_raw)
+
+    # Train linear regression
+    model = LinearRegression()
+    model.fit(X, y)
+
+    # Print coefficients
+    print("Linear Regression Coefficients:")
+    for feature, coef in zip(X_raw.columns, model.coef_):
+        print(f"  {feature}: {coef:.4f}")
+    print(f"Intercept: {model.intercept_:.4f}")
+    print(f"R² Score: {r2_score(y, model.predict(X)):.4f}")
+
+    # Predictions
+    df["prediction"] = model.predict(X)
+
+    comparison_axes = ["contrastive_score", "independent_score", "sparsity", "ground_truth"]
+
+    # Get consistent color mapping
+    sae_groups = sorted(df["sae_group"].unique())
+    palette = sns.color_palette("tab10", n_colors=len(sae_groups))
+
+    for column in comparison_axes:
+        plt.figure(figsize=(7, 5))
+
+        # Scatterplot with larger points
+        sns.scatterplot(
+            data=df,
+            x=column,
+            y="prediction",
+            hue="sae_group",
+            hue_order=sae_groups,
+            palette=palette,
+            alpha=0.8,
+            s=70
         )
-        for variant, scores in results_by_sae.items()
-    }
 
-    # Visualization (unchanged)
-    sae_indices = []
-    contrastive_avgs = []
-    independence_avgs = []
-    interpretability_avgs = []
+        # Lineplot with thinner lines and same hue_order/palette
+        sns.lineplot(
+            data=df.sort_values(by=["sae_group", column]),
+            x=column,
+            y="prediction",
+            hue="sae_group",
+            hue_order=sae_groups,
+            palette=palette,
+            legend=False,
+            linewidth=0.7,
+            estimator=None,
+            errorbar=None
+        )
 
-    contrastive_points = []
-    independence_points = []
-    interpretability_points = []
+        plt.title(f"Prediction vs. {column}")
+        plt.xlabel(column)
+        plt.ylabel("Model Prediction")
 
-    for i, sae_variant in enumerate(sae_pool):
-        scores = results_by_sae.get(sae_variant, [])
-        sae_indices.append(i)
-        for s in scores:
-            contrastive_points.append((i, s[0]))
-            independence_points.append((i, s[1]))
-            interpretability_points.append((i, s[2]))
-
-        contrastive_avgs.append(np.mean([s[0] for s in scores]) if scores else None)
-        independence_avgs.append(np.mean([s[1] for s in scores]) if scores else None)
-        interpretability_avgs.append(np.mean([s[2] for s in scores]) if scores else None)
-
-    # Plot
-    fig, axs = plt.subplots(1, 3, figsize=(15, 4))
-    fig.suptitle(f"Score vs. SAE Variant (Block {block_num}) for dataset {dataset_ver} with metric {metric}", fontsize=14)
-
-    # Truncate SAE variant names
-    sae_labels = [sae.split("_")[0] for sae in sae_pool]
-    sae_labels = ["p_anneal" if s == "p" else s for s in sae_labels]
-    xticks = list(range(len(sae_labels)))
-
-    axs[0].scatter(*zip(*contrastive_points), alpha=1.0, color='skyblue', s=20, label="All Runs")
-    axs[0].plot(sae_indices, contrastive_avgs, color='blue', marker='o', markersize=2, label="Avg")
-    axs[0].set_title("Contrastive Score")
-    axs[0].set_xticks(xticks)
-    axs[0].set_xticklabels(sae_labels, rotation=15)
-    axs[0].set_ylabel("Score")
-    axs[0].grid(True)
-    axs[0].legend()
-
-    axs[1].scatter(*zip(*independence_points), alpha=1.0, color='lightgreen', s=20, label="All Runs")
-    axs[1].plot(sae_indices, independence_avgs, color='green', marker='o', markersize=2, label="Avg")
-    axs[1].set_title("Independence Score")
-    axs[1].set_xticks(xticks)
-    axs[1].set_xticklabels(sae_labels, rotation=15)
-    axs[1].set_ylabel("Score")
-    axs[1].grid(True)
-    axs[1].legend()
-
-    axs[2].scatter(*zip(*interpretability_points), alpha=1.0, color='violet', s=20, label="All Runs")
-    axs[2].plot(sae_indices, interpretability_avgs, color='purple', marker='o', markersize=2, label="Avg")
-    axs[2].set_title("Interpretability Score")
-    axs[2].set_xticks(xticks)
-    axs[2].set_xticklabels(sae_labels, rotation=15)
-    axs[2].set_ylabel("Score")
-    axs[2].grid(True)
-    axs[2].legend()
-
-    plt.tight_layout(rect=[0, 0, 1, 0.95])
-    plt.savefig(f"figures/sae_analysis_{sae_release_series}{block_num}_{dataset_ver}_{metric}.png")
-
-    return results_by_sae, average_scores_by_sae
-
+        # Legend at bottom
+        plt.legend(title="SAE Variant", loc="upper center", bbox_to_anchor=(0.5, -0.2), ncol=2)
+        plt.tight_layout()
+        plt.savefig(f"ce_bench/prediction_vs_{column}.png", bbox_inches='tight')
+        plt.show()
 
 
 
@@ -563,26 +707,40 @@ if __name__ == "__main__":
         # )
 
         dataset_ver_2 = "v3"
-        metric_zoo = [
-            "max",
-            "mean",
-            "outlier_count_1_both",
-            "outlier_count_1_upper",
-            "outlier_count_2_both",
-            "outlier_count_2_upper",
-            "outlier_count_3_both",
-            "outlier_count_3_upper",
-        ]
+        # metric_zoo = [
+        #     "max",
+        #     "mean",
+        #     "outlier_count_1_both",
+        #     "outlier_count_1_upper",
+        #     "outlier_count_2_both",
+        #     "outlier_count_2_upper",
+        #     "outlier_count_3_both",
+        #     "outlier_count_3_upper",
+        # ]
 
-        for metric in metric_zoo:
+        # for metric in metric_zoo:
 
-            v3_runs, v3_avg = sae_analysis(
-                sae_release_series=sae_release_series,
-                sae_pool=sae_pool,
-                block_num=block_num,
-                dataset_ver=dataset_ver_2,
-                metric=metric
-            )
+        #     v3_runs, v3_avg = sae_analysis(
+        #         sae_release_series=sae_release_series,
+        #         sae_pool=sae_pool,
+        #         block_num=block_num,
+        #         dataset_ver=dataset_ver_2,
+        #         metric=metric
+        #     )
+
+        dataset_final = "v4"
+        pooling_metric = "max"
+        sae_analysis(
+            sae_release_series=sae_release_series,
+            sae_pool=sae_pool,
+            block_num=block_num,
+            dataset_ver=dataset_final,
+            metric=pooling_metric,
+        )
+
+        train_linear_regression("ce_bench/SAE_ANALYSIS_METRICS.csv")
+
+
 
         # plot_v2_vs_v3_scores(v2_avg, v3_avg, sae_pool)
     else:

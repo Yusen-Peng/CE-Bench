@@ -2,6 +2,8 @@ __pycache__/
 .env
 checkpoints/*
 logs/
+v2_results/*
+v3_results/*
 __pycache__/
 checkpoints/b5bc6yb8/final_1000448/sae_weights.safetensor
 figures/*.html
@@ -14,7 +16,6 @@ nohup.out
 wandb/*
 cache_activations/
 tiny-stories-1L-21M-cache/
-*.csv
 eval_results/
 intepretability_eval/
 *.jsonl
