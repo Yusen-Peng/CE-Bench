@@ -44,11 +44,11 @@ from sae_lens.toolkit.pretrained_saes_directory import get_pretrained_saes_direc
 TRAINED_FEATURES = ["contrastive_score", "independent_score", "joint_score", "sparsity"]
 
 # ABLATION STUDY FEATURE CONFIG
-TRAINED_FEATURES = ["contrastive_score", "independent_score", "sparsity"]
+#TRAINED_FEATURES = ["contrastive_score", "independent_score", "sparsity"]
 #TRAINED_FEATURES = ["contrastive_score", "independent_score", "joint_score"]
-#TRAINED_FEATURES = ["sparsity"]
+#TRAINED_FEATURES = ["sparsity"] # baseline
 
-def predict_with_l
+# def predict_with_l
 
 def compare_rankings(scores1: dict[str, float], scores2: dict[str, float]) -> float:
     rankings1 = {k: i for i, k in enumerate(sorted(scores1, key=scores1.get))}
@@ -112,7 +112,7 @@ def linear_regression_sae(csv_file: str, trained_scaler: StandardScaler, trained
     sae_groups = sorted(df["sae_group"].unique())
     palette = sns.color_palette("tab10", n_colors=len(sae_groups))
 
-    fig, axes = plt.subplots(1, len(TRAINED_FEATURES), figsize=(len(TRAINED_FEATURES)*4, 4))
+    fig, axes = plt.subplots(1, len(TRAINED_FEATURES)+1, figsize=((len(TRAINED_FEATURES)+1)*4, 4))
     axes = axes.flatten()
 
     for i, column in enumerate(comparison_axes):
