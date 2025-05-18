@@ -117,7 +117,7 @@ def linear_regression_sae(csv_file: str, trained_scaler: StandardScaler, trained
     sae_groups = sorted(df["sae_group"].unique())
     palette = sns.color_palette("tab10", n_colors=len(sae_groups))
 
-    fig, axes = plt.subplots(1, len(TRAINED_FEATURES), figsize=(len(TRAINED_FEATURES)*4, 4))
+    fig, axes = plt.subplots(1, len(TRAINED_FEATURES)+1, figsize=((len(TRAINED_FEATURES)+1)*4, 4))
     axes = axes.flatten()
 
     for i, column in enumerate(comparison_axes):
