@@ -1,4 +1,4 @@
-sae_variant,subfolder,contrastive_score,independent_score,interpretability_score,sparsity,ground_truth
+sae_variant,subfolder,contrastive_score,independent_score,joint_score,sparsity,ground_truth
 batch_top_k_width-2pow16_date-0107,blocks.12.hook_resid_post__trainer_5,54.29049607849120,58.21123826599120,56.000739866638200,695.598876953125,0.861383199691773
 batch_top_k_width-2pow16_date-0107,blocks.12.hook_resid_post__trainer_1,72.5784506362915,168.31554765319800,140.27809618835400,41.9134941101074,0.886458396911621
 batch_top_k_width-2pow16_date-0107,blocks.12.hook_resid_post__trainer_2,69.98655387001040,162.99456435089100,139.45959142608600,84.3312759399414,0.877960860729218

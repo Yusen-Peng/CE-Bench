@@ -15,7 +15,7 @@ from transformer_lens import HookedTransformer
 from sklearn.preprocessing import StandardScaler
 import pandas as pd
 import matplotlib.pyplot as plt
-from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import LinearRegression, Ridge
 from sklearn.metrics import r2_score
 import torch
 import torch.nn as nn
@@ -40,6 +40,119 @@ from multiprocessing import Pool
 from functools import partial
 from typing import Tuple, Dict
 from sae_lens.toolkit.pretrained_saes_directory import get_pretrained_saes_directory
+
+TRAINED_FEATURES = ["contrastive_score", "independent_score", "joint_score", "sparsity"]
+
+# ABLATION STUDY FEATURE CONFIG
+TRAINED_FEATURES = ["contrastive_score", "independent_score", "sparsity"]
+#TRAINED_FEATURES = ["contrastive_score", "independent_score", "joint_score"]
+#TRAINED_FEATURES = ["sparsity"]
+
+def train_linear_regression(train_csv: str):
+    df = pd.read_csv(train_csv)
+    X_raw = df[TRAINED_FEATURES]
+    y = df["ground_truth"]
+
+    trained_scaler = StandardScaler()
+    X_scaled = trained_scaler.fit_transform(X_raw)
+
+    trained_model = LinearRegression()
+    trained_model.fit(X_scaled, y)
+
+    return {
+        "model": trained_model,
+        "scaler": trained_scaler,
+        "coefficients": trained_model.coef_,
+        "intercept": trained_model.intercept_,
+        "r2_score": trained_model.score(X_scaled, y)
+    }
+
+def predict_with_global_model(df: pd.DataFrame, trained_model: LinearRegression, trained_scaler: StandardScaler):
+    X_raw = df[TRAINED_FEATURES]
+    X_scaled = trained_scaler.transform(X_raw)
+    predictions = trained_model.predict(X_scaled)
+    return predictions
+
+def linear_regression_sae(csv_file: str, trained_scaler: StandardScaler, trained_model: LinearRegression):
+    df = pd.read_csv(csv_file)
+
+    # Truncate sae_variant to prefix before "_width"
+    df["sae_group"] = df["sae_variant"].apply(lambda x: x.split("_width")[0])
+
+    # Features and target
+    X = df[TRAINED_FEATURES]
+    # Normalize features
+    X_scaled = trained_scaler.transform(X)
+    y = df["ground_truth"]
+
+    df["CE-Bench prediction"] = trained_model.predict(X_scaled)
+
+    # Plotting
+    comparison_axes = TRAINED_FEATURES + ["ground_truth"]
+    titles = comparison_axes.copy()
+
+    sae_groups = sorted(df["sae_group"].unique())
+    palette = sns.color_palette("tab10", n_colors=len(sae_groups))
+
+    fig, axes = plt.subplots(1, len(TRAINED_FEATURES), figsize=(len(TRAINED_FEATURES)*4, 4))
+    axes = axes.flatten()
+
+    for i, column in enumerate(comparison_axes):
+        ax = axes[i]
+        
+        # Scatter plot
+        sns.scatterplot(
+            data=df,
+            x=column,
+            y="CE-Bench prediction",
+            hue="sae_group",
+            hue_order=sae_groups,
+            palette=palette,
+            alpha=0.8,
+            s=70,
+            ax=ax,
+            legend=False  # Suppress internal legends
+        )
+
+        # Line plot
+        sns.lineplot(
+            data=df.sort_values(by=["sae_group", column]),
+            x=column,
+            y="CE-Bench prediction",
+            hue="sae_group",
+            hue_order=sae_groups,
+            palette=palette,
+            estimator=None,
+            errorbar=None,
+            linewidth=0.7,
+            ax=ax,
+            legend=False
+        )
+
+        ax.set_title(f"CE-Bench vs. {titles[i]}")
+        ax.set_xlabel(titles[i])
+        ax.set_ylabel("Model Prediction")
+
+    # Shared legend at the bottom
+    handles = [
+        Line2D([0], [0], marker='o', color='w', markerfacecolor=palette[i], markersize=8)
+        for i in range(len(sae_groups))
+    ]
+    labels = sae_groups
+
+    fig.legend(
+        handles,
+        labels,
+        title="SAE Variant",
+        loc="lower center",
+        bbox_to_anchor=(0.5, -0.15),
+        ncol=len(sae_groups),
+        frameon=False
+    )
+
+    plt.tight_layout(rect=[0, 0.05, 1, 1])
+    plt.savefig(f"ce_bench/sae_analysis.png", bbox_inches='tight')
+    plt.show()
 
 
 
@@ -155,336 +268,25 @@ def depth_analysis(sae_release: str, width: str):
     plt.show()
 
 
-
-def layer_type_analysis(sae_release_series: str, type_pool: List[str], layer: str, width: str):
-    results_by_type = {}
-
-    for layer_type in type_pool:
-        sae_release = f"{sae_release_series}{layer_type}"
-        base_path = os.path.expanduser(f"interpretability_eval/{sae_release}/{layer}/width_{width}")        
-        scores = []
-
-        for sparsity_folder in os.listdir(base_path):
-            results_path = os.path.join(base_path, sparsity_folder, "results.json")
-
-            try:
-                with open(results_path, "r") as f:
-                    results = json.load(f)
-                    contrastive = results.get("contrastive_score_mean")
-                    independence = results.get("independent_score_mean")
-                    interpretability = results.get("interpretability_score_mean")
-                    if all(v is not None for v in [contrastive, independence, interpretability]):
-                        scores.append((contrastive, independence, interpretability))
-            except json.JSONDecodeError:
-                print(f"Invalid JSON in {results_path}")
-
-        if scores:
-            results_by_type[layer_type] = scores
-
-    # Prepare data
-    layer_type_indices = []
-    contrastive_avgs = []
-    independence_avgs = []
-    interpretability_avgs = []
-
-    contrastive_points = []
-    independence_points = []
-    interpretability_points = []
-
-    for i, layer_type in enumerate(type_pool):
-        scores = results_by_type.get(layer_type, [])
-        if not scores:
-            continue
-
-        layer_type_indices.append(i)
-
-        for score in scores:
-            contrastive_points.append((i, score[0]))
-            independence_points.append((i, score[1]))
-            interpretability_points.append((i, score[2]))
-
-        contrastive_avgs.append(np.mean([s[0] for s in scores]))
-        independence_avgs.append(np.mean([s[1] for s in scores]))
-        interpretability_avgs.append(np.mean([s[2] for s in scores]))
-
-    # Plot
-    fig, axs = plt.subplots(1, 3, figsize=(15, 4))
-    fig.suptitle(f"Score vs. Layer Type for {sae_release_series} at {layer} with width {width}", fontsize=14)
-
-    xticks = list(range(len(type_pool)))
-    axs[0].scatter(*zip(*contrastive_points), alpha=1.0, color='skyblue', s=20, label="All Sparsities")
-    axs[0].plot(layer_type_indices, contrastive_avgs, color='blue', marker='o', markersize=2, label="Avg")
-    axs[0].set_title("Contrastive Score")
-    axs[0].set_xticks(xticks)
-    axs[0].set_xticklabels(type_pool)
-    axs[0].set_ylabel("Score")
-    axs[0].grid(True)
-    axs[0].legend()
-
-    axs[1].scatter(*zip(*independence_points), alpha=1.0, color='lightgreen', s=20, label="All Sparsities")
-    axs[1].plot(layer_type_indices, independence_avgs, color='green', marker='o', markersize=2, label="Avg")
-    axs[1].set_title("Independence Score")
-    axs[1].set_xticks(xticks)
-    axs[1].set_xticklabels(type_pool)
-    axs[1].set_ylabel("Score")
-    axs[1].grid(True)
-    axs[1].legend()
-
-    axs[2].scatter(*zip(*interpretability_points), alpha=1.0, color='violet', s=20, label="All Sparsities")
-    axs[2].plot(layer_type_indices, interpretability_avgs, color='purple', marker='o', markersize=2, label="Avg")
-    axs[2].set_title("Interpretability Score")
-    axs[2].set_xticks(xticks)
-    axs[2].set_xticklabels(type_pool)
-    axs[2].set_ylabel("Score")
-    axs[2].grid(True)
-    axs[2].legend()
-
-    plt.tight_layout(rect=[0, 0, 1, 0.95])
-    plt.savefig(f"figures/layer_type_analysis_{sae_release_series}_{layer}_{width}.png")
-
-def width_analysis(
-    base_dir: str,
-    dataset_ver: str,
-    metric: str,
-    output_csv: str = "ce_bench/width_scores.csv"
-):
-    """
-    Analyzes SAE scores for jump_relu variants across different widths.
-
-    Args:
-        base_dir: Path under interpretability_eval/ containing SAE folders.
-        dataset_ver: Dataset version (unused, for compatibility).
-        metric: Metric to extract from results.json (e.g., "mean").
-        output_csv: File to write CSV output.
-    """
-    eval_root = os.path.expanduser(f"interpretability_eval/{base_dir}")
-    if not os.path.exists(eval_root):
-        print(f"Base directory does not exist: {eval_root}")
-        return
-
-    width_pattern = re.compile(r"jump_relu_width-2pow(\d+)")
-    rows = []
-
-    for folder in os.listdir(eval_root):
-        if "jump_relu" not in folder:
-            continue
-
-        match = width_pattern.search(folder)
-        if not match:
-            continue
-
-        width_exp = int(match.group(1))
-        width = 2 ** width_exp
-        folder_path = os.path.join(eval_root, folder)
-
-        if not os.path.isdir(folder_path):
-            continue
-
-        for subfolder in os.listdir(folder_path):
-            results_path = os.path.join(folder_path, subfolder, "results.json")
-            if not os.path.exists(results_path):
-                print(f"Missing: {results_path}")
-                continue
-
-            try:
-                with open(results_path, "r") as f:
-                    results = json.load(f)
-                    contrastive = results.get("contrastive_score_mean", {}).get(metric)
-                    independence = results.get("independent_score_mean", {}).get(metric)
-                    interpretability = results.get("interpretability_score_mean", {}).get(metric)
-
-                    if contrastive is not None and independence is not None:
-                        rows.append([width, folder, subfolder, contrastive, independence, interpretability])
-                    else:
-                        print(f"Incomplete scores in {results_path}")
-            except Exception as e:
-                print(f"Error reading {results_path}: {e}")
-
-    # Write to CSV
-    with open(output_csv, mode="w", newline="") as csvfile:
-        writer = csv.writer(csvfile)
-        writer.writerow(["width", "folder_name", "subfolder", "contrastive_score", "independent_score", "interpretability_score"])
-        writer.writerows(rows)
-
-    print(f"Wrote JumpReLU width analysis results to {output_csv}")
-
-def sae_analysis(
-    sae_release_series: str,
-    sae_pool: List[str],
-    block_num: int,
-    dataset_ver: str,
-    metric: str,
-    output_csv: str = "ce_bench/sae_scores.csv"
-):
-    block_prefix = f"blocks.{block_num}.hook_resid_post"
-    rows = []
-
-    for sae_variant in sae_pool:
-        sae_release = f"{sae_release_series}{sae_variant}"
-        base_path = os.path.expanduser(f"interpretability_eval/{sae_release}")
-
-        if not os.path.exists(base_path):
-            print(f"Warning: {base_path} does not exist. Skipping.")
-            continue
-
-        for subfolder in os.listdir(base_path):
-            results_path = os.path.join(base_path, subfolder, "results.json")
-            if not os.path.exists(results_path):
-                print(f"Missing: {results_path}")
-                continue
-
-            try:
-                with open(results_path, "r") as f:
-                    results = json.load(f)
-                    contrastive = results.get("contrastive_score_mean", {}).get(metric)
-                    independence = results.get("independent_score_mean", {}).get(metric)
-                    interpretability = results.get("interpretability_score_mean", {}).get(metric)
-
-                    if contrastive is not None and independence is not None:
-                        rows.append([sae_variant, subfolder, contrastive, independence, interpretability])
-                    else:
-                        print(f"Incomplete scores in {results_path}")
-            except Exception as e:
-                print(f"Error reading {results_path}: {e}")
-
-            except Exception as e:
-                print(f"Error reading ce_bench/saes_metrics.json: {e}")
-
-    # Write to CSV
-    with open(output_csv, mode="w", newline="") as csvfile:
-        writer = csv.writer(csvfile)
-        writer.writerow(["sae_variant", "subfolder", "contrastive_score", "independent_score", "interpretability_score"])
-        writer.writerows(rows)
-
-    print(f"Wrote results to {output_csv}")
-
-
-def train_linear_regression_sae(csv_file: str):
-    df = pd.read_csv(csv_file)
-
-    # Truncate sae_variant to prefix before "_width"
-    df["sae_group"] = df["sae_variant"].apply(lambda x: x.split("_width")[0])
-
-    # Features and target
-    X_raw = df[["contrastive_score", "independent_score", "interpretability_score", "sparsity"]]
-    #X_raw = df[["interpretability_score", "sparsity"]]
-    y = df["ground_truth"]
-
-    scaler = StandardScaler()
-    X = scaler.fit_transform(X_raw)
-
-    # Train linear regression
-    model = LinearRegression()
-    model.fit(X, y)
-
-    print("Linear Regression Coefficients:")
-    for feature, coef in zip(X_raw.columns, model.coef_):
-        print(f"  {feature}: {coef:.4f}")
-    print(f"Intercept: {model.intercept_:.4f}")
-    print(f"R² Score: {r2_score(y, model.predict(X)):.4f}")
-
-    df["CE-Bench prediction"] = model.predict(X)
-
-    # Plotting
-    comparison_axes = ["contrastive_score", "independent_score", "interpretability_score", "sparsity", "ground_truth"]
-    #comparison_axes = ["interpretability_score", "sparsity"]
-    titles = ["Contrastive Score", "Independent Score", "Joint Score", "Sparsity", "Ground Truth"]
-    #titles = ["Interpretability Score", "Sparsity"]
-
-    sae_groups = sorted(df["sae_group"].unique())
-    palette = sns.color_palette("tab10", n_colors=len(sae_groups))
-
-    fig, axes = plt.subplots(1, 5, figsize=(20, 4))
-    axes = axes.flatten()
-
-    for i, column in enumerate(comparison_axes):
-        ax = axes[i]
-        
-        # Scatter plot
-        sns.scatterplot(
-            data=df,
-            x=column,
-            y="CE-Bench prediction",
-            hue="sae_group",
-            hue_order=sae_groups,
-            palette=palette,
-            alpha=0.8,
-            s=70,
-            ax=ax,
-            legend=False  # Suppress internal legends
-        )
-
-        # Line plot
-        sns.lineplot(
-            data=df.sort_values(by=["sae_group", column]),
-            x=column,
-            y="CE-Bench prediction",
-            hue="sae_group",
-            hue_order=sae_groups,
-            palette=palette,
-            estimator=None,
-            errorbar=None,
-            linewidth=0.7,
-            ax=ax,
-            legend=False
-        )
-
-        ax.set_title(f"CE-Bench vs. {titles[i]}")
-        ax.set_xlabel(titles[i])
-        ax.set_ylabel("Model Prediction")
-
-    # Shared legend at the bottom
-    handles = [
-        Line2D([0], [0], marker='o', color='w', markerfacecolor=palette[i], markersize=8)
-        for i in range(len(sae_groups))
-    ]
-    labels = sae_groups
-
-    fig.legend(
-        handles,
-        labels,
-        title="SAE Variant",
-        loc="lower center",
-        bbox_to_anchor=(0.5, -0.15),
-        ncol=len(sae_groups),
-        frameon=False
-    )
-
-    plt.tight_layout(rect=[0, 0.05, 1, 1])
-    plt.savefig(f"ce_bench/sae_analysis.png", bbox_inches='tight')
-    plt.show()
-
-
-
-def train_linear_regression_width(csv_file: str):
+def linear_regression_width(csv_file: str, trained_scaler: StandardScaler, trained_model: LinearRegression):
     df = pd.read_csv(csv_file)
 
     # Treat width as a categorical group
     df["width_group"] = df["width"].astype(str)
 
     # Features and target
-    X_raw = df[["contrastive_score", "independent_score", "interpretability_score", "sparsity"]]
+    X_raw = df[TRAINED_FEATURES]
     y = df["ground_truth"]
 
     # Normalize features
-    scaler = StandardScaler()
+    scaler = trained_scaler
     X = scaler.fit_transform(X_raw)
 
-    # Fit linear regression model
-    model = LinearRegression()
-    model.fit(X, y)
-
-    print("Linear Regression Coefficients:")
-    for feature, coef in zip(X_raw.columns, model.coef_):
-        print(f"  {feature}: {coef:.4f}")
-    print(f"Intercept: {model.intercept_:.4f}")
-    print(f"R² Score: {r2_score(y, model.predict(X)):.4f}")
-
-    df["CE-Bench prediction"] = model.predict(X)
+    df["CE-Bench prediction"] = trained_model.predict(X)
 
     # Plotting
-    comparison_axes = ["contrastive_score", "independent_score", "interpretability_score", "sparsity", "ground_truth"]
-    titles = ["Contrastive Score", "Independent Score", "Joint Score", "Sparsity", "Ground Truth"]
+    comparison_axes = TRAINED_FEATURES + ["ground_truth"]
+    titles = comparison_axes.copy()
 
     width_groups = sorted(df["width_group"].unique())
     palette = sns.color_palette("tab10", n_colors=len(width_groups))
@@ -550,65 +352,91 @@ def train_linear_regression_width(csv_file: str):
     plt.show()
 
 
+def linear_regression_layer_type(csv_file: str, trained_scaler: StandardScaler, trained_model: LinearRegression):
+    df = pd.read_csv(csv_file)
 
-def plot_v2_vs_v3_scores(v2_avg: dict, v3_avg: dict, sae_pool: list):
-    score_types = ["contrastive", "independence", "interpretability"]
-    colors = ['skyblue', 'lightgreen', 'violet']
+    # Treat sae_type as a categorical group
+    df["type_group"] = df["layer_type"]
 
-    # Map each SAE variant to a display label (truncate before first underscore)
-    sae_labels = [s.split("_")[0] for s in sae_pool]
-    sae_labels = ["p_anneal" if label == "p" else label for label in sae_labels]
+    # Features and target
+    X_raw = df[TRAINED_FEATURES]
 
-    # Store unpacked score arrays
-    v2_scores = {k: [] for k in score_types}
-    v3_scores = {k: [] for k in score_types}
-    valid_labels = []
+    # Normalize features using the trained scaler
+    X = trained_scaler.transform(X_raw)
 
-    for sae, label in zip(sae_pool, sae_labels):
-        v2_tuple = v2_avg.get(sae)
-        v3_tuple = v3_avg.get(sae)
+    # Predict
+    df["CE-Bench prediction"] = trained_model.predict(X)
 
-        if v2_tuple and v3_tuple:
-            v2_scores["contrastive"].append(v2_tuple[0])
-            v2_scores["independence"].append(v2_tuple[1])
-            v2_scores["interpretability"].append(v2_tuple[2])
+    # Plotting
+    comparison_axes = TRAINED_FEATURES
+    titles = comparison_axes.copy()
 
-            v3_scores["contrastive"].append(v3_tuple[0])
-            v3_scores["independence"].append(v3_tuple[1])
-            v3_scores["interpretability"].append(v3_tuple[2])
+    type_groups = sorted(df["type_group"].unique())
+    palette = sns.color_palette("tab10", n_colors=len(type_groups))
 
-            valid_labels.append(label)
-        else:
-            print(f"[WARN] Missing data for {sae}")
+    fig, axes = plt.subplots(1, 4, figsize=(16, 4))
+    axes = axes.flatten()
 
-    fig, axs = plt.subplots(1, 3, figsize=(15, 4))
-    fig.suptitle("v2 vs. v3 Score Comparison per SAE Variant", fontsize=14)
+    for i, column in enumerate(comparison_axes):
+        ax = axes[i]
 
-    for i, score_type in enumerate(score_types):
-        x = v2_scores[score_type]
-        y = v3_scores[score_type]
+        # Scatter plot
+        sns.scatterplot(
+            data=df,
+            x=column,
+            y="CE-Bench prediction",
+            hue="type_group",
+            hue_order=type_groups,
+            palette=palette,
+            alpha=0.8,
+            s=70,
+            ax=ax,
+            legend=False
+        )
 
-        axs[i].scatter(x, y, color=colors[i], s=40, label="SAE Variants")
+        # Line plot
+        sns.lineplot(
+            data=df.sort_values(by=["type_group", column]),
+            x=column,
+            y="CE-Bench prediction",
+            hue="type_group",
+            hue_order=type_groups,
+            palette=palette,
+            estimator=None,
+            errorbar=None,
+            linewidth=0.7,
+            ax=ax,
+            legend=False
+        )
 
-        # Diagonal line
-        min_val = min(x + y)
-        max_val = max(x + y)
-        axs[i].plot([min_val, max_val], [min_val, max_val], 'k--', alpha=0.6, label="y = x")
+        ax.set_title(f"CE-Bench vs. {titles[i]}")
+        ax.set_xlabel(titles[i])
+        ax.set_ylabel("Model Prediction")
 
-        # Annotations
-        for j, label in enumerate(valid_labels):
-            axs[i].annotate(label, (x[j] + 0.5, y[j] + 0.5), fontsize=8)
+    # Shared legend
+    handles = [
+        Line2D([0], [0], marker='o', color='w', markerfacecolor=palette[i], markersize=8)
+        for i in range(len(type_groups))
+    ]
 
-        axs[i].set_title(f"{score_type.capitalize()} Score")
-        axs[i].set_xlabel("v2")
-        axs[i].set_ylabel("v3")
-        axs[i].grid(True)
-        axs[i].set_aspect('equal', adjustable='box')
-        axs[i].legend(loc='upper left', fontsize=8)
+    labels = type_groups
 
-    plt.tight_layout(rect=[0, 0, 1, 0.95])
-    plt.savefig("figures/v2_vs_v3_score_scatter.png")
+    fig.legend(
+        handles,
+        labels,
+        title="Layer Type",
+        loc="lower center",
+        bbox_to_anchor=(0.5, -0.15),
+        ncol=len(type_groups),
+        frameon=False
+    )
+
+    plt.tight_layout(rect=[0, 0.05, 1, 1])
+    plt.savefig("ce_bench/layer_type_analysis.png", bbox_inches='tight')
     plt.show()
+
+
+
 
 
 def arg_parser():
@@ -628,6 +456,20 @@ if __name__ == "__main__":
     args = parser.parse_args()
     device = general_utils.setup_environment()
 
+    trained_results = train_linear_regression(
+        #train_csv="ce_bench/ablation_study/ABLATION_MEAN_TRAINING_DATA.csv"
+        #train_csv="ce_bench/ablation_study/ABLATION_OUTLIER_TRAINING_DATA.csv"
+        train_csv="ce_bench/data_processing/TRAINING_DATA.csv"
+    )
+
+    trained_scaler = trained_results["scaler"]
+    trained_model = trained_results["model"]
+    trained_coefficients = trained_results["coefficients"]
+    trained_intercept = trained_results["intercept"]
+    trained_r2_score = trained_results["r2_score"]
+    print(f"Trained model R² score: {trained_r2_score:.4f}")
+
+
     if args.task_name == "depth":
         sae_release = "gemma-scope-2b-pt-res"
         width = "16k"
@@ -640,13 +482,21 @@ if __name__ == "__main__":
         sae_release_series = "gemma-scope-2b-pt-"
         type_pool = ["att", "mlp", "res"]
         layer = "layer_12"
-        width = "16k"
+        width = "width_16k"
+        metric = "max"
 
-        layer_type_analysis(
-            sae_release_series=sae_release_series,
-            type_pool=type_pool,
-            layer=layer,
-            width=width,
+        # layer_type_analysis(
+        #     sae_release_series=sae_release_series,
+        #     type_pool=type_pool,
+        #     layer=layer,
+        #     width=width,
+        #     metric=metric,
+        # )
+
+        linear_regression_layer_type(
+            csv_file="ce_bench/LAYER_TYPE_ANALYSIS_METRICS.csv",
+            trained_scaler=trained_scaler,
+            trained_model=trained_model
         )
             
     elif args.task_name == "width":
@@ -659,9 +509,11 @@ if __name__ == "__main__":
         #     metric=pooling_metric
         # )
         
-        train_linear_regression_width("ce_bench/WIDTH_ANALYSIS_METRICS.csv")
-
-
+        linear_regression_width(
+            csv_file="ce_bench/WIDTH_ANALYSIS_METRICS.csv",
+            trained_scaler=trained_scaler,
+            trained_model=trained_model
+        )
 
     elif args.task_name == "sae":
         sae_release_series = "sae_bench_gemma-2-2b_"
@@ -715,7 +567,13 @@ if __name__ == "__main__":
         #     metric=pooling_metric,
         # )
 
-        train_linear_regression_sae("ce_bench/SAE_ANALYSIS_METRICS.csv")
+        linear_regression_sae(
+            #csv_file="ce_bench/ablation_study/ABLATION_MEAN_SAE_ANALYSIS_METRICS.csv",
+            #csv_file="ce_bench/ablation_study/ABLATION_OUTLIER_SAE_ANALYSIS_METRICS.csv",
+            csv_file="ce_bench/data_processing/SAE_ANALYSIS_METRICS.csv",
+            trained_scaler=trained_scaler,
+            trained_model=trained_model
+        )
 
 
 

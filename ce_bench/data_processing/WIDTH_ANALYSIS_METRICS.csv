@@ -1,4 +1,4 @@
-width,folder_name,subfolder,contrastive_score,independent_score,interpretability_score,sparsity,ground_truth
+width,folder_name,subfolder,contrastive_score,independent_score,joint_score,sparsity,ground_truth
 16k,sae_bench_gemma-2-2b_jump_relu_width-2pow14_date-0107,blocks.12.hook_resid_post__trainer_5,29.6593073846817,59.889933818054200,52.644626303863500,711.298828125,0.821644585253458
 16k,sae_bench_gemma-2-2b_jump_relu_width-2pow14_date-0107,blocks.12.hook_resid_post__trainer_1,30.117548287582400,91.07381221618650,79.2220342628479,42.4760551452637,0.848697394789582
 16k,sae_bench_gemma-2-2b_jump_relu_width-2pow14_date-0107,blocks.12.hook_resid_post__trainer_2,30.26925546588900,89.82428628387450,79.55782395324710,85.2770538330078,0.840251932436304
