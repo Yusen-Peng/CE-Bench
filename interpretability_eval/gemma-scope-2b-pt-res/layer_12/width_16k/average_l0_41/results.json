@@ -1,0 +1,63 @@
+{
+    "contrastive_dataset": "GulkoA/contrastive-stories-v4",
+    "sae_release": "gemma-scope-2b-pt-res",
+    "sae_id": "layer_12/width_16k/average_l0_41",
+    "contrastive_score_mean": {
+        "max": 42.442706064605716,
+        "mean": 1.7424608813598752e-10,
+        "outlier_count_1_both": 773.731,
+        "outlier_count_1_upper": 773.731,
+        "outlier_count_2_both": 362.6054,
+        "outlier_count_2_upper": 362.6054,
+        "outlier_count_3_both": 200.115,
+        "outlier_count_3_upper": 200.115
+    },
+    "independent_score_mean": {
+        "max": 88.68721236190795,
+        "mean": 2.7909627533517777e-10,
+        "outlier_count_1_both": 539.0102,
+        "outlier_count_1_upper": 539.0102,
+        "outlier_count_2_both": 127.8954,
+        "outlier_count_2_upper": 127.8954,
+        "outlier_count_3_both": 58.6784,
+        "outlier_count_3_upper": 58.6784
+    },
+    "interpretability_score_mean": {
+        "max": 79.13044263687134,
+        "mean": 4.380344762466848e-11,
+        "outlier_count_1_both": 634.9186,
+        "outlier_count_1_upper": 634.9186,
+        "outlier_count_2_both": 189.5978,
+        "outlier_count_2_upper": 189.5978,
+        "outlier_count_3_both": 93.982,
+        "outlier_count_3_upper": 93.982
+    },
+    "total_rows": 5000,
+    "sae_config": {
+        "architecture": "jumprelu",
+        "d_in": 2304,
+        "d_sae": 16384,
+        "dtype": "torch.bfloat16",
+        "device": "cuda",
+        "model_name": "gemma-2-2b",
+        "hook_name": "blocks.12.hook_resid_post",
+        "hook_layer": 12,
+        "hook_head_index": null,
+        "activation_fn_str": "relu",
+        "activation_fn_kwargs": {},
+        "apply_b_dec_to_input": false,
+        "finetuning_scaling_factor": false,
+        "sae_lens_training_version": null,
+        "prepend_bos": true,
+        "dataset_path": "monology/pile-uncopyrighted",
+        "dataset_trust_remote_code": true,
+        "context_size": 1024,
+        "normalize_activations": null,
+        "neuronpedia_id": "gemma-2-2b/12-gemmascope-res-16k__l0-41",
+        "model_from_pretrained_kwargs": {},
+        "seqpos_slice": [
+            null
+        ]
+    },
+    "date": "2025-05-17 09:57:57"
+}

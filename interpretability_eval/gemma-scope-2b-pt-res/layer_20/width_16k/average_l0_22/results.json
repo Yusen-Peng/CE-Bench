@@ -1,0 +1,63 @@
+{
+    "contrastive_dataset": "GulkoA/contrastive-stories-v4",
+    "sae_release": "gemma-scope-2b-pt-res",
+    "sae_id": "layer_20/width_16k/average_l0_22",
+    "contrastive_score_mean": {
+        "max": 53.18894071044922,
+        "mean": 4.8769288696348666e-11,
+        "outlier_count_1_both": 561.0186,
+        "outlier_count_1_upper": 561.0186,
+        "outlier_count_2_both": 264.425,
+        "outlier_count_2_upper": 264.425,
+        "outlier_count_3_both": 151.9554,
+        "outlier_count_3_upper": 151.9554
+    },
+    "independent_score_mean": {
+        "max": 47.45805464935303,
+        "mean": 5.2047980716452e-10,
+        "outlier_count_1_both": 948.7578,
+        "outlier_count_1_upper": 948.7578,
+        "outlier_count_2_both": 265.0972,
+        "outlier_count_2_upper": 265.0972,
+        "outlier_count_3_both": 119.5948,
+        "outlier_count_3_upper": 119.5948
+    },
+    "interpretability_score_mean": {
+        "max": 47.04938436889648,
+        "mean": 3.3699325285851953e-11,
+        "outlier_count_1_both": 775.552,
+        "outlier_count_1_upper": 775.552,
+        "outlier_count_2_both": 254.451,
+        "outlier_count_2_upper": 254.451,
+        "outlier_count_3_both": 129.0486,
+        "outlier_count_3_upper": 129.0486
+    },
+    "total_rows": 5000,
+    "sae_config": {
+        "architecture": "jumprelu",
+        "d_in": 2304,
+        "d_sae": 16384,
+        "dtype": "torch.bfloat16",
+        "device": "cuda",
+        "model_name": "gemma-2-2b",
+        "hook_name": "blocks.20.hook_resid_post",
+        "hook_layer": 20,
+        "hook_head_index": null,
+        "activation_fn_str": "relu",
+        "activation_fn_kwargs": {},
+        "apply_b_dec_to_input": false,
+        "finetuning_scaling_factor": false,
+        "sae_lens_training_version": null,
+        "prepend_bos": true,
+        "dataset_path": "monology/pile-uncopyrighted",
+        "dataset_trust_remote_code": true,
+        "context_size": 1024,
+        "normalize_activations": null,
+        "neuronpedia_id": null,
+        "model_from_pretrained_kwargs": {},
+        "seqpos_slice": [
+            null
+        ]
+    },
+    "date": "2025-05-17 23:19:41"
+}
