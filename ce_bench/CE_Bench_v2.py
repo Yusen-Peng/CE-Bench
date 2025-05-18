@@ -24,7 +24,7 @@ from sae_bench.evals.autointerp.eval_config import AutoInterpEvalConfig
 from sae_bench.sae_bench_utils.sae_selection_utils import (
     get_saes_from_regex,
 )
-from stw import Stopwatch
+import stw
 from datasets import load_dataset, Dataset
 import multiprocessing as mp
 from multiprocessing import Pool
@@ -46,7 +46,7 @@ def outlier_counting_one_way(tensor: Tensor, num_sigmas: int = 1) -> int:
     outliers = tensor > upper_bound
     return outliers.sum().item()
 
-
+@stw.stopwatch
 def run_eval_once(
     dataset: Dataset,
     device: str,
@@ -76,7 +76,7 @@ def run_eval_once(
         os.makedirs(f"{logs_folder}/raw", exist_ok=True)
 
 
-    sw = Stopwatch(verbose=True, start=True)
+    sw = stw.Stopwatch(verbose=True, start=True)
 
     contrastive_scores = []
     independent_scores = []
@@ -93,10 +93,10 @@ def run_eval_once(
     total_rows = len(dataset)
 
     all_activations = []
+    subject_activations = defaultdict(list)
 
     for pair_index in tqdm(range(total_rows)):
 
-        # filter out marked tokens
         text_A_original = dataset[pair_index]["story1"]
         text_B_original = dataset[pair_index]["story2"]
         ground_truth_subject = dataset[pair_index]["subject_title"]
@@ -150,25 +150,42 @@ def run_eval_once(
         I1 = I1 / I1_token_num if I1_token_num > 0 else I1
 
         all_activations.append((V1, V2, I1, ground_truth_subject))
+        subject_activations[ground_truth_subject].append((V1, V2, I1))
 
         if log_vectors:
             df = pd.DataFrame({"V1": V1, "V2": V2, "delta": V1 - V2, "abs_delta": np.abs(V1 - V2)})
             df.to_csv(f"{logs_folder}/raw/V1_V2_{pair_index}.csv", index=True)
-
+            
 
     print(f"V1: {V1.shape}, V2: {V2.shape}, I1: {I1.shape}")
 
-    I2 = torch.zeros(activations_B.shape[2])
-    I2_token_num = len(all_activations)
+    # I2 = torch.zeros(activations_B.shape[2])
+    # I2_token_num = 0
+    subject_averaged_activations = {}
+    subjects = []
 
-    for V1, V2, I1, ground_truth_subject in all_activations:
-        I2 += I1
-    I2 = I2 / I2_token_num if I2_token_num > 0 else I2
+    for subject, activations in subject_averaged_activations.items():
+        I1s = []
+        for V1, V2, I1 in activations:
+            I1s.append(I1)
+        average = torch.mean(torch.stack(I1s), dim=0)
+        subject_averaged_activations[subject] = average
+        subjects.append(subject)
+
+    # for V1, V2, I1, ground_truth_subject in all_activations:
+    #     I2 += I2
+    # I2 = I2 / I2_token_num if I2_token_num > 0 else I2
 
     print(f"V1: {V1.shape}, V2: {V2.shape}, I1: {I1.shape}, I2: {I2.shape}")
     for pair_index, (V1, V2, I1, ground_truth_subject) in tqdm(enumerate(all_activations)):
 
         # compute the contrastive and independent scores
+        I2s = []
+        for subject, I2 in subject_averaged_activations.items():
+            if subject != ground_truth_subject:
+                I2s.append(I2)
+
+        I2 = torch.mean(torch.stack(I2s), dim=0)
 
         shift_v = I1 - I2
         shift_v_per_subect[ground_truth_subject].append(shift_v)
@@ -205,7 +222,6 @@ def run_eval_once(
             "outlier_count_3_both": outlier_counting_two_way(elementwise_independence_score, num_sigmas=3),
             "outlier_count_3_upper": outlier_counting_one_way(elementwise_independence_score, num_sigmas=3),
         }
-
 
 
         elementwise_interpretability_distance = elementwise_contrast_distance + elementwise_independence_distance
