@@ -11,48 +11,53 @@ from tqdm import tqdm
 from matplotlib.lines import Line2D
 import re
 import seaborn as sns
-from transformer_lens import HookedTransformer
+# from transformer_lens import HookedTransformer
 from sklearn.preprocessing import StandardScaler
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression, Ridge
 from sklearn.metrics import r2_score
 import torch
-import torch.nn as nn
+# import torch.nn as nn
 import numpy as np
 import pandas as pd
-from transformers import AutoTokenizer
-from sae_lens import SAE, HookedSAETransformer
-from collections import defaultdict
+# from transformers import AutoTokenizer
+# from sae_lens import SAE, HookedSAETransformer
+# from collections import defaultdict
 import matplotlib.pyplot as plt
 import json
-from typing import Any, List
-import sae_bench.sae_bench_utils.activation_collection as activation_collection
+# from typing import Any, List
+# import sae_bench.sae_bench_utils.activation_collection as activation_collection
 import sae_bench.sae_bench_utils.general_utils as general_utils
-from sae_bench.evals.autointerp.eval_config import AutoInterpEvalConfig
-from sae_bench.sae_bench_utils.sae_selection_utils import (
-    get_saes_from_regex,
-)
-from stw import Stopwatch
-from datasets import load_dataset, Dataset
-import multiprocessing as mp
-from multiprocessing import Pool
-from functools import partial
-from typing import Tuple, Dict
-from sae_lens.toolkit.pretrained_saes_directory import get_pretrained_saes_directory
+# from sae_bench.evals.autointerp.eval_config import AutoInterpEvalConfig
+# from sae_bench.sae_bench_utils.sae_selection_utils import (
+#     get_saes_from_regex,
+# )
+# from stw import Stopwatch
+# from datasets import load_dataset, Dataset
+# import multiprocessing as mp
+# from multiprocessing import Pool
+# from functools import partial
+# from typing import Tuple, Dict
+# from sae_lens.toolkit.pretrained_saes_directory import get_pretrained_saes_directory
 
 TRAINED_FEATURES = ["contrastive_score", "independent_score", "joint_score", "sparsity"]
 
 # ABLATION STUDY FEATURE CONFIG
-TRAINED_FEATURES = ["contrastive_score", "independent_score", "sparsity"]
-#TRAINED_FEATURES = ["contrastive_score", "independent_score", "joint_score"]
-#TRAINED_FEATURES = ["sparsity"]
+# TRAINED_FEATURES = ["contrastive_score", "independent_score", "sparsity"]
+# TRAINED_FEATURES = ["contrastive_score", "independent_score", "joint_score"]
+# TRAINED_FEATURES = ["sparsity"]
 
-def predict_with_l
+def compare_rankings(df, predictions, target_feature="ground_truth") -> float:
+    scores_pred = { i: predictions[i] for i in range(len(predictions)) }
+    scores_gt = { i: df[target_feature][i] for i in range(len(df[target_feature])) }
+    print("Scores_pred:", scores_pred)
 
-def compare_rankings(scores1: dict[str, float], scores2: dict[str, float]) -> float:
-    rankings1 = {k: i for i, k in enumerate(sorted(scores1, key=scores1.get))}
-    rankings2 = {k: i for i, k in enumerate(sorted(scores2, key=scores2.get))}
+    rankings1 = {k: i for i, k in enumerate(sorted(scores_pred, key=scores_pred.get, reverse=True))}
+    rankings2 = {k: i for i, k in enumerate(sorted(scores_gt, key=scores_gt.get, reverse=True))}
+
+    print("Rankings1:", rankings1)
+    # print("Rankings2:", rankings2)
 
     concordant_pairs = 0
     discordant_pairs = 0
@@ -455,8 +460,6 @@ def linear_regression_layer_type(csv_file: str, trained_scaler: StandardScaler, 
 
 
 
-
-
 def arg_parser():
     parser = argparse.ArgumentParser(description="Post analysis of neuron steering")
     parser.add_argument(
@@ -487,6 +490,22 @@ if __name__ == "__main__":
     trained_intercept = trained_results["intercept"]
     trained_r2_score = trained_results["r2_score"]
     print(f"Trained model R² score: {trained_r2_score:.4f}")
+
+    training_data = pd.read_csv("ce_bench/data_processing/TRAINING_DATA.csv")
+
+    predicted = predict_with_global_model(
+        df=training_data,
+        trained_model=trained_model,
+        trained_scaler=trained_scaler
+    )
+
+    ranking_score = compare_rankings(
+        df=training_data,
+        predictions=predicted,
+        target_feature="ground_truth"
+    )
+
+    print(f"Ranking score: {ranking_score:.4f}")
 
 
     if args.task_name == "depth":
