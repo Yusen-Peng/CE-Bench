@@ -48,7 +48,6 @@ TRAINED_FEATURES = ["contrastive_score", "independent_score", "sparsity"]
 #TRAINED_FEATURES = ["contrastive_score", "independent_score", "joint_score"]
 #TRAINED_FEATURES = ["sparsity"]
 
-def predict_with_l
 
 def compare_rankings(scores1: dict[str, float], scores2: dict[str, float]) -> float:
     rankings1 = {k: i for i, k in enumerate(sorted(scores1, key=scores1.get))}
