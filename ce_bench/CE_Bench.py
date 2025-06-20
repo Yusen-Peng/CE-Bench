@@ -65,7 +65,7 @@ def run_eval_once(
         sae_release, sae_id, device, config.llm_dtype
     )
     
-    generate_histograms = False
+    generate_histograms = True
     log_vectors = False
 
     logs_folder = f"interpretability_eval/{sae_release}/{sae_id}"
@@ -91,6 +91,7 @@ def run_eval_once(
     neuron_interpretability_score_subject_pairs = {}
 
     total_rows = len(dataset)
+    total_rows = 1
 
     all_activations = []
 
@@ -233,36 +234,31 @@ def run_eval_once(
             plt.figure(figsize=(20, 5))  # Wider figure for one row
             
             # Set up title and subtitle
-            plt.suptitle(f"Interpretability Analysis - {ground_truth_subject}", fontsize=14, y=0.98)
+            plt.suptitle(f"Visualization Analysis - {ground_truth_subject}", fontsize=16, y=0.98)
             plt.figtext(0.5, 0.91, 
-                    f"Contrastive: {contrastive_score_zoo['max']:.4f} | Independent: {independence_score_zoo['max']:.4f} | Interpretability: {interpretability_score_zoo['max']:.4f} | Story1: {text_A_original[:100]}...", 
-                    ha="center", fontsize=12)
+                    f"Contrastive: {contrastive_score_zoo['max']:.4f} | Independent: {independence_score_zoo['max']:.4f} | Story1: {text_A_original[:100]}...", 
+                    ha="center", fontsize=16)
             
             # Scatter plot
-            plt.subplot(1, 4, 1)
+            plt.subplot(1, 3, 1)
             scatter = plt.scatter(elementwise_contrastive_score_np, elementwise_independence_score_np, 
                         c=elementwise_interpretability_score_np, cmap='viridis')
-            plt.colorbar(scatter, label="Interpretability Score")
-            plt.xlabel("Contrastive Score")
-            plt.ylabel("Independent Score")
-            plt.title("Feature Space")
+            plt.colorbar(scatter, label="Joint")
+            plt.xlabel("Contrastive Score", fontsize=16)
+            plt.ylabel("Independent Score", fontsize=16)
+            plt.title("Feature Space", fontsize=16)
             
             # Histograms in a row
-            plt.subplot(1, 4, 2)
+            plt.subplot(1, 3, 2)
             plt.hist(elementwise_contrastive_score_np, bins=50)
-            plt.title("Contrastive Distribution")
-            plt.xlabel("z-score")
-            plt.ylabel("Frequency")
+            plt.title("Contrastive Distribution", fontsize=16)
+            plt.xlabel("z-score", fontsize=16)
+            plt.ylabel("Frequency", fontsize=16)
             
-            plt.subplot(1, 4, 3)
+            plt.subplot(1, 3, 3)
             plt.hist(elementwise_independence_score_np, bins=50)
-            plt.title("Independence Distribution")
-            plt.xlabel("z-score")
-            
-            plt.subplot(1, 4, 4)
-            plt.hist(elementwise_interpretability_score_np, bins=50)
-            plt.title("Interpretability Distribution")
-            plt.xlabel("z-score")
+            plt.title("Independence Distribution", fontsize=16)
+            plt.xlabel("z-score", fontsize=16)
             
             plt.tight_layout()
             plt.subplots_adjust(top=0.85)  # Make room for the titles
