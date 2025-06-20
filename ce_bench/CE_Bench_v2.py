@@ -24,7 +24,7 @@ from sae_bench.evals.autointerp.eval_config import AutoInterpEvalConfig
 from sae_bench.sae_bench_utils.sae_selection_utils import (
     get_saes_from_regex,
 )
-from stw import Stopwatch
+import stw
 from datasets import load_dataset, Dataset
 import multiprocessing as mp
 from multiprocessing import Pool
@@ -46,7 +46,7 @@ def outlier_counting_one_way(tensor: Tensor, num_sigmas: int = 1) -> int:
     outliers = tensor > upper_bound
     return outliers.sum().item()
 
-
+@stw.stopwatch
 def run_eval_once(
     dataset: Dataset,
     device: str,
@@ -65,7 +65,7 @@ def run_eval_once(
         sae_release, sae_id, device, config.llm_dtype
     )
     
-    generate_histograms = True
+    generate_histograms = False
     log_vectors = False
 
     logs_folder = f"interpretability_eval/{sae_release}/{sae_id}"
@@ -76,7 +76,7 @@ def run_eval_once(
         os.makedirs(f"{logs_folder}/raw", exist_ok=True)
 
 
-    sw = Stopwatch(verbose=True, start=True)
+    sw = stw.Stopwatch(verbose=True, start=True)
 
     contrastive_scores = []
     independent_scores = []
@@ -91,13 +91,12 @@ def run_eval_once(
     neuron_interpretability_score_subject_pairs = {}
 
     total_rows = len(dataset)
-    total_rows = 1
 
     all_activations = []
+    subject_activations = defaultdict(list)
 
     for pair_index in tqdm(range(total_rows)):
 
-        # filter out marked tokens
         text_A_original = dataset[pair_index]["story1"]
         text_B_original = dataset[pair_index]["story2"]
         ground_truth_subject = dataset[pair_index]["subject_title"]
@@ -151,25 +150,42 @@ def run_eval_once(
         I1 = I1 / I1_token_num if I1_token_num > 0 else I1
 
         all_activations.append((V1, V2, I1, ground_truth_subject))
+        subject_activations[ground_truth_subject].append((V1, V2, I1))
 
         if log_vectors:
             df = pd.DataFrame({"V1": V1, "V2": V2, "delta": V1 - V2, "abs_delta": np.abs(V1 - V2)})
             df.to_csv(f"{logs_folder}/raw/V1_V2_{pair_index}.csv", index=True)
-
+            
 
     print(f"V1: {V1.shape}, V2: {V2.shape}, I1: {I1.shape}")
 
-    I2 = torch.zeros(activations_B.shape[2])
-    I2_token_num = len(all_activations)
+    # I2 = torch.zeros(activations_B.shape[2])
+    # I2_token_num = 0
+    subject_averaged_activations = {}
+    subjects = []
 
-    for V1, V2, I1, ground_truth_subject in all_activations:
-        I2 += I1
-    I2 = I2 / I2_token_num if I2_token_num > 0 else I2
+    for subject, activations in subject_averaged_activations.items():
+        I1s = []
+        for V1, V2, I1 in activations:
+            I1s.append(I1)
+        average = torch.mean(torch.stack(I1s), dim=0)
+        subject_averaged_activations[subject] = average
+        subjects.append(subject)
+
+    # for V1, V2, I1, ground_truth_subject in all_activations:
+    #     I2 += I2
+    # I2 = I2 / I2_token_num if I2_token_num > 0 else I2
 
     print(f"V1: {V1.shape}, V2: {V2.shape}, I1: {I1.shape}, I2: {I2.shape}")
     for pair_index, (V1, V2, I1, ground_truth_subject) in tqdm(enumerate(all_activations)):
 
         # compute the contrastive and independent scores
+        I2s = []
+        for subject, I2 in subject_averaged_activations.items():
+            if subject != ground_truth_subject:
+                I2s.append(I2)
+
+        I2 = torch.mean(torch.stack(I2s), dim=0)
 
         shift_v = I1 - I2
         shift_v_per_subect[ground_truth_subject].append(shift_v)
@@ -208,7 +224,6 @@ def run_eval_once(
         }
 
 
-
         elementwise_interpretability_distance = elementwise_contrast_distance + elementwise_independence_distance
         elementwise_interpretability_score = elementwise_interpretability_distance - torch.mean(elementwise_interpretability_distance)
         st_dev = torch.std(elementwise_interpretability_distance) if torch.std(elementwise_interpretability_distance) != 0 else 1
@@ -234,31 +249,36 @@ def run_eval_once(
             plt.figure(figsize=(20, 5))  # Wider figure for one row
             
             # Set up title and subtitle
-            plt.suptitle(f"Visualization Analysis - {ground_truth_subject}", fontsize=16, y=0.98)
+            plt.suptitle(f"Interpretability Analysis - {ground_truth_subject}", fontsize=14, y=0.98)
             plt.figtext(0.5, 0.91, 
-                    f"Contrastive: {contrastive_score_zoo['max']:.4f} | Independent: {independence_score_zoo['max']:.4f} | Story1: {text_A_original[:100]}...", 
-                    ha="center", fontsize=16)
+                    f"Contrastive: {contrastive_score_zoo['max']:.4f} | Independent: {independence_score_zoo['max']:.4f} | Interpretability: {interpretability_score_zoo['max']:.4f} | Story1: {text_A_original[:100]}...", 
+                    ha="center", fontsize=12)
             
             # Scatter plot
-            plt.subplot(1, 3, 1)
+            plt.subplot(1, 4, 1)
             scatter = plt.scatter(elementwise_contrastive_score_np, elementwise_independence_score_np, 
                         c=elementwise_interpretability_score_np, cmap='viridis')
-            plt.colorbar(scatter, label="Joint")
-            plt.xlabel("Contrastive Score", fontsize=16)
-            plt.ylabel("Independent Score", fontsize=16)
-            plt.title("Feature Space", fontsize=16)
+            plt.colorbar(scatter, label="Interpretability Score")
+            plt.xlabel("Contrastive Score")
+            plt.ylabel("Independent Score")
+            plt.title("Feature Space")
             
             # Histograms in a row
-            plt.subplot(1, 3, 2)
+            plt.subplot(1, 4, 2)
             plt.hist(elementwise_contrastive_score_np, bins=50)
-            plt.title("Contrastive Distribution", fontsize=16)
-            plt.xlabel("z-score", fontsize=16)
-            plt.ylabel("Frequency", fontsize=16)
+            plt.title("Contrastive Distribution")
+            plt.xlabel("z-score")
+            plt.ylabel("Frequency")
             
-            plt.subplot(1, 3, 3)
+            plt.subplot(1, 4, 3)
             plt.hist(elementwise_independence_score_np, bins=50)
-            plt.title("Independence Distribution", fontsize=16)
-            plt.xlabel("z-score", fontsize=16)
+            plt.title("Independence Distribution")
+            plt.xlabel("z-score")
+            
+            plt.subplot(1, 4, 4)
+            plt.hist(elementwise_interpretability_score_np, bins=50)
+            plt.title("Interpretability Distribution")
+            plt.xlabel("z-score")
             
             plt.tight_layout()
             plt.subplots_adjust(top=0.85)  # Make room for the titles
