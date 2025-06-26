@@ -4,12 +4,17 @@ Authors: Alex Gulko, Yusen Peng; Advisor: Dr. Sachin Kumar
 
 ## 💥NEW: ICML workshop feedback
 
+### Issues with Design (Major)
+
+1. the flaw of supervised training - "The interpretability score trains a linear regression using SAE-Bench scores as ground truth. However, SAE-Bench itself uses auto-interp as one of its core metrics. CE-Bench therefore inherits whatever noise, bias or prompt-instability those LLM judges introduce, even though its inference stage is LLM-free."
+2. missing train/test split - "Since there is no explicit train-test split, one cannot tell whether the proposed metric generalises beyond the SAE-Bench results or merely memorises SAE-Bench results. The authors also never test whether the regressor can predict auto-interp ranking for new SAEs whose SAE-Bench scores are hidden. Without such a holdout, one cannot claim that CE-Bench is a reliable proxy for SAE-Bench."
+3. not agree on the "contrastive part" - "Consider a minimally contrastive example of two stories or concepts like "victory" and "defeat" - intuitively, one would want the features spaces of these two to overlap significantly"
+
+### Issues with Manuscript (Minor)
+
 1. missing citation - "The paper fails to cite a number of tools and methods it uses, such as the Gemma models, p-annealing SAEs [1], JumpReLUSAEs [2], and others."
-2. the flaw of supervised training - "The interpretability score trains a linear regression using SAE-Bench scores as ground truth. However, SAE-Bench itself uses auto-interp as one of its core metrics. CE-Bench therefore inherits whatever noise, bias or prompt-instability those LLM judges introduce, even though its inference stage is LLM-free."
-3. missing train/test split - "Since there is no explicit train-test split, one cannot tell whether the proposed metric generalises beyond the SAE-Bench results or merely memorises SAE-Bench results. The authors also never test whether the regressor can predict auto-interp ranking for new SAEs whose SAE-Bench scores are hidden. Without such a holdout, one cannot claim that CE-Bench is a reliable proxy for SAE-Bench."
-4. previous work discussion - "the lack of meaningful comparison with relevant previous work, or at least a better positioning of this work with previous work"
-5. not agree on the "contrastive part" - "Consider a minimally contrastive example of two stories or concepts like "victory" and "defeat" - intuitively, one would want the features spaces of these two to overlap significantly"
-6. a longer discussion and description of the evaluation results is necessary!
+2. previous work discussion - "the lack of meaningful comparison with relevant previous work, or at least a better positioning of this work with previous work."
+3. a longer discussion and description of the evaluation results is necessary!
 
 ## Motivation
 The two existing interpretability evaluation methods are based on LLM prompting, which can be inherently nondeterministic, unstable, and inconsistent, despite the fact that we can run the same prompt multiple times to slightly alleviate this problem. Instead of utilizing any LLM to evaluate or simulate neuron activations, we propose a contrastive evaluation framework, CE-Bench. Its architecture is illustrated below:
