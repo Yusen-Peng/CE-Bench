@@ -55,12 +55,12 @@ TRAINED_FEATURES = ["contrastive_score", "independent_score", "sparsity"]
 def compare_rankings(df, predictions, target_feature="ground_truth") -> float:
     scores_pred = { i: predictions[i] for i in range(len(predictions)) }
     scores_gt = { i: df[target_feature][i] for i in range(len(df[target_feature])) }
-    print("Scores_pred:", scores_pred)
+    #print("Scores_pred:", scores_pred)
 
     rankings1 = {k: i for i, k in enumerate(sorted(scores_pred, key=scores_pred.get, reverse=True))}
     rankings2 = {k: i for i, k in enumerate(sorted(scores_gt, key=scores_gt.get, reverse=True))}
 
-    print("Rankings1:", rankings1)
+    #print("Rankings1:", rankings1)
     # print("Rankings2:", rankings2)
 
     concordant_pairs = 0
@@ -445,24 +445,25 @@ def arg_parser():
 
 
 
-if __name__ == "__main__":
+def main():
     parser = arg_parser()
     args = parser.parse_args()
     device = general_utils.setup_environment()
 
     trained_results = train_linear_regression(
         #train_csv="ce_bench/ablation_study/ABLATION_MEAN_TRAINING_DATA.csv"
-        train_csv="ce_bench/ablation_study/ABLATION_OUTLIER_TRAINING_DATA.csv"
-        #train_csv="ce_bench/data_processing/TRAINING_DATA.csv"
+        #train_csv="ce_bench/ablation_study/ABLATION_OUTLIER_TRAINING_DATA.csv"
+        train_csv="ce_bench/data_processing/TRAINING_DATA.csv"
     )
-
 
     trained_scaler = trained_results["scaler"]
     trained_model = trained_results["model"]
     trained_coefficients = trained_results["coefficients"]
     trained_intercept = trained_results["intercept"]
     trained_r2_score = trained_results["r2_score"]
-    print(f"Trained model R² score: {trained_r2_score:.4f}")
+    #print(f"Trained model R² score: {trained_r2_score:.4f}")
+
+    # Approach 1 (primary approach): proxy learning
 
     training_data = pd.read_csv("ce_bench/data_processing/TRAINING_DATA.csv")
 
@@ -478,8 +479,33 @@ if __name__ == "__main__":
         target_feature="ground_truth"
     )
 
-    print(f"Ranking score: {ranking_score:.4f}")
+    # print out the ranking score
+    print(f"Ranking score of proxy learning: {ranking_score:.4f}") # should be 0.7598
 
+
+    # Approach 2: simple average of contrastive and independent scores
+    ranking_score = compare_rankings(
+        df=training_data,
+        predictions=(training_data["contrastive_score"] + training_data["independent_score"]) / 2,
+        target_feature="ground_truth"
+    )
+
+    # print out the ranking score
+    print(f"Ranking score of simple average: {ranking_score:.4f}")
+
+
+    # Approach 3: simple average of contrastive and independent scores with sparsity penalty
+    ranking_score = compare_rankings(
+        df=training_data,
+        predictions=(training_data["contrastive_score"] + training_data["independent_score"]) / 2 - training_data["sparsity"],
+        target_feature="ground_truth"
+    )
+
+    # print out the ranking score
+    print(f"Ranking score of simple average with sparsity penalty: {ranking_score:.4f}")
+
+
+    return
 
     if args.task_name == "depth":
         sae_release = "gemma-scope-2b-pt-res"
@@ -596,3 +622,8 @@ if __name__ == "__main__":
         # plot_v2_vs_v3_scores(v2_avg, v3_avg, sae_pool)
     else:
         raise ValueError(f"Unknown task name: {args.task_name}")
+
+
+
+if __name__ == "__main__":
+    main()
