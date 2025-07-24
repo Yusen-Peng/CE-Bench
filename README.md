@@ -2,6 +2,10 @@
 
 Alex Gulko*, Yusen Peng*, Sachin Kumar
 
+## Paper (under review at NeurIPS 2025 Mechanistic Interpretability Workshop)
+
+[CE-Bench paper (including appendix)](papers/CE_Bench__NeurIPS_workshop_.pdf)
+
 ## CE-Bench
 
 ![alt text](CE_Bench.png)
