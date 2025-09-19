@@ -4,7 +4,7 @@ Alex Gulko*, Yusen Peng*, Sachin Kumar
 
 ## News
 
-- [September 18th, 2025] paper accepted at BlackboxNLP Workshop @ EMNLP, 2025! See you in Suzhou, China!
+- [September 18th, 2025] paper accepted at BlackboxNLP Workshop @ EMNLP, 2025!
 - [August 31, 2025] paper available on [arXiv](https://arxiv.org/abs/2509.00691)!
 - [May 15, 2025] contrastive story dataset is publicly available on [HuggingFace](https://huggingface.co/datasets/GulkoA/contrastive-stories-v4)!
 
