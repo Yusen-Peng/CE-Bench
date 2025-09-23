@@ -112,16 +112,17 @@ def linear_regression_sae(csv_file: str, trained_scaler: StandardScaler, trained
     X_scaled = trained_scaler.transform(X)
     y = df["ground_truth"]
 
-    df["CE-Bench prediction"] = trained_model.predict(X_scaled)
+    df["CE-Bench prediction"] = (df['contrastive_score'] + df['independent_score']) - 0.25 * df['sparsity']
 
     # Plotting
-    comparison_axes = TRAINED_FEATURES + ["ground_truth"]
+    #comparison_axes = TRAINED_FEATURES + ["ground_truth"]
+    comparison_axes = TRAINED_FEATURES
     titles = comparison_axes.copy()
 
     sae_groups = sorted(df["sae_group"].unique())
     palette = sns.color_palette("tab10", n_colors=len(sae_groups))
 
-    fig, axes = plt.subplots(1, len(TRAINED_FEATURES)+1, figsize=((len(TRAINED_FEATURES)+1)*4, 4))
+    fig, axes = plt.subplots(1, len(TRAINED_FEATURES), figsize=((len(TRAINED_FEATURES))*4, 4))
     axes = axes.flatten()
 
     for i, column in enumerate(comparison_axes):
@@ -196,7 +197,8 @@ def linear_regression_layer_type(csv_file: str, trained_scaler: StandardScaler, 
     X = trained_scaler.transform(X_raw)
 
     # Predict
-    df["CE-Bench prediction"] = trained_model.predict(X)
+    df["CE-Bench prediction"] = (df['contrastive_score'] + df['independent_score']) - 0.25 * df['sparsity']
+
 
     # Plotting
     comparison_axes = TRAINED_FEATURES
@@ -282,16 +284,17 @@ def linear_regression_width(csv_file: str, trained_scaler: StandardScaler, train
     scaler = trained_scaler
     X = scaler.fit_transform(X_raw)
 
-    df["CE-Bench prediction"] = trained_model.predict(X)
+    df["CE-Bench prediction"] = (df['contrastive_score'] + df['independent_score']) - 0.25 * df['sparsity']
 
     # Plotting
-    comparison_axes = TRAINED_FEATURES + ["ground_truth"]
+    #comparison_axes = TRAINED_FEATURES + ["ground_truth"]
+    comparison_axes = TRAINED_FEATURES
     titles = comparison_axes.copy()
 
     width_groups = sorted(df["width_group"].unique())
     palette = sns.color_palette("tab10", n_colors=len(width_groups))
 
-    fig, axes = plt.subplots(1, len(TRAINED_FEATURES)+1, figsize=(4*(len(TRAINED_FEATURES)+1), 4))
+    fig, axes = plt.subplots(1, len(TRAINED_FEATURES), figsize=(4*(len(TRAINED_FEATURES)), 4))
     axes = axes.flatten()
 
     for i, column in enumerate(comparison_axes):
@@ -365,7 +368,8 @@ def linear_regression_depth(csv_file: str, trained_scaler: StandardScaler, train
     X_raw = df[TRAINED_FEATURES]
 
     X = trained_scaler.transform(X_raw)
-    df["CE-Bench prediction"] = trained_model.predict(X)
+    df["CE-Bench prediction"] = (df['contrastive_score'] + df['independent_score']) - 0.25 * df['sparsity']
+
 
     # Plotting setup
     comparison_axes = TRAINED_FEATURES
@@ -465,7 +469,9 @@ def main():
 
     # Approach 1 (primary approach): proxy learning
 
-    training_data = pd.read_csv("ce_bench/data_processing/TRAINING_DATA.csv")
+    #training_data = pd.read_csv("ce_bench/data_processing/TRAINING_DATA.csv")
+    #training_data = pd.read_csv("ce_bench/ablation_study/ABLATION_MEAN_TRAINING_DATA.csv")
+    training_data = pd.read_csv("ce_bench/ablation_study/ABLATION_OUTLIER_TRAINING_DATA.csv")
 
     predicted = predict_with_global_model(
         df=training_data,
@@ -486,7 +492,7 @@ def main():
     # Approach 2: simple average of contrastive and independent scores
     ranking_score = compare_rankings(
         df=training_data,
-        predictions=(training_data["contrastive_score"] + training_data["independent_score"]) / 2,
+        predictions=(training_data["contrastive_score"] + training_data["independent_score"]),
         target_feature="ground_truth"
     )
 
@@ -497,15 +503,13 @@ def main():
     # Approach 3: simple average of contrastive and independent scores with sparsity penalty
     ranking_score = compare_rankings(
         df=training_data,
-        predictions=(training_data["contrastive_score"] + training_data["independent_score"]) / 2 - training_data["sparsity"],
+        predictions=(training_data["contrastive_score"] + training_data["independent_score"]) - 0.25 * training_data["sparsity"],
         target_feature="ground_truth"
     )
 
     # print out the ranking score
     print(f"Ranking score of simple average with sparsity penalty: {ranking_score:.4f}")
 
-
-    return
 
     if args.task_name == "depth":
         sae_release = "gemma-scope-2b-pt-res"
