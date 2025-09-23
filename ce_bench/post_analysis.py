@@ -75,6 +75,67 @@ def compare_rankings(df, predictions, target_feature="ground_truth") -> float:
 
     return concordant_pairs / total_pairs if total_pairs > 0 else 0.0
 
+
+
+def _average_rank(values: np.ndarray) -> np.ndarray:
+    """Tie-aware average ranks (0-based)."""
+    n = values.size
+    order = np.argsort(values, kind="mergesort")
+    sorted_vals = values[order]
+    ranks = np.empty(n, dtype=float)
+
+    i = 0
+    while i < n:
+        j = i
+        while j + 1 < n and sorted_vals[j + 1] == sorted_vals[i]:
+            j += 1
+        avg_rank = 0.5 * (i + j)  # average of tied positions (0-based)
+        ranks[order[i:j + 1]] = avg_rank
+        i = j + 1
+    return ranks
+
+def spearman_correlation(df, predictions, target_feature: str = "ground_truth") -> float:
+    """Spearman's ρ (Pearson on ranks), returns in [-1, 1] or NaN."""
+    y_true = np.asarray(df[target_feature].to_numpy(), dtype=float)
+    y_pred = np.asarray(predictions, dtype=float)
+    if y_true.shape[0] != y_pred.shape[0]:
+        raise ValueError(f"Length mismatch: {y_true.shape[0]} ground-truth vs {y_pred.shape[0]} predictions")
+
+    r_true = _average_rank(y_true)
+    r_pred = _average_rank(y_pred)
+
+    n = r_true.size
+    x = r_true - r_true.mean()
+    y = r_pred - r_pred.mean()
+    sx = r_true.std(ddof=0)
+    sy = r_pred.std(ddof=0)
+    if sx == 0 or sy == 0:
+        return np.nan
+
+    rho = float((x @ y) / (n * sx * sy))
+    # numerical guard
+    return float(np.clip(rho, -1.0, 1.0))
+
+def pearson_correlation(df, predictions, target_feature: str = "ground_truth") -> float:
+    """Pearson's r, returns in [-1, 1] or NaN."""
+    y_true = np.asarray(df[target_feature].to_numpy(), dtype=float)
+    y_pred = np.asarray(predictions, dtype=float)
+    if y_true.shape[0] != y_pred.shape[0]:
+        raise ValueError(f"Length mismatch: {y_true.shape[0]} ground-truth vs {y_pred.shape[0]} predictions")
+
+    n = y_true.size
+    x = y_true - y_true.mean()
+    y = y_pred - y_pred.mean()
+    sx = y_true.std(ddof=0)
+    sy = y_pred.std(ddof=0)
+    if sx == 0 or sy == 0:
+        return np.nan
+
+    r = float((x @ y) / (n * sx * sy))
+    # numerical guard
+    return float(np.clip(r, -1.0, 1.0))
+
+
 def train_linear_regression(train_csv: str):
     df = pd.read_csv(train_csv)
     X_raw = df[TRAINED_FEATURES]
@@ -469,9 +530,9 @@ def main():
 
     # Approach 1 (primary approach): proxy learning
 
-    #training_data = pd.read_csv("ce_bench/data_processing/TRAINING_DATA.csv")
+    training_data = pd.read_csv("ce_bench/data_processing/TRAINING_DATA.csv")
     #training_data = pd.read_csv("ce_bench/ablation_study/ABLATION_MEAN_TRAINING_DATA.csv")
-    training_data = pd.read_csv("ce_bench/ablation_study/ABLATION_OUTLIER_TRAINING_DATA.csv")
+    #training_data = pd.read_csv("ce_bench/ablation_study/ABLATION_OUTLIER_TRAINING_DATA.csv")
 
     predicted = predict_with_global_model(
         df=training_data,
@@ -510,122 +571,135 @@ def main():
     # print out the ranking score
     print(f"Ranking score of simple average with sparsity penalty: {ranking_score:.4f}")
 
+    rho = spearman_correlation(
+        df=training_data,
+        predictions=(training_data["contrastive_score"] + training_data["independent_score"]) - 1.0 * training_data["sparsity"],
+        target_feature="ground_truth"
+    )
+    r = pearson_correlation(
+        df=training_data, 
+        predictions=(training_data["contrastive_score"] + training_data["independent_score"]) - 1.0 * training_data["sparsity"],
+        target_feature="ground_truth"
+    )
+    print(f"Spearman correlation of simple average with sparsity penalty: {rho:.4f}")
+    print(f"Pearson correlation of simple average with sparsity penalty: {r:.4f}")
 
-    if args.task_name == "depth":
-        sae_release = "gemma-scope-2b-pt-res"
-        width = "16k"
-        # depth_analysis(
-        #     sae_release=sae_release,
-        #     width=width,
-        # )
-        linear_regression_depth(
-            csv_file="ce_bench/data_processing/DEPTH_ANALYSIS_METRICS.csv",
-            trained_scaler=trained_scaler,
-            trained_model=trained_model
-        )
 
-    elif args.task_name == "layer_type":
-        sae_release_series = "gemma-scope-2b-pt-"
-        type_pool = ["att", "mlp", "res"]
-        layer = "layer_12"
-        width = "width_16k"
-        metric = "max"
+    # if args.task_name == "depth":
+    #     sae_release = "gemma-scope-2b-pt-res"
+    #     width = "16k"
+    #     # depth_analysis(
+    #     #     sae_release=sae_release,
+    #     #     width=width,
+    #     # )
+    #     linear_regression_depth(
+    #         csv_file="ce_bench/data_processing/DEPTH_ANALYSIS_METRICS.csv",
+    #         trained_scaler=trained_scaler,
+    #         trained_model=trained_model
+    #     )
 
-        # layer_type_analysis(
-        #     sae_release_series=sae_release_series,
-        #     type_pool=type_pool,
-        #     layer=layer,
-        #     width=width,
-        #     metric=metric,
-        # )
+    # elif args.task_name == "layer_type":
+    #     sae_release_series = "gemma-scope-2b-pt-"
+    #     type_pool = ["att", "mlp", "res"]
+    #     layer = "layer_12"
+    #     width = "width_16k"
+    #     metric = "max"
 
-        linear_regression_layer_type(
-            csv_file="ce_bench/data_processing/LAYER_TYPE_ANALYSIS_METRICS.csv",
-            trained_scaler=trained_scaler,
-            trained_model=trained_model
-        )
+    #     # layer_type_analysis(
+    #     #     sae_release_series=sae_release_series,
+    #     #     type_pool=type_pool,
+    #     #     layer=layer,
+    #     #     width=width,
+    #     #     metric=metric,
+    #     # )
+
+    #     linear_regression_layer_type(
+    #         csv_file="ce_bench/data_processing/LAYER_TYPE_ANALYSIS_METRICS.csv",
+    #         trained_scaler=trained_scaler,
+    #         trained_model=trained_model
+    #     )
             
-    elif args.task_name == "width":
-        layer = "layer_12"
-        pooling_metric = "max"
+    # elif args.task_name == "width":
+    #     layer = "layer_12"
+    #     pooling_metric = "max"
 
-        # width_analysis(
-        #     base_dir=".",
-        #     dataset_ver="v4",
-        #     metric=pooling_metric
-        # )
+    #     # width_analysis(
+    #     #     base_dir=".",
+    #     #     dataset_ver="v4",
+    #     #     metric=pooling_metric
+    #     # )
         
-        linear_regression_width(
-            csv_file="ce_bench/data_processing/WIDTH_ANALYSIS_METRICS.csv",
-            trained_scaler=trained_scaler,
-            trained_model=trained_model
-        )
+    #     linear_regression_width(
+    #         csv_file="ce_bench/data_processing/WIDTH_ANALYSIS_METRICS.csv",
+    #         trained_scaler=trained_scaler,
+    #         trained_model=trained_model
+    #     )
 
-    elif args.task_name == "sae":
-        sae_release_series = "sae_bench_gemma-2-2b_"
-        sae_pool = [
-                    "batch_top_k_width-2pow16_date-0107", 
-                    "gated_width-2pow16_date-0107", 
-                    "p_anneal_width-2pow16_date-0107", 
-                    "standard_new_width-2pow16_date-0107",
-                    "top_k_width-2pow16_date-0107",
-                    "jump_relu_width-2pow16_date-0107",
-                    "matryoshka_batch_top_k_width-2pow16_date-0107"
-                    ]
-        block_num = 12
-        # dataset_ver_1 = "v2"
-        # v2_runs, v2_avg = sae_analysis(
-        #     sae_release_series=sae_release_series,
-        #     sae_pool=sae_pool,
-        #     block_num=block_num,
-        #     dataset_ver=dataset_ver_1,
-        # )
+    # elif args.task_name == "sae":
+    #     sae_release_series = "sae_bench_gemma-2-2b_"
+    #     sae_pool = [
+    #                 "batch_top_k_width-2pow16_date-0107", 
+    #                 "gated_width-2pow16_date-0107", 
+    #                 "p_anneal_width-2pow16_date-0107", 
+    #                 "standard_new_width-2pow16_date-0107",
+    #                 "top_k_width-2pow16_date-0107",
+    #                 "jump_relu_width-2pow16_date-0107",
+    #                 "matryoshka_batch_top_k_width-2pow16_date-0107"
+    #                 ]
+    #     block_num = 12
+    #     # dataset_ver_1 = "v2"
+    #     # v2_runs, v2_avg = sae_analysis(
+    #     #     sae_release_series=sae_release_series,
+    #     #     sae_pool=sae_pool,
+    #     #     block_num=block_num,
+    #     #     dataset_ver=dataset_ver_1,
+    #     # )
 
-        dataset_ver_2 = "v3"
-        # metric_zoo = [
-        #     "max",
-        #     "mean",
-        #     "outlier_count_1_both",
-        #     "outlier_count_1_upper",
-        #     "outlier_count_2_both",
-        #     "outlier_count_2_upper",
-        #     "outlier_count_3_both",
-        #     "outlier_count_3_upper",
-        # ]
+    #     dataset_ver_2 = "v3"
+    #     # metric_zoo = [
+    #     #     "max",
+    #     #     "mean",
+    #     #     "outlier_count_1_both",
+    #     #     "outlier_count_1_upper",
+    #     #     "outlier_count_2_both",
+    #     #     "outlier_count_2_upper",
+    #     #     "outlier_count_3_both",
+    #     #     "outlier_count_3_upper",
+    #     # ]
 
-        # for metric in metric_zoo:
+    #     # for metric in metric_zoo:
 
-        #     v3_runs, v3_avg = sae_analysis(
-        #         sae_release_series=sae_release_series,
-        #         sae_pool=sae_pool,
-        #         block_num=block_num,
-        #         dataset_ver=dataset_ver_2,
-        #         metric=metric
-        #     )
+    #     #     v3_runs, v3_avg = sae_analysis(
+    #     #         sae_release_series=sae_release_series,
+    #     #         sae_pool=sae_pool,
+    #     #         block_num=block_num,
+    #     #         dataset_ver=dataset_ver_2,
+    #     #         metric=metric
+    #     #     )
 
-        dataset_final = "v4"
-        pooling_metric = "mean"
-        # sae_analysis(
-        #     sae_release_series=sae_release_series,
-        #     sae_pool=sae_pool,
-        #     block_num=block_num,
-        #     dataset_ver=dataset_final,
-        #     metric=pooling_metric,
-        # )
+    #     dataset_final = "v4"
+    #     pooling_metric = "mean"
+    #     # sae_analysis(
+    #     #     sae_release_series=sae_release_series,
+    #     #     sae_pool=sae_pool,
+    #     #     block_num=block_num,
+    #     #     dataset_ver=dataset_final,
+    #     #     metric=pooling_metric,
+    #     # )
 
-        linear_regression_sae(
-            #csv_file="ce_bench/ablation_study/ABLATION_MEAN_SAE_ANALYSIS_METRICS.csv",
-            csv_file="ce_bench/ablation_study/ABLATION_OUTLIER_SAE_ANALYSIS_METRICS.csv",
-            #csv_file="ce_bench/data_processing/SAE_ANALYSIS_METRICS.csv",
-            trained_scaler=trained_scaler,
-            trained_model=trained_model
-        )
+    #     linear_regression_sae(
+    #         #csv_file="ce_bench/ablation_study/ABLATION_MEAN_SAE_ANALYSIS_METRICS.csv",
+    #         csv_file="ce_bench/ablation_study/ABLATION_OUTLIER_SAE_ANALYSIS_METRICS.csv",
+    #         #csv_file="ce_bench/data_processing/SAE_ANALYSIS_METRICS.csv",
+    #         trained_scaler=trained_scaler,
+    #         trained_model=trained_model
+    #     )
 
 
 
-        # plot_v2_vs_v3_scores(v2_avg, v3_avg, sae_pool)
-    else:
-        raise ValueError(f"Unknown task name: {args.task_name}")
+    #     # plot_v2_vs_v3_scores(v2_avg, v3_avg, sae_pool)
+    # else:
+    #     raise ValueError(f"Unknown task name: {args.task_name}")
 
 
 
