@@ -10,13 +10,36 @@ Alex Gulko*, Yusen Peng*, Sachin Kumar
 
 ## Abstract
 
-Probing with sparse autoencoders is a promising approach for uncovering interpretable features in large language models (LLMs). However, the lack of automated evaluation methods has hindered their broader adoption and development. In this work, we introduce CE-Bench, a novel and lightweight contrastive evaluation benchmark for sparse autoencoders, built on a curated dataset of contrastive story pairs. We conduct comprehensive ablation studies to validate the effectiveness of our approach. Our results show that CE-Bench reliably measures the interpretability of sparse autoencoders and aligns well with existing benchmarks—all without requiring an external LLM. The official implementation and evaluation dataset are open-sourced under the MIT License.
+Sparse autoencoders (SAEs) are a promising approach for uncovering inter-
+pretable features in large language models (LLMs). While several automated
+evaluation methods exist for SAEs, most rely on external LLMs. In this work,
+we introduce CE-Bench, a novel and lightweight contrastive evaluation bench-
+mark for sparse autoencoders, built on a curated dataset of contrastive story pairs.
+We conduct comprehensive evaluation studies to validate the effectiveness of our
+approach. Our results show that CE-Bench reliably measures the interpretability
+of sparse autoencoders and aligns well with existing benchmarks without requir-
+ing an external LLM judge, achieving over 70% Spearman correlation with results
+in SAEBench. The official implementation and evaluation dataset will be open-
+sourced upon acceptance.
 
 ## CE-Bench
 
-![alt text](CE_Bench.png)
+![alt text](docs/CE_Bench.png)
 
-Overview of the CE-Bench pipeline. Two contrastive stories about the same subject are passed through a frozen LLM and a pretrained sparse autoencoder (SAE) to extract neuron activations. A contrastive score is computed as the max absolute difference between the stories’ average activations (V1, V2), while an independence score measures deviation from the dataset-wide activation mean (Iavg). These scores, along with SAE sparsity, are used to derive an interpretability score via either (1) supervised regression using SAE-Bench scores as ground truth, or (2) simple averaging for an LLM-free, deterministic evaluation.
+Pipeline of constructing the interpretability metric in CE-Bench. Two contrastive stories about the same subject are passed through a frozen LLM and a pretrained sparse autoencoder (SAE) to extract neuron activations. A contrastive score is computed as the max absolute difference between the stories’ average activations (V1, V2), while an independence score measures deviation from the dataset-wide activation mean (Iavg). These scores, along with SAE sparsity, are used to derive an interpretability score for an LLM-free evaluation of interpretability of sparse autoencoders.
+
+
+## Alignment Evaluation
+
+![alt text](docs/alignment.png)
+
+Comparison of Interpretability Score Derivation Methods. C stands for contrastive score; I stands for independence score; S stands for sparsity. Baseline achieves 70.12% ranking agreement with SAE-Bench, but the sparsity-aware method pushes it to 77.30% with proper hyperparameter tuning on α.
+
+## Sample Score Visualization
+
+![alt text](docs/sample.png)
+
+Sample Visualization of Neuron-wise Scores for the Subject “Computer.” The left scatter plot shows each neuron’s contrastive and independence scores, with top-right points indicating neurons that are both highly contrastive and independent. The center and right histograms reveal that most neurons have low scores, suggesting that only a small subset of features are semantically relevant for the given subject.
 
 ## Citation
 
