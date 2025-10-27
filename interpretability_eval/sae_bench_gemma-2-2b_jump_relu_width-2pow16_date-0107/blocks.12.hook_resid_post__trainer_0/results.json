@@ -3,36 +3,36 @@
     "sae_release": "sae_bench_gemma-2-2b_jump_relu_width-2pow16_date-0107",
     "sae_id": "blocks.12.hook_resid_post__trainer_0",
     "contrastive_score_mean": {
-        "max": 49.892588166427615,
-        "mean": 2.6167253963649273e-11,
-        "outlier_count_1_both": 3660.1388,
-        "outlier_count_1_upper": 3660.1388,
-        "outlier_count_2_both": 1615.355,
-        "outlier_count_2_upper": 1615.355,
-        "outlier_count_3_both": 896.8834,
-        "outlier_count_3_upper": 896.8834
+        "max": 49.5427360534668,
+        "mean": 1.210719347000122e-08,
+        "outlier_count_1_both": 3861.0,
+        "outlier_count_1_upper": 3861.0,
+        "outlier_count_2_both": 1722.0,
+        "outlier_count_2_upper": 1722.0,
+        "outlier_count_3_both": 980.0,
+        "outlier_count_3_upper": 980.0
     },
     "independent_score_mean": {
-        "max": 188.68544205932616,
-        "mean": 1.1507654562592507e-10,
-        "outlier_count_1_both": 2146.2088,
-        "outlier_count_1_upper": 2146.2088,
-        "outlier_count_2_both": 795.5586,
-        "outlier_count_2_upper": 795.5586,
-        "outlier_count_3_both": 405.062,
-        "outlier_count_3_upper": 405.062
+        "max": 0.0,
+        "mean": 0.0,
+        "outlier_count_1_both": 0.0,
+        "outlier_count_1_upper": 0.0,
+        "outlier_count_2_both": 0.0,
+        "outlier_count_2_upper": 0.0,
+        "outlier_count_3_both": 0.0,
+        "outlier_count_3_upper": 0.0
     },
     "interpretability_score_mean": {
-        "max": 158.81858388824463,
-        "mean": -1.6928825061768293e-10,
-        "outlier_count_1_both": 2830.1438,
-        "outlier_count_1_upper": 2830.1438,
-        "outlier_count_2_both": 1121.4376,
-        "outlier_count_2_upper": 1121.4376,
-        "outlier_count_3_both": 582.6866,
-        "outlier_count_3_upper": 582.6866
+        "max": 49.5427360534668,
+        "mean": 1.210719347000122e-08,
+        "outlier_count_1_both": 3861.0,
+        "outlier_count_1_upper": 3861.0,
+        "outlier_count_2_both": 1722.0,
+        "outlier_count_2_upper": 1722.0,
+        "outlier_count_3_both": 980.0,
+        "outlier_count_3_upper": 980.0
     },
-    "total_rows": 5000,
+    "total_rows": 1,
     "sae_config": {
         "architecture": "standard",
         "d_in": 2304,
@@ -59,5 +59,5 @@
             null
         ]
     },
-    "date": "2025-05-16 14:10:49"
+    "date": "2025-09-29 15:29:46"
 }

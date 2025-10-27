@@ -220,7 +220,7 @@ def linear_regression_sae(csv_file: str, trained_scaler: StandardScaler, trained
 
         ax.set_title(f"CE-Bench vs. {titles[i]}", fontsize=16)
         ax.set_xlabel(titles[i], fontsize=16)
-        ax.set_ylabel("Model Prediction", fontsize=16)
+        ax.set_ylabel("CE-Bench prediction", fontsize=16)
 
     # Shared legend at the bottom
     handles = [
@@ -305,7 +305,7 @@ def linear_regression_layer_type(csv_file: str, trained_scaler: StandardScaler, 
 
         ax.set_title(f"CE-Bench vs. {titles[i]}", fontsize=16)
         ax.set_xlabel(titles[i], fontsize=16)
-        ax.set_ylabel("Model Prediction", fontsize=16)
+        ax.set_ylabel("CE-Bench prediction", fontsize=16)
 
     # Shared legend
     handles = [
@@ -392,7 +392,7 @@ def linear_regression_width(csv_file: str, trained_scaler: StandardScaler, train
 
         ax.set_title(f"CE-Bench vs. {titles[i]}", fontsize=16)
         ax.set_xlabel(titles[i], fontsize=16)
-        ax.set_ylabel("Model Prediction", fontsize=16)
+        ax.set_ylabel("CE-Bench prediction", fontsize=16)
 
     # Shared legend
     handles = [
@@ -474,7 +474,7 @@ def linear_regression_depth(csv_file: str, trained_scaler: StandardScaler, train
 
         ax.set_title(f"CE-Bench vs. {titles[i]}", fontsize=16)
         ax.set_xlabel(titles[i], fontsize=16)
-        ax.set_ylabel("Model Prediction", fontsize=16)
+        ax.set_ylabel("CE-Bench prediction", fontsize=16)
 
     # Shared legend
     handles = [
@@ -562,9 +562,15 @@ def main():
 
 
     # Approach 3: simple average of contrastive and independent scores with sparsity penalty
+
+    PREDICTIONS = (training_data["contrastive_score"] + training_data["independent_score"]) - 0.25 * training_data["sparsity"]
+    #PREDICTIONS = training_data["contrastive_score"]
+    #PREDICTIONS = training_data["independent_score"]
+    #PREDICTIONS =  -training_data["sparsity"]
+
     ranking_score = compare_rankings(
         df=training_data,
-        predictions=(training_data["contrastive_score"] + training_data["independent_score"]) - 0.25 * training_data["sparsity"],
+        predictions=PREDICTIONS,
         target_feature="ground_truth"
     )
 
@@ -573,12 +579,12 @@ def main():
 
     rho = spearman_correlation(
         df=training_data,
-        predictions=(training_data["contrastive_score"] + training_data["independent_score"]) - 1.0 * training_data["sparsity"],
+        predictions=PREDICTIONS,
         target_feature="ground_truth"
     )
     r = pearson_correlation(
         df=training_data, 
-        predictions=(training_data["contrastive_score"] + training_data["independent_score"]) - 1.0 * training_data["sparsity"],
+        predictions=PREDICTIONS,
         target_feature="ground_truth"
     )
     print(f"Spearman correlation of simple average with sparsity penalty: {rho:.4f}")
@@ -689,8 +695,8 @@ def main():
 
     #     linear_regression_sae(
     #         #csv_file="ce_bench/ablation_study/ABLATION_MEAN_SAE_ANALYSIS_METRICS.csv",
-    #         csv_file="ce_bench/ablation_study/ABLATION_OUTLIER_SAE_ANALYSIS_METRICS.csv",
-    #         #csv_file="ce_bench/data_processing/SAE_ANALYSIS_METRICS.csv",
+    #         #csv_file="ce_bench/ablation_study/ABLATION_OUTLIER_SAE_ANALYSIS_METRICS.csv",
+    #         csv_file="ce_bench/data_processing/SAE_ANALYSIS_METRICS.csv",
     #         trained_scaler=trained_scaler,
     #         trained_model=trained_model
     #     )

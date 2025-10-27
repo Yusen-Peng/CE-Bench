@@ -4,23 +4,14 @@ Alex Gulko*, Yusen Peng*, Sachin Kumar
 
 ## News
 
+- [October 27th, 2025] [poster](/CE-Bench%20poster%20(84x119cm).pdf) for EMNLP is ready!
 - [September 18th, 2025] paper accepted at BlackboxNLP Workshop @ EMNLP, 2025!
 - [August 31, 2025] paper available on [arXiv](https://arxiv.org/abs/2509.00691)!
 - [May 15, 2025] contrastive story dataset is publicly available on [HuggingFace](https://huggingface.co/datasets/GulkoA/contrastive-stories-v4)!
 
 ## Abstract
 
-Sparse autoencoders (SAEs) are a promising approach for uncovering inter-
-pretable features in large language models (LLMs). While several automated
-evaluation methods exist for SAEs, most rely on external LLMs. In this work,
-we introduce CE-Bench, a novel and lightweight contrastive evaluation bench-
-mark for sparse autoencoders, built on a curated dataset of contrastive story pairs.
-We conduct comprehensive evaluation studies to validate the effectiveness of our
-approach. Our results show that CE-Bench reliably measures the interpretability
-of sparse autoencoders and aligns well with existing benchmarks without requir-
-ing an external LLM judge, achieving over 70% Spearman correlation with results
-in SAEBench. The official implementation and evaluation dataset will be open-
-sourced upon acceptance.
+Sparse autoencoders (SAEs) are a promising approach for uncovering interpretable features in large language models (LLMs). While several automated evaluation methods exist for SAEs, most rely on external LLMs. In this work, we introduce CE-Bench, a novel and lightweight contrastive evaluation benchmark for sparse autoencoders, built on a curated dataset of contrastive story pairs. We conduct comprehensive evaluation studies to validate the effectiveness of our approach. Our results show that CE-Bench reliably measures the interpretability of sparse autoencoders and aligns well with existing benchmarks without requiring an external LLM judge, achieving over 70% Spearman correlation with results in SAEBench. The official implementation and evaluation dataset are made publicly available. 
 
 ## CE-Bench
 

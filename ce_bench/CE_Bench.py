@@ -91,7 +91,6 @@ def run_eval_once(
     neuron_interpretability_score_subject_pairs = {}
 
     total_rows = len(dataset)
-    total_rows = 1
 
     all_activations = []
 
@@ -156,9 +155,6 @@ def run_eval_once(
             df = pd.DataFrame({"V1": V1, "V2": V2, "delta": V1 - V2, "abs_delta": np.abs(V1 - V2)})
             df.to_csv(f"{logs_folder}/raw/V1_V2_{pair_index}.csv", index=True)
 
-
-    print(f"V1: {V1.shape}, V2: {V2.shape}, I1: {I1.shape}")
-
     I2 = torch.zeros(activations_B.shape[2])
     I2_token_num = len(all_activations)
 
@@ -167,131 +163,144 @@ def run_eval_once(
     I2 = I2 / I2_token_num if I2_token_num > 0 else I2
 
     print(f"V1: {V1.shape}, V2: {V2.shape}, I1: {I1.shape}, I2: {I2.shape}")
-    for pair_index, (V1, V2, I1, ground_truth_subject) in tqdm(enumerate(all_activations)):
-
-        # compute the contrastive and independent scores
-
-        shift_v = I1 - I2
-        shift_v_per_subect[ground_truth_subject].append(shift_v)
-
-        elementwise_contrast_distance = torch.abs(V1 - V2)
-        elementwise_contrastive_score = elementwise_contrast_distance - torch.mean(elementwise_contrast_distance)
-        st_dev = torch.std(elementwise_contrastive_score) if torch.std(elementwise_contrastive_score) != 0 else 1
-        elementwise_contrastive_score /= st_dev
+    output_path = "scores_dump.txt"
 
 
-        contrastive_score_zoo = {
-            "max": torch.max(elementwise_contrastive_score).item(),
-            "mean": torch.mean(elementwise_contrastive_score).item(),
-            "outlier_count_1_both": outlier_counting_two_way(elementwise_contrastive_score, num_sigmas=1),
-            "outlier_count_1_upper": outlier_counting_one_way(elementwise_contrastive_score, num_sigmas=1),
-            "outlier_count_2_both": outlier_counting_two_way(elementwise_contrastive_score, num_sigmas=2),
-            "outlier_count_2_upper": outlier_counting_one_way(elementwise_contrastive_score, num_sigmas=2),
-            "outlier_count_3_both": outlier_counting_two_way(elementwise_contrastive_score, num_sigmas=3),
-            "outlier_count_3_upper": outlier_counting_one_way(elementwise_contrastive_score, num_sigmas=3),
-        }
+    with open(output_path, "a") as f:
+        for pair_index, (V1, V2, I1, ground_truth_subject) in tqdm(enumerate(all_activations)):
 
-        elementwise_independence_distance = torch.abs(I1 - I2)
-        elementwise_independence_score = elementwise_independence_distance - torch.mean(elementwise_independence_distance)
-        st_dev = torch.std(elementwise_independence_score) if torch.std(elementwise_independence_score) != 0 else 1
-        elementwise_independence_score /= st_dev
+            # compute the contrastive and independent scores
 
-        independence_score_zoo = {
-            "max": torch.max(elementwise_independence_score).item(),
-            "mean": torch.mean(elementwise_independence_score).item(),
-            "outlier_count_1_both": outlier_counting_two_way(elementwise_independence_score, num_sigmas=1),
-            "outlier_count_1_upper": outlier_counting_one_way(elementwise_independence_score, num_sigmas=1),
-            "outlier_count_2_both": outlier_counting_two_way(elementwise_independence_score, num_sigmas=2),
-            "outlier_count_2_upper": outlier_counting_one_way(elementwise_independence_score, num_sigmas=2),
-            "outlier_count_3_both": outlier_counting_two_way(elementwise_independence_score, num_sigmas=3),
-            "outlier_count_3_upper": outlier_counting_one_way(elementwise_independence_score, num_sigmas=3),
-        }
+            shift_v = I1 - I2
+            shift_v_per_subect[ground_truth_subject].append(shift_v)
+
+            elementwise_contrast_distance = torch.abs(V1 - V2)
+            elementwise_contrastive_score = elementwise_contrast_distance - torch.mean(elementwise_contrast_distance)
+            st_dev = torch.std(elementwise_contrastive_score) if torch.std(elementwise_contrastive_score) != 0 else 1
+            elementwise_contrastive_score /= st_dev
 
 
+            contrastive_score_zoo = {
+                "max": torch.max(elementwise_contrastive_score).item(),
+                'neuron_id': torch.argmax(elementwise_contrastive_score).item(),
+                "mean": torch.mean(elementwise_contrastive_score).item(),
+                "outlier_count_1_both": outlier_counting_two_way(elementwise_contrastive_score, num_sigmas=1),
+                "outlier_count_1_upper": outlier_counting_one_way(elementwise_contrastive_score, num_sigmas=1),
+                "outlier_count_2_both": outlier_counting_two_way(elementwise_contrastive_score, num_sigmas=2),
+                "outlier_count_2_upper": outlier_counting_one_way(elementwise_contrastive_score, num_sigmas=2),
+                "outlier_count_3_both": outlier_counting_two_way(elementwise_contrastive_score, num_sigmas=3),
+                "outlier_count_3_upper": outlier_counting_one_way(elementwise_contrastive_score, num_sigmas=3),
+            }
 
-        elementwise_interpretability_distance = elementwise_contrast_distance + elementwise_independence_distance
-        elementwise_interpretability_score = elementwise_interpretability_distance - torch.mean(elementwise_interpretability_distance)
-        st_dev = torch.std(elementwise_interpretability_distance) if torch.std(elementwise_interpretability_distance) != 0 else 1
-        elementwise_interpretability_score /= st_dev
+            elementwise_independence_distance = torch.abs(I1 - I2)
+            elementwise_independence_score = elementwise_independence_distance - torch.mean(elementwise_independence_distance)
+            st_dev = torch.std(elementwise_independence_score) if torch.std(elementwise_independence_score) != 0 else 1
+            elementwise_independence_score /= st_dev
 
-        interpretability_score_zoo = {
-            "max": torch.max(elementwise_interpretability_score).item(),
-            "mean": torch.mean(elementwise_interpretability_score).item(),
-            "outlier_count_1_both": outlier_counting_two_way(elementwise_interpretability_score, num_sigmas=1),
-            "outlier_count_1_upper": outlier_counting_one_way(elementwise_interpretability_score, num_sigmas=1),
-            "outlier_count_2_both": outlier_counting_two_way(elementwise_interpretability_score, num_sigmas=2),
-            "outlier_count_2_upper": outlier_counting_one_way(elementwise_interpretability_score, num_sigmas=2),
-            "outlier_count_3_both": outlier_counting_two_way(elementwise_interpretability_score, num_sigmas=3),
-            "outlier_count_3_upper": outlier_counting_one_way(elementwise_interpretability_score, num_sigmas=3),
-        }
+            independence_score_zoo = {
+                "max": torch.max(elementwise_independence_score).item(),
+                'neuron_id': torch.argmax(elementwise_independence_score).item(),
+                "mean": torch.mean(elementwise_independence_score).item(),
+                "outlier_count_1_both": outlier_counting_two_way(elementwise_independence_score, num_sigmas=1),
+                "outlier_count_1_upper": outlier_counting_one_way(elementwise_independence_score, num_sigmas=1),
+                "outlier_count_2_both": outlier_counting_two_way(elementwise_independence_score, num_sigmas=2),
+                "outlier_count_2_upper": outlier_counting_one_way(elementwise_independence_score, num_sigmas=2),
+                "outlier_count_3_both": outlier_counting_two_way(elementwise_independence_score, num_sigmas=3),
+                "outlier_count_3_upper": outlier_counting_one_way(elementwise_independence_score, num_sigmas=3),
+            }
 
-        elementwise_interpretability_score_np = elementwise_interpretability_score.numpy()
-        elementwise_contrastive_score_np = elementwise_contrastive_score.numpy()
-        elementwise_independence_score_np = elementwise_independence_score.numpy()
+            record = {
+                "pair_index": pair_index,
+                "subject": ground_truth_subject,
+                "contrastive neuron": contrastive_score_zoo["neuron_id"],
+                "independence neuron": independence_score_zoo["neuron_id"],
+            }
+            f.write(json.dumps(record) + "\n")
 
-        if generate_histograms:
-            # Create a single row of plots with better title structure
-            plt.figure(figsize=(20, 5))  # Wider figure for one row
+
+            elementwise_interpretability_distance = elementwise_contrast_distance + elementwise_independence_distance
+            elementwise_interpretability_score = elementwise_interpretability_distance - torch.mean(elementwise_interpretability_distance)
+            st_dev = torch.std(elementwise_interpretability_distance) if torch.std(elementwise_interpretability_distance) != 0 else 1
+            elementwise_interpretability_score /= st_dev
+
+            interpretability_score_zoo = {
+                "max": torch.max(elementwise_interpretability_score).item(),
+                "mean": torch.mean(elementwise_interpretability_score).item(),
+                "outlier_count_1_both": outlier_counting_two_way(elementwise_interpretability_score, num_sigmas=1),
+                "outlier_count_1_upper": outlier_counting_one_way(elementwise_interpretability_score, num_sigmas=1),
+                "outlier_count_2_both": outlier_counting_two_way(elementwise_interpretability_score, num_sigmas=2),
+                "outlier_count_2_upper": outlier_counting_one_way(elementwise_interpretability_score, num_sigmas=2),
+                "outlier_count_3_both": outlier_counting_two_way(elementwise_interpretability_score, num_sigmas=3),
+                "outlier_count_3_upper": outlier_counting_one_way(elementwise_interpretability_score, num_sigmas=3),
+            }
+
+            elementwise_interpretability_score_np = elementwise_interpretability_score.numpy()
+            elementwise_contrastive_score_np = elementwise_contrastive_score.numpy()
+            elementwise_independence_score_np = elementwise_independence_score.numpy()
+
+            if generate_histograms:
+                # Create a single row of plots with better title structure
+                plt.figure(figsize=(20, 5))  # Wider figure for one row
+                
+                # Set up title and subtitle
+                plt.suptitle(f"Visualization Analysis - {ground_truth_subject}", fontsize=16, y=0.98)
+                plt.figtext(0.5, 0.91, 
+                        f"Contrastive: {contrastive_score_zoo['max']:.4f} | Independent: {independence_score_zoo['max']:.4f} | Story1: {text_A_original[:100]}...", 
+                        ha="center", fontsize=16)
+                
+                # Scatter plot
+                plt.subplot(1, 3, 1)
+                scatter = plt.scatter(elementwise_contrastive_score_np, elementwise_independence_score_np, 
+                            c=elementwise_interpretability_score_np, cmap='viridis')
+                plt.colorbar(scatter, label="Joint")
+                plt.xlabel("Contrastive Score", fontsize=16)
+                plt.ylabel("Independent Score", fontsize=16)
+                plt.title("Feature Space", fontsize=16)
+                
+                # Histograms in a row
+                plt.subplot(1, 3, 2)
+                plt.hist(elementwise_contrastive_score_np, bins=50)
+                plt.title("Contrastive Distribution", fontsize=16)
+                plt.xlabel("z-score", fontsize=16)
+                plt.ylabel("Frequency", fontsize=16)
+                
+                plt.subplot(1, 3, 3)
+                plt.hist(elementwise_independence_score_np, bins=50)
+                plt.title("Independence Distribution", fontsize=16)
+                plt.xlabel("z-score", fontsize=16)
+                
+                plt.tight_layout()
+                plt.subplots_adjust(top=0.85)  # Make room for the titles
+                
+                plt.savefig(f"{logs_folder}/histograms/{pair_index}.png")
+                plt.close()
+
+            """
+                Responsibility Clustering
+            """
+            # clustering neurons into different interpreter groups based on their highest interpretability score 
+            # for neuron_index in range(len(elementwise_interpretability_score_np)):
+            #     # check if the neuron index is already in the dictionary
+            #     if neuron_index not in neuron_interpretability_score_subject_pairs:
+            #         neuron_interpretability_score_subject_pairs[neuron_index] = [elementwise_interpretability_score_np[neuron_index], ground_truth_subject]
+            #     else:
+            #         # if it is, check if the current interpretability score is higher than the previous one
+            #         if elementwise_interpretability_score[neuron_index] > neuron_interpretability_score_subject_pairs[neuron_index][0]:
+            #             neuron_interpretability_score_subject_pairs[neuron_index] = [elementwise_interpretability_score[neuron_index], ground_truth_subject]
             
-            # Set up title and subtitle
-            plt.suptitle(f"Visualization Analysis - {ground_truth_subject}", fontsize=16, y=0.98)
-            plt.figtext(0.5, 0.91, 
-                    f"Contrastive: {contrastive_score_zoo['max']:.4f} | Independent: {independence_score_zoo['max']:.4f} | Story1: {text_A_original[:100]}...", 
-                    ha="center", fontsize=16)
-            
-            # Scatter plot
-            plt.subplot(1, 3, 1)
-            scatter = plt.scatter(elementwise_contrastive_score_np, elementwise_independence_score_np, 
-                        c=elementwise_interpretability_score_np, cmap='viridis')
-            plt.colorbar(scatter, label="Joint")
-            plt.xlabel("Contrastive Score", fontsize=16)
-            plt.ylabel("Independent Score", fontsize=16)
-            plt.title("Feature Space", fontsize=16)
-            
-            # Histograms in a row
-            plt.subplot(1, 3, 2)
-            plt.hist(elementwise_contrastive_score_np, bins=50)
-            plt.title("Contrastive Distribution", fontsize=16)
-            plt.xlabel("z-score", fontsize=16)
-            plt.ylabel("Frequency", fontsize=16)
-            
-            plt.subplot(1, 3, 3)
-            plt.hist(elementwise_independence_score_np, bins=50)
-            plt.title("Independence Distribution", fontsize=16)
-            plt.xlabel("z-score", fontsize=16)
-            
-            plt.tight_layout()
-            plt.subplots_adjust(top=0.85)  # Make room for the titles
-            
-            plt.savefig(f"{logs_folder}/histograms/{pair_index}.png")
-            plt.close()
-
-        """
-            Responsibility Clustering
-        """
-        # clustering neurons into different interpreter groups based on their highest interpretability score 
-        # for neuron_index in range(len(elementwise_interpretability_score_np)):
-        #     # check if the neuron index is already in the dictionary
-        #     if neuron_index not in neuron_interpretability_score_subject_pairs:
-        #         neuron_interpretability_score_subject_pairs[neuron_index] = [elementwise_interpretability_score_np[neuron_index], ground_truth_subject]
-        #     else:
-        #         # if it is, check if the current interpretability score is higher than the previous one
-        #         if elementwise_interpretability_score[neuron_index] > neuron_interpretability_score_subject_pairs[neuron_index][0]:
-        #             neuron_interpretability_score_subject_pairs[neuron_index] = [elementwise_interpretability_score[neuron_index], ground_truth_subject]
-        
 
 
-        # append the scores to the lists - for each metric in the zoo
+            # append the scores to the lists - for each metric in the zoo
 
-        contrastive_scores.append(contrastive_score_zoo)
-        independent_scores.append(independence_score_zoo)
-        interpretability_scores.append(interpretability_score_zoo)
-        elementwise_interpretability_scores_per_subject[ground_truth_subject].append(elementwise_interpretability_score)
-        interpretability_scores_per_subject[ground_truth_subject].append(interpretability_score_zoo)
-        elementwise_contrastive_scores_per_subject[ground_truth_subject].append(elementwise_contrastive_score_np)
-        elementwise_independence_scores_per_subject[ground_truth_subject].append(elementwise_independence_score_np)
+            contrastive_scores.append(contrastive_score_zoo)
+            independent_scores.append(independence_score_zoo)
+            interpretability_scores.append(interpretability_score_zoo)
+            elementwise_interpretability_scores_per_subject[ground_truth_subject].append(elementwise_interpretability_score)
+            interpretability_scores_per_subject[ground_truth_subject].append(interpretability_score_zoo)
+            elementwise_contrastive_scores_per_subject[ground_truth_subject].append(elementwise_contrastive_score_np)
+            elementwise_independence_scores_per_subject[ground_truth_subject].append(elementwise_independence_score_np)
 
-    sw.lap("Finished all stories")
+        sw.lap("Finished all stories")
 
     # delete the model and sae to free up memory
     sae_cfg = sae.cfg.to_dict()

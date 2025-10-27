@@ -18,4 +18,6 @@ cache_activations/
 tiny-stories-1L-21M-cache/
 eval_results/
 intepretability_eval/
+interpretability_eval/
 *.jsonl
+*.txt
