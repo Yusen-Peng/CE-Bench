@@ -4,6 +4,7 @@ Alex Gulko*, Yusen Peng*, Sachin Kumar
 
 ## News
 
+- [Nov 4th, 2025] [paper](https://aclanthology.org/2025.blackboxnlp-1.1) is published on ACL Anthology!
 - [October 27th, 2025] [poster](/CE-Bench%20poster%20(84x119cm).pdf) for EMNLP is ready!
 - [September 18th, 2025] paper accepted at BlackboxNLP Workshop @ EMNLP, 2025!
 - [August 31, 2025] paper available on [arXiv](https://arxiv.org/abs/2509.00691)!
