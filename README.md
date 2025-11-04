@@ -37,6 +37,8 @@ Sample Visualization of Neuron-wise Scores for the Subject “Computer.” The l
 
 Please cite our work if find it helpful for your research:
 
+- arXiv version:
+
 ```bibtex
 @misc{gulko2025cebenchreliablecontrastiveevaluation,
       title={CE-Bench: Towards a Reliable Contrastive Evaluation Benchmark of Interpretability of Sparse Autoencoders}, 
@@ -48,6 +50,37 @@ Please cite our work if find it helpful for your research:
       url={https://arxiv.org/abs/2509.00691}, 
 }
 ```
+
+- BlackboxNLP Workshop version:
+
+```bibtex
+@inproceedings{gulko-etal-2025-ce,
+    title = "{CE}-Bench: Towards a Reliable Contrastive Evaluation Benchmark of Interpretability of Sparse Autoencoders",
+    author = "Gulko, Alex  and
+      Peng, Yusen  and
+      Kumar, Sachin",
+    editor = "Belinkov, Yonatan  and
+      Mueller, Aaron  and
+      Kim, Najoung  and
+      Mohebbi, Hosein  and
+      Chen, Hanjie  and
+      Arad, Dana  and
+      Sarti, Gabriele",
+    booktitle = "Proceedings of the 8th BlackboxNLP Workshop: Analyzing and Interpreting Neural Networks for NLP",
+    month = nov,
+    year = "2025",
+    address = "Suzhou, China",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2025.blackboxnlp-1.1/",
+    pages = "1--15",
+    ISBN = "979-8-89176-346-3",
+    abstract = "Sparse autoencoders (SAEs) are a promising approach for uncovering interpretable features in large language models (LLMs). While several automated evaluation methods exist for SAEs, most rely on external LLMs. In this work, we introduce CE-Bench, a novel and lightweight contrastive evaluation benchmark for sparse autoencoders, built on a curated dataset of contrastive story pairs. We conduct comprehensive evaluation studies to validate the effectiveness of our approach. Our results show that CE-Bench reliably measures the interpretability of sparse autoencoders and aligns well with existing benchmarks without requiring an external LLM judge, achieving over 70{\%} Spearman correlation with results in SAEBench. The official implementation and evaluation dataset are open-sourced and publicly available."
+}
+
+```
+
+
+
 
 ## Contacts
 
